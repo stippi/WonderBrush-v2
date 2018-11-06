@@ -1,0 +1,8 @@
+SOURCE_FILES +=
+	CommonPropertyIDs.cpp
+	Property.cpp
+	PropertyItemValueView.cpp
+	PropertyItemView.cpp
+	PropertyListView.cpp
+	PropertyObject.cpp
+;

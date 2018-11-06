@@ -1,0 +1,20 @@
+SOURCE_FILES +=
+	CImgDeNoise.cpp
+	ColorReduction.cpp
+	Contrast.cpp
+	Dispersion.cpp
+	DropShadow.cpp
+	FilterFactory.cpp
+	FilterObject.cpp
+	GaussFilter.cpp
+	GaussianBlur.cpp
+	Halftone.cpp
+	Invert.cpp
+	MotionBlur.cpp
+	Noise.cpp
+	Saturation.cpp
+	SimpleBrightness.cpp
+	SolidColor.cpp
+	StackBlurFilter.cpp
+	Warpsharp.cpp
+;

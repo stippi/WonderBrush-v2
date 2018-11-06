@@ -1,0 +1,8 @@
+SOURCE_FILES +=
+	DuplicatePanel.cpp
+	ExportPanel.cpp
+	NamePanel.cpp
+	NewCanvasPanel.cpp
+	NewSizePanel.cpp
+	SerialPanel.cpp
+;

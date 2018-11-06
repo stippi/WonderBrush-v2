@@ -1,0 +1,5 @@
+SOURCE_FILES +=
+	Brush.cpp
+	BrushConfigView.cpp
+	BrushView.cpp
+;

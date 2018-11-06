@@ -1,0 +1,13 @@
+SOURCE_FILES +=
+	CanvasTabView.cpp
+	DualSlider.cpp
+	DualSliderInputGroup.cpp
+	GradientControl.cpp
+	InfoView.cpp
+	LayerConfigView.cpp
+	NavigatorView.cpp
+	NumericalTextControl.cpp
+	ReportingTextView.cpp
+	SwatchView.cpp
+	ToggleFullscreenIB.cpp
+;

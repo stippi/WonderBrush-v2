@@ -1,0 +1,521 @@
+// Finnish
+// author: Ville Koskinen <w-ber@iki.fi>
+// Translated for 1.7.1: 2005/08/07
+// Fixed typos and missing strings for 2.0.0: 2005/09/29
+
+// En ole graafisen alan ammattilainen, joten jos löydät puutteita tai korjattavaa,
+// ota yhteyttä!
+// Sanastoa aiheesta: http://www.imaginos.fi/materiaa/photoshp/23.html
+
+// addon stuff
+extern "C" {
+_EXPORT void init_strings(const char* strings[]);
+}
+
+// init_strings
+void
+init_strings(const char* strings[])
+{
+	strings[FILE_MENU]			= "Tiedosto";
+	strings[NEW]				= "Uusi";				// will show up in Canvas menu
+	strings[NEW_CANVAS]			= "Uusi piirtoalue";			// tool tip
+	strings[NEW_LAYER]			= "Uusi";				// these strings were added
+	strings[NEW_BRUSH]			= "Uusi";				// by request to be able to
+	strings[NEW_PALETTE]		= "Uusi";				// reflect different genders in "New"
+	strings[OPEN]				= "Avaa";
+	strings[LOAD]				= "Lataa";
+	strings[OPEN_CANVAS]		= "Avaa piirtoalue";
+	strings[EXPORT_CANVAS]		= "Vie piirtoalue";		// title of Export panel
+	strings[EXPORT]				= "Vie";
+	strings[EXPORT_AS]			= "Vie nimellä";
+	strings[SAVE_CANVAS]		= "Tallenna piirtoalue";		// title of Save panel
+	strings[SAVE]				= "Tallenna";
+	strings[SAVE_AS]			= "Tallenna nimellä";
+	strings[SETUP_PAGE]			= "Sivun asetukset";
+	strings[PRINT]				= "Tulosta";
+	strings[CLOSE]				= "Sulje";
+	strings[CLOSE_CANVAS]		= "Sulje piirtoalue";		// tool tip
+	strings[ABOUT]				= "Tietoja";
+	strings[QUIT]				= "Lopeta";
+
+	strings[LOADING_FILE]		= "Ladataan tiedostoa:";
+
+	strings[EDIT]				= "Muokkaa";
+	strings[UNDO]				= "Kumoa";
+	strings[REDO]				= "Toista";
+
+	strings[SETTINGS]			= "Asetukset";
+	strings[FULLSCREEN]			= "Koko näyttö";
+	strings[SHOW_GRID]			= "Näytä ruudukko";	// if zoomed in far enough,
+														// display a grid arround each pixel
+	strings[LANGUAGE]			= "Kieli";
+	strings[CANVAS]				= "Piirtoalue";				// ie project, document
+	strings[IMAGE]				= "Kuva";				// ie bitmap
+	strings[CLEAR]				= "Pyyhi";
+	strings[RESIZE]				= "Muuta kokoa";				// resize canvas (new resolution)
+	strings[ROTATE_90]			= "90°";
+	strings[ROTATE_180]			= "180°";
+	strings[ROTATE_270]			= "-90°";
+
+	strings[FORMAT]				= "Värimalli";				// color space of the canvas (RGB, Lab etc)
+
+	strings[EXPORT_FORMAT]		= "Muoto";				// ie PNG, SVG etc
+	strings[CURSOR_SOURCE]		= "Kohdistimen lähdekoodi";
+	strings[BITMAP_SOURCE]		= "Bittikartan lähdekoodi";
+	strings[SVG_FORMAT]			= "SVG (ei käy kaikille objekteille)";
+	strings[AI_FORMAT]			= "Adobe Illustrator (ei käy kaikille objekteille)";
+	strings[RDEF_FORMAT]		= "RDef-lähdekoodi";
+
+	strings[LAYER]				= "Taso";
+	strings[DUPLICATE]			= "Monista";
+	strings[MERGE_DOWN]			= "Yhdistä alaspäin";			// combining of current layer and the
+														// one underneath it
+	strings[MERGE_VISIBLE]		= "Yhdistä näkyvät";		// combining of all visible layers
+	strings[RENAME]				= "Nimeä uudelleen";
+	strings[DELETE]				= "Poista";
+	strings[DELETE_ALL]			= "Poista kaikki";
+
+	// layer blending modes
+	strings[MODE]				= "Toiminto";
+	strings[NORMAL]				= "Tavallinen";
+	strings[ERASE]				= "Pyyhi";
+	strings[MULTIPLY]			= "Kertova";
+	strings[INVERSE_MULTIPLY]	= "Käänteisesti kertova";
+	strings[LUMINANCE]			= "Värin kirkkaus";
+	strings[MULTIPLY_ALPHA]		= "Alpha";
+	strings[MULTIPLY_INVERSE_ALPHA]	= "Käänteinen alpha";
+	strings[REPLACE_RED]		= "Korvaa punainen";
+	strings[REPLACE_GREEN]		= "Korvaa vihreä";
+	strings[REPLACE_BLUE]		= "Korvaa sininen";
+	strings[DARKEN]				= "Tummenna";
+	strings[LIGHTEN]			= "Vaalenna";
+
+	strings[HISTORY]			= "Historia";			// as in "modifier stack"
+	strings[OBJECT]				= "Objekti";				// new name for the "History"
+	strings[FREEZE]				= "Jäädytä";				// renders the result of the modifier stack
+														// into one "bitmap modifier" and replaces
+														// all previous modifiers (ie, you cannot edit
+														// them anymore) by the single bitmap modifier
+	strings[CUT]				= "Leikkaa";
+	strings[COPY]				= "Kopioi";
+	strings[PASTE]				= "Liitä";
+	strings[MULTI_PASTE]		= "Liitä useaan";		// paste one ore more properties to
+														// *multiple* objects at once
+	strings[REMOVE_ALL]			= "Poista kaikki";
+
+	strings[OBJECT_SELECTION]	= "Valitse";				// change selection shortcuts
+	strings[SELECT_ALL_OBJECTS]	= "Kaikki";				// in Object and Property list
+	strings[SELECT_NO_OBJECTS]	= "Ei mitään";
+	strings[INVERT_SELECTION]	= "Käänteisesti";
+	strings[ALL_OBJECTS]		= "Kaikki";
+	strings[PROPERTY_SELECTION]	= "Valitse";
+	strings[SELECT_ALL_PROPERTIES] = "Kaikki";
+	strings[SELECT_NO_PROPERTIES] = "Ei mitään";
+
+	// filters
+	strings[ADD_FILTER]			= "Suotimet";				// the actual menu
+	strings[DROP_SHADOW]		= "Taustavarjo"; // XXX
+	strings[GAUSSIAN_BLUR]		= "Gauss-sumennus";
+	strings[INVERT]				= "Negatiivi";
+	strings[BRIGHTNESS]			= "Kirkkaus";
+	strings[CONTRAST]			= "Kontrasti";
+	strings[SATURATION]			= "Kylläisyys";
+	strings[MOTION_BLUR]		= "Liike-epäterävyys";
+	strings[HALFTONE]			= "Rasterikuvio";
+	strings[DOT]				= "Piste";				// mode options of Halftone
+	strings[LINE]				= "Viiva";
+	strings[DITHER]				= "Rasteroi";
+	strings[DITHER_FS]			= "Rasteroi (FS)";
+	strings[DITHER_NC]			= "Rasteroi (NK)";
+	strings[NOISE]				= "Kohina";
+	strings[HUE_SHIFT]			= "Sävyn siirto";			// filter not yet written
+	strings[DISPERSION]			= "Hajonta";
+	strings[STRENGTH]			= "Voimakkuus";
+	strings[LUMINANCE_ONLY]		= "Vain värin kirkkaus";
+	strings[WARPSHARP]			= "Warpsharp"; // XXX
+	strings[LAMBDA]				= "Lambda";
+	strings[MU]					= "µ";
+	strings[NON_MAXIMAL_SUPPRESSION] = "NMS";
+
+	strings[PROPERTY]			= "Ominaisuus";
+	strings[UNKOWN_PROPERTY]	= "<tuntematon>";
+
+	strings[SWATCHES]			= "Väriviuhkat";			// color palette
+	strings[ZOOM]				= "Suurennuslasi";
+	strings[ALPHA]				= "Peittävyys";			// keep this as short as possible
+	strings[ALPHA_CHANNEL]		= "Alphakanava";		// used for properties
+	strings[COLOR]				= "Väri";				// used for properties
+	strings[GRADIENT]			= "Liukuväri";			// used for properties (?)
+
+	// gradient options
+	strings[GRADIENT_TYPE]					= "Tyyppi";
+	strings[GRADIENT_TYPE_LINEAR]			= "Suora";
+	strings[GRADIENT_TYPE_RADIAL]			= "Säteittäinen";
+	strings[GRADIENT_TYPE_DIAMONT]			= "Salmiakki"; // XXX
+	strings[GRADIENT_TYPE_CONIC]			= "Kartiomainen";
+	strings[GRADIENT_TYPE_XY]				= "X-Y";
+	strings[GRADIENT_TYPE_XY_SQRT]			= "Sqrt(X-Y)";
+	strings[GRADIENT_INTERPOLATION]			= "Interpolaatio";
+	strings[GRADIENT_INTERPOLATION_LINEAR]	= "Suora";
+	strings[GRADIENT_INTERPOLATION_SMOOTH]	= "Pehmeä";
+	strings[GRADIENT_INHERITS_TRANSFORM]	= "Peri muunnos"; // XXX
+
+	// brush options
+	strings[OPACITY]			= "Peittävyys";
+	strings[MIN_OPACITY]		= "väh. peitt.";			// property label (keep short)
+	strings[DYN_OPACITY]		= "dyn. peitt.";			// property label (keep short)
+	strings[RADIUS]				= "Säde";
+	strings[MIN_RADIUS]			= "väh. säde";			// property label (keep short)
+	strings[DYN_RADIUS]			= "dyn. säde";			// property label (keep short)
+	strings[HARDNESS]			= "Kovuus";			// controls brush shape (soft...hard)
+	strings[MIN_HARDNESS]		= "väh. kovuus";			// property label (keep short)
+	strings[DYN_HARDNESS]		= "dyn. kovuus";			// property label (keep short)
+	strings[SPACING]			= "Väli";			// distance in % of brush diameter at wich brush
+														// shapes will be put into the bitmap along the
+														// line of a stroke,
+														// ! also used for Text tool (spacing between chars)
+	strings[MIN_SPACING]		= "väh. väli";		// property label (keep short), not yet used
+	strings[DYN_SPACING]		= "dyn. väli";		// property label (keep short), not yet used
+	strings[SUBPIXELS]			= "Alipikselit";			// allow subpixel precise positioning of tools
+	strings[SOLID]				= "Kiinteä";				// solid (fixed) opacity for all pixels
+	strings[TILT]				= "Kallistus";				// tablet specific, tilt of pen
+	strings[BLUR_RADIUS]		= "Sumennussäde";		// property label (keep short), also used for Dispersion filter
+	// translate options
+	strings[X_LABEL]			= "X";
+	strings[Y_LABEL]			= "Y";
+	strings[X_SCALE]			= "Skaalaa X";
+	strings[Y_SCALE]			= "Skaalaa Y";
+	strings[TRANSLATION_X]		= "X";
+	strings[TRANSLATION_Y]		= "Y";
+	strings[SCALE_X]			= "X";
+	strings[SCALE_Y]			= "Y";
+	strings[ANGLE]				= "Kulma";
+
+	strings[X_OFFSET]			= "X-siirtymä";
+	strings[Y_OFFSET]			= "Y-siirtymä";
+	// crop & select options
+	strings[LEFT]				= "Vasen";
+	strings[TOP]				= "Ylä";
+	strings[ENTIRE_CANVAS]		= "Kaikki"; // XXX
+	// bucket fill options
+	strings[TOLERANCE]			= "Toleranssi";
+	strings[SOFTNESS]			= "Pehmeys";
+	strings[CONTIGUOUS_AREA]	= "Yhtenäinen alue";
+	// shape options
+	strings[PATH]				= "Polku";				// property label
+	strings[OUTLINE]			= "Vain reuna";
+	strings[TRANSFORM]			= "Muunna";
+	strings[CLOSED]				= "Suljettu";				// ie first and last point of path
+														// are connected
+	strings[CAP_MODE]			= "Päädyt";
+	strings[BUTT_CAP]			= "Suora"; // XXX
+	strings[SQUARE_CAP]			= "Neliö";
+	strings[ROUND_CAP]			= "Pyöreä";
+	strings[JOIN_MODE]			= "Liitokset";
+	strings[MITER_JOIN]			= "Suorakulma"; // XXX
+	strings[ROUND_JOIN]			= "Pyöreä";
+	strings[BEVEL_JOIN]			= "Viiste";
+
+	strings[CIRCLE]				= "Ympyrä";				// not yet used
+	strings[RECT]				= "Suorakulmio";				// not yet used
+	strings[ROUND_CORNERS]		= "Pyöristetyt reunat";		// not yet used
+	// text options
+	strings[FONT]				= "Kirjasin";
+	strings[SIZE]				= "Koko";
+	strings[ROTATION]			= "Asento";
+	strings[TEXT_INPUT]			= "Teksti";				// label for text input control (not used anymore)
+	strings[ADVANCE_SCALE]		= "Lisäväli";			// additional spacing between chars
+														// (not used anymore)
+	strings[HINTING]			= "Vihjeistys";			// hinting means that the shapes
+														// of chars are modified to more directly hit pixels,
+														// enhances readability of text on screen
+	strings[KERNING]			= "Välistys";			// kerning means that the distance between two
+														// glyphs is individual per their combination
+	strings[TEXT_LINE_SPACING]	= "Rivinväli";		// font height * line spacing = vertical line dist
+	// color picker tool
+	strings[TIP_SIZE]			= "Kärjen koko";
+	strings[PIXEL_1x1]			= "1x1 pikseliä";
+	strings[PIXEL_3x3]			= "3x3 pikseliä";
+	strings[PIXEL_5x5]			= "5x5 pikseliä";
+	strings[INCLUDE_ALL_LAYERS]	= "Käytä kaikkia tasoja";
+	// tools
+	strings[BRUSH]				= "Sivellin";
+	strings[CLONE]				= "Kopiosivellin";				// clone brush (transfers parts of an image to
+														// another place)
+	strings[ERASER]				= "Pyyhekumi";
+	strings[PEN]				= "Mustekynä";
+	strings[PEN_ERASER]			= "Pyyhemuovi";
+	strings[RESTORE]			= "Palauta";			// opposite of eraser (restores alpha channel)
+	strings[DROPPER]			= "Pipetti";			// color picker
+	strings[TEXT]				= "Teksti";
+	strings[BLUR]				= "Sumenna";
+	strings[BITMAP]				= "Bittikartta";
+	strings[SELECT]				= "Valitse";
+	strings[TRANSLATE]			= "Muunna";
+	strings[CROP]				= "Rajaa";
+	strings[BUCKET_FILL]		= "Täyttö";
+	strings[SHAPE]				= "Kuvio";
+	strings[ELLIPSE]			= "Ellipsi";
+	strings[ROUND_RECT]			= "(Pyöristetty) suorakulmio";	// the tool also creates non-round rectangles
+	strings[EDIT_GRADIENT]		= "Muokkaa liukuväriä";
+
+	// zoom
+	strings[ZOOM_IN]			= "Lähennä";			// tool tips
+	strings[ZOOM_OUT]			= "Loitonna";
+
+	// actions
+	strings[ADD_LAYER]			= "Lisää taso";			// the following strings are for display in the
+														// undo/redo menu
+	strings[REMOVE_LAYER]		= "Poista taso";		// a "modifier" is a step of changing the bitmap,
+														// ie a brush stroke or something else.
+	strings[REMOVE_LAYERS]		= "Poista tasoja";
+	strings[MOVE_LAYER]			= "Siirrä taso";			// ie drag sorting to another pos in list
+	strings[MOVE_LAYERS]		= "Siirrä tasoja";
+	strings[MERGE_LAYERS]		= "Yhdistä tasoja";
+	strings[UNKOWN_MODIFIER]	= "Tuntematon objekti";
+	strings[ADD_MODIFIER]		= "Lisää objekti";
+	strings[ADD_MODIFIERS]		= "Lisää objekteja";
+	strings[CHANGE_COLOR]		= "Vaihda väri";
+	strings[CHANGE_COLORS]		= "Vaihda värejä";
+	strings[REMOVE_MODIFIER]	= "Poista objekti";
+	strings[REMOVE_MODIFIERS]	= "Poista objekteja";
+	strings[MOVE_MODIFIER]		= "Siirrä objekti";
+	strings[MOVE_MODIFIERS]		= "Siirrä objekteja";
+	strings[TRANSLATE_MODIFIER]	= "Muunna objekti";
+	strings[TRANSLATE_MODIFIERS]	= "Muunna objekteja";
+	strings[CHANGE_LAYER_SETTINGS]	= "Vaihda tason asetuksia";
+	strings[CROP_CANVAS]		= "Rajaa piirtoalue";
+	strings[RESIZE_CANVAS]		= "Muuta piirtoalueen kokoa";
+	strings[ROTATE_CANVAS]		= "Käännä piirtoaluetta";
+	strings[INSERT_CANVAS]		= "Lisää piirtoalue";
+	strings[CHANGE_OPACITY]		= "Muuta peittävyyttä";
+	strings[EDIT_MODIFIER]		= "Muokkaa objektia";
+
+	// pasting properties
+	strings[PASTE_PROPERTY]		= "Liitä ominaisuus";				// paste one property to one object
+	strings[PASTE_PROPERTIES]	= "Liitä ominaisuuksia";			// paste multiple properties to one object
+	strings[MULTI_PASTE_PROPERTY] = "Liitä ominaisuus useaan";		// paste one property to multiple objects
+	strings[MUTLI_PASTE_PROPERTIES] = "Liitä ominaisuuksia useaan";	// paste multiple property to multiple objects
+
+	// shape tool history
+	strings[ADD_CONTROL_POINT]	= "Lisää ohjauspiste";
+	strings[TOGGLE_OUTLINE]		= "Kytke reunaviiva";
+	strings[CHANGE_OUTLINE_WIDTH] = "Muuta reunaviivan paksuutta";
+	strings[CHANGE_CAP_MODE]	= "Muuta päätyjä";
+	strings[CHANGE_JOIN_MODE]	= "Muuta liitoksia";
+	strings[MODIFY_CONTROL_POINT] = "Muokkaa ohjauspistettä";
+	strings[CLOSE_PATH_ACTION]	= "Sulje polku";
+	strings[INSERT_CONTROL_POINT] = "Lisää ohjauspiste";
+	strings[REMOVE_CONTROL_POINT] = "Poista ohjauspiste";
+	strings[REMOVE_CONTROL_POINTS] = "Poista ohjauspisteitä";
+	strings[CHANGE_POINT_SELECTION] = "Muuta valintaa";
+	strings[NUDGE_CONTROL_POINT] = "Tönäise ohjauspistettä";
+	strings[NUDGE_CONTROL_POINTS] = "Tönäise ohjauspisteitä";
+	// text tool history
+	strings[CHANGE_FONT_SIZE]	= "Muuta kirjasinkokoa";
+	strings[CHANGE_TEXT_ROTATION] = "Muuta tekstin asentoa";
+	strings[MOVE_TEXT]			= "Siirrä tekstiä";
+	strings[CHANGE_FONT]		= "Muuta kirjasinta";
+	strings[CHANGE_TEXT]		= "Muuta tekstiä";
+	strings[CHANGE_FONT_ADVANCE_SCALE] = "Muuta välitystä";
+	// crop tool
+	strings[MODIFY_CROP_RECT]	= "Muokkaa rajauskulmiota";
+	// select tool
+	strings[MODIFY_SELECT_RECT]	= "Muokkaa valintakulmiota";
+	// transformations
+	strings[TRANSFORMATION]		= "Muunnos";
+	strings[BEGIN_TRANSFORMATION] = "Aloita muunnos";
+	strings[FINISH_TRANSFORMATION]	= "Lopeta muunnos";
+	strings[MOVE]				= "Siirrä";
+	strings[ROTATE]				= "Käännä";
+	strings[SCALE]				= "Skaalaa";
+	strings[MOVE_PIVOT]			= "Siirrä keskipistettä";
+	strings[TRANSFORM_OBJECT]	= "Muunna objekti";
+	strings[TRANSFORM_OBJECTS]	= "Muunna objekteja";
+	// general
+	strings[OK]					= "Ok";
+	strings[CONFIRM]			= "Vahvista";			// apply changes
+	strings[CANCEL]				= "Peruuta";
+	strings[REVERT]				= "Palauta";				// revert changes made in panel
+	strings[NAME]				= "Nimi";				// name of project
+	strings[UNNAMED]			= "Nimetön";
+	strings[DEFAULT]			= "Oletus";
+	strings[MERGED]				= "Yhdiste";				// default name for merged layer
+	strings[TOOL]				= "Työkalu";				// for tool tips
+	strings[ANY_MODIFIER]		= "Mikä vain";		// as in modifier key on the keyboard (shift,
+														// option, alt etc)
+	strings[RETURN]				= "Rivinvaihto";
+	strings[ESCAPE]				= "Escape";
+	strings[SET]				= "Aseta";
+	// panels
+	strings[PICK_COLOR]			= "Valitse väri";			// window title of color picker
+	strings[WIDTH]				= "Leveys";				// pixel count
+	strings[HEIGHT]				= "Korkeus";
+	strings[BRUSH_PANEL]		= "Valitse sivellin";
+	strings[BRUSH_NAME]			= "Siveltimen nimi";
+	strings[PROGRAM_SETTINGS]	= "Ohjelman asetukset";
+	// program settings
+	strings[ON_STARTUP]			= "Käynnistyessä";
+	strings[DO_NOTHING]			= "Älä tee mitään";
+	strings[ASK_OPEN]			= "Näytä Avaa-paneeli";
+	strings[ASK_NEW]			= "Näytä Uusi-paneeli";
+	strings[AUTO_SIZE]			= "Luo annetunkokoinen piirtoalue";
+	strings[LIVE_UPDATES]		= "Navigaattorin ja tason kuvakkeiden jatkuva päivitys";
+	strings[USE_SYSTEM_LANGUAGE] = "Käytä järjestelmän kieltä";
+	strings[STARTUP_ACTION]		= "Käynnistystoimet";
+	strings[INTERFACE]			= "Käyttöliittymä";
+	// requestors
+	strings[AKS_SAVE_CHANGES]	= "Suljetaanko työ? Kaikki tallentamattomat muutokset hylätään.";
+	strings[DISCARD]			= "Hylkää muutokset";
+	strings[SAVING_FAILED]		= "Tallentaminen epäonnistui!";
+	strings[ERROR]				= "Virhe";				// alias reason for above
+	strings[BLIP]				= "Blip!";				// As in "Mission Earth"
+
+	strings[DEMO_MODE]			= "WonderBrush on demotilassa. "
+								  "Projektien tallentaminen on pois käytöstä.\n\n"
+								  "Rekisteröi ohjelma joissakin seuraavista "
+								  "verkkokaupoista, niin saat oman avaintiedoston.";
+	strings[NEVER_MIND]			= "Hällä väliä";
+	strings[OPEN_TRANSLATIONKIT_ERROR]	= "Tiedoston \"%s\" avaaminen Translation "
+								  "Kitillä epäonnistui.\n\nJoko tiedosto "
+								  "ei sisällä kuvaa tai järjestelmään ei "
+								  "ole asennettu sitä tukevaa muunninta.";
+	strings[OPEN_NATIVE_ERROR]	= "Tiedostoa \"%s\" ei voitu avata "
+								  "WonderBrush-dokumenttina.\n\n";  // yes, that's two \n
+	strings[UNSUPPORTED_CURSOR_SIZE] = "Piirtoalueen koon pitää olla "
+								  "16x16 pikseliä. Muunlaiset "
+								  "kohdistinkoot eivät ole tuettuja.";
+	strings[SELECTED_AREA_EMPTY] = "Valittu alue oli tyhjä.";
+	// tool tips										// please test the appearance of the tips and
+														// try to align them manually by putting the
+														// '\n' in the right spot!
+
+	strings[TOOL_TIPS]			= "Näytä työkaluvihjeet";
+	strings[ALPHA_TIP]			= "Aktiivisen tason globaali alpha-arvo.";
+	strings[VISIBILITY_TIP]		= "Aktiivinen taso näkyviin/piiloon.";
+	strings[PRESSURE_CONTROL_TIP]	= "Ota huomioon kynän paine.";
+	strings[BRUSH_PREVIEW_TIP]	= "Siveltimen esikatselu. Napsauta, niin siveltimen\n"
+								  "hallintapaneeli aukeaa.";
+	strings[CURRENT_COLOR_TIP]	= "Nykyinen väri. Napsauta, niin värivalitsimen ikkuna\n"
+								  "aukeaa.";
+	strings[NAVIGATOR_TIP]		= "Piirtoalueen yleisnäkymä. Siirrä näkyvää\n"
+								  "osaa napsauttamalla. Käytä hiiren rullaa\n"
+								  "lähentämään ja loitontamaan.";
+
+	strings[LAYER_LIST_TIP]		= "Järjestele vetämällä ja pudottamalla. Napsauta\n"
+								  "silmäkuvaketta näkyvyyden kytkemiseksi. Nimen\n"
+								  "voi vaihtaa kaksoisnapsauttamalla.";
+	strings[HISTORY_LIST_TIP]	= "Järjestele vetämällä ja pudottamalla. Valitun\n"
+								  "määreen värin voi muuttaa pudottamalla värin siihen.";
+	strings[PROPERTY_LIST_TIP]	= "Muokkaa, kopioi ja liitä objektien ominaisuuksia.";
+	strings[SUB_PIXEL_TIP]		= "Seuraa hiiren/kynän sijaintia alipikselin tarkkuudella.";
+	strings[SOLID_TIP]			= "Pidä siveltimen reunat terävinä.";
+	strings[TILT_TIP]			= "Vääristä siveltimen muoto kynän asennon mukaan.";
+	strings[FULLSCREEN_TIP]		= "Kytke koko näyttö tai ikkuna.";
+	strings[GRADIENT_CONTROL_TIP] = "Väripysäytyksiä voi lisätä ja muokata\n"
+								  "pudottamalla värejä tähän. Värin voi poimia\n"
+								  "kaksoisnapsauttamalla.";
+	strings[GRADIENT_INHERITS_TRANSFORM_TIP] = "Peri muunnos objektilta";
+
+	// quick help
+	strings[READY]				= "Valmis.";
+	strings[NO_CANVAS_HELP]		= "Luo uusi piirtoalue, tai lataa projekti- tai kuvatiedosto.";
+	strings[NO_HELP]			= "Ei muita vinkkejä.";
+	strings[CROP_HELP]			= "Säädä rajauskulmiota. Rivinvaihto ottaa asetukset käyttöön.\nVaihtonäppäin lukitsee sivusuhteen.";
+	strings[TRANSLATE_HELP]		= "Valitse muunnettavat objektit.\nVaihtonäppäin lukitsee sivusuhteen.";
+	strings[EDIT_GRADIENT_HELP]	= "Muokkaa liukuvärin väripysäytyksiä, tyyppiä tai muunnosta.";
+	strings[STROKE_HELP]		= "Edellisen vedon jatkaminen onnistuu painamalla vaihtonäppäintä ja vetämällä suora viiva.";
+	strings[CLONE_HELP]			= "Ensimmäinen napsautus määrittelee lähdesijainnin, toinen siirtymän.\nSiirtymä nollaantuu painamalla <Ctrl>.";
+	strings[BUCKET_FILL_HELP]	= "\"Pehmeys\" ohjaa täyttövärin kiinteyttä.";
+	strings[TEXT_HELP]			= "Kun olet valmis, paina rivinvaihtoa, niin työkalu otetaan käyttöön.";
+	strings[SHAPE_HELP]			= "Lisää pisteenmuokkausvalintoja saa\npitämällä pohjassa <Ctrl>-, vaihto- tai <Alt>-näppäintä.\nRivinvaihdon painaminen ottaa asetukset käyttöön.";
+	strings[SELECT_HELP]		= "Määrittele alue. Alue kopioidaan järjestelmän leikepöydälle painamalla rivinvaihtoa.";
+	strings[ELLIPSE_HELP]		= "Ellipsin voi luoda napsauttamalla ja vetämällä.\nVaihtonäppäin lukitsee sivusuhteen.";
+	strings[ROUND_RECT_HELP]	= "Suorakulmion voi luoda napsauttamalla ja vetämällä.\nVaihtonäppäin lukitsee sivusuhteen.";
+	
+	// New strings since 1.7.1
+	
+ 	strings[SPECIAL]			= "Erityistä";
+	strings[SOLID_AREA]			= "Alue";
+	strings[SELECTABLE]			= "Valittavissa";			// which object types are "selectable"
+	strings[TOGGLE_ROUND_CORNERS]		= "Kytke pyöristetyt reunat";		// not yet used
+	strings[ROUND_CORNER_RADIUS]		= "Säde";						// not yet used
+	strings[CHANGE_ROUND_CORNER_RADIUS]	= "Muuta pyöristettyjen reunojen sädettä";	// not yet used
+	
+	strings[GUIDES]				= "Ohjaimet";
+	strings[SHOW_GUIDES]		= "Näytä ohjaimet";
+	strings[GUIDES_HELP]		= "Luo, muokkaa tai poista ohjaimia.";
+	strings[PICK_OBJECTS]		= "Valitse objekti";
+	strings[PICK_OBJECTS_HELP]	= "Valitse objektit napsauttamalla tai vetämällä laatikko niiden ympäri.\nVaihtonäppäin säilyttää edellisen valinnan.";
+
+	strings[CLIPBOARD]			= "Leikepöytä";
+
+	strings[SELECT_PATH]		= "Valitse polku";
+	strings[CREATE_NEW_PATH]	= "Uusi polku";
+	strings[DELETE_PATH]		= "Poista polku";
+	strings[TEXT_TO_SHAPE]		= "Teksti kuvioksi";
+	strings[TEXTS_TO_SHAPES]	= "Tekstit kuvioiksi";
+	strings[TRANSFORM_CONTROL_POINTS] = "Muunna ohjauspisteet";
+
+	strings[MERGE_SHAPE_OBJECTS] = "Yhdistä kuviot";
+	strings[FILLING_RULE]		= "Täyttömitta";  // XXX: rule?
+	strings[NON_ZERO]			= "Ei-nolla";
+	strings[EVEN_ODD]			= "Parillinen-pariton";
+
+	strings[ALIGNMENT]			= "Tasaus";
+	strings[CHANGE_ALIGNMENT]	= "Vaihda tasaus";
+	strings[ALIGNMENT_LEFT]		= "Vasen";
+	strings[ALIGNMENT_CENTER]	= "Keski";
+	strings[ALIGNMENT_RIGHT]	= "Oikea";
+	strings[ALIGNMENT_JUSTIFY]	= "Tasaa reunat";
+
+	strings[CHANGE_TEXT_WIDTH]	= "Muuta tekstin paksuutta";
+	strings[PARAGRAPH_INSET]	= "Inset";
+	strings[CHANGE_PARAGRAPH_INSET]	= "Change Inset";
+	strings[PARAGRAPH_SPACING]	= "Kappaleiden väli";		// additional spacing between paragraphs
+	strings[HORIZONTAL]			= "Vaaka";
+	strings[VERTICAL]			= "Pysty";
+
+	strings[UNIT]				= "Yksikkö";
+	strings[UNIT_PERCENT]		= "%";
+	strings[UNIT_PIXEL]			= "px";
+	strings[UNIT_CM]			= "cm";
+	strings[UNIT_MM]			= "mm";
+	strings[UNIT_INCH]			= "tuuma";
+	strings[UNIT_DPI]			= "dpi";
+
+	strings[REMOVE_ALL]			= "Poista kaikki";
+	strings[REMOVE_LAYER]		= "Poista taso";		// a "modifier" is a step of changing the bitmap,
+	strings[REMOVE_LAYERS]		= "Poista tasot";
+	strings[REMOVE_MODIFIER]	= "Poista objekti";
+	strings[REMOVE_MODIFIERS]	= "Poista objektit";
+	strings[REMOVE_CONTROL_POINT] = "Poista ohjauspiste";
+	strings[REMOVE_CONTROL_POINTS] = "Poista ohjauspisteet";
+	strings[REMOVE]				= "Poista";
+	
+	strings[COUNT]				= "Lukumäärä";
+	
+	strings[GRADIENT_INTERPOLATION]			= "Interpolaatio";
+	strings[GRADIENT_INTERPOLATION_LINEAR]	= "Suora";
+	strings[GRADIENT_INTERPOLATION_SMOOTH]	= "Tasainen";
+	strings[INTERPOLATION]		= "Interpolaatio";
+	strings[NEAREST_NEIGHBOR]	= "Toisto";
+	strings[BILINEAR]			= "Bilineaarinen";
+	
+	strings[RETRY]				= "Yritä uudelleen";
+	strings[OVERWRITE]			= "Ylikirjoita";
+	
+	strings[ENTRY_DOES_NOT_EXIST] = "Tiedostoa \"%s\" ei voitu ladata, koska "
+									"se ei ole olemassa.";
+	strings[ENTRY_IS_A_FOLDER]	= "Tiedostoa \"%s\" ei voitu ladata, koska "
+								  "se on hakemisto.";
+	
+	strings[WARN_SVG_DATA_LOSS]	= "Osa SVG-tiedoston datasta jäi "
+								  "lukematta latausvaiheessa. Jos "
+								  "alkuperäinen ylikirjoitetaan, "
+								  "tämä data häviää.";
+	
+	strings[ENTER_SERIAL_NUMBER] = "Syötä ostamasi kopion sarjanumero.";
+	strings[WRONG_SERIAL_NUMBER] = "Syöttämäsi sarjanumero on virheellinen.";
+
+}

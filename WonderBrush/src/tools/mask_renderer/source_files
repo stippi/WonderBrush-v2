@@ -1,0 +1,7 @@
+SOURCE_FILES +=
+	ColorRenderer.cpp
+	EraseRenderer.cpp
+	Gradient.cpp
+	GradientRenderer.cpp
+	MaskRenderer.cpp
+;

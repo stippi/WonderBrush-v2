@@ -1,0 +1,6 @@
+SOURCE_FILES +=
+	AddLayerAction.cpp
+	ContainerAction.cpp
+	MoveLayersAction.cpp
+	RemoveLayersAction.cpp
+;

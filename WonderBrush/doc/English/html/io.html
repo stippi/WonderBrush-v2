@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>WonderBrush Documentation - Working with files</title>
+</head>
+<body text="#000000" bgcolor="#fefefe" link="#ff1111" vlink="#aa0505"
+	  leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
+
+
+<center>
+<table width="90%" border=0 cellpadding=5 cellspacing=0>
+	<tr>
+		<td><a href="introduction.html">
+			<img src="./images/introduction_off.png" alt="Overview" border=0>
+		</a></td>
+		<td align="center"><a href="objects.html">
+			<img src="./images/objects_off.png" alt="Objects" border=0>
+		</a></td>
+		<td align="center"><a href="colors.html">
+			<img src="./images/colors_off.png" alt="Colors" border=0>
+		</a></td>
+		<td align="center">
+			<img src="./images/io_on.png" alt="Working with files" border=0>
+		</td>
+		<td align="center"><a href="tools_general.html">
+			<img src="./images/tools_general_off.png" alt="Tools overview" border=0>
+		</a></td>
+		<td align="right"><a href="tools_frames.html">
+			<img src="./images/tools_off.png" alt="Tools details" border=0>
+		</a></td>
+	</tr>
+</table>
+
+<table width="90%" border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td>
+
+			<h2>Loading files</h2>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+			<p align="justify">
+Wonderbrush manages basically two different types of files. One are the Wonderbrush canvas files, which contain all information on layers and objects. The other are all the different graphics formats like JPG, TIFF or PNG that you can open with Wonderbrush. These files are displayed as one canvas, containing one layer with one bitmap object.
+			</p>
+
+			<p align="justify">
+Scalable Vector Graphics (SVG) files are a special case and are only supported to a degree  by Wonderbrush. Some SVG objects are processed as shape objects which may also contain gradients.
+			</p>
+
+			<p align="justify">
+Wonderbrush can open files in different ways. Loading via drag&drop from a Tracker window is most flexible. If the <b>shift</b> key is pressed while dropping a file onto the layer list, the canvas or bitmap from that file is merged into the current project. In that case additional layers are created accordingly.
+			</p>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+			<h2>Saving files</h2>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+			<p align="justify">
+Wonderbrush distinguishes between <b>Save</b> and <b>Export</b>. Saving generates a Wonderbrush canvas file, that contains all information on layers and objects. For exporting the file dialogue offers a number of different formats which retain no or not all layer and object information. Most formats are limited to the bare bitmap data.
+			</p>
+
+			<p align="justify">
+Wonderbrush remembers the on-disk-location of the canvas file as well as the export file. Thus both kinds of files can conveniently be saved by invoking <b><i>File</i></b>-&gt;<b><i>Save</i></b> or <b><i>File</i></b>-&gt;<b><i>Export</i></b> from the menu without any cumbersome changing back and forth between folders. With &quot;newly&quot; created documents, both file locations are unknown, freshly &quot;opened&quot; documents have, according to their format, one of these locations set. Wonderbrush also remembers the export format individually for all open documents. If no format was chosen yet, the one most recently used is taken.
+			</p>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+				<tr>
+					<td>
+						<h4>Notes:</h4>
+						<p align="justify"><i><font size=2>
+&bull; Which file formats can be opened and exported by Wonderbrush, depends on the system wide installed <i>Translators</i>.
+
+						</font></i></p>
+						<p align="justify"><i><font size=2>
+&bull; In the file dialogue of the export function, the chosen <i>Translator</i> can be configured by clicking on <b>Settings...</b>.
+					</font></i></p>
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+
+</table>
+
+<table width="90%" border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td height="75" valign="center">
+
+			<a href="colors.html"><img alt="Colors" src="./images/colors_prev.png" border=0></a>
+
+		</td>
+		<td valign="center" align="right">
+
+			<a href="tools_general.html"><img alt="Tools overview" src="./images/tools_general_next.png" border=0></a>
+
+		</td>
+	</tr>
+</table>
+</center>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+SOURCE_FILES +=
+;
+
+if $(ALLOCATION_CHECK) {
+	SOURCE_FILES +=
+		AllocationChecker.cpp
+		ElfFile.cpp
+		ElfImage.cpp
+		ElfSymbolPatcher.cpp
+		SymbolTable.cpp
+	;
+}

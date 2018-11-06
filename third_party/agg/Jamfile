@@ -1,0 +1,81 @@
+SubDir YB_TOP third_party agg ;
+
+SubDirHdrs [ FDirName $(SUBDIR) include ] ;
+
+SubDirCcFlags -w ;
+SubDirC++Flags -w ;
+
+SEARCH_SOURCE += [ FDirName $(SUBDIR) font_freetype ] ;
+SEARCH_SOURCE += [ FDirName $(SUBDIR) src ] ;
+
+
+# specify the name of the binary and its location
+NAME = libagg.a ;
+TARGET_LOCATION = $(WONDERBRUSH_OBJECTS) ;
+OBJECTS_LOCATION = $(WONDERBRUSH_OBJECTS) ;
+
+# specify the type of binary
+#	APP:	Application
+#	SHARED:	Shared library or add-on
+#	STATIC:	Static library archive
+#	DRIVER: Kernel Driver
+TYPE = STATIC ;
+
+SRCS =
+	# font_freetype
+#	agg_font_freetype.cpp
+
+	# src
+	agg_arc.cpp
+	agg_arrowhead.cpp
+	agg_bezier_arc.cpp
+	agg_bspline.cpp
+	agg_curves.cpp
+	agg_embedded_raster_fonts.cpp
+	agg_gsv_text.cpp
+	agg_image_filters.cpp
+	agg_line_aa_basics.cpp
+	agg_line_profile_aa.cpp
+	agg_path_storage.cpp
+	agg_rasterizer_scanline_aa.cpp
+	agg_rounded_rect.cpp
+	agg_sqrt_tables.cpp
+	agg_trans_affine.cpp
+	agg_trans_double_path.cpp
+	agg_trans_perspective.cpp
+	agg_trans_single_path.cpp
+	agg_trans_warp_magnifier.cpp
+	agg_vcgen_bspline.cpp
+	agg_vcgen_contour.cpp
+	agg_vcgen_dash.cpp
+	agg_vcgen_markers_term.cpp
+	agg_vcgen_smooth_poly1.cpp
+	agg_vcgen_stroke.cpp
+	agg_vpgen_clip_polygon.cpp
+	agg_vpgen_clip_polyline.cpp
+	agg_vpgen_segmentator.cpp
+;
+
+#	specify additional compiler flags for all files
+if $(OSPLAT) = PPC {
+	COMPILER_FLAGS = ;
+} else {
+	COMPILER_FLAGS = ;
+#	COMPILER_FLAGS = -ffast-math -mcpu=pentiumpro ;
+}
+
+#	specify additional linker flags
+LINKER_FLAGS = ;
+
+#	specify a unique string for the current configuration of the build.
+#	Default is "common". The string will be used a) as name of the subdirectory
+#	of $(OBJECTS_LOCATION) where the object files will be put, and b) as
+#	identification whether the main target, if existing, needs to be rebuilt.
+#	E.g. when the target platform matters TARGET_CONFIG could be set to
+#	$(TARGET_PLATFORM). When building for another platform another subdirectory
+#	for the objects will be used and the main target will be replaced even if
+#	it looks up to date judging from file time stamps only.
+TARGET_CONFIG = $(TARGET_PLATFORM) ;
+
+RunJamfileEngine ;
+

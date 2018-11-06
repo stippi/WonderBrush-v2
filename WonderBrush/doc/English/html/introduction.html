@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>WonderBrush Documentation - Overview</title>
+</head>
+<body text="#000000" bgcolor="#fefefe" link="#ff1111" vlink="#aa0505"
+	  leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
+
+<center>
+<table width="90%" border=0 cellpadding=5 cellspacing=0>
+	<tr>
+		<td>
+			<img src="./images/introduction_on.png" alt="Overview" border=0>
+		</td>
+		<td align="center"><a href="objects.html">
+			<img src="./images/objects_off.png" alt="Objects" border=0>
+		</a></td>
+		<td align="center"><a href="colors.html">
+			<img src="./images/colors_off.png" alt="Colors" border=0>
+		</a></td>
+		<td align="center"><a href="io.html">
+			<img src="./images/io_off.png" alt="Working with files" border=0>
+		</a></td>
+		<td align="center"><a href="tools_general.html">
+			<img src="./images/tools_general_off.png" alt="Tools overview" border=0>
+		</a></td>
+		<td align="right"><a href="tools_frames.html">
+			<img src="./images/tools_off.png" alt="Tools details" border=0>
+		</a></td>
+	</tr>
+</table>
+
+<table width="90%" border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td>
+
+			<h2>Overview</h2>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+			<p align="justify">
+WonderBrush is an editor for bitmap graphics. These are called Canvas and are the WonderBrush documents. The main window hosts any number of those canvases. Each graphic canvas may consist of several <b>Layers</b>. According to its mode, every layer overlays the one below it and thus builds up the final picture. Every layer, which is empty i.e. completely transparent by default, can hold any number of graphical <b>Objects</b>, that themselves can overlay each other on their layer. These objects are created with Wonderbrush's <b>Tools</b>. There are different types of objects, like brush strokes, text objects or filters. Every single object provides a list of <b>Properties</b>, defining its appearance. Wonderbrush's strong point is that these objects can be reordered and their properties adjusted at any time.
+			</p>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<h3>The main window</h3>
+
+			<img alt="WonderBrush main window" src="./images/main.png">
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<br><br>
+			<p align="justify">
+To simplify access to objects and their properties, Wonderbrush displays three lists beside the actual canvas: The Layer, Object, and Property list. The active layer is selected in the Layer list; the Object list shows only the objects that are on the currently active layer. If there's just one object selected, its settings are shown in the Property list. The Object and the Property lists have their own clipboard, enabling quick copies of objects or transfers of properties. Properties by the same name are compatible between different types of objects.
+			</p>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+			<h3>Menus and lists</h3>
+
+			<p align="justify">
+Besides the menu of the main window, Wonderbrush offers individual menus for all special areas. Most of the time the functions in these menus (e.g. in the <b><i>Layer</i></b>, <b><i>Object</i></b>, and <b><i>Property</i></b> menu) refer to the elements that are selected in that list. The corresponding menu items are only available when elements of the list are selected (more on selections in a bit). Furthermore, some menu items are only available when certain types of objects are selected. For example, <b><i>Object</i></b>-&gt;<b><i>Special</i></b>-&gt;<b><i>Merge Shapes</i></b> will only work, if at least two shape objects are part of the selection.
+			</p>
+
+			<p align="justify">
+The <b><i>Layer</i></b> list, as well as the <b><i>Object</i></b> list support reordering by drag&drop. If the <b>shift</b> key is pressed while dropping, an element isn't moved, but duplicated instead.
+			</p>
+
+			<p align="justify">
+In the <b><i>Object</i></b> list more than one element at a time can be marked (selected): To select a block you click on another object while pressing the <b>shift</b> key and every element between the clicked and the already marked will be selected. Specific objects are added or removed by clicking them with the second (right) mouse button.
+			</p>
+
+			<p align="justify">
+In the <b><i>Property</i></b> list a setting is selected by clicking on its name. It can be edited by clicking on the field on its right. Several properties can be selected at once or separately just like it's done with objects.
+			</p>
+
+		</td>
+	</tr>
+</table>
+
+<table width="90%" border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td height="75" valign="center" align="right">
+
+			<a href="objects.html"><img alt="Objects" src="./images/objects_next.png" border=0></a>
+
+		</td>
+	</tr>
+</table>
+</center>
+
+</body>
+</html>

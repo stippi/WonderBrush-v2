@@ -1,0 +1,62 @@
+libwarpsharp
+Contained in this library is functionality to sharp (or scale) images by the technique illustrated in the paper "Image Based Morphing" by Nur Arad and Graig Gotsman. It is a direct derivate from the demonstration C++ code that accompanies the paper. However, I have cleaned up the code and API and introduced error checking as well as integration with the BeOS Translation system. It is my first attempt at a shared library, and the code is not heavily tested or optimized nor is the API frozen. However, it is quite useful as it comes with a demo command line program that uses the library. As soon as I integrate the warpsharp library into eXposer, I will test the API against a real world application and will adjust it and make it as flexible as makes sense. I am very open to any suggestions from users and/or developers about the API and the features of the library in general. It might seem somewhat hasty to publish the code in this form, but it is quite useful since a program to sharp images is included. I don't know when I have time to work on this project again, and I don't want to hold it back, since it is such an amazing sharpening algorithm.
+
+Requirements
+None. Just BeOS R5. Though the code relies on the presence of BBitmap and BTranslationUtils, it should be easy to port it to other platforms as those dependancies are only at a few places in the code.
+
+Installation
+Unzip the archive, to install libwarpsharp.so just drop it on the provided link, which will move the file to your user "lib" folder. Additionally you can install the demo program warpsharp to your user "bin" folder so you can access it from anywhere in a Terminal. Drop it on the provided link as well.
+
+Usage (warpsharp)
+I explain some things about warpsharp, the included demo program here. You use it in the Terminal and you can type "warpsharp --help" which prints a help screen. Or it displays the help screen anyways if you give it wrong input parameters. The help screen looks like this:
+
+USAGE: warpsharp [options] IMAGEFILENAME
+Options:
+ --help:     print this help message.
+ -o FILE:    save output image in FILE, default is
+             "./sharped_image".
+ -t NAME:    NAME = image translator for output image,
+             default is "TGA image".
+ -rR:        R = <integer> radius of edge-detector,
+             default is 2.
+ -n:         Apply non-maximal supression, default is
+             FALSE.
+ -a MAPFILE: Save mapfile in MAPFILE, default is FALSE
+ -d MAPFILE: Use mapfile from MAPFILE, default is FALSE
+ -lL:        L = <float> lambda, default is 10.0.
+ -mM:        M = <float> mu, default is 0.01.
+ -sS:        S = <scale> scale, default is 1.0.
+
+You actually have to read the paper that describes the algorithm to fully understand what the parameters mean. Since you're probably lazy and won't do that, you will enjoy my short and ignorant way of explaining them:
+
+The algorithm works by running an edge detector over the supplied bitmap, it then translates this information into a so-called warpmap. This warpmap defines how far and in which direction each pixel in the source image is distorted for the final picture. It actually moves pixels towards an edge. This is why nothing else changes in the resulting image except the sharpness. Other algorithms work by changing contrast which introduces new colors to the picture while not actually improving sharpness. Anyways... the first important parameter is the edge detector radius "-rR option". Usually a value of 2 should give quite good results, but you can increase the radius for very fuzzy pictures, I guess. You can think of this value as of how many pixels arround an edge will be warped. The other parameter important for the edge detection is "-n". Non-maximal suppression means that softer edges will be ignored. However, in my tests, this option introduces non-smooth edges especially when scaling images. (I wouldn't use it.)
+The actual warping is controlled by "lambda" (-lL) and "mu" (-mM). Don't ask me why, that's how the original authors of the demo code called them. Basically you control the strengthness of the warping effect by these two. The higher lamda is chosen and the lower mu gets, the sharper the resulting image will be. Most importantly are those values when scaling pictures. You will notice that different scaling factors require different mu and lambda settings, which ones is up to experimenting and your taste. In my particular case, I'm scaling PAL sized pictures to 2K resolutions, which translates to a scale factor of 2.666667. The defaults I've chosen give best results in exactly this situation. Hey, you can edit the code if you want different defaults...
+Well, just try it out and see what you get.
+
+Usage (libwarpsharp.so)
+The integration of libwarpsharp.so is best explained by the sample code in the "demo" folder. To load, sharp and save images, you actually have to only use two of the classes that the library provides: RGB8Image and WarpManager. The first class is your connection to BBitmap and the Translation system, the second is your interface to the warping algorithm. The demo code is heavily documented, so it would be best for you to go there for more information.
+
+Legal Stuff
+libwarpsharp.so comes as freeware. I cannot guaranty you any support, nor anything else. All risk of using the software is entirely by YOU. I'll take no responsibility for any damage this software might cause to you, your computer, your data or your production or whatever. I don't even guaranty that the software fits a particular purpose. This software is provided in the hope that it will be useful, but without warranty of any kind!
+
+You are hereby allowed to use and/or modify this code as you wish, in free or commercial and in open or closed projects without any fee. It would be nice if you let your improvements to libwarpsharp flow back into this distribution, but you don't need to.
+
+History
+Version 0.2		06. Mai 2002
+	- fixed serious memory leaks
+		in WarpManager.cpp
+	- minor speed improvements
+Version 0.1		06. Mai 2002
+	- Initial release
+
+Known Bugs
+None at this time.
+
+Contact
+Please don't hesitate to contact me. Bug reports, feature requests... anything is welcome. My email is <superstippi@gmx.com>. 
+
+
+Have fun!
+-Stephan
+
+

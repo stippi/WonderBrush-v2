@@ -1,0 +1,6 @@
+SOURCE_FILES +=
+	AboutView.cpp
+	BlurFilter.cpp
+	EdgesFilter.cpp
+	IFS.cpp
+;

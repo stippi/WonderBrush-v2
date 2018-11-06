@@ -1,0 +1,3 @@
+SubDir YB_TOP common ;
+
+SubInclude YB_TOP common src ;

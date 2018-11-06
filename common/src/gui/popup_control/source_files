@@ -1,0 +1,7 @@
+SOURCE_FILES +=
+	PopupControl.cpp
+	PopupSlider.cpp
+	PopupView.cpp
+	PopupWindow.cpp
+	SliderView.cpp
+;

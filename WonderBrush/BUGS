@@ -1,0 +1,19 @@
+* Edit Gradient tool does not update transformation box when transformation done on the gradient's parent object is undone.
+
+* sometimes, WonderBrush keeps insisting the document has not been saved on exit, pressing "Save" will bring up the same alert again
+
+* when rebuilding the Canvas becomes more heavy, the transformation box will not follow the mouse strictly enough, this can be quite annoying, but will go away
+after the canvas rebuilding process has been rewritten
+
+* R5 app_server crashes when editing a gradient on an object with
+	zero scale (degenerate matrix?) -> but you cannot give objects a zero scale
+	from the interface
+
+----------------------
+minor bugs/annoyances:
+
+* Transform tool applies subpixel setting to rotation and scale too, even though this doesn't make much sense
+
+* the SetTo() and _Init() process of CanvasView() is probably doing to much/early invalidating, since flashing can be observed (canvas bitmap not yet composed, but white)
+
+* when the Text tools size setting is keyboard controlled, there will be unwanted undo steps added when size already is the minimum or maximum value

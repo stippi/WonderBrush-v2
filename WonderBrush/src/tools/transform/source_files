@@ -1,0 +1,6 @@
+SOURCE_FILES +=
+	AdvancedTransformable.cpp
+	DragStates.cpp
+	ObjectSelection.cpp
+	TransformBox.cpp
+;

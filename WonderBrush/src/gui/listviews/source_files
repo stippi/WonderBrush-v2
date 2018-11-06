@@ -1,0 +1,6 @@
+SOURCE_FILES +=
+	CanvasListView.cpp
+	HistoryListView.cpp
+	LayersListView.cpp
+	ListViews.cpp
+;

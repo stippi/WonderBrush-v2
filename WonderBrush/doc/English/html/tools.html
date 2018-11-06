@@ -1,0 +1,993 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>WonderBrush Documentation - Tools</title>
+</head>
+<body text="#000000" bgcolor="#fefefe" link="#ff1111" vlink="#aa0505"
+	  leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
+
+<center>
+<table width="90%" cellpadding=0 cellspacing=0>
+	<tr>
+		<td width="0%" align="left"><img alt="Picking objects" src="./images/icons/pickicon.png"></td>
+		<td width="5%"></td>
+		<td>
+
+			<h3><a name="PickObjects">Pick objects</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+
+			<p align="justify">
+This tool allows to directly pick objects on the canvas by clicking or drawing a frame. The configuration area of the tool includes a mask where all selectable object types are defined. With the buttons <b><i>All</i></b> and <b><i>None</i></b> every object can be quickly selected or unselected. The same buttons in the <b><i>Select</i></b> area however, only apply to the selecting mask.
+			</p>
+
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left" colspan=2>
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+					</td>
+					<td>
+						Add Objects to current selection
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+	<tr><td colspan=3><p align="justify">&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Clipboard" src="./images/icons/clipboardicon.png"></td>
+		<td width="5%"></td>
+		<td>
+
+			<h3><a name="Clipboard">Clipboard</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+
+			<p align="justify">
+The clipboard tool copies graphics data into the system wide clipboard. With it a frame is defined on the canvas which is copied as bitmap data by clicking the <b><i>Confirm</i></b> icon. That data can be pasted again within Wonderbrush or other applications. In Wonderbrush this is done with <b><i>Edit</i></b>-&gt;<b><i>Paste</i></b>. The menu item is only selectable when there's data in the clipboard. Pasting creates a new bitmap object and automatically activates the transfomation tool.
+			</p>
+			
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left" colspan=2>
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+					</td>
+					<td>
+						Lock aspect ratio when resizing the frame
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Cropping" src="./images/icons/cropicon.png"></td>
+		<td width="5%"></td>
+		<td>
+
+			<h3><a name="Crop">Crop</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+A canvas can be cut but also grown with the cropping tool. If the <b><i>Subpixels</i></b> option is active, the frame that defines the new canvas size doesn't lock exclusively onto whole pixel positions. Therefore, objects will be marginally moved when the tool is applied.
+			</p>
+			
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left" colspan=2>
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+					</td>
+					<td>
+						Lock aspect ratio when resizing the frame
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Transform" src="./images/icons/transformicon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="Transform">Transform</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+The tool displays a frame around all in the list selected objects, which is used to move, rotate, and resize them as a group. As soon as the frame is manipulated, the transformation begins and can be edited until the <b><i>Confirm</i></b> icon is clicked. Within this action single steps of the transformation can be undone. After the transformation was applied, it can only be reverted completely. Plus, the frame will be reset to start a new transformation.<br>
+If the group of selected objects is changed, the transformation is automatically reset and started anew.
+			</p>
+			
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left" colspan=2>
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+					</td>
+					<td>
+						Lock aspect ratio when resizing the frame<br>
+						Lock movement to horizontal or vertical direction
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Left" src="./images/keys/left.png">
+						<img alt="Right" src="./images/keys/right.png">
+						<img alt="Up" src="./images/keys/up.png">
+						<img alt="Down" src="./images/keys/down.png">
+					</td>
+					<td>
+						Move object group by one pixel
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+						<img alt="Left" src="./images/keys/left.png">
+						<img alt="Right" src="./images/keys/right.png">
+						<img alt="Up" src="./images/keys/up.png">
+						<img alt="Down" src="./images/keys/down.png">
+					</td>
+					<td>
+						Move object group in smaller steps
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Ctrl" src="./images/keys/strg.png">/<img alt="Alt" src="./images/keys/alt.png">
+					</td>
+					<td>
+						Select objects directly by clicking into the canvas (like the <b>Pick object</b> tool)
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Edit gradient" src="./images/icons/gradienticon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="EditGradient">Edit gradient</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+This tool edits the <b><i>Gradient</i></b> property of the selected object. For that, the (fill)-<b><i>Mode</i></b> property has to be set to <b><i>Gradient</i></b>. If an appropriate object is marked, the tool displays a frame around the area covered by the gradient. The gradient can be transformed with this frame. The configuration area of this tool shows, among other things, a control that allows to change the colors of the gradient. By clicking, the active gradient point is set, which also adjusts the <a href="colors.html" target="_top">currently set color</a>. If the current color is changed while a gradient point is active, this color is automatically transferred to that gradient point. The <b><i>Opacity</i></b> control refers to the currently active gradient point as well.<br>
+New gradient points can be set either by a double click or by drag&dropping of a color into an empty area. The <b>Del</b> key deletes the active point.</p>
+
+			<p align="justify">
+The option <b><i>Inherit Transformation</i></b> determines if the gradient information is independent of the object or not. By default, a gradient is moved together with the object it fills.
+			</p>
+			
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left" colspan=2>
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+					</td>
+					<td>
+						Lock aspect ratio when resizing the gradient<br>
+						Lock movement to horizontal or vertical direction
+					</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<b>With activated gradient control</b>
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Left" src="./images/keys/left.png">
+						<img alt="Right" src="./images/keys/right.png">
+					</td>
+					<td>
+						Move active gradient point
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Up" src="./images/keys/up.png">
+						<img alt="Down" src="./images/keys/down.png">
+					</td>
+					<td>
+						Activate next or previous gradient point
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Del" src="./images/keys/delete.png">
+					</td>
+					<td>
+						Delete active gradient point
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Brush" src="./images/icons/brushicon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="Brush">Brush</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+The brush tool works best with a graphic tablet, because the <b><i>Opacity</i></b>, <b><i>Radius</i></b> and <b><i>Hardness</i></b> is dynamically controlled with the pen's pressure. The parameters that are to be pressure controlled are activated with the checkbox to the upper right of the respective slide control. The slider then shows two small handles, representing the minimal and maximal pressure. Currently, only circular brush tips are supported. Clicking on the brush preview opens a window where sets of brushes can be edited and saved. The option <b><i>Subpixels</i></b> defines if the mouse or pen position is scanned also between pixel coordinates. The option <b><i>Solid</i></b> prevents the generation of interim values of the opacity of an object. The <b><i>Spacing</i></b> slider controls the positioning of the brush's form along its path.
+			</p>
+
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left" colspan=2>
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="+" src="./images/keys/plus.png">
+					</td>
+					<td>
+						Increase brush radius by 10%
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+						<img alt="+" src="./images/keys/plus.png">
+					</td>
+					<td>
+						Increase brush radius by 1 Pixel
+					</td>
+				</tr>
+
+				<tr>
+					<td nowrap width="10%">
+						<img alt="-" src="./images/keys/minus.png">
+					</td>
+					<td>
+						Decrease brush radius by 10%
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+						<img alt="-" src="./images/keys/minus.png">
+					</td>
+					<td>
+						Decrease brush radius by 1 Pixel
+					</td>
+				</tr>
+
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+					</td>
+					<td>
+						Connect to the end of the previous brush object
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Pen" src="./images/icons/penicon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="Pen">Pen</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+The pen works quite similar to the brush, only its tip is always just one pixel in size. That's why the parameters for <b><i>Radius</i></b>, <b><i>Hardness</i></b>, and <b><i>Distance</i></b> don't apply.
+			</p>
+
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left" colspan=2>
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+					</td>
+					<td>
+						Connect to the end of the previous pen object
+					</td>
+				</tr>
+			</table>
+			
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Eraser" src="./images/icons/erasericon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="Eraser">Eraser</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+The eraser works exactly like the brush, only that the created brush objects' <b><i>Mode</i></b> properties are automatically set to <b><i>Erase</i></b>. By changing their <b><i>Mode</i></b> property, brush objects can be converted to eraser objects and vice-versa at any time.
+			</p>
+
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left">
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td>
+						See <a href="#Brush">Brush</a>
+					</td>
+				</tr>
+			</table>
+			
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Pen eraser" src="./images/icons/penerasericon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="PenEraser">Pen eraser</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+The pen eraser is to the pen what the eraser is to the brush: It creates pen objects in <b><i>Erase</i></b> mode.
+			</p>
+
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left">
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td>
+						See <a href="#Pen">Pen</a>
+					</td>
+				</tr>
+			</table>
+			
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Clone brush" src="./images/icons/cloneicon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="CloneBrush">Clone brush</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+The clone brush copies parts of the picture, using the same parameters for adjusting the shape of the tip as the brush tool. When activated, the first click sets the source. The second click then defines the direction and length for the movement and starts the cloning. By pressing the command key (depending on your system configuration that's <b>Ctrl</b> or <b>Alt</b>), a new vector of movement is set.
+			</p>
+			<p align="justify">
+The interesting feature of the clone tool in Wonderbrush is that the clone objects are refreshed when the source is changed. That means, the clone function is dynamically generated.
+			</p>
+			
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left" colspan=2>
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Ctrl" src="./images/keys/strg.png">
+						/
+						<img alt="Alt" src="./images/keys/alt.png">
+					</td>
+					<td>
+						Set a new source
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						For more shortcuts, see <a href="#Brush">Brush</a>
+
+					</td>
+				</tr>
+			</table>
+			
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Blur brush" src="./images/icons/bluricon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="BlurBrush">Blur brush</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+The blur brush is another "brush-based" tool. It blurs the areas of the picture that are under the brush tip. After creation, the blurred radius can currently only be changed in the property list.
+			</p>
+			
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left">
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td>
+						See <a href="#Brush">Brush</a>
+					</td>
+				</tr>
+			</table>
+			
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Bucket fill" src="./images/icons/fillicon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="BucketFill">Bucket fill</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+This tool replaces one color in the picture with another. The <b><i>Tolerance</i></b> parameter controls to what extend similar colors will be filled as well. The setting <b><i>Softness</i></b> reflects the needed tolerance of the opacity channel of the created object (i.e. the higher the divergence from the base color, the lower the resulting opacity).
+			</p>
+			<p align="justify">
+When the option <b><i>Contiguous Area</i></b> is deactivated, all areas of the chosen color will be filled, regardless if it creates several independent filled areas.
+			</p>
+			<p align="justify">
+Clicking into the canvas defines the base color and creates a bucket fill object. That object has a fixed opacity mask (<a href="introduction.html">see "Objects"</a>), that is transferred with the set mode onto the layer. Therefore, by adjusting the <b><i>Mode</i></b> property, a bucket fill object can also be used for erasing or a gradient.
+			</p>
+
+			<br><table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+				<tr>
+					<td>
+						<h4>Note</h4>
+
+						<p align="justify"><i><font size=2>
+							&bull; Note, that by using the lowest tolerance, only areas with an absolutely constant color will be filled. It may not be seen with the naked eye, but there could be a color gradation. In that case, the tolerance should be increased until the whole area is filled as planned. Incomplete bucket fill objects should be deleted before the next try.
+						</font></i></p>
+
+					</td>
+				</tr>
+			</table>
+
+			
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Text" src="./images/icons/texticon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="Text">Text</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+The text tool isn't just for simple labeling, it can also create whole blocks of text. While the settings are therefore more complex, you probably already know most functions from other applications.
+			</p>
+			<p align="justify">
+Clicking on the canvas produces a new text object with the currently set parameters. On the canvas, the text tool displays a line with two handles that control the width and the indention of the text block. Currently, the text isn't displayed directly on the canvas, but in a text field inside the tool area. That's where the most important parameters like font type and size are located. A lot of other settings are adjusted in the property list of the text object. Some of the maybe not so widely known settings are explained below:
+			</p>
+			
+			<p align="justify">
+				<b><i>Spacing</i></b> is a factor for the tracking, which controls if letters are placed closer together or wider apart.
+			</p>
+			
+			<p align="justify">
+				<b><i>Line Spacing</i></b> is a factor for the line spacing, based on the font size.
+			</p>
+			
+			<p align="justify">
+				<b><i>P. Spacing</i></b> is another factor and defines the distance between two paragraphs in relation to the normally used line spacing.
+			</p>
+			
+			<p align="justify">
+				<b><i>Hinting</i></b> means that the shapes of letters are slightly distorted and moved in order to fit the important form elements better onto the available pixels and thereby improving the readability on the screen. However, with scaled or rotated text objects, this option loses its sharpening effect.
+			</p>
+			
+			<p align="justify">
+				<b><i>Kerning</i></b> effects the distance between single letters and uses possibly available additional information of the font that can improve the typeface. If, for example, after a capital <i>T</i> follows a small <i>e</i>, the <i>e</i> can be moved closer to the <i>T</i>, although that means it won't have the normal tracking. If the <i>T</i> is followed by an <i>i</i>, the normal tracking of the <i>T</i> is used, to prevent the letters from overlapping. If <b><i>Kerning</i></b> is deactivated, the "normal" tracking is always used, regardless of the letter combination.
+			</p>
+			
+			<p align="justify">
+				<b><i>Solid</i></b> deactivates the antialiasing for letters. Other object types offer this option as well.
+			</p>
+			
+			<br><table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+				<tr>
+					<td>
+						<h4>Notes</h4>
+
+						<p align="justify"><i><font size=2>
+							&bull; Double clicking a text object in the object list starts editing with the text tool.
+						</font></i></p>
+
+						<p align="justify"><i><font size=2>
+							&bull; If the text field in the configuration area of the tool is active, every keyboard input refers to this field, the following shortcuts have therefore no effect. To use those shortcuts, another control field has to be activated first, e.g. by clicking on the currently edited text object in the <b>Object</b> list.
+						</font></i></p>
+
+						<p align="justify"><i><font size=2>
+							&bull; The automatic line break is suppressed by setting the block width to <b>0</b>.
+						</font></i></p>
+
+					</td>
+				</tr>
+			</table>
+
+			&nbsp;<br>
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left" colspan=2>
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="+" src="./images/keys/plus.png">
+					</td>
+					<td>
+						Increase text size by 10%
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+						<img alt="+" src="./images/keys/plus.png">
+					</td>
+					<td>
+						Increase text size by 1 point
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="-" src="./images/keys/minus.png">
+					</td>
+					<td>
+						Decrease text size by 10%
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+						<img alt="-" src="./images/keys/minus.png">
+					</td>
+					<td>
+						Decrease text size by 1 point
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Left" src="./images/keys/left.png">
+						<img alt="Right" src="./images/keys/right.png">
+						<img alt="Up" src="./images/keys/up.png">
+						<img alt="Down" src="./images/keys/down.png">
+					</td>
+					<td>
+						Move text object by 1 pixel
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Ctrl" src="./images/keys/strg.png">/<img alt="Alt" src="./images/keys/alt.png">
+						<img alt="Up" src="./images/keys/up.png">
+					</td>
+					<td>
+						Previous font type
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Strg" src="./images/keys/strg.png">/<img alt="Alt" src="./images/keys/alt.png">
+						<img alt="Runter" src="./images/keys/down.png">
+					</td>
+					<td>
+						Next font type
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Shape" src="./images/icons/shapeicon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="Shape">Shape</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+The shape tool produces so called vector paths. They can describe the borders of an area or are displayed as lines or curves with a certain width. A vector path runs along so called "control points", which are exactly what is created or edited by the shape tool. A control point consists of max. three "sub-points". The vector path runs always through the main control point. Each of the other two points define the tangent in which the path enters or leaves the main point. Thus any curve can be described very easily. Wonderbrush signals the various editing possibilities with different mouse pointers.
+			</p>
+			
+			<br><h4><i>Creating a new point</i></h4>
+			<p align="justify">
+A new point is created by clicking into an empty area; it sets the position of the main control point. Keeping the mouse button pressed, the leaving tangent can be edited. The entering tangent is automatically mirrored.
+			</p>
+			
+			<br><h4><i>Editing a point</i></h4>
+			<p align="justify">
+If the mouse pointer is over an existing point, its position can be moved. If the main control point is moved, it takes its tangent points with it. If one tangent point is moved, Wonderbrush adjusts the other one in way that they remain on a line. This connection can be severed to achieve a corner in the path (more on that later).
+			</p>
+			
+			<br><h4><i>Inserting a point</i></h4>
+			<p align="justify">
+If the mouse pointer hovers over the vector path itself, a new point can be inserted. It will be inserted in a way that maintains the shape of the path, automatically adjusting the preceding and following points. Keeping the mouse button pressed, the leaving tangent can be edited just like when "creating a new point".
+			</p>
+			
+			<br><h4><i>Closing a path</i></h4>
+			<p align="justify">
+Clicking the first control point "closes" the path. Then, the default behavior for areas outside the path isn't "insert point" anymore, but "select point". Paths created in <b><i>Outline</i></b> mode can't be closed by clicking the first point. Here, it's done by checking the control <b><i>Closed</i></b>.
+			</p>
+			
+			<br><h3>Extended functions</h3>
+
+			<h4><i>Deleting a point</i>&nbsp;&nbsp;<img alt="Alt" src="./images/keys/alt.png">/<img alt="Ctrl" src="./images/keys/strg.png"></h4>
+			<p align="justify">
+When pressing the <b>Alt</b> key (or <b>Ctrl</b> if <b>Alt</b> is configured as command key on your system), clicking on a point will delete it. This works too if the point is a tangent point.
+			</p>
+			
+			<br><h4><i>Square corner</i>&nbsp;&nbsp;<img alt="Ctrl" src="./images/keys/strg.png">/<img alt="Alt" src="./images/keys/alt.png"></h4>
+			<p align="justify">
+To delete both tangent points at once, the main control point is clicked while holding the <b>Ctrl</b> key (or <b>Alt</b> if that is configured as command key on your system). Afterwards, the leaving tangent point can be created once more by keeping the mouse button pressed while dragging over the main control point. The entry tangent point will again be mirrored accordingly.
+			</p>
+			<p align="justify">
+If the <b>Ctrl</b> (or <b>Alt</b>) key is pressed while clicking on a tangent point, the point can be moved separately without disturbing the other tangent point. Now the connection between tangent points is severed and they are not in line anymore. From now on they are individually movable. To re-establish the connection, hold down the <b>Ctrl</b> (or <b>Alt</b>) key, click on the main control point to delete both tangent points and drag out two new ones.
+			</p>
+			
+			<br><h4><i>Selecting points</i>&nbsp;&nbsp;<img alt="Shift" src="./images/keys/shift.png"></h4>
+			<p align="justify">
+You may have noticed that the last clicked control point always stays selected. You can add points to the selection (and remove them) by clicking while holding the <b>shift</b> key. The <b>shift</b> key always triggers the "select point" mode, offering a selection frame when you click outside the path. The selection state of all points inside that frame is then inverted.
+			</p>
+			<p align="justify">
+A click into an empty area will clear the selection of all points.
+			</p>
+
+			<br><h4><i>Transforming a selection</i>&nbsp;&nbsp;
+				<img alt="Left" src="./images/keys/left.png">
+				<img alt="Right" src="./images/keys/right.png">
+				<img alt="Up" src="./images/keys/up.png">
+				<img alt="Down" src="./images/keys/down.png">&nbsp;&nbsp;
+				<img alt="T" src="./images/keys/t.png">&nbsp;&nbsp;
+				<img alt="Transform" src="./images/icons/move.png">
+			</h4>
+			<p align="justify">
+These selected points can be moved or transformed as a group. Either the points are moved pixel by pixel with the cursor keys (for more precise movement hold down the <b>shift</b> key), or you click on the <b><i>Transform</i></b> icon in the shape tool configuration (not the general transformation tool for objects). The latter option allows a more complex transformation on the selected group.
+			</p>
+			
+			<br><h4><i>Deleting a selection</i>&nbsp;&nbsp;<img alt="Entf" src="./images/keys/delete.png">&nbsp;&nbsp;<img alt="Delete" src="./images/icons/trash.png"></h4>
+			<p align="justify">
+Clicking the icon <b><i>Delete control points</i></b> deletes the selected points. In case that all points of a path were selected, the whole (sub)path of the shape object will be deleted. Alternatively, the <b>Del</b> key can also be use for deletion.
+			</p>
+			
+			<br><a name="Subpaths"><h4><i>Subpaths</i>&nbsp;&nbsp;<img alt="Option" src="./images/keys/option.png">&nbsp;&nbsp;<img alt="New path" src="./images/icons/newpath.png"></h4></a>
+			<p align="justify">
+A single shape object can consist of several independent paths. If paths overlap, the <b><i>Filling Rule</i></b> property defines if an area is "outside" or "inside" the shape area.
+			</p>
+
+			<table width="100%" cellpadding=0 cellspacing=0>
+				<tr>
+					<td valign="top">
+						<p align="justify">
+							<b><i>Non-Zero</i></b> means that the direction of the control points around the paths influences the "outside"/"inside" decision: "Non-Zero" paths count as plane, whereas "Even-Odd" means they're holes - although only if they are on the inside of another path.
+						</p>
+					</td>
+					<td width=20></td>
+					<td valign="top">
+						<p align="justify">
+							<b><i>Even-Odd</i></b> means that "inside" and "outside" are alternating when a subpath confines a new area. In this mode, subpaths that are inside the area of other paths, always define a "hole".
+					</p>
+					</td>
+				</td>
+				<tr>
+					<td>
+						<img alt="Non-Zero" src="./images/nonzero.png">
+					</td>
+					<td width=20></td>
+					<td>
+						<img alt="Even-Odd" src="./images/even_odd.png">
+					</td>
+				</td>
+			</table>
+
+			<p align="justify">
+Note that these rules only apply for the paths of a single shape object. Several shape objects on the same layer do not influence each other as described, but are superimposed like normal objects. The function <b><i>Object</i></b>-&gt;<b><i>Special</i></b>-&gt;<b><i>Merge Shapes</i></b> combines several shape objects. This creates one shape object from all in the list marked objects and now includes all the subpaths of the formerly separate objects.
+			</p>
+			<p align="justify">
+To get a new subpath, the icon <b><i>New path</i></b> has to be activated. It stays active until the user clicks outside the existing paths to plant the first control point of the new path. (To leave this mode, either click on the <b><i>Cancel</i></b> icon or press the <b><i>Esc</i></b> key.)<br>
+Instead of activating the icon <b><i>New path</i></b> you also press the <b>Option</b> key and click to start a new subpath.
+			</p>
+
+			<br><h4><i>Reversing the path</i>&nbsp;&nbsp;<img alt="Reversing the path" src="./images/icons/reversepath.png"></h4>
+			<p align="justify">
+The order in which the control points are set, establishes a <i>direction</i> of the path. As that direction can be crucial for the <a href="#Subpaths"><b><i>Filling Rule</i></b></a>, a function is needed to <i>reverse</i> the path. That's done by the icon <b><i>Reverse Path</i></b>. The first control point becomes the last and so on. That option also becomes interesting if you want to add new control points to the beginning of the path instead of the end.
+			</p>
+			
+			<br>
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+				<tr>
+					<td>
+						<h4>Note</h4>
+						<p align="justify"><i><font size=2>
+Double clicking a form object in the object list starts editing with the shape tool.
+						</font></i></p>
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Ellipse" src="./images/icons/ellipseicon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="Ellipse">Ellipse/(Rounded) Rectangle</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%" align="left" valign="top"><img alt="(Rounded) Rectangle" src="./images/icons/recticon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+This tool produces a predefined shape object: an ellipse or a rectangle. By clicking and dragging a new object with the according size is created. An additionally pressed <b>shift</b> key locks the aspect ratio, resulting in circles and squares. After that these objects are treated as normal shape objects, so further editing happens with the shape tool.
+			</p>
+
+			<br><table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+				<tr>
+					<td>
+
+						<h4>Note</h4>
+
+						<p align="justify"><i><font size=2>
+The default direction of newly created shape objects is always <a href="#Subpaths">Non-Zero</a>.
+						</font></i></p>
+
+					</td>
+				</tr>
+			</table>
+
+			&nbsp;<br>
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8">
+				<tr>
+					<th align="left" colspan=2>
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Shift" src="./images/keys/shift.png">
+					</td>
+					<td>
+						Lock aspect ratio when resizing (to get a circle or a rectangle as new object)<br>
+						Lock movement to horizontal or vertical direction
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Left" src="./images/keys/left.png">
+						<img alt="Right" src="./images/keys/right.png">
+						<img alt="Up" src="./images/keys/up.png">
+						<img alt="Down" src="./images/keys/down.png">
+					</td>
+					<td>
+						Move ellipse/rectangle by 1 pixel
+					</td>
+				</tr>
+			</table>
+			
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Dropper" src="./images/icons/droppericon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="Dropper">Dropper</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+The dropper tool picks a color from the canvas. This simply sets the <a href="colors.html" target="_top">current color</a>. Depending on the <b><i>size of the tip</i></b> a mixed color from a group pixels is generated.
+			</p>
+			
+		</td>
+	</tr>
+	<tr><td colspan=3><p>&nbsp;</p></td></tr>
+	<tr>
+		<td width="0%" align="left"><img alt="Guides" src="./images/icons/guidesicon.png"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<h3><a name="Guides">Guides</a></h3>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="0%"></td>
+		<td width="5%"></td>
+		<td>
+			
+			<p align="justify">
+Guides help with aligning objects, but aren't themselves part of the picture and can also be hidden. With the <b><i>New</b></i> icon, a new guide is inserted as defined in the tool's controls. Active guides are displayed bright red and can be precisely positioned with their control fields. Perfectly vertical guides have an <b><i>Angle</b></i> of 0, horizontal ones of 90 degrees.<br>
+The <b><i>Leonardo da Vinci</i></b> icon moves the active guide to the position of the next golden section. Based on the picture height and width, there are two golden sections respectively.
+			</p>
+
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#e8e8e8" >
+				<tr>
+					<th align="left" colspan=2>
+						Shortcuts
+					</th>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Del" src="./images/keys/delete.png">
+					</td>
+					<td>
+						Delete active guide
+					</td>
+				</tr>
+				<tr>
+					<td nowrap width="10%">
+						<img alt="Left" src="./images/keys/left.png">
+						<img alt="Right" src="./images/keys/right.png">
+						<img alt="Up" src="./images/keys/up.png">
+						<img alt="Down" src="./images/keys/down.png">
+					</td>
+					<td>
+						Move active guide 1 pixel
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+</table>
+
+<table width="90%" border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td height="75" valign="center">
+
+			<a href="tools_general.html" target="_top"><img alt="Tools overview" src="./images/tools_general_prev.png" border=0></a>
+
+		</td>
+	</tr>
+</table>
+</center>
+
+</body>
+</html>

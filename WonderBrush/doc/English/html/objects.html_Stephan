@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>WonderBrush Dokumentation - Objekte</title>
+</head>
+<body text="#000000" bgcolor="#fefefe" link="#ff1111" vlink="#aa0505"
+	  leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
+
+
+<center>
+<table width="90%" border=0 cellpadding=5 cellspacing=0>
+	<tr>
+		<td><a href="introduction.html">
+			<img src="./images/introduction_off.png" alt="Introduction" border=0>
+		</a></td>
+		<td align="center">
+			<img src="./images/objects_on.png" alt="Objects" border=0>
+		</td>
+		<td align="center"><a href="colors.html">
+			<img src="./images/colors_off.png" alt="Colors" border=0>
+		</a></td>
+		<td align="center"><a href="io.html">
+			<img src="./images/io_off.png" alt="Working with Files" border=0>
+		</a></td>
+		<td align="center"><a href="tools_general.html">
+			<img src="./images/tools_general_off.png" alt="Tools Overview" border=0>
+		</a></td>
+		<td align="right"><a href="tools_frames.html">
+			<img src="./images/tools_off.png" alt="Tools in Detail" border=0>
+		</a></td>
+	</tr>
+</table>
+
+<table width="90%" border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td>
+
+			<h2>Objects</h2>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+			<p align="justify">
+				Conceptionally spoken, Objects fill a Layer with image
+				content. Most Objects will generate a kind of <i>mask</i>
+				for this, which is applied in a certain <i>Mode</i> over
+				already rendered Objects.
+				The <i>mask</i> is a simple opacity channel, that defines
+				for every pixel of the Object, with what opacity level
+				that pixel is to be influenced.
+			</p>
+	
+			<center>
+				<img alt="Object mask and fill mode" src="./images/fill_mode.png">
+			</center>
+
+			<p align="justify">
+				There are different types of Objects, mainly distinguished
+				by how they generate their opacity mask. Most types have
+				several <b><i>Properties</i></b>, which influence the
+				generation of the mask.
+			</p>
+
+			<p align="justify">
+				To create an Object of the desired type, the appropriate 
+				<a href="tools_general.html">Tool</a> has to be activated.
+				For every tool, WonderBrush displays controls which
+				define the Properties of a new Object. An Object is created
+				by simply clicking into the image area and possibly dragging
+				with the mouse or pen. Some tools, especially the Shape tool,
+				offer sophisticated editing options. Filter Objects take a
+				special role, because they are only created by choosing from
+				the <b><i>Filter</i></b> menu. Bitmap Objects are likewise not
+				created by a tool, but represent loaded image data or
+				have been generated as a consequence of choosing
+				<b><i>Object</i></b>-&gt;<b><i>All</i></b>-&gt;<b><i>Freeze</i></b>.
+				Every new Object starts life at the top position of the
+				active Layer (last position in the list). By simple Drag &amp; Drop
+				they can be put to another position in the list. Objects can be
+				duplicated by holding down the <b><i>Shift</i></b> key while doing
+				this. Some types of Objects, like Shape and Text Objects,
+				can be edited again by the respective tool, via double clicking
+				on the Object in the list. Other Objects, like Brush or Filter
+				Objects, can only be adjusted by editing their list of Properties.
+			</p>
+
+		</td>
+	</tr>
+</table>
+
+<table width="90%" border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td height="75" valign="center">
+
+			<a href="introduction.html"><img alt="Introduction" src="./images/introduction_prev.png" border=0></a>
+
+		</td>
+		<td valign="center" align="right">
+
+			<a href="colors.html"><img alt="Colors" src="./images/colors_next.png" border=0></a>
+
+		</td>
+	</tr>
+</table>
+</center>
+
+</body>
+</html>

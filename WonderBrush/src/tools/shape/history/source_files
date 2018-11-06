@@ -1,0 +1,23 @@
+SOURCE_FILES +=
+	AddPointAction.cpp
+	ChangePointAction.cpp
+	ChangeAlphaAction.cpp
+	ChangeCapModeAction.cpp
+	ChangeJoinModeAction.cpp
+	ChangeOutlineAction.cpp
+	ChangeOutlineWidthAction.cpp
+	CloseAction.cpp
+	EnterTransformPointsAction.cpp
+	ExitTransformPointsAction.cpp
+	InsertPointAction.cpp
+	NewPathAction.cpp
+	NudgePointsAction.cpp
+	PathAction.cpp
+	RemovePathAction.cpp
+	RemovePointAction.cpp
+	ReversePathAction.cpp
+	SelectPathAction.cpp
+	SelectPointsAction.cpp
+	SetShapeColorAction.cpp
+	TransformPointsAction.cpp
+;

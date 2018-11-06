@@ -1,0 +1,17 @@
+SOURCE_FILES +=
+	AddModifierAction.cpp
+	AddModifiersAction.cpp
+	ChangeColorAction.cpp
+	ChangeLayerSettingsAction.cpp
+	DeleteModifiersAction.cpp
+	DuplicateAction.cpp
+	EditModifierAction.cpp
+	FreezeAction.cpp
+	LayerAction.cpp
+	MergeShapesAction.cpp
+	MoveModifiersAction.cpp
+	PastePropertiesAction.cpp
+	TextToShapeAction.cpp
+	TransformAction.cpp
+	TransformObjectsAction.cpp
+;

@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>WonderBrush Dokumentation - Umgang mit Dateien</title>
+</head>
+<body text="#000000" bgcolor="#fefefe" link="#ff1111" vlink="#aa0505"
+	  leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
+
+
+<center>
+<table width="90%" border=0 cellpadding=5 cellspacing=0>
+	<tr>
+		<td><a href="introduction.html">
+			<img src="./images/introduction_off.png" alt="&Uuml;berblick" border=0>
+		</a></td>
+		<td align="center"><a href="objects.html">
+			<img src="./images/objects_off.png" alt="Objekte" border=0>
+		</a></td>
+		<td align="center"><a href="colors.html">
+			<img src="./images/colors_off.png" alt="Farben" border=0>
+		</a></td>
+		<td align="center">
+			<img src="./images/io_on.png" alt="Umgang mit Dateien" border=0>
+		</td>
+		<td align="center"><a href="tools_general.html">
+			<img src="./images/tools_general_off.png" alt="Werkzeuge im &Uuml;berblick" border=0>
+		</a></td>
+		<td align="right"><a href="tools_frames.html">
+			<img src="./images/tools_off.png" alt="Werkzeuge im Detail" border=0>
+		</a></td>
+	</tr>
+</table>
+
+<table width="90%" border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td>
+
+			<h2>Laden von Dateien</h2>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+			<p align="justify">
+				WonderBrush verwaltet grunds&auml;tzlich zwei 
+				verschiedene Typen von Dateien. Das eine sind 
+				WonderBrush Dokumentdateien, welche s&auml;mtliche 
+				Ebenen- und Objektinformationen enthalten. Bei den 
+				anderen handelt es sich um verschiedene Bildformate 
+				wie JPG, TIFF oder PNG, die WonderBrush &ouml;ffnen 
+				kann. Solche Dateien werden als ein Dokument 
+				dargestellt, welches eine Ebene mit einem 
+				Bilddatenobjekt (dem Bild aus der Datei) enh&auml;lt.
+			</p>
+
+			<p align="justify">
+				Eine Sonderrolle nehmen Scalable Vector Graphics (SVG) 
+				Dateien ein, die von WonderBrush in begrenztem Umfang 
+				unterst&uuml;tzt werden. Einige SVG Objekte werden 
+				vom Programm als Formobjekte verarbeitet, die auch 
+				Farbverl&auml;ufe enthalten k&ouml;nnen.
+			</p>
+
+			<p align="justify">
+				WonderBrush kann Dateien auf verschiedene Arten 
+				laden. Die gr&ouml;&szlig;te Flexibilit&auml;t 
+				bietet das Laden per Ziehen und Fallenlassen aus 
+				dem Tracker. Werden Dateien mit gedr&uuml;ckter 
+				<b>Shift</b> (Umschalt-) Taste in die 
+				Ebenenliste gezogen, so kann ein Dokument oder 
+				eine Bilddatei in ein bereits ge&ouml;ffnetes 
+				Dokument geladen werden. In diesem Fall werden 
+				entsprechend zus&auml;tzliche Ebenen angelegt.
+			</p>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+			<h2>Speichern von Dateien</h2>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+			<p align="justify">
+				WonderBrush unterscheidet zwischen <b>Speichern</b> 
+				und <b>Exportieren</b>. Speichern erzeugt WonderBrush 
+				Dokumentdateien mit s&auml;mtlichen Ebenen- und 
+				Objektinformationen. Zum Exportieren stehen 
+				(im Dateiauswahldialog)
+				verschiedene Dateiformate zur Option, wobei die 
+				erzeugten Dateien keine oder nicht alle Ebenen- und 
+				Objektinformationen enthalten. Die meisten Formate 
+				enthalten nur noch die visuellen Bildinformationen.
+			</p>
+
+			<p align="justify">
+				Ein in WonderBrush ge&ouml;ffnetes Dokument merkt sich 
+				den Ort sowohl der Dokument- als auch der Exportdatei 
+				auf der Festplatte. Es lassen sich also ohne 
+				umst&auml;ndliches Hin- und Herspringen beide 
+				Dateiversionen durch Auswahl von 
+				<b><i>Datei</i></b>-&gt;<b><i>Speichern</i></b> bzw. 
+				<b><i>Datei</i></b>-&gt;<b><i>Exportieren</i></b> 
+				speichern. Bei &quot;neuen&quot; Dokumenten sind beide 
+				Dateiorte noch unbekannt, bei frisch 
+				&quot;ge&ouml;ffneten&quot; Dateien ist entsprechend 
+				ihres Formats einer der beiden Speicherorte bereits 
+				bekannt. Das jeweilige Exportformat merkt sich WonderBrush
+				auch einzeln f&uuml;r jedes offene Dokument. Falls noch
+				kein Format gew&auml;hlt wurde, gilt das zuletzt benutzte.
+			</p>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+				<tr>
+					<td>
+						<h4>Hinweise</h4>
+						<p align="justify"><i><font size=2>
+							&bull; Welche Bilddateiformate WonderBrush &ouml;ffnen und 
+							exportieren kann, h&auml;ngt von den systemweit 
+							installierten <i>Translator</i> Zusatzmodulen ab.
+						</font></i></p>
+						<p align="justify"><i><font size=2>
+							&bull; Im Dateiauswahldialog f&uuml;r den Export
+							kann der ausgew&auml;hlte <i>Translator</i> durch
+							Wahl von <b>Einstellungen</b> konfiguriert werden.
+						</font></i></p>
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+
+</table>
+
+<table width="90%" border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td height="75" valign="center">
+
+			<a href="colors.html"><img alt="Farben" src="./images/colors_prev.png" border=0></a>
+
+		</td>
+		<td valign="center" align="right">
+
+			<a href="tools_general.html"><img alt="Werkzeuge im &Uuml;berblick" src="./images/tools_general_next.png" border=0></a>
+
+		</td>
+	</tr>
+</table>
+</center>
+
+</body>
+</html>

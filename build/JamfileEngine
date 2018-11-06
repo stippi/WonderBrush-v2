@@ -1,0 +1,155 @@
+################
+# JamfileEngine
+
+JAMFILE_ENGINE_VARIABLES =
+		COMPILER_FLAGS
+		DEFINES
+		LIBS
+		LINKER_FLAGS
+		LOCAL_INCLUDE_PATHS
+		NAME
+		OBJECTS_LOCATION
+		RSRCS
+		SOURCE_DIRS
+		SRCS
+		SYSTEM_INCLUDE_PATHS
+		TARGET_CONFIG
+		TARGET_LOCATION
+		TYPE
+;
+
+rule InitVariables
+{
+	for var in $(1) {
+		JAMFILE_ENGINE_BACKUP_$(var) = $($(var)) ;
+		$(var) = ;
+	}
+}
+
+rule RestoreVariables
+{
+	for var in $(1) {
+		$(var) = $(JAMFILE_ENGINE_BACKUP_$(var)) ;
+	}
+}
+
+rule InitJamfileEngine
+{
+	# Must be called before setting any of the variables for the JamfileEngine.
+	#
+	InitVariables $(JAMFILE_ENGINE_VARIABLES) ;
+}
+
+actions MakeTargetBuildConfigFile
+{
+	echo "EXISTING_TARGET_CONFIG = $(TARGET_CONFIG) ;" > $(1)
+}
+
+
+rule RunJamfileEngine
+{
+	# Evaluates the JamfileEngine variables and invokes the respective
+	# Jam rules.
+	#
+
+	# check NAME
+	if ! $(NAME) {
+		Exit JamfileEngine ERROR: NAME not set ;
+	}
+
+	# set the defines
+	local subDirDefines = ;
+	if $(DEFINES) {
+		subDirDefines = [ FDefines $(DEFINES) ] ;
+	} else {
+		subDirDefines = ;
+	}
+
+	# DEFINES is a jam variable, so we restore it here already in case it is
+	# set globally.
+	RestoreVariables DEFINES ;
+
+	# set compiler flags
+	SubDirCcFlags $(subDirDefines) $(COMPILER_FLAGS) ;
+	SubDirC++Flags $(subDirDefines) $(COMPILER_FLAGS) ;
+
+	# set linker flags
+	if $(LINKER_FLAGS) {
+		LINKFLAGS on $(NAME) = [ on $(NAME) return $(LINKFLAGS) ]
+							   $(LINKER_FLAGS) ;
+	}
+
+	# target config
+	TARGET_CONFIG ?= common ;
+
+	# set the dir for the objects
+	local targetObjectDir = [ FDirName $(OBJECTS_LOCATION) $(TARGET_CONFIG) ] ;
+	LOCATE_SOURCE = $(targetObjectDir) ;
+	LOCATE_TARGET = $(targetObjectDir) ;
+
+	# set the include dirs
+	local d ;
+	for d in $(LOCAL_INCLUDE_PATHS) {
+		SubDirHdrs $(d) ;
+	}
+	for d in $(SYSTEM_INCLUDE_PATHS) {
+		SysSubDirHdrs $(d) ;
+	}
+
+	# set SEARCH_SOURCE to contain all source directories
+	if $(SOURCE_DIRS) {
+		SEARCH_SOURCE = $(SOURCE_DIRS) ;
+	}
+
+	if (RSRCS) {
+		AddResources $(NAME) : $(RSRCS) ;
+	}
+	switch $(TYPE) {
+		case APP :
+		{
+			Main $(NAME) : $(SRCS) ;
+			LINKLIBS on $(NAME) = -L$(LIBPATHS) ;
+			LinkSharedOSLibs $(NAME) : $(LIBS) ;
+		}
+		case SHARED :
+		{
+			Main $(NAME) : $(SRCS) ;
+			LINKLIBS on $(NAME) = -L$(LIBPATHS) ;
+			LINKFLAGS on $(NAME) = [ on $(NAME) return $(LINKFLAGS) ]
+				-Xlinker -shared -Xlinker -soname=\"$(NAME)\" ;
+			LinkSharedOSLibs $(NAME) : $(LIBS) ;
+		}
+		case STATIC :
+		{
+			Library $(NAME) : $(SRCS) ;
+		}
+		case * :
+		{
+			Exit JamfileEngine ERROR: Unsupported TYPE: $(TYPE) ;
+		}
+	}
+	# relocate $(NAME) -- not nice, but we can't help it: LOCATE_TARGET has no
+	# effect when set on target
+	MakeLocate $(NAME) : $(TARGET_LOCATION) ;
+
+	# Deal with the target config stuff
+	EXISTING_TARGET_CONFIG = ;
+
+	# If existing, we include the file that tells us about the configuration
+	# of the existing target.
+	local configFile = $(NAME).build-config ;
+	LOCATE on $(configFile) = $(OBJECTS_LOCATION) ;
+	if [ Glob $(OBJECTS_LOCATION) : $(configFile) ] {
+		include $(configFile) ;
+	}
+
+	if $(EXISTING_TARGET_CONFIG) != $(TARGET_CONFIG) {
+		Always $(NAME) $(configFile) ;
+		Depends $(NAME) : $(configFile) ;
+
+		TARGET_CONFIG on $(configFile) = $(TARGET_CONFIG) ;
+		MakeTargetBuildConfigFile $(configFile) ;
+	}
+
+	RestoreVariables $(JAMFILE_ENGINE_VARIABLES) ;
+}

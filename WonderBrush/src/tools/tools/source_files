@@ -1,0 +1,5 @@
+SOURCE_FILES +=
+	Tool.cpp
+	BrushTool.cpp
+	MoveTool.cpp
+;

@@ -1,0 +1,15 @@
+SubDir YB_TOP ;
+
+SubInclude YB_TOP beqt ;
+SubInclude YB_TOP common ;
+SubInclude YB_TOP common_qt ;
+SubInclude YB_TOP eXposer ;
+SubInclude YB_TOP keygen ;
+SubInclude YB_TOP LaunchBox ;
+SubInclude YB_TOP libwarpsharp ;
+SubInclude YB_TOP third_party ;
+SubInclude YB_TOP TimeTracker ;
+SubInclude YB_TOP WonderBrush ;
+SubInclude YB_TOP WonderBrush_qt ;
+
+SubInclude YB_TOP test ;

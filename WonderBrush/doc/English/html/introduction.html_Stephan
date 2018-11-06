@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>WonderBrush Documentation - Introduction</title>
+</head>
+<body text="#000000" bgcolor="#fefefe" link="#ff1111" vlink="#aa0505"
+	  leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
+
+<center>
+<table width="90%" border=0 cellpadding=5 cellspacing=0>
+	<tr>
+		<td>
+			<img src="./images/introduction_on.png" alt="Introduction" border=0>
+		</td>
+		<td align="center"><a href="objects.html">
+			<img src="./images/objects_off.png" alt="Objects" border=0>
+		</a></td>
+		<td align="center"><a href="colors.html">
+			<img src="./images/colors_off.png" alt="Colors" border=0>
+		</a></td>
+		<td align="center"><a href="io.html">
+			<img src="./images/io_off.png" alt="Working with Files" border=0>
+		</a></td>
+		<td align="center"><a href="tools_general.html">
+			<img src="./images/tools_general_off.png" alt="Tools Overview" border=0>
+		</a></td>
+		<td align="right"><a href="tools_frames.html">
+			<img src="./images/tools_off.png" alt="Tools in Detail" border=0>
+		</a></td>
+	</tr>
+</table>
+
+<table width="90%" border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td>
+
+			<h2>Introduction</h2>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+			<p align="justify">
+				WonderBrush is an editor for bitmap graphics. These are
+				called <b>Canvas</b> and are the WonderBrush documents.
+				The main window holds any number of such documents.
+				Every Canvas can contain several <b>Layers</b>. From the
+				bottom to the top, every Layer overlays the previous
+				according to its Mode setting until the final image is
+				formed. Every Layer, which is empty and thus completely
+				transparent by default, can contain any number of
+				graphical <b>Objects</b>, which again overlay each other
+				on the Layer.
+				These Objects are created by the WonderBrush <b>Tools</b>.
+				There are several types of Objects, like Brush strokes, 
+				Text objects or Filters. Each Object is associated with
+				a number of <b>Properties</b>, which define its
+				appearance. The power of WonderBrush lies in the fact
+				that the order of Objects on the Layer or any of their 
+				Properties can be changed at any time.
+				To simplify access to the Objects and their Properties, 
+				WonderBrush displays three lists: The Layer, Object and
+				Property list. The active Layer is set in the Layer list,
+				the Object list will only display Objects contained on
+				that Layer. If only one Object is selected, that Object's
+				Properties are displayed in the Property list. The Object
+				and Property list each own their private clipboard,
+				so that Objects or Properties may be quickly copied and
+				pasted. Properties with the same name are compatible
+				between different types of Objects.
+			</p>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<h3>The Main Window</h3>
+
+			<img alt="WonderBrush Main Window" src="./images/main.png">
+
+		</td>
+	</tr>
+</table>
+
+<table width="90%" border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td height="75" valign="center" align="right">
+
+			<a href="objects.html"><img alt="Objects" src="./images/objects_next.png" border=0></a>
+
+		</td>
+	</tr>
+</table>
+</center>
+
+</body>
+</html>

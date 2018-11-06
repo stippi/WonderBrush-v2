@@ -1,0 +1,205 @@
+SubDir YB_TOP WonderBrush src ;
+SYSSUBDIRHDRS = ;
+InitJamfileEngine ;
+
+# To manage the bunch of source files we put them into subdirectories. Each of these
+# subdirectories contains a file source_files.
+sourceDirs =	.
+				canvas
+				canvas_view_states
+				gui
+				gui/listviews
+				gui/panels
+				gui/panels/about
+				gui/panels/brush_panel
+				gui/panels/color_picker
+				history
+				history/canvas_actions
+				history/container_actions
+				history/layer_actions
+				import_export
+				import_export/svg
+				language
+				minilzo
+				properties
+				properties/specific_properties
+				settings
+				support
+				tools
+				tools/brush
+				tools/crop
+				tools/crop/history
+				tools/edit_gradient
+				tools/edit_gradient/history
+				tools/auto_shape
+				tools/auto_shape/history
+				tools/filters
+				tools/font
+				tools/font/history
+				tools/mask_renderer
+				tools/select
+				tools/select/history
+				tools/shape
+				tools/shape/history
+				tools/transform
+				tools/transform/history
+;
+
+# Create a list of source dirs paths relative to the current dir and include
+# the source_files files.
+SOURCE_FILES = ;
+SOURCE_DIRS = ;
+local sourceDir ;
+for sourceDir in $(sourceDirs) {
+	sourceDir = [ FDirName $(SUBDIR) $(sourceDir) ] ;
+	SOURCE_DIRS += $(sourceDir) ;
+	include [ FDirName $(sourceDir) source_files ] ;
+}
+
+# Include the version definition file.
+
+include [ FDirName $(WONDERBRUSH_ROOT) Version ] ;
+
+## Application Specific Settings ---------------------------------------------
+
+# specify the name of the binary and its location
+NAME = WonderBrush ;
+TARGET_LOCATION = $(WONDERBRUSH_ROOT) ;
+OBJECTS_LOCATION = $(WONDERBRUSH_OBJECTS) ;
+
+# specify the type of binary
+#	APP:	Application
+#	SHARED:	Shared library or add-on
+#	STATIC:	Static library archive
+#	DRIVER: Kernel Driver
+TYPE = APP ;
+
+#	specify the source files to use
+#	full paths or paths relative to the makefile can be included
+# 	all files, regardless of directory, will have their object
+#	files created in the common object directory.
+#	Note that this means this makefile will not work correctly
+#	if two source files with the same name (source.c or source.cpp)
+#	are included from different directories.  Also note that spaces
+#	in folder names do not work well with this makefile.
+SRCS = $(SOURCE_FILES) ;
+
+#	specify the resource files to use
+#	full path or a relative path to the resource file can be used.
+RSRCS = WonderBrush.rsrc ;
+
+#	specify additional libraries to link against
+#	there are two acceptable forms of library specifications
+#	-	if your library follows the naming pattern of:
+#		libXXX.so or libXXX.a you can simply specify XXX
+#		library: libbe.so entry: be
+#		
+#	- 	if your library does not follow the standard library
+#		naming scheme you need to specify the path to the library
+#		and it's name
+#		library: my_lib.a entry: my_lib.a or path/my_lib.a
+LIBS = be layout tracker translation stdc++.r4 textencoding
+	   freetype libagg.a libybcommon.a expat z libwarpsharp.a ;
+
+if $(TARGET_PLATFORM) = zeta {
+	LIBS += zeta ;
+}
+
+#	specify additional paths to directories following the standard
+#	libXXX.so or libXXX.a naming scheme.  You can specify full paths
+#	or paths relative to the makefile.  The paths included may not
+#	be recursive, so include all of the paths where libraries can
+#	be found.  Directories where source files are found are
+#	automatically included.
+LIBPATHS = [ FDirName $(YB_TOP) lib ] ;
+
+#	additional paths to look for system headers
+#	thes use the form: #include <header>
+#	source file directories are NOT auto-included here
+SYSTEM_INCLUDE_PATHS = [ FDirName $(YB_TOP) third_party liblayout ]
+					   [ FDirName $(YB_TOP) libwarpsharp src ]
+					   [ FDirName $(YB_TOP) third_party agg "include" ]
+					   [ FDirName $(YB_TOP) third_party expat ]
+;
+
+if $(TARGET_PLATFORM) != haiku {
+	SYSTEM_INCLUDE_PATHS += [ FDirName $(YB_TOP) third_party freetype ] ;
+}
+
+#	additional paths to look for local headers
+#	thes use the form: #include "header"
+#	source file directories are automatically included
+LOCAL_INCLUDE_PATHS = $(SOURCE_DIRS)
+					  [ CommonIncludes debug ]
+					  [ CommonIncludes gui ]
+					  [ CommonIncludes gui dimensions_control ]
+					  [ CommonIncludes gui popup_control ]
+					  [ CommonIncludes gui scrollview ]
+					  [ CommonIncludes keyfile ]
+					  [ CommonIncludes support ]
+;
+
+#	specify any preprocessor symbols to be defined.  The symbols will not
+#	have their values set automatically; you must supply the value (if any)
+#	to use.  For example, setting DEFINES to "DEBUG=1" will cause the
+#	compiler option "-DDEBUG=1" to be used.  Setting DEFINES to "DEBUG"
+#	would pass "-DDEBUG" on the compiler's command line.
+DEFINES =	USE_LZO=0 
+			USE_COLORSPACES=0
+			SLIM_GUI=0
+;
+if $(ALLOCATION_CHECK) {
+	DEFINES += ALLOCATION_CHECK ;
+}
+if $(USE_SERIAL_NUMBERS) {
+	DEFINES += USE_SERIAL_NUMBERS ;
+}
+
+# app version defines
+DEFINES += MAJOR_APP_VERSION=$(MAJOR_APP_VERSION) ;
+DEFINES += MIDDLE_APP_VERSION=$(MIDDLE_APP_VERSION) ;
+DEFINES += MINOR_APP_VERSION=$(MINOR_APP_VERSION) ;
+DEFINES += APP_VERSION_SUFFIX=\"\\\"$(APP_VERSION_SUFFIX)\\\"\" ;
+
+#	specify additional compiler flags for all files
+if $(OSPLAT) = PPC {
+	COMPILER_FLAGS = ;
+} else {
+	COMPILER_FLAGS = ;
+#	COMPILER_FLAGS = -ffast-math -mcpu=pentiumpro ;
+}
+if $(ALLOCATION_CHECK) {
+	local debugDir = [ FDirName $(SUBDIR) debug ] ;
+	COMPILER_FLAGS += -include $(debugDir)/AllocationChecker.h ;
+}
+
+#	specify additional linker flags
+LINKER_FLAGS = ;
+
+#	specify a unique string for the current configuration of the build.
+#	Default is "common". The string will be used a) as name of the subdirectory
+#	of $(OBJECTS_LOCATION) where the object files will be put, and b) as
+#	identification whether the main target, if existing, needs to be rebuilt.
+#	E.g. when the target platform matters TARGET_CONFIG could be set to
+#	$(TARGET_PLATFORM). When building for another platform another subdirectory
+#	for the objects will be used and the main target will be replaced even if
+#	it looks up to date judging from file time stamps only.
+TARGET_CONFIG = $(TARGET_PLATFORM) ;
+
+RunJamfileEngine ;
+
+rule SVGIcon
+{
+	Depends "$(1)" : "$(2)" ;
+}
+
+actions SVGIcon
+{
+	if [ -f /bin/IconTool ]
+	then
+		IconTool "$(1)" Build STD_ICON 1 -1 SVG "$(2)"
+	fi
+}
+
+local svgIconDir = [ FDirName $(WONDERBRUSH_ROOT) package ] ;
+SVGIcon WonderBrush : $(svgIconDir)/Icon.svg ;

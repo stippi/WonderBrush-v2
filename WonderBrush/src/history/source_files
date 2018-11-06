@@ -1,0 +1,5 @@
+SOURCE_FILES +=
+	Action.cpp
+	CompoundAction.cpp
+	HistoryManager.cpp
+;

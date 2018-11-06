@@ -1,0 +1,9 @@
+SOURCE_FILES +=
+	Canvas.cpp
+	History.cpp
+	Guide.cpp
+	Layer.cpp
+	LayerBase.cpp
+	LayerContainer.cpp
+	RLEBuffer.cpp
+;

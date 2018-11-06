@@ -1,0 +1,1578 @@
+19.12.2006
+	- added De-Noise filter based on CImg.h by David Tschumperlé
+	  (also known as GREYCstoration in other packages), the license is
+	  similar to LGPL and I was allowed to use the header as long as
+	  I mention where I got from.
+
+21.11.2006
+	- fixed the rest of the drag states of a transformation for use
+	  with perspective transformations
+	- fixed usage of clipping at the rasterizer level, can sometimes
+	  result in huge performance improvements, and avoids program
+	  appearing to freeze in some worst cases due to long unnecessary
+	  calculations
+
+15.11.2006
+	- fixed the behaviour of the splitters between the list views
+	- dragging and dropping layers or objects in such a way that no
+	  change takes place, there is no unnecessary undo step inserted
+	  anymore
+
+13.11.2006
+	- fixed WonderBrush's external editor feature, now bitmaps
+	  will load in WonderBrush again when for example eXposer
+	  uses WonderBrush as an external editor. Native images can
+	  be edited in this way as well now
+
+02.11.2006
+	- implemented new bitmap interpolation "Resample", which gives
+	  best results for downscaled bitmaps
+
+28.06.2006
+	- implemented new drag state for dragging the corner of a transform
+	  box that works after perspective transformations
+	- finally fixed the bug of the Transformation tool which caused the
+	  undo steps to be messed up
+	- fixed the bug that the confirmation icons stayed enabled in the
+	  Transformation tool after the mouse was relased without changing
+	  the transformation
+
+26.06.2006
+	- updated underlaying transformation code to support perspective
+	  transformation, the transformation box already supports dragging
+	  the corners freely, but more changes are necessary to make "normal"
+	  affine transformations work after distorting the box
+
+13.06.2006
+	- fixed memory leak when removing points of a Shape's path
+
+12.06.2006
+	- dramatic speed increase of DropShadow and Gaussian Blur filters,
+	  the filter time is almost independent of the filter radius, on
+	  average, both filters work 10 times faster than before
+
+08.04.2006
+	- added MIME sniffer rule to make the system identify WonderBrush
+		images more easily
+
+04.04.2006
+	- added Color Reduction filter, currently it converts to the
+		system palette
+	- RDef exporter optionally saves as an icon resource if the canvas
+		happens to be 16x16 or 32x32
+
+03.02.2006
+	- "fixed" IconOptionsControl to not trigger re-layouting the window
+		which seems to reduce start up time
+	- vector paths are drawn with gaps to make them look better on Haiku
+
+21.11.2005
+	- now uses the previously edited path when entering Shape edit mode
+	- fixed GradientControl startup size being too small to hold valid
+		gradient bitmap
+
+15.11.2005
+	- fixed a small problem in the sliders in the Brush config: There was
+		a gap of one pixel height in which clicking onto the slider moved
+		neither the min nor the max thumb
+
+12.11.2005
+	- the path property was not updated when changing the round corner
+		radius
+
+10.11.2005
+	- small bug fix in the SVG polyline parsing
+
+31.10.2005
+	- fixed some more GUI layout problems on ZETA (popup menus, File panel)
+	- serial number is now displayed in about panel instead of
+		"<running in demo mode>"
+	- holding down <shift> while launching WonderBrush will cause the
+		app to rewrite the document MIME type
+	- on ZETA, an SVG icon is added to the document MIME type
+
+28.10.2005
+	- fixed bug with dragging stuff onto a list view with a tablet,
+		the drop position would be messed up, dragging colors would
+		mostly not work at all
+	- now correctly restores tilt information in Brush objects from
+		saved WonderBrush files
+	- fixed a bug where the Brush cursor jumped to an offset under
+		ZETA when clicked in zoomed documents
+	- fixed two bugs in the Edit Gradient tool:
+		- if Properties were pasted to Objects, it was very likely
+			that editing Gradients had no effect anymore
+		- changing a Gradients transformation did not update the
+			Gradient Property correctly
+	- added Tilt setting to Brush objects properties
+	- fixed interpolation of alpha when double clicking to create a
+		new Gradient stop
+	- fixed broken interpolation of Gradients stops with alpha
+
+20.10.2005
+	- fixed two bugs in the Shape tool:
+		- if you select another sub-path
+			and accidentally click onto a point of the path, the click
+			could start modifying the path
+		- if you pressed or released a modifier key while already dragging
+			with the mouse, unexpected results could happen
+
+18.10.2005
+	- replaced canvas list view with dragsortable version
+	- added cool (negotiated) drag & drop from canvas list view to Tracker
+
+17.10.2005
+	- replaced potentially indefinitely large tab view with a regular
+		list view to hold the list of open documents
+	- fixed irritating open panel behaviour (always used path to last
+		saved or exported file, now it does that only the first time
+		it is opened)
+
+14.10.2005
+	- now supports the fill-rule property when importing SVG
+	- gradients are blended in linear RGB space
+
+13.10.2005
+	- Pick Objects pick mask icons are now black & white
+
+09.10.2005
+	- Shape outlines created with subpixels off are shifted into the
+		center of pixels depending on the outline width
+
+08.10.2005
+	- SVG export supports gradients in all supported object types
+	- font manager uses a more reliable family name
+
+07.10.2005
+	- drastical speed up of switching from layers with many objects
+	- SVG export saves relative coords to save some space
+	- documents are forced to R5 format on ZETA
+
+05.10.2005
+	- added function to reverse a path (another icon in Shape tool)
+	- fixed dragging all selected control points I broke with some
+		earlier change
+	- prevent keyboard actions when mouse is down in Shape and Text tool
+
+04.10.2005
+	- added Text Alignment to the configuration GUI of the Text tool
+		(was Property only before)
+	- fixed some potential "low memory" crashing bugs
+
+03.10.2005
+	- added SVG icon to ZETA version
+
+01.10.2005
+	- added Round Rect Radius to (Round) Rect tool so that it finally
+		deserves the (Round)
+
+30.09.2005
+	- fixed a bug constrain rect missunderstanding bug in the text
+		renderer
+	- small optimization in the path rendering
+
+29.09.2005
+	- fixed scrolling of regions outside of canvas
+	- updated Canvas context menu
+	- should have fixed remaining tearing problems, there can still
+		be some tearing observed at certain zoom levels, but I'm sure
+		they are caused by inaccurate code in the app_server scaled
+		bitmap drawing routine (the seems to be an optimization for
+		150% scaling which has problems, the generic scaling at 151% or
+		149% is fine)
+
+28.09.2005
+	- started looking into scrolling/zooming related "canvas tearing
+		problems" (fixed some, but there seem to be some more)
+
+26.09.2005
+	- do not show "Cap" and "Join Mode" properties on non-outline Shape
+		objects
+	- fixed some more "update color" bugs
+		- when the Edit Gradient control becomes focus, color is
+			updated to the active color stop
+		- the color field marker did not update in certain situations
+
+22.09.2005
+	- prevent giving objects a zero scale in one or both directions, this
+		prevents an obscure app_server crash from happening, besides, who
+		would want zero scale objects anyways...
+	- bug fix for changing properties of Shape objects after control
+		points have been nudged, now path will stay the same
+	- improved word and glyph spacing for justify aligned Text objects
+	- optimized SVG export for file size a bit more
+		(use more path commands, limit to two digits after decimal point
+		for coordinates)
+	- the SVG export is now smart enough to warn the user when atempting
+		to overwrite an SVG file, that originally had tags ignored by the
+		SVG import
+	- uses "Copy" cursor in Pick Object tool when <Shift> is pressed
+	- reworked cut/copy/paste behaviour, the shortcuts work in Object list,
+		and also finally in the Text tools text input
+	- made negotiated drag&drop (other app->WonderBrush) work correctly
+		(tested with ShowImage)
+
+21.09.2005
+	- fixed ugly scrollviews under ZETA, also fixes Drag&Drop flickering
+		because of focus color animation
+	- fixed Brush cursor sticking arround when mouse leaves CanvasView
+		under ZETA
+	- fixed problems with hit testing and integer pixel mouse tracking
+	- nudging in Shape tool no longer ignores/bypasses an on-going
+		transformation, nudging is now handled by the transformbox directly
+	- deleting control points in the Shape tool finishes an on-going
+		transformation first
+	- hue is now updated correctly when the color has no saturation
+	- efficiency improvements to color slider and color field
+
+17.09.2005
+	- Bitmap objects have an Opacity property now
+
+16.09.2005
+	- improved SVG import
+		- removal of duplicate path control points
+		- implemented A/a command for arcs
+	- much more accurate aproximation of circles and ellipses
+
+14.09.2005
+	- SVG exports "Line To" insted of "Cubic Curve" command when appropriate
+	- SVG export tries to avoid exporting a transformation matrix if the transformation
+		can be "frozen"
+	- if the first Shape used for a Merge Shape command has a gradient, the
+		transformation is applied to the gradient before it is frozen
+
+12.09.2005
+	- updated Shape tool to also remember Shape settings of the last edited
+		Shape which only have a Property but no control in the config GUI
+	- fixed problems with object inherited transformation when displaying
+		the transformation box of a gradient (mouse cursors could have
+		wrong rotation)
+
+11.09.2005
+	- fixed problems with changing object properties during an ongoing
+		transformation, the transform box will always be the right size,
+		additionally the transformation will be performed first
+	- fixed dirty pixels bug in Shape tool when it was canceled
+	- "text width" is now displayed with a handle that can be controlled
+		with the mouse in Text tool
+	- more logical Text properties order
+	- speed improvement for clipped text rendering
+	- Text tool remembers all Text properties of the last edited Text
+		object for creating a new Text object
+	- added first line of paragraph indention (mouse draggable) and
+		paragraph line spacing scale
+	- additional text settings, which have no controls in the Text tool,
+		are now also persistent (taken from the last edited Text object)
+
+10.09.2005
+	- complete rework of text and glyph layout algorithm, should add
+		a little speed up even and supports left, center, right and
+		justify alignment in a certain width
+	- fixes for hinted text, the additional glyph spacing becomes
+		truncated to integer units and a translation is rounded, except
+		if the transformation on the text object contains rotation and
+		scale as well
+
+09.09.2005
+	- Guides can now be moved with the cursor keys, hitting <Delete>
+		will delete the current guide
+	- fixed "rotate cursor appears *inside* transformation box" bug that
+		I introduced some time ago
+	- big cleanup in text rendering (single glyph layouting function)
+
+06.09.2005
+	- implemented first draft of Serial Number panel
+	- using <Tab> or <Enter> on text controls no longer loses the
+		selection of the focused text control, so that a new value
+		can be typed without having to first select/delete the previous
+		text (Transformation controls, Property controls, etc)
+
+03.09.2005
+	- AI Exporter knows about sub paths
+	- fixed SVG Export to use the "closed" property of each sub path
+
+01.09.2005
+	- fixed crashing bug that happened sometimes on exit (Ingo)
+
+31.08.2005
+	- added "Merge Shapes" function to Object->Special menu, available when
+		at least two Shape objects are selected. The merged Shape will have
+		all the paths from the original Shapes and the properties of the
+		first original Shape.
+	- added a way to freeze the transformations of Shape objects and
+		VectorPaths (used by above feature)
+
+30.08.2005
+	- some work and fixes on Bitmap objects, added Interpolation
+		property -> Nearest Neighbor and Bilinear are supported
+
+27.08.2005
+	- fixed pasting into text controls, including the text input
+		of the Text tool
+
+23.08.2005
+	- Remove button in Guides tool is only available when a Guide is selected
+	- fixed bug in Shape tool, when removing points with the Delete key, the
+		Path property was not updated
+	- localization of Guides tool
+	- replaced buttons in Guides tool with icons
+	- added "Da Vinci" icon to Guides tool, which places a selected Guide
+		onto the closest "Golden Proportion"
+
+22.08.2005
+	- when using the TAB key in the dimension control to jump from one to
+		the next text control, (ie Width -> Height), the selection will
+		no longer get lost because the text changes when the proportion
+		lock is on
+	- added cool "Duplicate" (with transformation) function to Object menu
+	- added "All" and "None" buttons to Pick Objects tool, to quickly
+		change the pick mask accordingly
+	- added "All" and "None" buttons to Pick Objects tool, to quickly
+		select all or no objects
+	- B_SELECT_ALL is now a more global shortcut to select all objects,
+		in the Shape tool, it selects all path control points when
+		a path is being edited
+
+19.08.2005
+	- fixed export of transformed linear gradients
+
+18.08.2005
+	- added "pick" mask to Pick Objects tool
+
+16.08.2005
+	- some bugfixes to Pen and Brush drawing with respect to constrain
+		rect with one pixel width/height
+	- more work on direct selection tool, selection of all objects
+		in an area
+	- fixed selection of objects that don't use an alpha map (Bitmap)
+	- fixed nonworking "All" button in Copy tool
+
+15.08.2005
+	- more work on direct selection tool
+
+14.08.2005
+	- fixed missing cursor updates on ZETA
+	- introduced a way for objects to be informed of layer size changes,
+		which fixes the "Area" filter
+	- bug fixes for UI updates on gradient related controls
+	- fixed pressing "delete" key to delete objects when the shape tool
+		was active
+	- started work on "Pick Objects" tool (picking objects directly on
+		canvas)
+	- renamed new "Color" filter to "Area"
+
+13.08.2005
+	- mouse mode is now updated in Shape tool when switching to another
+		sub path
+
+10.08.2005
+	- added new "Color" Filter, that is simply spanning the entire layer
+		and fills it with the given rendering mode
+	- added drag & drop of colors onto layers list, which uses the new
+		"Color" filter
+
+08.08.2005
+	- finished work on drag & drop of objects onto and between layers
+		to move/copy (shift held down) them onto existing or new layers
+	- improved usability by indicating "copy" action in cursor during
+		drag & drop in layers/object list
+	- show less properties on Brush based objects, if dynamic control
+		is turned off
+	- select just the clicked point on MouseUp, if a set of more selected
+		points was not moved in the Shape tool
+
+07.08.2005
+	- started work on drag & drop of objects from one layer to
+		another
+	- improved path cleanup
+
+06.08.2005
+	- when dragging one of many selected control points, the whole
+		set will be dragged
+	- double clicking between gradient stops in the gradient control
+		creates a new stop with the interpolated color from that
+		location
+	- fixed a syntax bug when exporting transparent gradient stops in SVG
+	- Gradient control can now show transparent stops
+	- usability improvements to editing a gradient:
+		- dropping a color to add a stop will make the control focused
+		- editing the current color will edit the current stop as well
+			if the gradient control has focus
+		- clicking on a stop will set the canvas current color
+		- all these changes make it much easier to edit stop colors
+			(no excessive drag&drop anymore)
+	- added slider to control the active gradient stop's opacity
+
+05.08.2005
+	- added "Text to Shape" conversion, it's under Object->Special, and
+		you need to have Text objects selected
+	- fixed "curve3" command "import", should have fixed SVG import too
+	- removing all points of a path will remove the whole path from
+		the Shape object
+	- fixed crashing bug when pressing Delete key in Shape tool when
+		no Shape object had been created yet
+	- added icons to Shape tool: Transform Points (in exchange for
+		the button), New (Sub) Path, Delete (selected points)
+	- better GUI updates in Shape tool, "Closed" checkbox no longer
+		enabled when path can not be closed (due to too few points)
+	- fixed stickyness of New Path mode after switching to another tool
+	- When importing from AGG path_storage, curve3 is now converted to
+		curve4 for better editing (most visible in Text to Shape command)
+
+04.08.2005
+	- fixed a pretty obscure bug in the export modules when writing
+		floating point numbers. It effected mostly transformations,
+		especially radial gradients in SVG files. Basically, a number
+		like "0.073" would have been written as "0.73"...
+	- fixed a couple of bugs with properties in new sub-path stuff
+	- fixed weird path point selection behaviour from last beta,
+		plus older selection weirdness
+	- fixed transformation of newly created subpaths if the parent
+		object already was transformed
+	- fixed crashing bug when canceling Shape tool and the last
+		editing action had been adding a new sub path
+	- you have to hold down B_OPTION_KEY to create a new sub path,
+		the default mode for closed paths is now "Select Points" and
+		"Add Point" for unclosed paths, as before. Selection works
+		much better again that way.
+	- when selecting another sub-path, all its points are automatically
+		selected
+	- added Filling Rule to Shape object properties
+	- fixed a bad bufferoverrun bug in the SVG export. More than ten
+		gradients caused a buffer overrun and bogus to be written,
+		though irritatingly no crash.
+	- fixed bug in Shape tool, it now syncs with the Shapes current
+		path when a property was changed
+
+03.08.2005
+	- added units (%, px for now) to Guide tool
+	- Shape tool shifts control points by 0.5x0.5 pixels (to the
+		pixel center), when in Outline and non-Subpixel mode
+	- started work on creating and editing sub paths, missing is
+		the adding of each subpath as a stand alone Property, so
+		they can be copied individually
+
+02.08.2005
+	- Guides tool now more or less working - missing: Undo stack,
+		rotation of guides along with canvas, units option
+	- fixed crashing bug in Shape tool introduced in 1.7.1, when
+		pressing the delete key with no points selected
+
+01.08.2005
+	- "implemented" SVG path commands T/t
+	- some text controls could still have keyboard focus
+		when switching to another tool, which broke some
+		of the keyboard control functionality
+
+31.07.2005
+	- restructured ShapeStroke::Draw(), uses special Bresenham
+		rasterizer for solid strokes with width = 1, also doesn't
+		set even-odd fill mode any more, which also fixes a back
+		wards compatibility issue
+	- started work on Guide tool
+
+30.07.2005
+	- can no longer do anything in the canvas view when no layer
+		is set (thanks Marcin)
+
+30.07.2005 (1.7.1)
+	- fixed printing (tested with Preview and PDF printer on ZETA)
+	- added "All" buttons to Crop and Select tool which set the
+		rectangle to the entire canvas
+
+29.07.2005
+	- added "inherit transformation" option to Gradients
+	- added auto scrolling to Select, Crop, Transform, Edit Gradient,
+		Text and Shape tool (there you go Christian)
+	- fixed a crashing bug in the Edit Gradient tool, which happened
+		when a gradient object was selected when switching to another
+		tool from the Edit Gradient tool and then undoing something
+		which affected the selected object (thanks Mikael)
+
+28.07.2005
+	- fixed memory leak in VectorPath::operator=()
+	- WarpSharp filter no longer tries to sharp homogenous areas,
+		which appeared to take forever (thanks Axel)
+	- fixed crashing bug in PopupSlider control (eg Zoom slider)
+		when clicking it more than once while the window thread
+		was busy (thanks Axel)
+	- fixed bug in PopupSlider control which caused the slider
+		to stick to the mouse cursor even if the mouse was
+		already released (thanks Axel)
+	- implemented cleaning up of paths, this means that
+		WonderBrush Image -> SVG -> WonderBrush Image will restore
+		pretty much the same Shape objects with no extra points
+		and no broken in-out control points connections
+	- fixed a bug in Shape tool when removing path points so
+		that only one or no points remained, if the path was
+		closed before, it is unclosed, so that new points can be
+		added again
+	- tracked down a pretty obscure bug in the AGG path storage
+		code, which caused some SVGs to load incorrectly (thanks Paco)
+
+27.07.2005
+	- hitting Return or Escape in Ellipse and Rect tools applies
+		or cancels the tools as it should (thanks stargater)
+
+26.07.2005
+	- fixed last minute bug in pasting Path property to Shapes
+		with mutliple subpaths
+
+26.07.2005
+	- switches to Pen Eraser from Pen if tablet pen is used with
+		its eraser end
+	- Tilt is now settable in the Brush tool config GUI
+	- the Brush tool cursor previews the tilt distortion
+	- the Gradient control has a disabled look
+	- added "Trash" icons to Layer and Object list views to delete
+		the selected layer or objects
+	- all sub paths of a Shape object are put into the "Path"
+		Property and are correctly copied/pasted
+
+25.07.2005
+	- objects in gradient mode now have an icon with their gradient
+		in the Object list
+	- speed optimizations for the Brush rendering
+	- fixed bug: Brush with 100% hardness were not rendered without
+		anti-aliasing if "Solid" was checked (post 1.6.1 bug)
+	- fixed precision issues with gradient rendering
+		(colors were slightly transparent, mostly visible with dark
+		colors)
+	- fixed precision issues with Fill tool rendering (same as above)
+	- fixed a bug with setting the color of an object by dropping
+		a color onto the color property (post 1.6.1 bug)
+	- fixed bug with transform box for ellipse and rect tool
+		(almost always in "translate" mode)
+	- the proportion lock is also affecting the scale controls in
+		the Resize panel
+	- the state of the proportion locks (at least in New and Resize panel)
+		is remembered now
+	- fixed some off by one bugs in Gradient::MakeGradient()
+
+22.07.2005
+	- fixed drop shadow bug (random shadow pixels at bottom of canvas)
+
+21.07.2005
+	- added basic tilt support to Brush drawing, but it needs to be
+		part of Brush flags yet with it being turned off by default
+
+20.07.2005
+	- VectorPath::Iterator uses incremantal curve approximation just
+		for path display (alternating black/white lines)
+
+18.07.2005
+	- updated to AGG 2.3
+
+17.07.2005
+	- when an Object is set to Gradient mode, and a new Gradient is
+		created, the gradient is fit to the Object's bounds.
+
+16.07.2005
+	- further polished Edit Gradient tool, added icons for
+		gradient types, fixed more bugs, added tool tips, shortcut etc.
+	- fixed bug that the language was reset to English when editing
+		a language file and WonderBrush recompiled it
+	- fixed some SVG loading stuff, gradient stops can have percentage
+		offset, viewBox is used instead of width and height, colors can
+		be specified using only three letters (#bf6)
+
+14.07.2005
+	- added localization for Gradient stuff
+
+13.07.2005
+	- fixed more bugs in Edit Gradient Tool, including crashing bugs
+	- the Gradient is now a Property which can be copied and pasted
+		to other objects
+
+10.07.2005
+	- fixed a lot of the bugs in the Edit Gradient tool, should work
+		much smoother now with undo now
+
+06.07.2005
+	- added RDef export
+
+04.07.2005
+	- tweaked the About panel animation and layout
+	- worked on full Undo support for the Edit Gradient tool
+	- Some "minor" issues with the gradient tool remain...
+
+16.-21.06.2005
+	- Shape objects can now contain an arbitrary number of paths which
+		are currently rendered with even-odd filling rule. However,
+		they cannot be accessed through the GUI yet.
+	- worked a lot on SVG loading support with gradients
+	- updated SVG export to support subpaths and gradients
+
+14.06.2005
+	- fixed a bug where you couldn't do anything in the canvas
+		after it has been resized and the resizing took a little while.
+
+07.06.2005
+	- started work on supporting gradients in SVG
+
+05.06.2005
+	- added very basic SVG import capability
+
+30.05.2005
+	- added Warpsharp filter
+	- worked on EditGradientState
+
+22.05.2005
+	- added undo for editing the gradient itself - undo for transformation
+		as well as after performing is completely missing yet
+
+XX.05.2005
+	- made a GUI control for editing gradients and made the Gradient
+		tool use it
+
+XX.04.2005
+	- added updating to system language on ZETA.
+
+11.04.2005
+	- got font hinting finally working. seems to be a really weird
+		bug in the AGG font engine (depending on flip_y setting),
+		need to contact Maxim...
+	- added Kerning to editable Text object properties
+
+10.04.2005
+	- investigated font hinting again, added Hinting to editable
+		Text object properties
+
+19.03.2005
+	- worked over help strings for tools
+	- fixed bug in color picker, it would switch to the last tool
+		usable with color, instead of staying in color picker mode
+	- implemented Opacity setting for Fill tool (there you go, Axel :-)
+
+18.03.2005
+	- Undo history of Ellipse tool is working, and lots of other
+		Ellipse tool details
+	- pretty much completed the Ellipse tool and did a Rect tool just
+		like it (refactored reusable bits of Ellipse tool)
+	- the Rect tool is missing a "round corners" option yet
+	- drew new icons for the Ellipse and Rect tool
+	- found a nice way to turn off anti-aliasing in Text and Shape
+		objects (via Property list only)
+	- fixed a bug in new Gradient stuff
+
+17.03.2005
+	- reenabled Ellipse tool and worked on it
+
+16.03.2005
+	- many GUI tweaks to get WonderBrush work correctly on Zeta
+	- more work on gradients
+	- some refactoring when objects report their name
+
+15.03.2005
+	- language files also include the international (2 char) representation
+	- finally worked arround that Zeta app_server (mouse moved) problem
+		for good (ignore messages that contain "be:cursor_needed" as suggested
+		on BeBits)
+
+12.03.2005
+	- more work on gradients
+
+11.03.2005
+	- language addons, which are compiled in /tmp are now correctly copied
+		into the WonderBrush application folder if it is on another volume
+		than /tmp.
+
+08.03.2005
+	- new About animation
+
+07.03.2005
+	- the selection of control points of a Shape can now be deleted via
+		the Delete key.
+	- huge improvement in "insert point on path" code, the closest path
+		segment is calculated much smarter and the insert cursor should
+		no longer appear when the cursor is not near a true path segment
+
+
+03.03.2005
+	- special cased brush drawing code for hardness=100% like in
+		pre-AGG version, which gives a nice speed up
+	- fixed crashing bug in Property list when brush was drawn outside canvas
+
+06.02.2005
+	- fixed a stupid bug in PopupSlider::SetValue() that prevented live
+		updates during dragging
+	- the gradients were not showing because of a really stupid bug,
+		they work fine now, but the complete GUI for configuring them is
+		missing yet.
+
+05.02.2005
+	- first try to get some Gradient results showing, but it doesn't work yet
+
+04.02.2005
+	- worked on Gradient support based on AGG
+
+17.01.2005
+	- fixed two small flickering issues
+	- implemented ignoring "Contiguous Area" fill mode, there is now a
+		checkmark in the Fill tool GUI
+	- implemented selection of multiple items using the second mouse
+		button without needing to hold down any modifier
+
+16.01.2005
+	- reimplemented access to Translator settings in Export panel
+	- Export panel window title is now also updated when language is changed
+
+15.01.2004
+	- fixed keyboard controlled paramaters of Text tool to update in the GUI
+		when no Text object was being edited
+
+14.01.2005
+	- fixed flickering in Property list view when object properties change
+		and/or another object is selected
+	- fixed font sorting again, now it should work correctly for all cases
+	- font popup menu now behaves like a normal BMenuField and tries to
+		locate the currently marked item under the mouse
+	- it is now possible to cycle through all installed fonts by the means of 
+		<Command>+<Up>/<Down> while the Text tool is active
+
+13.01.2005
+	- fixed glitch in invalidation of splitter GUI object
+	- using the Shape tool should be smoother now when working on new Shape
+		objects
+
+12.01.2005
+	- implemented "Replace Red|Green|Blue" layer blending modes
+	- fixed invalidation bug when switching layer blending modes involving
+		"Alpha" and "Inverse Alpha"
+	- found better algorithm for "Alpha" and "Inverse Alpha" blending modes
+		(min_c(srcAlpha, dstAlpha) instead of srcAlpha*dstAlpha/255)
+	- fixed "Inverse Multiply" blending mode to work as "Screen" in Photoshop
+	- implemented "Lighten" and "Darken" blend modes more are to follow...
+	- hopefully fixed an invalidation glitch in the popup slider (eg Zoom)
+	- fixed irritating bug in Copy and Crop tool, which didn't "auto-cancel"
+		when another tool was selected
+
+30.12.2004
+	- fixed memleaks in font renderer
+
+08.12.2004
+	- the keyfile can now be put into the WonderBrush settings folder
+		while the app is running, unlocking will be live
+	- WB now renders a demo text string on top of the canvas, also when
+		exporting and using the Copy tool, sorry guys...
+
+07.12.2004
+	- improvements in font handling, font menu sorting should work better
+	- better export of correct font in SVG
+	- Pen object export in SVG
+	- Fill object export in SVG, not working yet
+
+06.12.2004
+	- the file extension is now automatically adjusted when changing
+		the export module in the export panel and so on
+	- Text object export in SVG
+	- fixed some crashing bugs in FontManager, that were triggered by
+		certain fonts
+
+05.12.2004
+	- finished bitmap support in exporting SVG
+
+04.12.2004
+	- implemented base64 encoder (needed for embedding bitmaps in SVG)
+
+02.12.2004
+	- implemented "IconOptionsControl", which handles switching pressed
+		state of icons as mutually exclusive options, used for cap and join
+		modes in Shape tool
+
+
+29.11.2004
+	- implemented different line cap and join modes in Shape tool
+		-> TODO: Shape->GUI update, undo actions, better (space saving) controls
+
+28.11.2004
+	- first steps of an Ellipse tool, pretty rough and non-functional yet
+
+26.-27.11.2004
+	- Text and Bitmap object export in Illustrator files
+
+24.11.2004
+	- validated Adobe Illustrator export
+	- implemented remembering the last file panel folder (hope it is as
+		smart as I intended it to be...)
+
+23.11.2004
+	- implemented Abobe Illustrator export, based in part on work done
+		by Marcin Konicki
+
+21.11.2004
+	- bug hunting in Export feature
+
+20.11.2004
+	- implemented basic SVG export
+	- redesigned (cleaned up, unified) the "Export" feature
+
+08.11.2004
+	- a bit more keyboard control in Property list for Option properties
+		(the one with the popup menu): by using the cursors keys, one can
+		cycle through the available options
+
+07.11.2004
+	- tracked down that nasty Fill tool crashing bug, should potentially
+		have fixed other (crashing) symptoms in the app concerning bitmaps
+
+06.11.2004
+	- implemented nudging of control points when editing a path
+	- reimplemented Fill algorithm, in my limited test, the speed up was more
+		than x2
+
+04.11.2004
+	- tab navigation in the Property list view works now
+
+03.11.2004
+	- fixed a couple of undo actions to not update the Object list view,
+		if that is showing a different layer than the changed object(s)
+		live(s) on
+	- build using the new GCC 2.95.3 which gives about a 20% speed increase
+		(tested with layer blending) using -O3 :-)
+	- changed a couple of things in the shutdown sequence, hopefully fixes a
+		rare crash in the Filepanel destructor when quitting WonderBrush
+	- looked hard in Fill tool, made some more preventive checks, but
+		couldn't find a possible crashing bug.
+	- the navigator now doesn't scale the preview up, only down to fit
+		the given area
+	- maximum zoom is now 3200%
+	- navigator doesn't show dotted frame when entire canvas is visible
+	- layer icons are also never scaled up anymore
+
+29.10.2004
+	- Subpixel precision can now be turned off for the Shape tool 
+
+26.10.2004
+	- tweaked the approximation scale of the Shape objects in outline mode,
+		gives much smoother results
+
+25.10.2004
+	- fixed a critical bug in Text tool, the whole system froze up
+		wnen the text started with spaces
+	- fixed the CPU hogging problem in drawing a straight line with Brush tool
+
+24.10.2004
+	- fixed bug in transform box (picking pivot was broken when zoomed in/out)
+
+23.10.2004
+	- fixed a bug in Shape and Text tool which caused the config GUI to
+		incorrectly reflect the Shape/Text object having been double clicked
+		to be edited
+
+22.10.2004
+	- work around for app_server bug in Zeta, which apparently filters
+		mouse moved messages, so that when these events are generated by
+		a tablet, they would not contain all fields (pressure, tilt, etc)
+	- improved brush spacing code, so that when scaling up Brush objects,
+		they look perfectly smooth now (instead of the spacing becoming
+		visible)
+	- work around for Zeta app_server bug (the one concerning drawing
+		segments of a circle)
+
+18.10.2004
+	- fixed crashing bug in multi Property paste when an object was not
+		caused to change at all
+
+16.10.2004
+	- fixed crashing bug when compiling language add-ons under on Zeta
+
+14.10.2004
+	- canvas name is now updated in canvas list when saving under a new name
+	- fixed rendering bug when switching mode from Normal to Erase in case
+		the object has been created (ie was not edited after having been
+		applied once before, but was new)
+
+13.10.2004
+	- made cute little Undo/Redo icons
+	- the Separator GUI object uses it's parents view color, which should
+		fix some remaining problems when adjusting GUI colors on Zeta
+	- fixed a crashing bug in the Halftone filter (changing properties)
+
+12.10.2004
+	- ported Halftone filter from ArtPaint, changed the semantics somewhat
+	- added ability to chose line distance in Text tool (property only)
+	- Object listview is now much less restrictive when currently editing
+		a Text or Shape object
+	- fixed a bug in the Shape tool, which caused not all the current
+		settings of the tool to be applied to a new object
+	- added Dispersion and Noise filter
+	- fixed yet another problem with the canvas not being up to date when
+		adjusting some property
+	- fixed problem with which text control contains the most recent
+		value in the Resize panel when closing the panel
+	- relayouted Transform tool controls for the input fields to be wider
+
+11.10.2004
+	- ported Brightness, Contrast, Saturation and Motion Blur filter from
+		ArtPaint
+		- especially the Motion Blur algorithm is much improved compared to
+			ArtPaint, all filters should work much faster than their originals
+		- porting is fun, since such little amount of code has to be written
+			for a filter thanks to the Property stuff
+	- Shape and Text tools automatically apply when the selection changes
+
+08.10.2004
+	- fixed a bug with dragsorting objects, in certain situations, the dragged
+		objects could just disappear
+
+07.10.2004
+	- the last filter whoes properties were edited will define the settings
+		of a new filter being created of the same type
+	- fixed "color change loop" bug in Shape and Text tools
+	- the tool help message can now contain '\n' so that it line breaks in
+		the bubble help
+
+06.10.2004
+	- fixed bug, picking a color from the actual Color Picker panel was
+		not undoable in Text and Shape tool
+	- fixed new bug from yesterday, setting the rectangles numerically in
+		Select and Crop tool was broken
+	- fixed Drop Shadow property changes, displays color now
+
+05.10.2004
+	- bugfixes in color property
+	- Text tool is multiline now! Yay!
+	- redesigned "spacing" effects again (in Font tool), negative spacing
+		isn't possible anymore, while the effect looks much more evenly
+		distributed now
+	- better mouse wheel support in list views (drop mark is shown at the
+		correct item)
+	- fixed "Blur tool doesn't blur edge pixels" bug
+	- fixed "transform box shows wrong cursors when flipped" bug
+	- fixed "transform box leaves dirty pixels when zoomed out far enough" bug
+	- fixed input of invalid chars in text inputs for numerical values
+	- fixed Select text input (Top coordinate was ued where Left coordinate
+		should have been used)
+	- fixed that when transforming control points, it was possible to paste
+		the Path property, which could change the position of control points
+		without the transform box updating, nothing Bad actually happens
+		though, even if the control points being transformed have disappeared
+	- fixed a redraw bug in Shape tool when pasting path property
+
+03.10.2004
+	- translations for property stuff
+	- more properties editable in Brush based objects
+	- updated the Shape tool with the same redesign as the Text tool
+	- implemented color property
+	- updated TODO list
+	- fixed a couple bugs in Fill tool
+	- fixed problems in Transform tool (way too much rerendering the canvas)
+	- fixed that weird buffer swapping bug
+	- WonderBrush now goes to the current workspace when a document
+		has been loaded
+	- fixed bug where canvas was not correctly updated when layers were merged
+	- fixed bug in Transform tool where it was actually "applying" inside
+		"cancelling"
+	- lots of strings translated
+	- fixed bug in Transform tool where changing the transformation through
+		the text controls was not undoable
+	- reintroduced nudging in Transform tool (cursor keys move objects)
+		if SHIFT is held down, nudge distance will be one visible pixel
+		(a fraction of a canvas pixel if zoomed in), otherwise one canvas
+		pixel
+
+01.-02.10.2004
+	- implemented more types of properties (bool, path, font, option)
+	- redesigned internal workings of Text tool (needs to be done for
+		Shape tool as well)
+	- bug hunting
+
+31.09.2004
+	- finished work on basic property design, imeplemented everything that
+		was needed to get first results, WonderBrush can now interchange
+		properties between different object types, selected properties can
+		be pasted from one object to a mixed selection of other objects
+	- new observer<->observable structure for objects
+
+30.09.2004
+	- worked on Int- and FloatProperty
+	- imeplemented NumericalTextInput stuff
+	- worked alot on PropertyListView
+
+28.09.2004
+	- more implementation for basics of Properties
+
+27.09.2004
+	- started imeplementing basic Property structure
+
+24.09.2004
+	- fixed bug in CloneStroke::ExtendRebuildArea, the offset is now
+		correctly transformed
+
+23.09.2004
+	- design and conceptual thoughts of a Property Editor
+
+22.09.2004
+	- added Gaussian Blur filter
+	- fixed some recently introduced bugs in Shape tool
+
+21.09.2004
+	- perfected Fill and Bitmap tool
+	- started to code config GUI for filters
+
+20.09.2004
+	- redesign of Filters, implemented FilterFactory, should be easy to
+		add new Filters
+
+19.9.2004
+	- implemented a Drop Shadow and an Invert filter
+
+18.9.2004
+	- added more convenience menu items to Object menu: Select All,
+		Select None, Invert Selection, Remove.
+	- renamed menu items in Object menu, Remove -> Remove All,
+		Freeze -> Freeze All so that there should be no confusion that
+		they actually ignore the selection
+
+17.09.2004
+	- smoothness of Shape and Font objects is now also dependent on
+		overall scale, so that no precision is lost when scaling such
+		objects up
+
+16.09.2004
+	- bugfixes in new Text tool implementation
+	- bugfixes in transformation stuff concerning Shape tool
+	- new behaviour for closing a path, there is now a checkbox in the
+		Shape tool GUI for closing the path. When a Shape is not in
+		outline mode, clicking the first point automatically closes the
+		path, however, not so when the path is an outline, this way one
+		can drag the first point without unwantingly closing the path, but
+		one can still close an outline using the new checkbox.
+	- started to fix transformation box mouse picking problems
+
+
+15.09.2004
+	- finished the GUI connection to the Transform tool
+	- reimplemented the stroke caching system for the new transformation stuff
+	- fixed big memory leak in Crop action and updated it to use
+		new transformation stuff
+	- implemented "Resize..." in Canvas menu (Blur tool won't give perfect
+		results though)
+	- implemented "Rotate" in Canvas menu
+	- bugfixes to new Text tool implementation
+
+12-13.09.2004
+	- implemented undo stack for Transform tool
+	- GUI for Transform tool
+
+11.09.2004
+	- redesigned Fill too with AGG backend which supports transformations
+	- implemented zlib compression in Bitmap and Fill objects as well as
+		Layers when they are loaded/saved, size of native documents much
+		reduced, though saving takes notably longer
+	- lots of bug hunting in the new code
+	- fixed bug in Pen tool, the flags (solid, alpha controlled by pen pressure)
+		where never saved correctly
+	- fixed bug in Shape tool "insert point", which didn't show up before real
+		transformations
+
+10.09.2004
+	- refactored Font rendering, implemented AGG backend which supports
+		transformations, huge speed improvement noticable
+
+09.09.2004
+	- fixed the bug in Bitmap object rendering, is almost perfect yet
+		(missing is the filtering in RGB not R'G'B space)
+	- completed all features of the Brush tool in AGG backend, got rid of
+		the existing problems (dark spots bug in small brush strokes
+		with hardness < 100%)!
+	- the Clone and Blur brush based tools will need some design decision...
+
+08.09.2004
+	- fixed bug in transformation, moving pivot didn't generate undo event
+	- much work on transformations, Shape objects work, Bitmap objects work,
+		but have a rendering bug, Brush based objects work, but rendering
+		has serious problems 
+
+07.09.2004
+	- work on transformations
+
+01.09.2004
+	- some bugfixes in regard to pasting from the clipboard if another
+		object was edited at the same time.
+	- added Transform button to Shape tool config GUI
+	- scaling by dragging a corner of the transform box in Shape tool can
+		now maintain the aspect ratio when shift is held down.
+
+30.08.2004
+	- completed undo of control point selection changes
+
+29.08.2004
+	- finnished transformation and selection of control points in Shape tool
+
+28.08.2004
+	- undo for each step of the transformation, needs finishing up though
+
+26.08.2004
+	- better control point selection handling in Shape tool
+
+22.-25.08.2004
+	- more work on affine transformations, currently visible in Shape tool
+		control point selection, transformation of selected points
+
+21.08.2004
+	- image data is now removed at pixels with alpha = 0 when saving the
+		canvas as image (Translator bitmap)
+	- fixed bugs in the Text tool, triggered if no settings file was present yet
+	- all icons are truely transparent now, so they look nice in Zeta when
+		the panel background color is not grey 216
+
+13.-16.08.2004
+	- worked on affine transformations
+	
+10.08.2004
+	- tool tip for Copy tool
+	- error alert when trying to copy empty area
+	- bug fix in Crop and Copy tool when no action was performed,
+		the undo/redo menu items would be labeled with the wrong action
+
+07.08.2004
+	- finnished temporary undo stack for Copy tool
+
+06.08.2004
+	- quick implementation of a simple Copy tool (copies a selected area
+		to the system clipboard)
+
+05.08.2004
+	- final string fixes
+	- tool tips are no longer toggled after using the Brush panel
+
+03.08.2004
+	- fully reimplemented MSplitter, this fixes the cursor not changing back
+		from the MSplitter cursor
+
+02.08.2004
+	- fixed a couple of bugs when there is no settings file present:
+		- the color field is having its marker at "black"
+		- the fullscreen toggle icon is displaying the monitor icon
+	- the pressure control for alpha and radius are off by default now,
+		this should make more sense for new users, especially since most
+		of them will not have a tablet. (it will also not trigger that
+		Zeta app_server bug right at start)
+	- updated and cleaned up all strings to be translatable
+	- fixed a bug where the Navigator view was not up to date with the canvas
+		when editing Shape and Text objects
+	- dropped images generate layers with the file name again
+
+01.08.2004
+	- redesigned loading of bitmaps and documents, refactured and simplified.
+		Result is that WonderBrush's own documents can now be appended to an
+		existing document (by dropping it from Tracker while holding down
+		shift). The whole loading process now takes place in another thread,
+		and this also fixes the redraw problems when WonderBrush was launched
+		with loading a document.
+	- tried to fix a crashing bug in the Bitmap object, I only have an idea
+		what caused it, and I couldn't reproduce the crash with some initial
+		tests. I hope it is gone now.
+	- probably fixed another crashing bug in the FreeType renderer, that was
+		triggered when loading a document from someone else that contained
+		Text objects using fonts that are not installed on the machine trying
+		to load the document. (This is still a problem though, just not
+		crashing I hope...)
+	- fixed a display bug when switching a layer to "alpha mask" mode
+
+31.07.2004
+	- Crop tool usability improvements
+
+23.07.2004
+	- added some additional checks to BitmapModifier::MergeWithBitmap()
+	- when freezing modifiers, empty parts of the layer are now excluded
+		from the generated bitmap
+
+21.07.2004
+	- finished implementation of some global settings
+
+19.07.2004
+	-renamed "History" list to "Object" list
+
+18.07.2004
+	- fixed crashing bugs in the Fill tool (hopefully all, but a
+		rewrite of the actual fill algorithm is also planned)
+
+14.07.2004
+	- fixed a bug I introduced when fixing alpha mask mode for layer
+		blending
+	- fixed some problems in Text tool behaviour when rendering takes too
+		long -> much smoother now
+
+08.07.2004
+	- when doubleclicking a Shape, the color is set to that of the Shape
+	- fixed redraw problem for translated Shapes
+	- when shapes are edited, launching the color picker no longer exits the
+		Shape tool, instead it sets the color of the shape being edited
+
+07.07.2004
+	- fixed a redraw problem in the layer merging when the layer blending
+		mode was set to "alpha" or "inverse alpha"
+	- the list of objects is now frozen (ie no objects can be removed,
+		sorted or added) when an object is being "edited"
+
+06.07.2004
+	- the bounding box that the Translate tool shows arround all selected
+		modifiers is now updated correctly in all cases
+
+05.07.2004
+	- debugging Wacom driver, except for some certain (un)plugging issues
+		with multiple tablets, the driver works fine
+
+04.07.2004
+	- reimplemented Wacom tablet driver for USB V3
+
+24.06.2004
+	- some bug fixes for Translate tool
+	- Translate tool displays now a bounding box for all selected objects
+	- Text tool redraw bug fixes
+
+21.06.2004
+	- bug hunting for Text tool undo stack
+	- added some remaining stuff as undoable, but Text tool has still
+		some stuff left
+	- strange problem redrawing the Navigator view, it is showing the
+		previous image instead of the current
+
+16.06.2004
+	- implemented temporary undo stack for Crop tool
+	- same thing goes for Text tool
+	
+
+15.06.2004
+	- Crop tool is now confirmable, but has no temporary undo stack yet
+	- fixed some crop tool visual bugs
+	- the Confirm/Cancel icons get orange background color now when
+		they are enabled to make them stick out
+	- changed Confirm/Cancel icons
+	- IconButton supports transparent icons now, should also look much better
+		on Zeta, when user changed default panel background
+	- moved internal support for nudging in CanvasView into Translate tool,
+		where is belongs
+	- fixed Clone tool visual bugs
+	- removed word "Tool" from tool tips for Tool icons...
+	- Shape tool no longer adds Shape with 0 control points
+	- some refactoring and the Navigator view is updated live again
+
+14.06.2004
+	- more Bug hunting
+	- more Shape tool changes are tracked via undo stack
+
+13.06.2004
+	- Bug hunting
+	- implemented "outline" mode for Shape tool, outline width is settable.
+		to add an outline to an existing shape, simply copy it in the History
+		list, double click it to edit, then switch to outline mode
+
+12.06.2004
+	- finished updates on Text tool
+	- got font menu with submenus working finally
+	- updated Development Release on BeBits
+	- redesigned Translate tool to be confirmable and more comfortable
+		it also features now a temporary undo stack
+
+11.06.2004
+	- fixed some remaining problems, started to implement selection of points
+		that will be used to perform affine transformations.
+	- started to update Text tool to make Text objects editable at any time
+
+10.06.2004
+	- fixed remaining bugs. Looks good. Now I need to think of how to handle
+		more than one path per "object". Those are needed for holes and stuff.
+
+09.06.2004
+	- implemented the missing pieces for temporary history
+	- implemented inserting a control point while maintaining the paths
+		shape.
+	- lots of debugging, but sometimes strange things happen, like hitting
+		Escape doesn't redraw everything correctly. Some things can be done
+		during editing a shape that should not be permitted to happen.
+
+08.06.2004
+	- implemented temporary history for Path tool, but it's not working
+		100% smoothly
+
+04-07.06.2004
+	- added sophisticated editing, everything is supported now except
+		selecting a group of control points and performing affine translations.
+		The COMMAND and ALT keys are used to get alternative editing modes.
+		COMMAND handles breaking the connection between curve control points
+		and ALT can be used to delete any points.
+
+03.06.2004
+	- added curves
+
+02.06.2004
+	- the vector shape tool is comming along nicely, basic path editing is
+		now possible. Curves are missing yet, but should be easy to add.
+
+29.05.2004
+	- AGG is faster at rendering transformed gradients than my stupid brush
+		rendering at simple circles (if hardness = 0%). Replacing the brush
+		rendering with AGG gradients requires writing a different
+		pixel format (special blending for brush tips) though.
+
+28.05.2004
+	-  I took the effort and ported the platform specific code from AGG to
+		compile and run the demos on BeOS. AGG is very flexible and offers
+		very many features I was looking for in WonderBrush. As a matter of
+		fact, I could replace large parts of what I have already written with
+		AGG, main adventage being speed and flexibility improvements.
+
+27.05.2004
+	- found out about AGG (Anti Grain Geometry). renderer has the same quality
+		as libart, but is faster. The API is C++, consitent though not as
+		smooth as Zodius, heavy use of templates. It compiles without changes
+		to the code on BeOS.
+
+23.-26.05.2004
+	- Zodius has a very nice API, much like BeOS, but libart is faster,
+		better suited and doesn't use subsampling.
+
+22.05.2004
+	- started work on vector shape tool, initially based on Zodius
+
+19.05.2004
+	- looked arround for bugs and found some minor inconsistencies when no settings file is present. Fixed some help strings.
+
+01.05.2004
+	- WonderBrush couldn't save a file on a volume other than the /boot volume
+		(initial "Save As" worked, but no subsequent "Save" operations) - fixed.
+	- fixed some GUI problems when WonderBrush was started with a document,
+
+16.04.2004
+	- a history listview item can now be "focused". the Text tool uses it
+		to indicate that it is still modifying the item, so the listview
+		is kind of locked, no drag'n'drop, no deleting items
+
+31.03.2004
+	- copied Becassos "External Editor" feature
+		eXposer uses this feature of Becasso, so does, I think,
+		Gobe Productive.
+	- fixed a crashing BUG that could be "fixed" by deleting the main settings
+
+09.03.2004
+	- Text tool is in a "working" state, it has some nice details,
+		but is missing many many important features
+
+28.02.2004
+	- started to work on Text tool.
+		- created FreeType2 based font scanner
+
+23.02.2004
+	- added hidden easter egg feature... :-) only shows if canvas is 16x16
+
+20.02.2004
+	- fixed calculation of rebuild area for tools that need to extend it.
+		this should fix the clone and blur tools display bugs. unfortunately,
+		it now resembles the brute force method, which should be revisited
+		later...
+
+19.02.2004
+	- fixed problem with calculating clipping area during layer rebuild
+
+29.12.2003
+	- fixed bug in bitmap modifying routines that caused tools not to work
+		when a Translator Bitmap had been loaded.
+
+06.12.2003
+	- reworked Crop tool behaviour. Should be easier to use.
+
+05.12.2003
+	- added little icon button to top right corner of the main window so
+		that it is a little more obvious how to get back from full screen
+		mode
+
+22.11.2003
+	- experimented with other ways to draw the brush shape.
+
+13.11.2003
+	- added more options to the color pick state: "Use All Layers" and
+		"Tip Size" 
+	- improved the Blur tool, it is based on Gaussian blur now and can have
+		an arbitary radius.
+
+
+...13.11.2003
+	- many bug fixes
+	- redesigned modifier (object) classes, but reverted changes later
+	- implemented aspect restriction for Crop tool (holding down <Shift>)
+	- second version of the GUI has little status bar with information about
+		the tools, however, this might be a waste of screen-space, since
+		eventually, the user will know those options and the space is wasted...
+	- lots of other stuff I can't remember
+	- usage of the stroke cache is much better, since parts for which there
+		is no cache are still drawn
+	- stroke cache is saved with the file!
+
+24.10.2003
+	- more work on PSD import/export, first tests, but doesn't work
+
+23.10.2003
+	- work on PSD import/export
+
+21.10.2003
+	- nicer icon for Fill tool, speed improvements (3x but it's still dog slow)
+
+19.10.2003
+	- finishing up and integrating Fill tool (cloning, loading/saving)
+
+18.10.2003
+	- improvements and debugging for Fill tool
+
+17.10.2003
+	- implemented Fill tool
+
+16.10.2003
+	- added Paste menu item to Edit menu (watches system clipboard for
+		bitmap contents)
+	- added additional checks and safety to save panel -> canvas association
+	- fixed bugs, where menu items in canvas menu and window title would
+		not update when renaming a canvas
+	- fixed a crashing bug when moving Pen and Brush tool
+	- fixed bugs with wrong placement of RLE cache and some subtile bugs of
+		the actual implementation -> what do we do with the off-canvas
+		regions, that might be moved into view?!? The solution looks like
+		figuring out the parts that need to be drawn the normal way and
+		just drawing them...
+
+15.10.2003
+	- found better way to traverse segments of lines (stroke based tools)
+	- fixed bug in Bitmap object (alpha was handled wrongly)
+
+14.10.2003
+	- implemented a "solid" brush mode. it absolutely ignores any
+		intermediate alpha values (no antialiasing or soft brush edges)
+		useful for drawing icons and such stuff
+	- made nicer icon for Move tool
+	- Move tool displays "stop" cursor if no objects are selected
+	- investigated drawing bug in Pen tool that seems to be caused by
+		traversing the segments of the stroke path wrongly
+
+13.10.2003
+	- more debugging of RLE buffer
+	- made nicer icon for Crop tool
+
+12.10.2003
+	- finished RLE buffer implementation. the speed improvement is quite
+		drastic, especially with large brushes (120 times for a 200 pixel
+		diameter soft brush)
+
+09.10.2003
+	- got rid of global setting for subpixel precision, it's now a per
+		tool setting (stroke tool(s), Crop and Move tool)
+	- improved pixel grid drawing a bit, but it still flickers quite
+		annoyingly
+	- more alerts in case of errors
+	- implemented a special RLE buffer, that can be decompressed into any
+		part of a larger (or smaller) bitmap (with optional clipping). this
+		can be used to cache the alpha bitmap of strokes and speed up
+		redrawing
+
+08.10.2003
+	- added alerts when loading a file failed
+
+07.10.2003
+	- fixed crashing bug in layer composing, that was only triggerd under
+		certain circumstances
+	- added ability to dump canvas as BeOS cursor data in C text format
+		(gosh, what a huge time saver!)
+	- added all the cursors needed for Crop and Move tool (hey,
+		selfcontained environment!)
+	- changed Crop tool to switch cursor depending on mouse position
+	- added option to show a pixel grid (zoom >= 800%)
+
+06.10.2003
+	- more of debugging Crop tool
+
+05.10.2003
+	- debugging Crop tool
+
+03.10.2003
+	- made GUI for Crop tool
+
+02.10.2003
+	- removed ScrollState and put that functionality back into CanvasView
+	- tested and debugged Crop tool, better tracking behaviour
+	- fixed invalidation bug when canvas was zoomed in (rightmost and
+		bottom pixels were not updated)
+	- fixed Alpha and Inverse Alpha layer blending modes to respect their
+		global alpha value
+
+01.10.2003
+	- fixed bugs that got introduced by states (colorpicker state). Added
+		new convinience that WonderBrush remembers the last "color" tool
+		to which it switches back when a swatch is clicked (was always
+		Brush before).
+	- implemented Crop tool, needs more fine tuning though...
+
+30.09.2003
+	- Move tool offsets can now be given numerically (GUI is connected).
+		I'm not sure if the way it works is optimal (you cannot move with
+		the mouse and fine tune the offset numerically, instead this
+		triggers a new move action).
+	- removed Subpixel checkbox from Brush Tool GUI, and added a menu
+		item in the settings menu, this better reflects the global nature
+		of this flag.
+	- changes to Move tool action to ensure no CPU cycles are wasted
+
+28.09.2003
+	- GUI for Move tool.
+
+26.09.2003
+	- took a look at the Gaussian Blur filter from ArtPaint. ported it
+		over and played arround with it, but unfortunately, the calculations
+		are not quite correct and mix transparent colors wrongly. Turned
+		it off again...
+
+18.09.2003
+	- implemented drawing functions for B_GRAY8 color space in preparation
+	for selections (tools operating in "mask mode")
+
+15.09.2003
+	- fixed unexpected behaviour (= bug) when pressing/releasing the shift
+		key during drawing a stroke. Now it switches back to drawing a
+		straight line from the first point of the stroke.
+	- when subpixel precision is switched off, the tool cursor can now
+		still be placed freely "inbetween" canvas pixels, which is easier
+		to work with: When trying to draw a straight line, it is easier to
+		see when the cursor is almost out of the pixel.
+	- remembers the weighting between layer and history groups
+
+14.09.2003
+	- found the cause of imprecision in conversion between canvas and view
+		coordinates
+
+13.09.2003
+	- wrote BetterMSplitter class overriding Draw(), placed one of those
+		between the layer and history list view -> need to remember the
+		weighting in the settings! MSplitter seems to use the old cursor
+		setting API, since the arrows keep sticking around most of the times!
+
+10.09.2003
+	- finished MoveTool (debugging), subpixel precision rocks, needs GUI now,
+		cursor and nicer icon, BitmapModifiers don't invalidate correct
+		region of canvas
+
+09.09.2003
+	- coded MoveTool (TranslateState) and made icon for it
+	- new distinction between MODE_* and TOOL_* IDs
+
+08.09.2003
+	- finished moving canvas view functionality into separate canvas view states classes, even managed to avoid some subtile bugs of the previous implementation
+
+05.09.2003
+	- more work on CanvasView states: refined the API, StrokeState compiles
+	- realised that Language addons need recompiling when new strings are
+		 added. changed LanguageManager accordingly, but ultimately, the
+		 string lookup by index must go, and be replaced by hash or map
+		 lookup with string mapping.
+
+04.09.2003
+	- more robust language switching (removes language from menu if addon
+		building failed), remembering language in settings is more robust
+		too and will actually work if the contents of the Language folder
+		change
+
+30.08.2003
+	- reacts on B_PASTE to insert a bitmap object if the system clipboard
+		 contains a bitmap archive (tested with ArtPaint)
+	- started to extract code from canvas view into seperate states
+	- uses persistent app clipboard to replace list of cloned modifiers in history list

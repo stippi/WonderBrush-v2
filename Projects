@@ -1,0 +1,14 @@
+# Projects Setups
+
+# common
+SetupProjectVariables common : COMMON ;
+rule CommonIncludes
+{
+	return [ FDirName $(COMMON_INCLUDES) $(1) ] ;
+}
+
+# warpsharp
+SetupProjectVariables libwarpsharp : WARPSHARP ;
+
+# WonderBrush
+SetupProjectVariables WonderBrush : WONDERBRUSH ;

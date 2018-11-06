@@ -1,0 +1,25 @@
+
+# The directory for build system specific files
+YB_BUILD_DIR = [ FDirName $(YB_TOP) build ] ;
+
+# Cache files for header scanning and jamfile caching
+HCACHEFILE = header_cache ;
+JCACHEFILE = jamfile_cache ;
+LOCATE on $(HCACHEFILE) $(JCACHEFILE) = $(YB_BUILD_DIR) ;
+
+# Include BuildConfig
+{
+	local buildConfig = [ GLOB $(YB_BUILD_DIR) : BuildConfig ] ;
+	if $(buildConfig)
+	{
+		LOCATE on BuildConfig = $(YB_BUILD_DIR) ;
+		include BuildConfig ;
+	}
+}
+
+include [ FDirName $(YB_BUILD_DIR) BuildServiceRules ] ;
+include [ FDirName $(YB_BUILD_DIR) BuildSettings ] ;
+include [ FDirName $(YB_BUILD_DIR) OverriddenJamRules ] ;
+include [ FDirName $(YB_BUILD_DIR) JamfileEngine ] ;
+include [ FDirName $(YB_BUILD_DIR) UserServiceRules ] ;
+include [ FDirName $(YB_TOP) Projects ] ;

@@ -1,0 +1,393 @@
+<html><head><title>Wonderbrush - Creating a button</title>
+
+
+
+		
+<style type="text/css">
+p.info { border:1px solid blue; background-color:#e0e0ff; padding:10px; margin:10px;}
+</style></head><body bgcolor="#ffffff">
+
+<center>
+<table border="0">
+<tbody><tr>
+	<td width="600">
+		<br>
+		<br>
+		<h3>Wonderbrush - Creating a button</h3>
+		<br>
+		<br>
+		<b>Our goal: </b><img src="images/final_button.gif"><br>
+		<br>
+		This tutorial demonstrates the use of several layers which form a kind of <i>filter chain</i>
+		to create the picture of a button. <i>Filter chain</i> means that the graphics data keeps
+		getting changed from one layer to the next until the finished button is generated. This enables 
+		non-destructive editing that makes it possible to alter every aspect of a picture later on. The
+		colour of the whole button can be changed simply by changing the colour of the bucket fill object
+		on the lowest layer; the metallic effect and the bevelled edges are automatically re-rendered.
+		Since all involved objects are vector-based, the button can always be resized without any pesky
+		artifacts from scaling pixels.<br>
+		<br>
+		<br>
+		<b>Creating the basic look</b><br>
+		<b>Goal:</b> <img src="images/step01.png"><br>
+		<br>
+		Start by creating a new canvas (<b>Canvas</b> menu) with the right size for the button.<br>
+		<br>
+		<center><img src="images/new_document.png">&nbsp;<img src="images/document_size.png"></center><br>
+		<br>		 
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					Alternatively the crop tool <img src="images/crop_icon.png"> can be used
+					on the standard canvas to become the right size.
+				</font></td>
+			</tr>
+		</table>
+
+		<br>
+		<br>
+		Use the fill tool <img src="images/fill_icon.png"> with a grey colour on the empty standard
+		layer. <br>
+		<br>
+		<center><img src="images/color_and_fill.png"></center><br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					The colour of existing objects (and also fill objects) can always
+					be changed by selecting them in the object list and assigning a
+					new colour via drag&drop.
+				</font></td>
+			</tr>
+		</table>
+
+		<br>
+		<br>
+		After that create a <i>noise filter</i>.</i><br>
+		<br>
+		<center><img src="images/noise_filter.png"></center><br>
+		<br>
+		The "Strength" property of the filter can be increased to later make the metallic effect more
+		pronounced. If the "Luminence only" property of the noise filter is activated, the noise will
+		be limited to the luminence only and the colour of a pixel will remain untouched.<br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					Currently the parameters of a filter can only be specified in the
+					<i>Property list</i> after its creation. Every new filter object
+					will automatically use the settings that were specified for the last
+					filter of that kind.
+				</font></td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		To achieve that metallic, "brushed" effect, a <i>Motion Blur</i> filter was added.<br>
+		<br>
+		<center><img src="images/motion_blur_filter.png"></center><br>
+		<br>
+		This object has only two Properties: The <i>Blur Radius</i>, specifying the extent of the
+		fuzziness, and the <i>Angle</i>, i.e. the direction. For the button you should use an angle
+		of 90 degrees, giving the blur a horizontal direction. A bigger radius of about 25 to 40 pixels
+		should do it for our button.<br> 
+		<br>
+		<center><img src="images/noise_added.png"></center><br>
+		<br>
+		This first layer with the three objects serves as a colour basis for the following links in
+		the initially mentioned "filter chain".<br>
+		
+		<br>
+		<br>
+		<b>Creating the shape of the button</b><br>
+		<b>Goal:</b> <img src="images/step02.png"><br>
+		<br>
+		Add another layer with the <b>Layer</b> menu.<br>
+		<br>
+		<center><img src="images/new_layer.png"></center><br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					New layers are created directly <i>above</i> the currently selected layer.
+				</font></td>
+			</tr>
+		</table>
+
+		<br>
+		<br>
+		The new layer is supposed to cut the rounded shape of the button out of the coloured plane
+		of the lower layer. This function is also known as "masking".<br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					Every layer in Wonderbrush has a <i>Mode setting</i> (see the <b>Mode</b>
+					menu), that defines how this layer influences the layers below it. The "Normal"
+					mode simply passes the colour of each pixel according to its opacity. The
+					"opacity" of a pixel is also called "alpha". It's just another channel
+					besides the three colour channels red, green and blue that saves the opacity
+					of every single pixel.
+				</font></td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		To have this layer work as a mask for the layer below, its mode is set to <i>Alpha</i>.<br>
+		<br>
+		<center><img src="images/mode_alpha.png"></center><br>
+		<br>
+		The colour of the layer is completely ignored, while its alpha channel is used to replace
+		the alpha channel of the layer below.
+		Since there aren't yet any objects on the masking layer, the coloured plane disappears completely.
+		<br>
+		It will only re-appear at places where objects on the masking layer increase the opacity.
+		A <i>straight brush stroke</i>, for example, is suited for the shape of our button. So, change
+		to the brush tool <img src="images/brush_icon.png">. <br>
+		Choose a brush size ("Radius" control) that's almost the height of the canvas.<br> 
+		<br>
+		<center><img src="images/brush_settings.png"></center><br>
+		<br>
+		You'll see how big the brush will be by the size of the mouse pointer while moving over the
+		canvas. The brush should have a <i>hard edge</i>, which means the "Hardness" control should
+		be at 100%. The option <i>Solid has to be turned off</i>, as it would deactivate the
+		generation of interim values for the opacity of the brush stroke (antialiasing). Set
+		<i>Spacing</i> to the minimum. The <i>Subpixel option isn't advantageous at the moment</i> either.
+		In a zoomed view it causes a sampling of the mouse position, sort of, "between" the pixels. Anyway,
+		you're better served with this option turned off, because the brush will be positioned on
+		full pixels only. You'll soon see why.<br>
+		<br>
+		To create a straight brush stroke, you first click on the left side of the canvas, then,
+		while keeping the <i><Shift> key</i> pressed, you click on the right side.<br> 
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					While the <i>&lt;Shift&gt; key</i> is pressed and the mouse button isn't released,
+					the end of the brush stroke can still be moved, until a perfectly horizontal
+					stroke is achieved. If you don't get it right on the first try, just use the
+					<i>Undo function</i> <img src="images/undo_icon.png">.
+				</font></td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		With the first click, which determined the starting point, already a brush object was created,
+		so that the layer now contains two brush objects. The first object can be selected and then
+		deleted by clicking on the <i>Trash icon</i> <img src="images/delete_icon.png"> for objects.<br>
+		<br>
+		The button now already has its shape.<br>
+		<br>
+		<br>
+		<b>Creating the 3D edges</b><br>
+		<b>Goal:</b> <img src="images/step03.png"><br>
+		<br>
+		Simply copy the whole layer.<br>
+		<br>
+		<center><img src="images/duplicate_layer.png"></center><br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					This can be achieved either by the <b>Layer</b> menu or by drag&drop
+					of the layer while pressing the <i>&lt;Shift&gt;</i> key.
+				</font></td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		The copy of the layer should be <i>in front, i.e. above</i> the other two layers.
+		Another "mode" can influence the luminance of the graphics data under a layer.
+		So, change the <i>mode of the copied layer to "Luminance"</i>. <br>
+		<br>
+		<center><img src="images/mode_luminace.png"></center><br>
+		<br>
+		Now the colour of the brush objects has an effect (on the masking layer it didn't matter).
+		Select the brush object <img src="images/brush_icon.png">, mix a white colour,<br>
+		<br>
+		<center><img src="images/color_white.png"></center><br>
+		<br> 
+		and <i>drag&drop the colour onto the brush object.</i><br>
+		<br>
+		<center><img src="images/three_layers.png"></center><br>
+		<br> 
+		Currently, the brush lightens up the whole button. To illuminate only the upper and left side,
+		the brush object has to be partially erased. For that, we copy it in the <b>Object</b> menu,<br> 
+		<br>
+		<center><img src="images/copy_object.png">&nbsp;<img src="images/paste_object.png"></center><br>
+		<br> 
+		or by drag&drop while pressing the <i>&lt;Shift&gt;</i> key. The copy should be <i>under</i> the brush
+		object. The <i>"Mode" is set to "Erase"</i> in the Property list of that object.<br>
+		<br>
+		<center><img src="images/mode_erase.png"></center><br>
+		<br> 
+		<i>The brush object becomes an eraser object.</i> To get a softer edge, the
+		property "Hardness" of 100% can be decreased.<br>
+		<br>
+		<center><img src="images/hardness.png"></center><br>
+		<br> 
+		The object has to be moved, so you change to the <i>Transform tool</i> <img src="images/transform_icon.png">.<br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					<i>This tool creates a box enclosing all objects that are
+					selected in the objects list.</i> As soon as the box is moved,
+					rotated or skewed, this transformation effects these objects;
+					it can be edited until the tool is finally applied by clicking
+					the green checkmark <img src="images/apply_icon.png">.
+				</font></td>
+			</tr>
+		</table>
+
+		<br>
+		<br>
+		Move and skew the eraser object until it crops the desired part of the white brush object
+		or enter the transformation with the keyboard like this:<br>
+		<br>
+		<center><img src="images/transform_settings_1.png"></center><br>
+		<br> 
+		Now, only the dark border is missing. For that, the whole layer is copied once again.<br> 
+		<br>
+		<center><img src="images/duplicate_layer.png"></center><br>
+		<br> 
+		Select the <i>brush object of the copy</i>, mix a colour black and drag&drop it onto the
+		object.<br> 
+		<br>
+		<center><img src="images/color_black.png">&nbsp;<img src="images/brush_and_eraser.png"></center><br>
+		<br> 
+		To have the brush object effect the lower right edge, the transform tool is used to move the
+		eraser object to the <i>opposite direction</i>.<br> 
+		<br>
+		<center><img src="images/transform_settings_2.png"></center><br>
+		<br>
+		Now the bevelled edges are finished.<br>
+		<br>
+		<br>
+		<b>Creating a black border</b><br>
+		<b>Goal:</b> <img src="images/step04.png"><br>
+		<br>
+		To draw a black border around the button, the top layer is <i>once more copied.</i>. <br> 
+		<br>
+		<center><img src="images/duplicate_layer.png"></center><br>
+		<br> 
+		This layer should be a standard colour layer, so the <i>"Mode" is changed back to "Normal"</i>.<br> 
+		<br>
+		<center><img src="images/mode_normal.png"></center><br>
+		<br>
+		An eraser object is needed on this layer as well, but the existing one is already transformed.
+		<i>Remove that eraser object.</i><br> 
+		<br>
+		<center>
+			<img src="images/eraser.png">&nbsp; 
+			<img src="images/delete_icon.png">&nbsp;
+			<img src="images/brush.png">
+		</center>
+		<br>
+		<br>
+		Make a copy of the remaining black brush object (make sure it's the last entry in the list),<br> 
+		<br>
+		<center><img src="images/copy_object.png">&nbsp;<img src="images/paste_object.png"></center><br>
+		<br>
+		and the property <i>"Mode" of the copy again to "Erase".</i><br> 
+		<br>
+		<center><img src="images/brush_to_eraser.png"></center><br>
+		<br>
+		Select the <i>black brush object</i> once more,<br> 
+		<br>
+		<center><img src="images/enlarged_brush_1.png"></center><br>
+		<br>
+		and <i>enlarge it.</i> It's most convenient by increasing the property <i>Radius</i> slightly.<br> 
+		<br>
+		<center><img src="images/enlarged_brush_2.png"></center><br>
+		<br>
+		Since the eraser object currently lies exactly on top of the area cleared by the masking
+		layer, a fine gap opens in the opacity of the inner button. It's recommended to <i>shrink the
+		object</i> a little bit. With the Transform tool, you'll quickly find the perfect size. It's even
+		faster by simply decreasing the property "Radius" with the keyboard.<br>
+		<br> 
+		<center><img src="images/smaller_eraser.png"></center><br>
+		<br>
+		<br>
+		<b>Creating a label</b><br>
+		<b>Goal:</b> <img src="images/step05.png"><br>
+		<br>
+		The label of the button can be created with the text tool <img src="images/text_icon.png"> on the
+		<i>same layer</i>.<br> 
+		<br>
+		<center><img src="images/font_settings.png"></center><br>
+		<br> 
+		<center><img src="images/text_object_1.png"></center><br>
+		<br> 
+		To make the text appear to be slightly sunk into the button's surface, copy the text object
+		<i>twice</i>. <br> 
+		<br>
+		<center><img src="images/copy_object.png">&nbsp;<img src="images/paste_object.png"></center><br>
+		<br>
+		The copies should be <i>behind</i> the original (i.e. in the list above) and their colour set to
+		black and white, respectively.<br> 
+		<br>
+		<center><img src="images/color_white.png">&nbsp;<img src="images/three_text_objects.png"></center><br>
+		<br> 
+		With the Transform tool, the <i>black copy</i> is moved to the <i>upper left</i>. This can be done
+		quite smoothly by activating the "Subpixel" option of the Transform tool and you've sufficiently 
+		zoomed into the canvas.<br>
+		The <i>white copy</i> is moved to the <i>lower right</i> accordingly. Again, entering the 
+		transformation with the keyboard is a suitable alternative.<br> 
+		<br>
+		<center><img src="images/transform_settings_3.png"></center><br>
+		<br>  
+		The transparency of both text objects can be decreased with the property <i>Opacity</i>.<br>
+		<br>
+		<center><img src="images/opacity.png"></center><br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					You can <i>double click a text object</i> to edit it once more
+					in the text tool. The opacity can be changed with the control there.
+				</font></td>
+			</tr>
+		</table>
+
+		<br>
+		<br>
+		The result is a button like this:<br> 
+		<br>
+		<center><img src="images/step06.png"></center><br>
+		<br>
+		<br>
+		<br>
+		<center>
+		<font size="-2">
+		The tutorial was created by Christian L&ouml;rchner (BeAthlon) in August 2005<br>
+		based on a text by Stephan A&szlig;mus 
+		(<a href="http://www.yellowbites.com/">YellowBites</a>)<br>
+		Originally published on <a href="http://besly.mittilgart.de/" target="_top">BeSly</a>, 
+		der BeOS &amp; Zeta Wissensbasis<br>
+		Translated by J.Seemer in November 2005.<br>
+		</font>
+		</center>
+		<br>
+	</td>
+</tr>
+</tbody></table>
+</center>
+</body></html>

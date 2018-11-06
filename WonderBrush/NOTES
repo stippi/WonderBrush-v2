@@ -1,0 +1,66 @@
+
+
+Könnte man die History ziemlich beschleunigen, indem man beispielsweise Pinselstriche gleicher Farbe auf einer Art Zwischenlayer zusammenfasst? Eventuell macht man in der History nach jedem Farb- oder Werkzeugwechsel ein neues "Superitem" auf, dass die folgenden Modifier als Unteritems enthält. Diese wären dann das visuelle Spiegelbild des aus Geschwindigkeitsgründen erzeugten Zwischenlayers. Für den User brächte es entsprechende Vorteile in Hinsicht auf Übersicht und zusammengefasste Handhabung automatisch gruppierter Modifier. Probleme: Was passiert, wenn der Benutzer die automatische Ordnung durcheinanderbringt? Etwa einen Pinselstrich anderer Farbe in eine "einfarbige" Gruppe einsortiert?
+
+Aktuell:
+ShapeState und TextState müssen gemeinsame Basisklasse kriegen, in der auch _RedrawStroke() und Freunde untergebracht werden können. Dort wird dann auch der Confirm()/Cancel() und der Temprorary-History Kram erledigt. Einige States enthalten doppelten Code, _ApplyStroke() und dergleichen. Für die Temprorary History muss sich was überlegt werden. Die Actions könnten als friend deklariert werden, aber vielleicht gibt es ein besseres Design. Mal mit Ingo reden.
+WICHTIG: Die State oder ConfirmableState Basisklasse braucht "Perform" auch wegen der Situation, dass ein Projekt während einer noch nicht angewendeten Bearbeitung gespeichert wird.
+
+AbstractFactory:
+	- Alles was mit Bitmaps zu tun hat, also Bitmap selbst, als auch alle
+	Blending Funktionen usw.
+ObjectComposition:
+	- Funktionen der jetzigen Modifier Objects entsprechend besser kapseln und dann durch Composition die Modifier zusammensetzen.
+
+
+Der Mechanismus mit den Actions ist irgendwie umständlich und theoretisch fehleranfällig. Momentan sind einige GUI Klassen so angepasst, dass sie, wenn sie eine Message aufgrund von MouseDown senden, ein spezielles Flag in die Message schreiben, was dann irgendwo anders das Generieren einer Action auslöst. Die weiteren Messages, die nur durch MouseMoved ausgelöst werden, erzeugen dann keine weiteren Actions. Eine bessere Idee wäre, alle Actions mit einem TimeStamp zu versehen und (wenn die nächste Action innerhalb eines bestimmten Zeitintervals erzeugt wurde) automatisch mit der vorhergehenden zusammenzufassen (so dies möglich ist). Dadurch könnten auch interessante Verhaltensmöglichkeiten eröffnet werden, zum Beispiel Actions, die sich auslöschen, weil sie den gegenteiligen Effekt haben.
+Dazu könnte der HistoryManager entsprechend angepasst werden, die Action Basisklasse würde das Timestamp Zeug beinhalten und eine abstrakte Funktion "bool CombineWith(Action*)" enthalten, in der in abgeleiteten Klassen, die die Funktion unterstützen wollen, zu dynamic_cast<>en versucht wird.
+Ist dieses System eingeführt, würde sich eine Menge Code vereinfachen, und wäre auch wesentlich robuster. Es ist auch eine bessere Entsprechung der Tatsache, dass Messages bewusst ignoriert werden, um ein flüssiges GUI zu garantieren, oder des Umstands, dass Messages wegen Systemüberlastung eventuell gar nicht ankommen.
+
+DualSlider könnten um ein Textfeld "Scale" erweitert werden, so dass sich die im Slider eingestellten Werte auf diesen Scale beziehen. So lässt sich leicht ein Bezugspunkt zum Beispiel für die Pinselgröße definieren.
+
+Die meisten anderen DualSlider müssten durch ein neues Objekt ersetzt werden, dass gleichzeitig ein Textfeld und auch ein Slider ist.
+
+
+CanvasView::AddManipulator(Manipulator* m)
+
+Ein Manipulator ist ähnlich einem State, nur das beliebig viele davon gleichzeitig angezeigt werden können, und wie eine Art Liste von Filtern von Input Events fungieren. Jeder Manipulator kann sich auf der Canvas zeichnen und
+manipuliert eine konkrete Eigenschaft eines Objekts.
+
+Anstatt des jetzigen Bereichs für Paletten könnte ein Bereich "Fill" enstehen, wo man "Solid Color", "Gradient", "Bitmap" etc konfigurieren kann.
+
+
+fName wieder von Property entfernen
+
+Clip Path:
+
+Wäre cool, wenn es eine Funktion "Generate Clip Path" gäbe, die über alle im Dokument enthaltenen Formobjekte iteriert, und mittels Oderverknüpfung einen ClipPath für's gesamte Dokument generiert. Dabei ist es egal, wenn es die Pfade für die Operation tesseliert wurden. Diese Funktion wäre hilfreich für Dokumentformate, die Transparenzen indirekt unterstützen.
+
+Pfadkonvertierungspipeline ermöglichen. Jedes Konvertierungsmodul kann eigene Transformation und Rendereigenschaften haben. Pipeline wird live aufgelöst.
+
+Jeder CanvasViewState könnte im Fensterhauptmenü ein eigenes Menü hinter "Edit" installieren und bei Deaktivierung wieder entfernen. So könnte man platzsparend und relativ elegant das Problem der kontextbezogenen Kommandos wie "Text in Pfad konvertieren" ermöglichen.
+
+
+
+Rendern in separatem Thread:
+
+- Rendererthread macht sich Kopie von Objektliste, die während einer Re-render Aktion benutzt wird.
+
+- Während der Renderer rendert, erzeugen Veränderer von Objekten Kopien dieser Objekte, während die Originale unverändert bleiben. Diese Kopien werden beim Setzen der Dirty-Region des Renderthreads mit registriert, sodass der Renderer, wenn er das nächste Mal ein Objekt anfasst, dessen Zustand auf den der registrierten Kopie setzt.
+
+Paramater:
+
+- werden durch Strings identifiziert
+
+- Haben ValueObject Basisklasse, die nach Identifizierung durch String in konkrete Implementierung zu casten versucht wird
+
+-> Erhebliche Vereinfachung der Undo Klassen
+
+
+Ebenenbaum:
+Vielleicht wäre es am besten, wenn die Trennung in "Ebenen" und "Objekte" nicht komplett verschwindet. Die Baumstruktur würde dann nur in der Ebenenliste stattfinden. Dort könnte man auch immer nur ein Element auswählen und draggen, so dass die ganze Sache für den Benutzer vielleicht einfacher nachvollziebar wäre. Zum Beispiel ist durch diese Trennung auch klar, wo in der Hirarchie neue Objekte hinzugefügt werden (nämlich an letzter Stelle in der Objektliste). Würde es nur noch eine Baumstruktur geben, müsste man einen zusätzlichen Marker brauchen, der anzeigt, wo in der Hirarchie neue Objekte eingehängt werden.
+
+Texturen als Füllmodus wären total geil. Es könnte eine Palette spezieller Werkzeuge zur Bearbeitung des Füllmodus geben. So ähnlich wie jetzt der Bereich mit den Werkzeugicons und dem Konfigurations-GUI. So könnte entlang des jetzigen "Farben"-Bereichs eine Reihe von Füllmodus Icons/Werkzeugen sein. Je nach gesetzem Füllmodus werden neue Objekte bereits entsprechend erzeugt.
+
+Effekte auf Objektmasken wären super. Vielleicht ein einfacher Weichzeichner für den Start?
+

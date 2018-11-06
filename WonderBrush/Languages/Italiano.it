@@ -1,0 +1,497 @@
+// Italiano
+// author: Mattia Tristo <mattia_tristo@libero.it>
+// additional work: Stefano Ceccherini <stefano.ceccherini@gmail.com>
+
+// addon stuff
+extern "C" {
+_EXPORT void init_strings(const char* strings[]);
+}
+
+// init_strings
+void
+init_strings(const char* strings[])
+{
+	strings[FILE_MENU]			= "File";
+	strings[NEW]				= "Nuovo";				// will show up in Canvas menu
+	strings[NEW_CANVAS]			= "Nuova tela";			// tool tip
+	strings[NEW_LAYER]			= "Nuovo layer";				// these strings were added
+	strings[NEW_BRUSH]			= "Nuovo pennello";				// by request to be able to
+	strings[NEW_PALETTE]		= "Nuova tavolozza";				// reflect different genders in "New"
+	strings[OPEN]				= "Apri";
+	strings[LOAD]				= "Carica";
+	strings[OPEN_CANVAS]		= "Apri tela";
+	strings[EXPORT_CANVAS]		= "Esporta progetto";
+	strings[EXPORT]				= "Esporta";
+	strings[EXPORT_AS]			= "Esporta come";
+	strings[SAVE_CANVAS]		= "Salva progetto";
+	strings[SAVE]				= "Salva";
+	strings[SAVE_AS]			= "Salva come";
+	strings[SETUP_PAGE]			= "Impostazione della pagina";
+	strings[PRINT]				= "Stampa";
+	strings[CLOSE]				= "Chiudi";
+	strings[CLOSE_CANVAS]		= "Chiudi tela";		// tool tip
+	strings[ABOUT]				= "A proposito";
+	strings[QUIT]				= "Esci";
+
+	strings[LOADING_FILE]		= "Sto caricando il file:";
+
+	strings[EDIT]				= "Modifica";
+	strings[UNDO]				= "Undo";
+	strings[REDO]				= "Redo";
+
+	strings[SETTINGS]			= "Impostazioni";
+	strings[FULLSCREEN]			= "A pieno schermo";
+	strings[SHOW_GRID]			= "Mostra la griglia per pixel";	// if zoomed in far enough,
+														// display a grid arround each pixel
+	strings[LANGUAGE]			= "Lingua";
+	strings[CANVAS]				= "Tela";				// ie project, document
+	strings[IMAGE]				= "Immagine";				// ie bitmap
+	strings[CLEAR]				= "Pulisci";
+	strings[RESIZE]				= "Ridimensiona";				// resize canvas (new resolution)
+	strings[ROTATE_90]			= "90°";
+	strings[ROTATE_180]			= "180°";
+	strings[ROTATE_270]			= "-90°";
+
+	strings[FORMAT]				= "Formato";				// color space of the canvas (RGB, Lab etc)
+
+	strings[EXPORT_FORMAT]		= "Formato";
+	strings[CURSOR_SOURCE]		= "Sorgente cursore";
+	strings[BITMAP_SOURCE]		= "Sorgente bitmap";
+	strings[SVG_FORMAT]			= "SVG (Non tutti i tipi di oggetto)";
+	strings[AI_FORMAT]			= "Adobe Illustrator (Non tutti i tipi di oggetto)";
+	strings[RDEF_FORMAT]		= "Sorgente RDef";
+
+	strings[LAYER]				= "Layer";
+	strings[DUPLICATE]			= "Duplica";
+	strings[MERGE_DOWN]			= "Unisci verso il basso";			// combining of current layer and the
+														// one underneath it
+	strings[MERGE_VISIBLE]		= "Unisci i layers visibili";		// combining of all visible layers
+	strings[RENAME]				= "Rinomina";
+	strings[DELETE]				= "Cancella";
+	strings[DELETE_ALL]			= "Rimuovi tutto";
+
+	// layer blending modes
+	strings[MODE]				= "Modo";
+	strings[NORMAL]				= "Normale";
+	strings[ERASE]				= "Cancella";
+	strings[MULTIPLY]			= "Moltiplica";
+	strings[INVERSE_MULTIPLY]	= "Moltiplica all'inverso";
+	strings[LUMINANCE]			= "Luminosità";
+	strings[MULTIPLY_ALPHA]		= "Canale alfa";
+	strings[MULTIPLY_INVERSE_ALPHA]	= "Inverti il canale alfa";
+	strings[REPLACE_RED]		= "Sostituisci rosso";
+	strings[REPLACE_GREEN]		= "Sostituisci verde";
+	strings[REPLACE_BLUE]		= "Sostituisci blu";
+	strings[DARKEN]				= "Scurisci";
+	strings[LIGHTEN]			= "Schiarisci";
+	
+	strings[HISTORY]			= "Storia";			// as in "modifier stack"
+	strings[OBJECT]				= "Oggetto";				// new name for the "History"
+	strings[FREEZE]				= "Congela";				// renders the result of the modifier stack
+														// into one "bitmap modifier" and replaces
+														// all previous modifiers (ie, you cannot edit
+														// them anymore) by the single bitmap modifier
+	strings[CUT]				= "Taglia";
+	strings[COPY]				= "Copia";
+	strings[PASTE]				= "Incolla";
+	strings[MULTI_PASTE]		= "Incolla multiplo";		// paste one ore more properties to
+														// *multiple* objects at once
+	strings[REMOVE_ALL]			= "Rimuovi tutto";
+
+	strings[OBJECT_SELECTION]	= "Seleziona";				// change selection shortcuts
+	strings[SELECT_ALL_OBJECTS]	= "Tutti";				// in Object and Property list
+	strings[SELECT_NO_OBJECTS]	= "Nessuno";
+	strings[INVERT_SELECTION]	= "Selezione inversa";
+	strings[ALL_OBJECTS]		= "Tutti";
+	strings[PROPERTY_SELECTION]	= "Seleziona";
+	strings[SELECT_ALL_PROPERTIES] = "Tutti";
+	strings[SELECT_NO_PROPERTIES] = "Nessuno";
+	strings[SPECIAL]			= "Speciale";
+
+	// filters
+	strings[ADD_FILTER]			= "Filtro";				// the actual menu
+	strings[DROP_SHADOW]		= "Disegna ombra";
+	strings[GAUSSIAN_BLUR]		= "Sfuocatura gaussiana";
+	strings[INVERT]				= "Inverti";
+	strings[BRIGHTNESS]			= "Luminosità";
+	strings[CONTRAST]			= "Contrasto";
+	strings[SATURATION]			= "Saturazione";
+	strings[MOTION_BLUR]		= "Sfuocatura da movimento";
+	strings[HALFTONE]			= "Mezzetinte";
+	strings[DOT]				= "Punto";				// mode options of Halftone
+	strings[LINE]				= "Linea";
+	strings[DITHER]				= "Tremore";
+	strings[DITHER_FS]			= "Tremore (FS)";
+	strings[DITHER_NC]			= "Tremore (NK)";
+	strings[NOISE]				= "Rumore";
+	strings[HUE_SHIFT]			= "Spostamento di tonalità";			// filter not yet written
+	strings[DISPERSION]			= "Dispersione";
+	strings[STRENGTH]			= "Forza";
+	strings[LUMINANCE_ONLY]		= "Solo luminosità";
+	strings[WARPSHARP]			= "Warpsharp";
+	strings[LAMBDA]				= "Lambda";
+	strings[MU]					= "µ";
+	strings[NON_MAXIMAL_SUPPRESSION] = "NMS";
+	strings[SOLID_AREA]			= "Area";
+
+	strings[PROPERTY]			= "Proprietà";
+	strings[UNKOWN_PROPERTY]	= "<sconosciuta>";
+
+	strings[SWATCHES]			= "Modelli";			// color palette
+	strings[ZOOM]				= "Zoom";
+	strings[ALPHA]				= "Alfa";				// keep this as short as possible
+	strings[ALPHA_CHANNEL]		= "Canale alfa";		// used for properties
+	strings[COLOR]				= "Colore";				// used for properties
+	strings[GRADIENT]			= "Gradiente";			// used for properties (?)
+
+	// pick objects tool
+	strings[SELECTABLE]			= "Selezionabile";		// which object types are "selectable"
+
+	// gradient options
+	strings[GRADIENT_TYPE]					= "Tipo";
+	strings[GRADIENT_TYPE_LINEAR]			= "Lineare";
+	strings[GRADIENT_TYPE_RADIAL]			= "Radiale";
+	strings[GRADIENT_TYPE_DIAMONT]			= "Diamante";
+	strings[GRADIENT_TYPE_CONIC]			= "Conico";
+	strings[GRADIENT_TYPE_XY]				= "X-Y";
+	strings[GRADIENT_TYPE_XY_SQRT]			= "Sqrt(X-Y)";
+	strings[GRADIENT_INTERPOLATION]			= "Interpolazione";
+	strings[GRADIENT_INTERPOLATION_LINEAR]	= "Lineare";
+	strings[GRADIENT_INTERPOLATION_SMOOTH]	= "Uniforme";
+	strings[GRADIENT_INHERITS_TRANSFORM]	= "Eredita trasformazione";
+
+	// brush options
+	strings[OPACITY]			= "Opacità";
+	strings[MIN_OPACITY]		= "Op. min";			// property label (keep short)
+	strings[DYN_OPACITY]		= "Op. din";			// property label (keep short)
+	strings[RADIUS]				= "Raggio";
+	strings[MIN_RADIUS]			= "Raggio min";			// property label (keep short)
+	strings[DYN_RADIUS]			= "Raggio din";			// property label (keep short)
+	strings[HARDNESS]			= "Durezza";			// controls brush shape (soft...hard)
+	strings[MIN_HARDNESS]		= "Durezza min";			// property label (keep short)
+	strings[DYN_HARDNESS]		= "Durezza dyn";			// property label (keep short)
+	strings[SPACING]			= "Spaziatura";			// distance in % of brush diameter at wich brush
+														// shapes will be put into the bitmap along the
+														// line of a stroke,
+														// ! also used for Text tool (spacing between chars)
+	strings[MIN_SPACING]		= "Spaziatura min";		// property label (keep short), not yet used
+	strings[DYN_SPACING]		= "Spaziatura din";		// property label (keep short), not yet used
+	strings[SUBPIXELS]			= "Subpixels";			// allow subpixel precise positioning of tools
+	strings[SOLID]				= "Solido";
+	strings[TILT]				= "Tilt";				// tablet specific, tilt of pen
+
+	strings[BLUR_RADIUS]		= "Sfuocatura radiale";		// property label (keep short), also used for Dispersion filter
+	// translate options
+	strings[X_LABEL]			= "X";
+	strings[Y_LABEL]			= "Y";
+	strings[X_SCALE]			= "Scala X";
+	strings[Y_SCALE]			= "Scala Y";
+	strings[TRANSLATION_X]		= "X";
+	strings[TRANSLATION_Y]		= "Y";
+	strings[SCALE_X]			= "X";
+	strings[SCALE_Y]			= "Y";
+	strings[ANGLE]				= "Angolo";
+
+	strings[X_OFFSET]			= "Intervallo X";
+	strings[Y_OFFSET]			= "Intervallo Y";
+	// crop options
+	strings[LEFT]				= "Sinistra";
+	strings[TOP]				= "Alto";
+	strings[ENTIRE_CANVAS]		= "Tutto";
+	// bucket fill options
+	strings[TOLERANCE]			= "Tolleranza";
+	strings[SOFTNESS]			= "Morbidezza";
+	strings[CONTIGUOUS_AREA]	= "Area Contigua";
+
+	// shape options
+	strings[PATH]				= "Tragitto";				// property label
+	strings[OUTLINE]			= "Outline";
+	strings[TRANSFORM]			= "Trasforma";
+	strings[CLOSED]				= "Chiuso";				// ie first and last point of path
+	
+	strings[CAP_MODE]			= "Caps";
+	strings[BUTT_CAP]			= "Butt";
+	strings[SQUARE_CAP]			= "Squadrati";
+	strings[ROUND_CAP]			= "Arrotondati";
+	strings[JOIN_MODE]			= "Join";
+	strings[MITER_JOIN]			= "Miter";
+	strings[ROUND_JOIN]			= "Arrotondata";
+	strings[BEVEL_JOIN]			= "Bevel";
+														// are connected
+	strings[CIRCLE]				= "Cerchio";				// not yet used
+	strings[RECT]				= "Rettangolo";				// not yet used
+	strings[ROUND_CORNERS]		= "Angoli arrotondati";		// not yet used
+	strings[TOGGLE_ROUND_CORNERS]		= "Togli angoli arrotondati";		// not yet used
+	strings[ROUND_CORNER_RADIUS]		= "Raggio angoli arrotondati";						// not yet used
+	strings[CHANGE_ROUND_CORNER_RADIUS]	= "Cambia raggio angoli arrotondati";	// not yet used
+	strings[REVERSE_PATH]		= "Percorso inverso";
+
+	// text options
+	strings[FONT]				= "Carattere";
+	strings[SIZE]				= "Dimensione";
+	strings[ROTATION]			= "Rotazione";
+	strings[TEXT_INPUT]			= "Testo";				// label for text input control (not used anymore)
+	strings[ADVANCE_SCALE]		= "Spaziatura";			// additional spacing between chars
+														// (not used anymore)
+	strings[HINTING]			= "Hinting";			// not used, hinting means that the shapes
+														// of chars are modified to more directly
+														// hit pixels
+	strings[KERNING]			= "Kerning";			// kerning means that the distance between two
+														// glyphs is individual per their combination
+														
+	strings[TEXT_LINE_SPACING]	= "Interlinea";		// font height * line spacing = vertical line dist
+	// color picker tool
+	strings[TIP_SIZE]			= "Dimensione della punta";
+	strings[PIXEL_1x1]			= "1x1 pixels";
+	strings[PIXEL_3x3]			= "3x3 pixels";
+	strings[PIXEL_5x5]			= "5x5 pixels";
+	strings[INCLUDE_ALL_LAYERS]	= "Includi tutti i layers";
+	// tools
+	strings[BRUSH]				= "Pennello";
+	strings[CLONE]				= "Clonazione";				// clone brush (transfers parts of an image to
+														// another place)
+	strings[ERASER]				= "Gomma";
+	strings[PEN]				= "Matita";
+	strings[PEN_ERASER]			= "Gomma-matita";
+	strings[RESTORE]			= "Restore";			// opposite of eraser (restores alpha channel)
+	strings[DROPPER]			= "Contagocce";			// color picker
+	strings[TEXT]				= "Testo";
+	strings[BLUR]				= "Sfumatura";
+	strings[BITMAP]				= "Bitmap";
+	strings[SELECT]				= "Selezione";
+	strings[TRANSLATE]			= "Sposta";
+	strings[CROP]				= "Taglia";
+	strings[BUCKET_FILL]		= "Secchiello";
+	strings[SHAPE]				= "Forma";
+	strings[ELLIPSE]			= "Ellisse";
+	strings[ROUND_RECT]			= "Rettangolo (arrotondato)";	// the tool also creates non-round rectangles
+	strings[EDIT_GRADIENT]		= "Modifica gradiente";
+	strings[GUIDES]				= "Guide";
+	strings[PICK_OBJECTS]		= "Seleziona oggetti";
+	strings[CLIPBOARD]			= "Clipboard";
+
+
+	// zoom
+	strings[ZOOM_IN]			= "Zoom in";			// tool tips
+	strings[ZOOM_OUT]			= "Zoom out";
+	// actions
+	strings[ADD_LAYER]			= "Aggiungi layer";			// the following strings are for display in the
+														// undo/redo menu
+	strings[REMOVE_LAYER]		= "Rimuovi layer";		// a "modifier" is a step of changing the bitmap,
+														// ie a brush stroke or something else.
+	strings[REMOVE_LAYERS]		= "Rimuovi layers";
+	strings[MOVE_LAYER]			= "Muovi layer";			// ie drag sorting to another pos in list
+	strings[MOVE_LAYERS]		= "Muovi layers";
+	strings[MERGE_LAYERS]		= "Fondi layers";
+	strings[UNKOWN_MODIFIER]	= "Modificatore sconosciuto";
+	strings[ADD_MODIFIER]		= "Aggiungi modificatore";
+	strings[ADD_MODIFIERS]		= "Aggiungi modificatori";
+	strings[CHANGE_COLOR]		= "Cambia colore";
+	strings[CHANGE_COLORS]		= "Cambia colori";
+	strings[REMOVE_MODIFIER]	= "Rimuovi modificatore";
+	strings[REMOVE_MODIFIERS]	= "Rimuovi modificatori";
+	strings[MOVE_MODIFIER]		= "Muovi modificatore";
+	strings[MOVE_MODIFIERS]		= "Muovi modificatori";
+	strings[TRANSLATE_MODIFIER]	= "Traduci modoficatore";
+	strings[TRANSLATE_MODIFIERS]	= "Traduci modificatori";
+	strings[CHANGE_LAYER_SETTINGS]	= "Cambia impostazioni dei layers";
+	strings[CROP_CANVAS]		= "Ritaglia tela";
+	strings[RESIZE_CANVAS]		= "Ridimensiona tela";
+	strings[ROTATE_CANVAS]		= "Ruota tela";
+	strings[INSERT_CANVAS]		= "Inserisci tela";
+	strings[CHANGE_OPACITY]		= "Cambia opacità";
+	strings[EDIT_MODIFIER]		= "Modifica modificatore";
+	// pasting properties
+	strings[PASTE_PROPERTY]		= "Incolla proprietà";				// paste one property to one object
+	strings[PASTE_PROPERTIES]	= "Incolla proprietà";			// paste multiple properties to one object
+	strings[MULTI_PASTE_PROPERTY] = "Incolla proprietà multiplo";		// paste one property to multiple objects
+	strings[MUTLI_PASTE_PROPERTIES] = "Incolla proprietà multiplo";	// paste multiple property to multiple objects
+	// shape tool history
+	strings[ADD_CONTROL_POINT]	= "Aggiungi punto di controllo";
+	strings[TOGGLE_OUTLINE]		= "Sottolineato on/off";
+	strings[CHANGE_OUTLINE_WIDTH] = "Modifica spessore sottolineatura";
+	strings[CHANGE_CAP_MODE]	= "Modifica Caps";
+	strings[CHANGE_JOIN_MODE]	= "Modifica intersezioni";
+	strings[MODIFY_CONTROL_POINT] = "Modifica punto di controllo";
+	strings[CLOSE_PATH_ACTION]	= "Chiudi percorso";
+	strings[INSERT_CONTROL_POINT] = "Inserisci punto di controllo";
+	strings[REMOVE_CONTROL_POINT] = "Rimuovi punto di controllo";
+	strings[REMOVE_CONTROL_POINTS] = "Rimuovi punti di controllo";
+	strings[CHANGE_POINT_SELECTION] = "Cambia selezione";
+	strings[NUDGE_CONTROL_POINT] = "Nudge punto di controllo";
+	strings[NUDGE_CONTROL_POINTS] = "Nudge punti di controllo";
+	strings[SELECT_PATH]		= "Seleziona percorso";
+	strings[CREATE_NEW_PATH]	= "Nuovo percorso";
+	strings[DELETE_PATH]		= "Rimuovi percorso";
+	strings[TEXT_TO_SHAPE]		= "Da testo a forma";
+	strings[TEXTS_TO_SHAPES]	= "Da testi a forma";
+	strings[TRANSFORM_CONTROL_POINTS] = "Trasforma punti di controllo";
+	strings[MERGE_SHAPE_OBJECTS] = "Unisci forme";
+
+	strings[FILLING_RULE]		= "Riempimento";
+	strings[NON_ZERO]			= "Non zero";
+	strings[EVEN_ODD]			= "Pari-dispari";
+	// text tool history
+	strings[CHANGE_FONT_SIZE]	= "Modifica dimensioni del font";
+	strings[CHANGE_TEXT_ROTATION] = "Modifica rotazione del testo";
+	strings[MOVE_TEXT]			= "Muovi testo";
+	strings[CHANGE_FONT]		= "Cambia font";
+	strings[CHANGE_TEXT]		= "Modifica testo";
+	strings[CHANGE_FONT_ADVANCE_SCALE] = "Modifica spaziatura";
+	strings[ALIGNMENT]			= "Allineamento";
+	strings[CHANGE_ALIGNMENT]	= "Modifica allineamento";
+	strings[ALIGNMENT_LEFT]		= "Sinistra";
+	strings[ALIGNMENT_CENTER]	= "Centrato";
+	strings[ALIGNMENT_RIGHT]	= "Destra";
+	strings[ALIGNMENT_JUSTIFY]	= "Giustificato";
+	strings[CHANGE_TEXT_WIDTH]	= "Modifica larghezza testo";
+	strings[PARAGRAPH_INSET]	= "Rientro";
+	strings[CHANGE_PARAGRAPH_INSET]	= "Modifica rientro";
+	strings[PARAGRAPH_SPACING]	= "Sp. Paragr.";		// additional spacing between paragraphs
+	
+	// crop tool
+	strings[MODIFY_CROP_RECT]	= "Modifica rettangolo del crop";
+	// select tool
+	strings[MODIFY_SELECT_RECT]	= "Modifica rettangolo di selezione";
+	// transformations
+	strings[TRANSFORMATION]		= "Trasformazione";
+	strings[BEGIN_TRANSFORMATION] = "Inizia trasformazione";
+	strings[FINISH_TRANSFORMATION]	= "Termina trasformazione";
+	strings[MOVE]				= "Muovi";
+	strings[ROTATE]				= "Ruota";
+	strings[SCALE]				= "Scala";
+	strings[MOVE_PIVOT]			= "Muovi pivot";
+	strings[TRANSFORM_OBJECT]	= "Trasforma oggetto";
+	strings[TRANSFORM_OBJECTS]	= "Trasforma oggetti";
+	// guide tool
+	strings[SHOW_GUIDES]		= "Mostra guide";
+	strings[HORIZONTAL]			= "Orizzontali";
+	strings[VERTICAL]			= "Verticali";
+	strings[UNIT]				= "Unità";
+	strings[UNIT_PERCENT]		= "%";
+	strings[UNIT_PIXEL]			= "px";
+	strings[UNIT_CM]			= "cm";
+	strings[UNIT_MM]			= "mm";
+	strings[UNIT_INCH]			= "pollici";
+	strings[UNIT_DPI]			= "dpi";
+
+	// general
+	strings[OK]					= "Ok";
+	strings[CONFIRM]			= "Conferma";			// apply changes
+	strings[CANCEL]				= "Annulla";
+	strings[REVERT]				= "Ritorna";				// revert changes made in panel
+	strings[REMOVE]				= "Rimuovi";
+	strings[NAME]				= "Nome";				// name of project
+	strings[UNNAMED]			= "Senza nome";
+	strings[DEFAULT]			= "Default";
+	strings[MERGED]				= "Fusione";				// default name for merged layer
+	strings[TOOL]				= "Strumento";				// for tool tips
+	strings[ANY_MODIFIER]		= "Qualsiasi modificatore";		// as in modifier key on the keyboard (shift,
+														// option, alt etc)
+	strings[RETURN]				= "Return";
+	strings[ESCAPE]				= "Escape";
+	strings[SET]				= "Imposta";
+	strings[COUNT]				= "Conta";
+	strings[INTERPOLATION]		= "Interpolazione";
+	strings[NEAREST_NEIGHBOR]	= "Ripeti";
+	strings[BILINEAR]			= "Bilineare";
+	strings[RETRY]				= "Riprova";
+	strings[OVERWRITE]			= "Sovrascrivi";
+
+	// panels
+	strings[PICK_COLOR]			= "Scegli un colore";			// window title of color picker
+	strings[WIDTH]				= "Larghezza";				// pixel count
+	strings[HEIGHT]				= "Altezza";
+	strings[BRUSH_PANEL]		= "Prendi pennello";
+	strings[BRUSH_NAME]			= "Nome pennello";
+	strings[PROGRAM_SETTINGS]	= "Impostazioni programma";
+	// program settings
+	strings[ON_STARTUP]			= "All'avvio";
+	strings[DO_NOTHING]			= "non fare nulla";
+	strings[ASK_OPEN]			= "visualizza il pannello apri";
+	strings[ASK_NEW]			= "visualizza il pannello nuovo";
+	strings[AUTO_SIZE]			= "crea nuova tela delle dimensioni";
+	strings[LIVE_UPDATES]		= "Esegui aggiornamenti nel navigatore e nelle icone dei layers";
+	strings[USE_SYSTEM_LANGUAGE] = "Usa la lingua di Sistema";
+	strings[STARTUP_ACTION]		= "Azione all'avvio";
+	strings[INTERFACE]			= "Interfaccia";
+	// requestors
+	strings[AKS_SAVE_CHANGES]	= "Chiudere il documento e scartare i cambiamenti non salvati?";
+	strings[DISCARD]			= "Scarta";
+	strings[SAVING_FAILED]		= "Salvataggio fallito!";
+	strings[ERROR]				= "Errore";				// alias reason for above
+	strings[BLIP]				= "Blip!";				// As in "Mission Earth"
+
+	strings[DEMO_MODE]			= "WonderBrush è in esecuzione in modalità demo. "
+								  "Il salvataggio dei progetti è disabilitato.\n\n"
+								  "Per favore registrati  al Kagi online store "
+								  "per ricevere il tuo keyfile di slocco.";
+	strings[NEVER_MIND]			= "Non importa";
+	strings[OPEN_TRANSLATIONKIT_ERROR]	= "Non sono riuscito ad aprire il "
+								  "file '%s' usando il Translation kit.\n\n"
+								  "O il file non contiene un'immagine, o "
+								  "non ci sono Translator installati per "
+								  "maneggiare questo formato.";
+	strings[OPEN_NATIVE_ERROR]	= "Non sono riuscito ad aprire il file '%s' "
+								  "come un documento WonderBrush.\n\n";		// yes, that's two \n
+	strings[UNSUPPORTED_CURSOR_SIZE] = "La tela dev'essere di 16 x 16 pixels "
+								  "di dimensione. Altre dimensioni per il "
+								  "cursore non sono supportate.";
+	strings[SELECTED_AREA_EMPTY] = "L'area selezionata era vuota.";
+	strings[ENTRY_DOES_NOT_EXIST] = "'%s' non può essere caricato, poichè non esiste.";
+	strings[ENTRY_IS_A_FOLDER]	= "'%s' non può essere caricato, perchè è una cartella.";
+	strings[WARN_SVG_DATA_LOSS]	= "WonderBrush potrebbe non aver "
+								  "letto tutti i dati dal file SVG "
+								  "quando è stato caricato. "
+								  "Sovrascrivendo il file originale, "
+								  "queste informazioni potrebbero essere "
+								  "perse.";
+
+	// tool tips										// please test the appearance of the tips and
+														// try to align them manually by putting the
+														// '\n' in the right spot!
+
+	strings[TOOL_TIPS]			= "Mostra suggerimenti";
+	strings[ALPHA_TIP]			= "Imposta il valore globale di alfa del canale attivo.";
+	strings[VISIBILITY_TIP]		= "Imposta la visibilita del layer attivo on/off.";
+	strings[PRESSURE_CONTROL_TIP]	= "Abilita il controllo con la pressione della penna.";
+	strings[BRUSH_PREVIEW_TIP]	= "Anteprima del pennello. Clicca per aprire il pannello per le impostazione del pennello.";
+	strings[CURRENT_COLOR_TIP]	= "Colore attuale. Clicca per aprire il pannello per la selezione di un colore.";
+	strings[NAVIGATOR_TIP]		= "Anteprima della tela. Clicca per muovere la parte visibile.\n"
+								  "Usa la rotellina del mouse per zoomare in/out.";
+	strings[LAYER_LIST_TIP]		= "Ordinamento per drag'n'drop. Clicca icona dell'occhio per cambiare\n"
+								  "la visibilità on/off. Doppio click per cambiare nome.";
+	strings[HISTORY_LIST_TIP]	= "Ordinamento per drag'n'drop. Rilascia un colore per cambiare\n"
+								  "il colore dei modificatori selezionati.";
+	strings[PROPERTY_LIST_TIP]	= "Modifica, copia e incolla le proprietà degli oggetti.";
+	strings[SUB_PIXEL_TIP]		= "Segui la posizione del mouse/penna con precisione superiore al pixel.";
+	strings[SOLID_TIP]			= "Non variare l'opacità per pixel.";
+	strings[TILT_TIP]			= "Distorgi forma del pennello in base all'inclinazione della penna.";
+	strings[FULLSCREEN_TIP]		= "Alterna tra pieno schermo e modalità finestra.";
+	strings[GRADIENT_CONTROL_TIP] = "Trascina i colori qui per aggiungere o modificare i punti colore.\n"
+									"Doppio click sopra un punto per selezionarne il colore.";
+	strings[GRADIENT_INHERITS_TRANSFORM_TIP] = "Eredita trasformazione dall'oggetto";
+
+	// quick help
+	strings[READY]				= "Pronto.";
+	strings[NO_CANVAS_HELP]		= "Crea una nuova tela o carica un progetto o un file immagine.";
+	strings[NO_HELP]			= "Nessun aiuto aggiuntivo.";
+	strings[CROP_HELP]			= "Regola i limiti del rettangolo, premi <Return> per applicare. <Shift> per tenere le proporzioni.";
+	strings[TRANSLATE_HELP]		= "Seleziona gli oggetti da spostare. <Shift> per tenere la direzione.";
+	strings[EDIT_GRADIENT_HELP]	= "Modifica colori, tipo e trasformazione gradiente.";
+	strings[STROKE_HELP]		= "Usa <Shift> per estendere una pennellata precedente e disegnare linea dritta.";
+	strings[CLONE_HELP]			= "Il primo click definisce l'origine, il secondo la distanza. Premi <Ctrl> per reimpostare la distanza.";
+	strings[BUCKET_FILL_HELP]	= "\"Morbidezza\" controlla la solidità del colore di riempimento.";
+	strings[TEXT_HELP]			= "Premi <Return> quando terminato per applicare il prodotto dello strumento usato.";
+	strings[SHAPE_HELP]			= "Tieni premuto il tasto <Command> o <Alt> per opzioni aggiuntive. Premi <Return> quando terminato.";
+	strings[SELECT_HELP]		= "Seleziona un'area dove copiare gli appunti di sistema.";
+	strings[ELLIPSE_HELP]		= "Clicca e trascina per creare un'ellisse.\n<Shift> mantiene le proporzioni.";
+	strings[ROUND_RECT_HELP]	= "Clicca e trascina per creare un rettangolo.\n<Shift> mantiene le proporzioni.";
+	strings[PICK_OBJECTS_HELP]	= "Seleziona gli oggetti cliccando su di essi o formando un rettangolo di selezione.\n<Shift> mantiene la precedente selezione.";
+	strings[GUIDES_HELP]		= "Crea, modifica o rimuovi guide.";
+
+	strings[ENTER_SERIAL_NUMBER] = "Prego inserire il Numero di Serie  "
+								   "ricevuto con questa copia di WonderBrush.";
+	strings[WRONG_SERIAL_NUMBER] = "E' stato inserito un Numero di Serie non valido.";
+
+}

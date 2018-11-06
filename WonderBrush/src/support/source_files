@@ -1,0 +1,11 @@
+SOURCE_FILES +=
+	bitmap_compression.cpp
+	bitmap_support.cpp
+	blending.cpp
+	colorspace.cpp
+	ImageProcessingLibrary.cpp
+	lab_convert.cpp
+	RandomNumberGenerator.cpp
+	support.cpp
+	version.cpp
+;

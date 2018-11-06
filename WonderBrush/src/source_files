@@ -1,0 +1,6 @@
+SOURCE_FILES +=
+	CanvasView.cpp
+	main.cpp
+	MainWindow.cpp
+	WonderBrushApp.cpp
+;

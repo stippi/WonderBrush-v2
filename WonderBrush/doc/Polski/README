@@ -1,0 +1,505 @@
+Wstęp:
+
+WonderBrush jest edytorem grafiki bitmapowej. Głowne okno zawiera dowolną ilość Projektów. Każdy projekt ma przypisaną nazwę, rozdzielczość pikseli, oraz inne właściwości. Dodatkowo każdy projekt może powiązany z dwoma plikami reprezentującymi go na dysku - jeden to "spłaszczony" obraz generowany przez Translator, drugi to pełny plik projektu.
+Każdy projekt może zawierać dowolną ilość Warstw, ulożonych na liście. Każda z warstw reprezentuje oddzielną bitmapę o rozmiarze projektu. W zależności od trybu nakładania są układane jedna na drugiej tworząc końcowy obraz projektu.
+Każda z warstw może zawierać dowolną ilość Obiektów, które są tworzone przy pomocy narzędzi WonderBrush'a. Każdy obiekt ma zbiór właściwości, które definiują unikalny wygląd obiektu na warstwie.
+Użytkownik może w dowolnym momencie zmieniać kolejnośc zarówno warstw jak i znajdujących się na nich obiektów. Można by to nazwać nie-linearnym edytowaniem. Dodatkowo można też zmieniać większość właściwości obiektów. Można by to nazwać nie-destruktywnym edytowaniem, ponieważ dodanie kolejnego obiektu (np. filtra) nie niszczy żadnych danych o pikselach.
+
+
+Interfejs:
+
+WnderBrush oferuje pracę w "jednym oknie". Dodatkowe okna są tylko w formie pojawiających się paneli, które w zamierzeniu nie powinny pozostawać ponad obszarem pracy. Wzdłuż lewej krawędzi  głównego okna znajduje się struktura zawartości dokumentu - najpierw opis, potem lista warstw, potem lista obiektów aktualnie wybranej warstwy, i w końcu lista właściwości aktualnie wybranego obiektu. Wzdłuż górnej krawędzi okna znajdują się narzędzia. Górna część wyświetla pola konfiguracji aktualnie wybranego narzędzia. W prawym, górnym rogu jest obszar zarezerwowany dla barw.
+
+
+Obsługa:
+
+Każda warstwa jest domyślnie przezroczysta. Zawartość warstwy jest tworzona jedynie przez obiekty, na przykład pociągnięcia Pędzla. Każda z warstw ma swoją własną listę przypisanych do niej Obiektów, która w zasadzie jest historią konstrukcji warstwy. Jednakże ta historia jest nie linearna, gdyż Obiekty mogą być rearanżowane poprzez przeciąganie myszką, a każda z ich właściwości może być pózniej zmieniana. Stosowna część bitmapy danej warstwy zostanie w takim przypadku wyrenderowana ponownie poprzez wyrenderowanie na nowo każdego obiektu znajdującego się w danym obszarze. Wszelkie zależności w historii także zostaną uwzględnione. Na przykład jeżeli część warstwy, która została skopiowana narzędziem Klonowanie, zostanie zmieniona, obszar zawierający pociągnięcia narzędzia Klonowanie także zostanie wyrenderowany ponownie.
+WonderBrush używa schowka systemowego do przechowywania danych o pikselach i ich wymiany z innymi aplikacjami, do czego służy specjalne narzędzie Kopiowanie. Dodatkowo utrzymywane są dwa prywatne schowki do przechowywania obiektów i właściwości obiektów. Są one trwałe aż do ponownego uruhomienia systemu i są dostępne poprzez menu list Obiektów i Właściwości. Korzystając z tych schowków, obiekty mogą być przenoszone lub kopiowane pomiędzy warstwami (również pomiędzy projektami) a właściwości jednego obiektu mogą być kopiowane do wielu innych obiektów na raz.
+Warstwy i obiekty mogą być także duplikowane poprzez trzymanie wciśniętego klawisza <SHIFT> podczas przeciągania i upuszczania myszką.
+
+"Nie linearna struktura historii" ma zarówno plusy jak i minusy. Niektóre z plusów to małe zużycie pamięci przez stos obiektów oraz, oczywiście, nie linearność. Struktura jest zapisywana w pliku projektu. Obliczenia są dokładniejsze, zmiana wymiarów projektu po prostu renderuje wszystkie warstwy z przeskalowanymi obiektami. Do minusów należy zaliczyć okazyjne wolne wykonywanie Cofnij/Ponów spowodowane potrzebą ponownego wyrenderowania wielu obiektów.
+
+Część operacji znanych z innych programów graficznych jest uzyskiwana w WonderBrush w inny sposób. Na przykład narzucanie kanału przezroczystości może być uzyskane poprzez duplikację warstwy i ustawienie trybu nakładania nowej warstwy na "Krycie". Następne malowanie na oryginalnej warstwie będzie wtedy maskowane przez duplikat. Niestety maska zostanie zaaplikowana także do wszystkich pozostałych warstw. Jednakże w przyszłości WonderBrush będzie posiadał drzewo kompozycji zamiast listy warstw, co pozwoli na ograniczenie efektu warstwy do konkretnej gałęzi warstw.
+
+WonderBrush oferuje koncepcję przenośnych właściwości. Oznacza to że właściwości jednego obiektu mogą być transferowane do dowolnej ilości innych obiektów, nawet kiedy te obiekty są różnego typu. Zbiór właściwości jakie obiekt może posiadać uzależniony jest od jego typu. Jednak część właściwości jest powszechna dla dwóch lub więcej typów obiektów. Na przykład wiele obiektów posiada "Krycie", a część posiada "Promień".
+Możliwość transferu dowolnej liczby właściwości do dowolnej liczby obiektów jest całkiem potężnym narzędziem, za to implementacja jest dosyć prosta. W oknie programu istnieje lista Właściwości, która wyświetla zbiór właściwości i ich specyficzne wartości dla zaznaczonego obiektu na liście Obiektów. Jeżeli zaznaczono więcej niż jeden obiekt lista ta będzie pusta. Większość właściwości może być edytowana bezpośrednio na liście Właściwości, każda z nich na swój sposób. Można zaznaczyć wiele właściwości na raz i skopiować do specjalnego (i trwałego aż do ponownego uruchomienia systemu operacyjnego) schowka Właściwości. Używając tego samego menu, właściwości ze schowka mogą zostać wklejone do zaznaczonych obiektów. Obiekty zostaną zmienione w zależności od tego, które z wklejanych właściwości są przez nie akceptowane.
+
+
+Aktualne zalety:
+
+Jedną z ważniejszych zalet WonderBrush jest obliczanie barw w przestrzeni RGB skonwertowanej do gamma. Pozwala to na wykluczenie nieprawidłowych barw pośrednich i jest unikalną zaletą pośród programów graficznych na BeOS'a.
+
+System Pędzli, pomimo brakujących jeszcze wielu opcji, oferuje kilka unikalnych możliwości. Ponieważ kształty pędzla są obliczane dynamicznie, ich różne aspekty mogą być kontrolowane poprzez nacisk pióra. Dodatkowo pociągnięcia pędzla są renderowane z podpikselową precyzją co, o ile mi wiadomo, nie jest dostępne w innych programach graficznych na BeOS'a.
+
+Sposób w jaki obiekty mogą być duplikowane i przemieszczane stwarza interesujące możliwości i pozwala na zaoszczędzenie mnóstwa czasu podczas zmiany wielu obiektów na raz.
+
+Część trybów edycji w WonderBrush wykorzystuje własny, tymczasowy stos Cofnij, co może być całkiem wygodne w użyciu. Oznacza to, że możesz na przykład, cofnąć pojedyńcze modyfikacje *w trakcie* tranfsormowania obiektów, a *po* akceptacji transformacji możesz cofnąć je wszystkie na raz.
+
+WonderBrush w pełni dostosowuje się do używanej czcionki, a używany język interfejsu może być dynamicznie zmieniany. Pliki językowe mogą być edytowane w trakcie działania programu, a wszelkie zmiany zostaną natychmiast wprowadzone do interfejsu.
+
+WonderBrush jest w pełni natywną aplikacją na BeOS'a. Uruchamia się całkiem szybko i wykorzystuje akceleracje sprzętową do rysowania. Jednak będę to musiał jeszcze przemyśleć, kiedy będę chciał się pozbyć migania części interfejsu w przyszłości.
+
+Testowałem ten program tylko na swoich komputerach, ale mogę szczerze powiedzieć, że nie ma w nim żadnych błędów zamykających program, o których bym wiedział. Jeżeli o jakichś wiesz, daj mi znać. W tej edycji pozostało kilka mniej denerwujących błędów, jednak nie powinny one uniemożliwiać pracy. Po więcej informacji zajrzyj do pliku BUGS.
+
+Jeżeli interesuje Cię co jest planowane na przyszłość, zajrzyj do pliku TODO. Poprzez plik LOG możesz za to wejrzeć w proces rozwoju WonderBrush.
+
+
+Aktualne wady:
+
+WonderBrush nie może eksportować projektów do plików w formacie Photoshop'a lub choćby TIFF, co jest jedną z najbardziej pożądanych opcji do profesjonalnego użytku. Niestety WonderBrush posiada opcje, które ciężko byłoby przenieść do tych obcych formatów. Jak tylko WonderBrush zacznie używać drzew kompozycji zamiast list, wszystko stanie sie jeszcze bardziej skomplikowane.
+
+Aktualnie nie ma zaimplementowanej architektury obszarów pamięci, a zatem tworzone mogą być tylko mniejsze bitmapy (do 3000x3000 pixeli jest Ok, powyżej tego... powodzenia!).
+
+Nie otrzymałem jeszcze licencji na użycie metody kompresjii, którą chciałbym wykorzystać (LZO). Przez to kompresja jest wyłączona w tym wydaniu. Zużycie RAM byłoby znacznie mniejsze gdyby była włączona. Kontaktowałem się z twórcą LZO więcej niż raz, jednak nie otrzymałem odpowiedzi. Pliki projektów używają kompresji zlib poczynając od wersji 1.5.0.
+
+Nie ma łatwego sposobu na tworzenie okręgów, kwadratów i innych podobnych figur podstawowych. W przyszłości taka możliwość zostanie zaimplementowana na bazie aktualnego narzędzia Kształt.
+
+Wybór pikseli jest aktualnie zaimplementowany w bardzo uproszczony sposób. Jak w części przeglądarek graficznych na BeOS'a, użytkownik może zdefiniować prostokątny obszar obrazu i skopiować go do schowka systemowego. Z tamtąd dane mogą być wklejone jako obiekt Bitmapa. To także sposób na wymianę danych z innymi programami graficznymi, jak na przykład ArtPaint.
+
+
+Skróty klawiaturowe:
+
+<spacja>		Przełącza na tryb przewijania widocznej powierchni (po wciśnięciu przycisku myszki)
+
++			kiedy klawisz modyfikatora jest wciśnięty -> zwiększa przybliżenie
+
+			bez modyfikatora, zależy od aktualnie używanego narzędzia:
+				narzędzia bazowane na pociągnięciach (Pędzel, Klonowanie, Rozmycie ...):
+					przy wciśniętym klawiszu <shift>, dodaje 1.0 do promienia pędzla
+					bez żadnych dodatkowych klawiszy, skaluje promień pędzla przez 1.1
+				Tekst:
+					przy wciśniętym klawiszu <shift>, dodaje 1.0 do rozmiaru tekstu
+					bez żadnych dodatkowych klawiszy, skaluje rozmar tekstu przez 1.1
+					
+
+-			przeciwieństwo +
+
+klawisze		przesuwanie wybranych obiektów podczas Transformacji, przesuwanie tekstu
+strzałek		podczas edycji obiektu Tekst, przesuwanie wybranych punktów kontrolnych lub całości podczas
+			edycji obiektu Kształt.
+
+z, y			cofnij
+
+Z, Y			powtórz
+
+b			zmień narzędzie na Pędzel
+
+c			zmień narzędzie na Klonuj
+
+p			zmień narzędzie na Ołówek
+
+s			zmień narzędzie na Kształt
+
+e			zmień narzędzie na Gumka
+
+d			zmień narzędzie na Pobór barwy
+
+r			zmień narzędzie na Rozmycie
+
+x			zmień narzędzie na Przycięcie
+
+f			zmień narzędzie na Wypełnienie
+
+t			zmień narzędzie na Tekst
+
+v			zmień narzędzie na Transformacja
+
+Dodatkowe skróty dla narzędzia Kształt:
+
+W trakcie edycji Kształtu, klawisze <Komendy> (<Ctrl>/<Alt>) i
+<Opcji> (<Alt>/<Ctrl>) zmienają tryb edycji podczas kliknięcia na punkt kontrolny.
+
+Klawisz <Komendy> spowoduje usunięcie punktów kontrolnych zakrzywienia,
+lub ich dodanie (poprzez przeciągnięcie kursora myszki) jeżeli ich nie było. 
+Przytrzymanie klawisza <Opcji> podczas kliknięcia na punkt kontrolny
+powoduje jego usunięcie. Punkty kontrolne zakrzywienia (te mniejsze niż główny)
+także moga być usuwane pojedyńczo w celu uzyskania konta prostego
+tylko z jednej strony. Aby przywrócić punkty kontrolne zakrzywienia do punktu
+kontrolnego kształtu wystarczy kliknąć i przeciągnąć ten punkt jednocześnie
+trzymając klawisz <Komendy> wciśnięty.
+
+Przeciągając jeden z dwóch punktów kontrolnych zakrzywienia, spowoduje
+również przesunięcie drugiego, tak że oba będą utrzymane na tej samej
+linii prostej. Można zerwać to połączenie poprzez przytrzymanie wciśniętego
+klawisza <Komendy> podczas rozpoczęcia przeciągania. Kliknięcie na główny
+punkt kontrolny z jednocześnie wciśniętym klawiszem <Komendy> spowoduje
+usunięcie punktów kontrolnych zakrzywienia oraz wyprostowanie linii połączonych
+przez główny punkt kontrolny (o ile jakieś zakrzywienie linii istniało).
+Ponowne przeciągnięcie głównego punktu kontrolnego przy wciśniętym
+klawiszu <Komendy> przywróci połączone punkty kontrolne zakrzywienia.
+
+
+Tryby nakładania warstw:
+
+Normalny			Pixel nakładanej warsty zastępuje pixel warstwy zasłanianej.
+
+Pomnażanie		Przemnaża komponenty barwy, przy uwzględnieniu komponentu
+				przezroczystości pixela zasłanianego, nie zmieniając barwy pixela
+				nakładanego.
+				To znaczy że nakładany biały pixel będzie widoczny jeżeli pixel
+				zasłanianej warstwy jest przezroczysty, a będzie niewidoczny
+				kiedy zasłaniany pixel jest w pełni widoczny.
+
+Odwrócone pomnażanie	Tak jak powyżej, tylko pomnaża używając odwrotności kanałów barw.
+
+Luminescencja		Zamienia luminescencję pixela zasłanianego na luminescencję
+				pixela nakładanego.
+				Operacja wykonywana jest w przestrzeni barw Lab i może być
+				wykorzystana jako mapa światła/cienia (jednak działające bardzo powoli!).
+
+Krycie			Przezroczystość pixeli zasłanianych jest przemnażana przez przezroczystość
+				pixeli nakładanych. Warstwa służy jako maska.
+
+Odwrotne krycie		Przezroczystość pixeli zasłanianych jest przemnażana przez odwrotność
+				przezroczystości pixeli nakładanych. Warstwa służy jako odwrotna maska.
+
+
+Klucze, odblokowanie WonderBrush:
+
+Ta wersja programu jest tak jakby "wersją demo" WonderBrush: 
+
+	- Aplikacja nie potrafi zapisywać plików projektów, eksport do formatów SVG
+		i Adobe Illustrator jest zablokowany.
+	- Na powierzchni projektu renderowany jest "znak wodny" przez co
+		eksportowanie do innych formatów bitmapowych także jest "okrojone".
+	- Znak wodny jest renderowany także podczas kopiowania do schowka.
+
+Licencję na WonderBrush do użytku komercyjnego i odblokowanie wersji demo możesz zakupić poprzez sklepy online Kagi i Mensys:
+
+	- Kagi: <http://order.kagi.com/?8JD>
+	- Mensys: <http://shop.mensys.nl/catalogue/mns_Wonderbrush.html>
+
+Pojedyńcza licencja kosztuje 17.50 EUR. Plik(i)-Klucz(e) do odblokowania wersji demo i zniwelowania jej ograniczeń otrzymasz poprzez email. Dziękuję za rozważenie możliwości zakupu klucza WonderBrush.
+
+Jeżeli uprzednio zakupiłeś już licencję, plik klucz będzie działać również z tą wersją WonderBrush.
+
+
+Tłumaczenie WonderBrush:
+
+Folder "Languages - incomplete" zawiera część tłumaczeń WonderBrush, które są niekompletne. Możesz utworzyć własne tłumacznie zaczynając od pliku "_English_". Format pliku jest "łatwy". Pliki językowe są kompilowane jako add-on z poziomu WonderBrush. A więc wszystko co możesz zrobić w języku programowania C/C++, możesz też zrobić w pliku językowym. To powoduje że musisz mieć zainstalowane narzędzia programistyczne (DevTools) lub poprosić kogoś innego o skompilowanie pliku.
+
+Dziękuję autorom oryginalnych tłumaczeń. Ich imiona są podane w plikach językowych. Część z autorów kontynuuje tłumaczenie kolejnych wersji programu, za co bardzo dziękuję. Dziękuję także wszystkim którzy nadesłali tłumaczenia w międzyczasie.
+
+
+Anti-Grain Geometry:
+
+Większa część silnika renderującego WonderBrush jest już oparta o Anti-Grain Geometry napisane przez Maxim'a Shemanarev'a. Dzięki temu mogę używać Afinicznych Transformacji w przyzwoity sposób bez spędzania masy czasu na programowanie. Narzędzie Kształt używa AGG do renderowania wektorowych kształtów. Anti-alias jest bardzo dobrej jakości ponieważ jest obliczany na podstawie dokładnych wartości geometrycznych pokrycia, co daje 256 odcieni we wszystkich przypadkach. Wiele profesjonalnych programów, jak na przykład Photoshop, obsługuje tylko do 16 odcieni szarości w często spotykanych sytuacjach (sub-sampling).
+
+
+FreeType:
+
+Pierwsza implementacja narzędzia Tekst była oparta o FreeType. Teraz jest oparte na Anti-Grain Geometry, które z kolei jest oparte na FreeType. FreeType to doskonały renderer czcionek, także obliczający anti-aliasing na podstawie dokładnych wartości geometrycznych pokrycia. Generalnie jest to dobre rozwiązanie, aczkolwiek w pewnych sytuacjach, czytelność tekstu mogłaby być polepszona poprzez hinting (mechanizm optymalizacji kształtu liter w bardzo małych stopniach pisma), który jednak wyłączyłem ponieważ nie ma większego sensu dla transformowanego tekstu.
+
+
+ArtPaint:
+
+Wiele filtrów w WonderBrush jest bazowana na filtrach ArtPaint. Kod ArtPaint został ofiarowany BeUnited przez Heikki Suhonen'a i tam jest utrzymywany. Wewnętrzne architektury WonderBrush i ArtPaint są zupełnie różne, a więc wykorzystane zostały tylko algorytmy. Zostały one także zmodyfikowane aby lepiej obsługiwać przezroczystości kolorów. W niektórych przypadkach udało się uzyskać poprawę szybkości wykonywania. Jeżeli ktoś jest zainteresowany uzyskaniem moich ulepszeń, proszę dać mi znać.
+
+
+Specjalne podziękowania:
+
+Jestem bardzo wdzięczny Marcinowi Konickiemu (ahwayakchih) za jego liczne, wyczerpujące raporty o błędach i generalnie za bycie fajnym gościem. Bez niego ostatnie wydania z pewnością byłyby niższej jakości. Wielkie dzięki także dla DarkWyrm'a za jego szczegółowe opinie na temat możliwych ulepszeń interfejsu. Pierre Arnaud nieraz pomagał mi poprzez udostępnienie kawałków użytecznego kodu do implementacji narzędzia Kształt.
+
+
+Historia:
+
+July 30 2005 (1.7.1)
+	- dodana opcja "dziedzicz transformacje" do narzędzia Gradient, użyteczne
+		do wykorzystywania tego samego Gradientu w wielu obiektach
+		które zostały transformowane na rózne sposoby
+	- zaimplementowane czyszczenie ścieżek, co oznacza że
+		WonderBrush Image -> SVG -> WonderBrush Image odzyska mniej więcej
+		te same obiekty Kształt bez dodatkowych punktów i utraconych
+		połączeń punków kontrolnych
+	- dodane automatyczne przesuwanie do narzędzi Wybór, Wytnij, Transformacja, Edytuj
+		Gradient, Tekst i Krztałt (proszę bardzo Christian)
+	- dodane przyciski "Wszystko" do narzędzi Wybór i Wytnij, które ustawiają całą
+		powierzchnię projektu dla przyszłych zmian
+
+	- poprawione błędy:
+		- drukowanie (testowane przy użyciu Podglądu oraz drukowania do PDF na ZETA)
+		- wywalanie programu w narzędziu Edytuj Gradient, które następowało
+			kiedy obiekt gradientu został zaznaczony, zmieniono narzędzie a potem
+			cofnięto zmiany dotyczące zaznaczonego obiektu (dzięki  Mikael!)
+		- wyciek pamięci w VectorPath::operator=()
+		- filtr WarpSharp filter nie próbuje już wyostrzać jednolitych obszarów,
+			co trwało niemal wieczność (dzięki Axel)
+		- wywalanie programu w kontrolce PopupSlider (np. suwak Przybliżenia)
+			po kliknięciu dwa razy w czasie gdy wątek Okna był zajęty (dzięki Axel)
+		- błąd w kontrolce PopupSlider który powodował przyklejanie się suwaka
+			do kursora myszki jeżeli przycisk myszy został już uwolniony (dzięki Axel)
+		- błąd w narzędziu Kształt po usunięciu wszystkich lub wszystkich prócz jednego
+			punktów kontrolnych: jeżeli ścieżka była wcześniej zamknięta, teraz już
+			będzie otwarta, tak żeby znów można było dodawać nowe punkty
+		- namierzony całkiem brzydki błąd w kodzie przetrzymywania ścieżki w AGG,
+			który powodował błędne wgrywanie niektórych plików SVG (dzięki Paco)
+		- teraz wciśnięcie Return lub Escape w narzędziach Elipsa i Prostokąt akceptuje
+			lub porzuca zmiany (dzięki stargater)
+		- błąd z ostatniej chwili wywalający program po wklejeniu włąściwości Ścieżka do
+			Kształtów które miały wiele pod-ścieżek
+		- ikonka śmietnika dla listy warstw jest już zablokowana po starcie WonderBrush w
+			trybie "Nie rób nic" (dzięki Marcin)
+
+July 26 2005 (1.7.0)
+	- tryb wypełnienia Gradient oraz nowe narzędzie Edytor Gradientu
+	- nowe narzędzia Elipsa i Prostokąt
+	- możliwość importowania podstaw SVG (w zasadzie tylko obiekty ścieżek,
+		jednak wraz z obsługą gradientów)
+	- obsługa gradientów podczas eksportowania do SVG
+	- obsługa arbitralnej ilości pod-ścieżek dla obiektów typu Kształt,
+		jednak na razie nie mogą one być zaznaczone do edycji
+	- przyspieszenie rysowania Pędzlem (przede wszystkim z twardością = 100%)
+	- zaznaczone punkty kontrolne Kształtu mogą być teraz usunięte przy pomocy
+		klawisza Delete
+	- Narzędzie/Obiekty typu Wypełnienie mają teraz ustawienie krycia
+	- podstawy obsługi przechylenia w tablecie (kształt pędzla jest spłaszczany
+		i obracany w kierunku nachylenia)
+	- anty-aliasing w narzędziach Tekst i Kształt może być teraz wyłączony
+		(na liście Właściwości)
+	- Hinting i Kerning są teraz właściwościami obiektów typu Tekst
+	- odświeżenie do AGG 2.3 (co wprowadza poprawę szybkości)
+	- olbrzymia poprawa w kodzie "dodawania punktu na ścieżce", kursor dodawania
+		nie powinien już więcej się pojawiać nie będąc naprawdę nad segmentem
+		ścieżki
+	- dodany (okropnie powolny ale całkiem efektowny) filtr Warpsharp
+	- dodany eksport do źródła RDef
+	- dodane ikonki Śmietnika do list Warstwa i Obiekt, dzięki czemu można szybko
+		usunąć wybrane pozycje
+	- nowa animacja O programie
+	- stany blokad proporcji w panelach Nowy i Skaluj są teraz trwałe
+	- Opcjonalnie zmieniany język w zależności od ustawionego języka w systemie ZETA
+	- obejście problemu z poruszaną myszką dla wersji ZETA wcześniejszych od 1.0
+	- ulepszone napisy pomocy dla Narzędzi
+
+	- poprawione błędy:
+		- błąd wywalający program po rysowaniu Pędzlem poza obszarem Projektu i
+			"auto-usuwaniu" takiego pociągnięcia pędzla
+		- błąd Cienia, który, w pewnych sytuacjach, powodował pojawianie się pikseli
+			cienia wzdłuż dolnej krawędzi projektu
+		- błąd blokujący wszelkie operacje po tym jak jakaś operacja zajęła sporo czasu
+			(na przykład skalowanie projektu zawierającego mnóstwo obiektów)
+		- wiele poprawek GUI w WonderBrush dla ZETA, jednak pewne problemy nadal
+			pozostają
+		- narzędzie Pobierz kolor nie przełącza już do ostatniego koloru Narzędzia
+		- moduły językowe są teraz poprawnie przenoszone do katalogu WonderBrush
+			w przypadku gdy jest on zainstalowany na innej partycji niż /boot
+		- blokada proporcji w panelu Skaluj nie wpływała na kontrolki skali
+		- używając pióra tabletu w trybie gumki, narzędzie Ołówek przełączy się w tryb
+			Gumka - ołówek, tak jak narzędzie Pędzel przełącza się w tryb Gumka
+
+2 Lutego 2005 (1.6.1)
+	- poprawiony błąd: suwaki kontrolujące zoom Projektu i krycie Warstwy nie były odświerzane dynamicznie podczas przesuwania
+
+17 Stycznia 2005 (1.6.0)
+	- napisana na nowo i zunifikowana opcja Eksportu
+		- moduł eksportu do SVG, obsługujący wiele typów obiektów WonderBrush,
+			poza Pędzlem i Filtrami, tryby nakładania Warstw nie są jeszcze obsługiwane
+		- moduł eksportu do Adobe Illustrator, obsługujący mniej typów obiektów niż moduł SVG
+		- ulepszony panel Eksportowania, formaty eksportu są teraz bardziej widoczne
+		- uporządkowanie menu Plik
+	- lepiej zapamiętywany ostatnio używany folder do zapisu/eksportu
+	- obsługa typów końcówek i łączeń w Kształtach konturowych
+	- nowe tryby nakładania warstw: "Zamiana Czerwonego/Zielonego/Niebieskiego", "Rozjaśnienie",
+		"Przyciemnienie"
+		- tryby Zamiana Czerwonego/Zielonego/Niebieskiego mogą być użyt do pracy w jednym
+			kanale barwy lub do separacji kanałów barw obrazu
+		- algorytm "Krycie", "Odwrotne krycie" i "Odwrotne Pomnażanie"
+			(PS: "Screen") został ulepszony i powinien dawać lepsze efekty
+	- używając klawiszy <Komendy>+<Góra>/<Dół> podczas edycji Tekstu można teraz
+		wybierać czcionki spośród wszystkich zainstalowanych w systemie
+	- narzędzie Wypełnienie może teraz wypełniać obszary z całego projektu, bez
+		względu na to czy ze sobą sąsiadują czy nie
+	- plik-klucz może zostać zainstalowany w trakcie działania WonderBrush,
+		program automatycznie zostanie odblokowany
+	- ograniczenia wersji demo są teraz bardziej w stylu "wersji demo",
+		"wersja demo" jest teraz bardziej nastawiona na "wypróbuj produkt przed zakupem"
+		- na projekcie renderowany jest znak wodny, także podczas kopowania do schowka
+		- eksportowanie do SVG i Adobe Illustrator jest zablokowane
+
+	- poprawione błędy:
+		- niektóre czcionki mogły zawiesić menadżera czionek w WonderBrush
+		- znacznie ulepszone sortowanie czcionek, nigdy więcej duplikatów styli (ale sprawdź
+			zainstalowane czcionki!) lub nazwy czionki z dodatkowymi stylami
+		- usunięty wyciek pamięci w renderowaniu tekstu
+		- usunięty błąd odświeżania podczas przełącznia trybów nakładania warstwy
+			"Krycie" i "Odwrotne Krycie"
+		- usunięte niedociągnięcie w odświerzaniu Popup Slider (np. Przybliżenie)
+		- usunięty irytujący błąd w narzędziach Kopiowanie i Przycięcie, który nie anulował
+			operacji automatycznie po wybraniu innego narzędzia
+		- usunięte niedociągnięcie w odświeżaniu separatora w interfejsie
+		- używanie narzędzia Kształt powinno być teraz lepsze podczas pracy nad nowymi
+			obiektami tego typu
+		- usunięte miganie listy Właściwości podczas zmian wartości właściwości obiektu i/lub
+			wybierania innego obiektu
+		- menu czcionek zachowuje się teraz jak zwyczajne BMenuField i próbuje
+			zlokalizować aktualnie wybraną czcinkę pod kursorem myszki
+		- naprawione parametry narzędzia Tekst kontrolowane klawiaturą, żeby odświerzały interfejs
+			kiedy żaden Tekst nie jest edytowany
+
+8 Listopada 2004 (1.5.3)
+	- Podpiksele mogą być wyłączone w narzędziu Kształt
+		(punkty kontrolne ścieżki mogą być wtedy ulokowane tylko
+		na pełnych pikselach)
+	- Ikony Nawigatora (Podgląd warstwy) i Warstw nie są skalowane,
+		dzięki temu wygląda znacznie lepiej i daje dobry podgląd bitmapy
+		w 100% podczas edycji małych bitmap, jak ikony.
+	- maksymalny poziom powiększenie to teraz 3200% - dla wszystkichz was edytujących ikony
+	- nawigacja klawiszem <TAB> pomiędzy właściwościami i dodatkowa kontrola klawiaturą
+		w części pól edycji listy Własciwości.
+	- przesuwanie punktów kontrolnych podczas edycji ścieżki (tranfsormacja przy
+		pomocy klawiszy strzałek), wszystkich zaznaczonych lub całej ścieżki
+		jeżeli żaden nie jest zaznaczony
+	- nowa implementacja algorytmu Wypełnienia dająca więcej niż dwukrotne przyspieszenie
+
+	- poprawione błędy:
+		- wyśledzony i usunięty błąd narzędzia Wypełnienie, który występował od czasu do
+			czasu. Poprawka mogła także usunąć inne błędy wyrzucające program,
+			jednak nie wiem czy błąd był wywoływany także z innych miejsc.
+		- kilka akcji Cofnij nie odświeżało listy Obiektów, jeżeli pokazywała inną warstwę
+			niż tą do której należą zmienione obiekty
+		- kilka rzeczy zmienionych w sekwencji zamykania programu, co, mam nadzieję,
+			usuwa rzadkie wyrzucanie programu w destruktorze FilePaanel'a podczas
+			zamykania WonderBrush. Błąd jest trudny do ponownego wywołania więc
+			nie wiem czy na pewno został naprawiony.
+		- poprawione przybliżone obliczanie skali obiektów Kształt w trybie Kontur,
+			co daje znacznie lepsze wyniki
+		- błąd generowania pociągnięcia w AGG został naprawiony, przez co problem
+			w WonderBrush	z generowaniem konturu ścieżki o ostrych krawędziach
+			został usunięty
+
+25 Października 2004 (1.5.2)
+	- naprawiony błąd krytyczny w narzędziu Tekst kiedy na początku tekstu znajdowały się spacje.
+		Po przęłączeniu do narzędzia Transformacja cały system się zawieszał.
+	- naprawiony błąd pożerający czas procesora przy rysowaniu prostej linii narzędziem Pędzel
+
+24 Października 24 2004 (1.5.1)
+	- poprawione programowanie odstepów pędzla, tak że teraz przeskalowane
+		obiekty Pędzel wyglądają gładko (i odstępy nie stają się widoczne)
+
+	- poprawione błędy:
+		- błąd wyrzucający program przy budowaniu modulu lokalizacji na Zeta
+		- wyrzucanie programu po Wklej do wielu obiektów na raz w przypadku gdy
+			przynajmniej jeden z obiektów się nie zmieniał (głupia zmiana w ostatniej chwili...)
+		- obejście błędu app_server'a w Zeta, który najwidoczniej filtruje
+			wiadomosci o ruchu myszy, i kiedy są one generowane przez tablet
+			nie zawsze zawierają wszystkie pola (nacisk, przechylenie, itp...)
+		- obejście błędu app_server'a w Zeta (dotyczącego rysowania segmentów okręgu)
+		- poprawione wybieranie punktu kontrolnego pola transformacji w przypadku
+			przybliżenia i oddalenia obrazu
+		- poprawiony błąd w narzędziach Kształt i Tekst, który powodował nieprawidłowe
+			zachowanie GUI wymagającego dwukliku do rozpoczęcia edytowania
+		- błąd "cały system się blokuje" jeżeli tekst dla narzędzia Tekst zawierał spacje
+			na samym początku i wybrano narzędzie Transformacja
+		- rysowanie prostej linii (trzymając klawisz SHIFT) narzędziem Pędzel było
+			nieznośnie powolne w wersjach 1.5.0 i 1.5.1
+
+15 Października 2004 (1.5.0)
+	- afiniczne transformacje obiektów (Przemieszczanie, Obracanie, Skalowanie
+		(oraz pośrednio Wykrzywianie))
+	- zmiana rozmiarów i obracanie (-90°, 90°, 180°) projektu
+	- reimplementacja wielu typów obiektów używając AGG
+		- Bitmapa, Wypełnienie, Tekst, Pędzel i Gumka
+	- narzędzie Tekst używa pamięci podręcznej dla czcionek w AGG
+	- Filtry (wiele przyswojonych z ArtPaint):
+		- Rozjaśnienie,
+		- Kontrast,
+		- Saturacja,
+		- Negatyw,
+		- Rozmycie Gauss'a,
+		- Rozmycie ruchu,
+		- Rozproszenie,
+		- Cień,
+		- Półton,
+		- Mora
+	- przenośne Właściwości Obiektów za pomocą specjalnego schowka
+	- narzędzie Tekst obsługuje teraz wieloliniowy tekst
+	- narzędzie Tekst ma właściwość Odstępy do sutawiania odstępów pomiędzy literami
+	- new behaviour for closing a path when the Shape is in outline mode
+		(to be able to move the first point of an open path)
+	- więcej ułatwiających pracę pozycji w menu Obiekt, Scal i Usuń nie mogą więcej być
+		mylnie użyte na wybranych obiektach
+	- WonderBrush przenosi się do aktualnego pulpitu po otworzeniu dokumentu
+	- narzędzia Tekst i Kształt automatycznie zatwierdzają zmiany po zmianie wyboru
+	- lista Obiektów jest teraz znacznie mniej restrykcyjna podczas edytowania obiektu
+		Tekst lub Kształt
+	- słodkie małe ikonki Cofnij/Powtórz
+
+	- poprawione błędy:
+		- duży wyciek pamięci w narzędziu Przycięcie
+		- wiele poprawek w narzędziu Wypełnienie
+		- Projekt jest teraz poprawnie renderowany na nowo w przypadku gdy jedna ze scalonych
+			warstw była niewidoczna
+		- poprawiony błąd "Rozmycie nie rozmywa pikseli z krawędzi"
+		- poprawiony błąd "pole transformacji wyświetla zły kursor po obróceniu"
+		- poprawiony błąd "pole transformacji zostawia brudne piksele kiedy się wystarczająco
+			bardzo zmniejszy sie przybliżenie"
+		- poprawione błędne znaki w polu tekstowym dla wartości numerycznych
+		- poprawione narzędzia wyboru w polu tekstowym (Góra była używana tam gdzie
+			powina być użyta Lewa)
+		- poprawione pobieranie barwy z panelu barw nie możliwe do cofnięcia
+			w narzędziach Tekst i Kształt
+		- podpowiedzi narzędzi mogą teraz zawierać znak nowej linii, tak żeby była
+			nowa linia w okienku podpowiedzi
+		- poprawiony błąd sortowania obiektów poprzez przeciąganie,
+			przeciąganie obiekty mogły po prostu zniknąć
+		- nazwa projektu jest teraz odświerzana w liście projektów po zapisaniu pliku pod nową nazwą
+
+1 Września 2004
+	- w narzędziu Kształt:
+		- znacznie ulepszona obsługa wyboru punktów kontrolnych podcza edycji ścieżek
+		- transformacja wybranych punktów kontrolnych z kompletnym Cofnij/Ponów
+	- część obrazu z przezroczystymi pixelami jest teraz usuwana podczas zapisywania,
+		dzięki czemu pliki mogą być lepiej skompresowane
+	- poprawki w narzędziu Tekst kiedy nie ma żadnych ustawień,
+		lepszy wybór czcionek
+	- poprawa wklejania ze schowka podczas edycji Tekstu lub Kształtu
+		(historia operacji była pomieszana)
+	- wszystkie ikony są teraz prawdziwie przezroczyste, dzięki czemu wyglądają dobrze
+		wyrenderowane na nie szarym-256 tle w Zeta.
+
+11 Sierpnia 2004
+	- nowe narzędzie Kopiowanie, które kopiuje prostokątny obszar do schowka systemowego
+	- drobne poprawki w narzędziu Przycięcie
+	- pozycja menu "Wklej" jest teraz tłumaczona
+	- świeższe pliki językowe Japoński i Polski
+
+5 Sierpnia 2004
+	- Akceptuj/Anuluj narzędzia Przycięcie i Transformacja
+	- Narzędzie Kształt ma teraz tryb konturu z wybraną szerokością
+	- prosokąt oznaczający wybrane obiekty w narzędziu Transformacja
+	- nowe globalne "Ustawienia programu", można wybrać operacje wykonywaną na starcie
+	- wiele poprawek błędów w narzędziach Kształt, Tekst, Przesunięcie, Przycięcie i Wypełnienie
+	- wiele ulepszeń użytkowania
+	- nowy mechanizm wgrywania w odzdzielnym wątku
+	- pliki projektów mogą być teraz dodawane do istniejących projektów
+		(trzymając wciśnięty klawisz <Shift> upuść plik na główne okno WonderBrush
+		(a lepiej na listę warstw))
+	- poprawka błędu nakładania warstw w trybie Krycie
+	- lepsze generowanie obiektów bitmap po Scaleniu
+		(wykluczanie pustych przestrzeni jest teraz inteligentniejsze)
+	- znów wszystkie napisy mogą być tłumaczone
+	- zmieniona nazwa listy Historia na Obiekt
+	- kontrola promienia i krycia Pędzla poprzez nacisk pióra jest teraz domyślnie wyłączona
+		(Błąd app_server'a Zeta ne jest wywoływany przy domyślnych ustawieniach)
+	- inne drobne poprawki
+
+12 Kwietnia 2004
+	- Nowe narzędzie: Kształt
+		brakuje:	transformacji wybranych punktów kontrolnych,
+					wielu ścieżek do definicji wycięć, itp..
+	- Akceptuj/Anuluj edycję narzędzi Tekst i Kształt
+	- edycja obiektów Tekst i Kształt w dowolnym momencie,
+		wystarczy podwójnie kliknąć na obiekt na liście Historia
+
+19 Maja 2004
+	- publicznie dostępna wersja rozwojowa
+	- Nowe narzędzia: Przycięcie, Transformacja, Wypełnienie i Tekst
+	- zmiany w układzie interfejsu
+	- wiele poprawek
+	- prace trwają...
+
+25 Sierpnia 2003 - pierwsza publicznie dostępna wersja
+
+
+
+

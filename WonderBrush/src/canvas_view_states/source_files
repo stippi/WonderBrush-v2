@@ -1,0 +1,18 @@
+SOURCE_FILES +=
+	AutoShapeState.cpp
+	CanvasViewState.cpp
+	ColorpickState.cpp
+	ConfirmableState.cpp
+	EditGradientState.cpp
+	CropState.cpp
+	EllipseState.cpp
+	FillState.cpp
+	GuidesState.cpp
+	PickObjectsState.cpp
+	RoundRectState.cpp
+	ShapeState.cpp
+	SimpleSelectState.cpp
+	StrokeState.cpp
+	TextState.cpp
+	TransformState.cpp
+;

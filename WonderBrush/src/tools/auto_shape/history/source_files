@@ -1,0 +1,9 @@
+SOURCE_FILES +=
+	AutoShapeAlphaAction.cpp
+	AutoShapeAction.cpp
+	AutoShapeOutlineAction.cpp
+	AutoShapeOutlineWidthAction.cpp
+	AutoShapeColorAction.cpp
+	AutoShapeTransformAction.cpp
+	RoundRectRadiusAction.cpp
+;

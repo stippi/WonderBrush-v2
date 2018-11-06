@@ -1,0 +1,44 @@
+# UserServiceRules
+#
+# Rules at disposal of the build system user. Not used by the build system
+# internally.
+
+rule FindSubDirs
+{
+	# FindSubDirs <dir> ;
+	# Recursively finds all subdirs in <dir>. Returns <dir> and all its
+	# descendant dirs.
+	# <dir>: The directory to be searched.
+	#
+	local subdirs ;
+	if $(1) {
+		local entries = [ GLOB $(1) : [a-zA-Z0-9_-]* ] ;
+		subdirs = [ GLOB $(entries) : . ] ;
+		# subdirs end with `/.', but things could be worse.
+		if $(subdirs) {
+			subdirs = [ FindSubDirs $(subdirs) ] ;
+		}
+	}
+	return $(1) $(subdirs) ;
+}
+
+rule SetupProjectVariables
+{
+	# SetupProjectVariables <dir> : <prefix>
+	# Sets up variables the following variables for a project:
+	# * <prefix>_ROOT: The project root dir.
+	# * <prefix>_SOURCES: The project's sources dir.
+	# * <prefix>_OBJECTS: The project's objects dir.
+	# * <prefix>_INCLUDES: The project's includes dir.
+	# <dir>: The directory root relative to YB_TOP. May be a list of path
+	#        components.
+	# <prefix>: The prefix of the variables to be defined.
+	#
+	local dir = [ FDirName $(YB_TOP) $(1) ] ;
+	local prefix = $(2) ;
+	$(prefix)_ROOT = $(dir) ;
+	$(prefix)_SOURCES = [ FDirName $(dir) src ] ;
+	$(prefix)_INCLUDES = [ FDirName $(dir) src ] ;
+	$(prefix)_OBJECTS = [ FDirName $(dir) objs ] ;
+}
+

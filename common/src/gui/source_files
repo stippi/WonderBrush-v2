@@ -1,0 +1,20 @@
+SOURCE_FILES +=
+	BetterMCheckBox.cpp
+	BetterMScrollView.cpp
+	BetterMSplitter.cpp
+	BetterSpinButton.cpp
+	BubbleHelper.cpp
+	FontPopup.cpp
+	FramedIconButton.cpp
+	IconButton.cpp
+	IconMenuItem.cpp
+	IconOptionsControl.cpp
+	LabelCheckBox.cpp
+	LabelPopup.cpp
+	LabelViewBox.cpp
+	MenuBar.cpp
+	MStatusBar.cpp
+	Panel.cpp
+	Seperator.cpp
+	StatusBar.cpp
+;

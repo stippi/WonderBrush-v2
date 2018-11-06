@@ -1,0 +1,463 @@
+// Slovenian
+// author: Matjaž Kovač <matjaz.kovac@volja.net>
+
+// addon stuff
+extern "C" {
+_EXPORT void init_strings(const char* strings[]);
+}
+
+// init_strings
+void
+init_strings(const char* strings[])
+{
+	strings[FILE_MENU]			= "Datoteka";
+	strings[NEW]				= "Novo";				// will show up in Canvas menu
+	strings[NEW_CANVAS]			= "Nov dokument";			// tool tip
+	strings[NEW_LAYER]			= "Nova";				// these strings were added
+	strings[NEW_BRUSH]			= "Nov";				// by request to be able to
+	strings[NEW_PALETTE]		= "Nova";				// reflect different genders in "New"
+	strings[OPEN]				= "Odpri";
+	strings[LOAD]				= "NaloÅŸi";
+	strings[OPEN_CANVAS]		= "Odpri dokument";
+	strings[EXPORT_CANVAS]		= "Izvozi dokument";		// title of Export panel
+	strings[EXPORT]				= "Izvozi";
+	strings[EXPORT_AS]			= "Izvozi kot";
+	strings[SAVE_CANVAS]		= "Shrani dokument";		// title of Save panel
+	strings[SAVE]				= "Shrani";
+	strings[SAVE_AS]			= "Shrani kot";
+	strings[SETUP_PAGE]			= "Nastavitev strani";
+	strings[PRINT]				= "Tiskaj";
+	strings[CLOSE]				= "Zapri";
+	strings[CLOSE_CANVAS]		= "Zapri dokument";		// tool tip
+	strings[ABOUT]				= "O programu";
+	strings[QUIT]				= "Izhod";
+
+	strings[LOADING_FILE]		= "Berem datoteko:";
+
+	strings[EDIT]				= "Urejanje";
+	strings[UNDO]				= "Razveljavi";
+	strings[REDO]				= "Ponovi";
+
+	strings[SETTINGS]			= "Nastavitve";
+	strings[FULLSCREEN]			= "Celoten zaslon";
+	strings[SHOW_GRID]			= "PrikaÅŸi mreÅŸo pikslov";	// if zoomed in far enough,
+														// display a grid arround each pixel
+	strings[LANGUAGE]			= "Jezik";
+	strings[CANVAS]				= "Platno";				// ie project, document
+	strings[IMAGE]				= "Slika";				// ie bitmap
+	strings[CLEAR]				= "PoÄisti";
+	strings[RESIZE]				= "Spremeni velikost";				// resize canvas (new resolution)
+	strings[ROTATE_90]			= "90Â°";
+	strings[ROTATE_180]			= "180Â°";
+	strings[ROTATE_270]			= "-90Â°";
+
+	strings[FORMAT]				= "Format";				// color space of the canvas (RGB, Lab etc)
+
+	strings[EXPORT_FORMAT]		= "Format";				// ie PNG, SVG etc
+	strings[CURSOR_SOURCE]		= "Kurzor - izvorna koda";
+	strings[BITMAP_SOURCE]		= "Bitna slika - izvorna koda";
+	strings[SVG_FORMAT]			= "SVG (nekateri objekti)";
+	strings[AI_FORMAT]			= "Adobe Illustrator (nekateri objekti)";
+	strings[RDEF_FORMAT]		= "RDef izvorna koda";
+
+	strings[LAYER]				= "Plast";
+	strings[DUPLICATE]			= "Podvoji";
+	strings[MERGE_DOWN]			= "ZdruÅŸi spodnje";			// combining of current layer and the
+														// one underneath it
+	strings[MERGE_VISIBLE]		= "ZdruÅŸi vidno";		// combining of all visible layers
+	strings[RENAME]				= "Preimenuj";
+	strings[DELETE]				= "Odstrani";
+	strings[DELETE_ALL]			= "Odstrani vse";
+
+	// layer blending modes
+	strings[MODE]				= "NaÄin";
+	strings[NORMAL]				= "Navadno";
+	strings[ERASE]				= "Radirka";
+	strings[MULTIPLY]			= "MnoÅŸenje";
+	strings[INVERSE_MULTIPLY]	= "Obratno mnoÅŸenje";
+	strings[LUMINANCE]			= "Svetlost";
+	strings[MULTIPLY_ALPHA]		= "Alfa kanal";
+	strings[MULTIPLY_INVERSE_ALPHA]	= "Invertiran alfa kanal";
+	strings[REPLACE_RED]		= "Nadomesti rdeÄe";
+	strings[REPLACE_GREEN]		= "Nadomesti zeleno";
+	strings[REPLACE_BLUE]		= "Nadomesti modro";
+	strings[DARKEN]				= "Potemnitev";
+	strings[LIGHTEN]			= "Posvetlitev";
+
+	strings[HISTORY]			= "Zgodovina";			// as in "modifier stack"
+	strings[OBJECT]				= "Objekt";				// new name for the "History"
+	strings[FREEZE]				= "Zamrzni";				// renders the result of the modifier stack
+														// into one "bitmap modifier" and replaces
+														// all previous modifiers (ie, you cannot edit
+														// them anymore) by the single bitmap modifier
+	strings[CUT]				= "IzreÅŸi";
+	strings[COPY]				= "Kopiraj";
+	strings[PASTE]				= "Prilepi";
+	strings[MULTI_PASTE]		= "Prilepi veÄ naenkrat";		// paste one ore more properties to
+														// *multiple* objects at once
+	strings[REMOVE_ALL]			= "Odstrani vse";
+
+	strings[OBJECT_SELECTION]	= "Izberi";				// change selection shortcuts
+	strings[SELECT_ALL_OBJECTS]	= "Vse";				// in Object and Property list
+	strings[SELECT_NO_OBJECTS]	= "NiÄ";
+	strings[INVERT_SELECTION]	= "Obrni izbiro";
+	strings[ALL_OBJECTS]		= "Vse";
+	strings[PROPERTY_SELECTION]	= "Izberi";
+	strings[SELECT_ALL_PROPERTIES] = "Vse";
+	strings[SELECT_NO_PROPERTIES] = "NiÄ";
+
+	// filters
+	strings[ADD_FILTER]			= "Filter";				// the actual menu
+	strings[DROP_SHADOW]		= "Senca";
+	strings[GAUSSIAN_BLUR]		= "Gaussovo zabrisanje";
+	strings[INVERT]				= "Invertiranje";
+	strings[BRIGHTNESS]			= "Svetlost";
+	strings[CONTRAST]			= "Kontrast";
+	strings[SATURATION]			= "ZasiÄenost";
+	strings[MOTION_BLUR]			= "Zabrisanje od hitrosti";
+	strings[HALFTONE]			= "Poltoni";
+	strings[DOT]				= "Pika";				// mode options of Halftone
+	strings[LINE]				= "Ärta";
+	strings[DITHER]				= "RedÄenje";
+	strings[DITHER_FS]			= "RedÄenje (FS)";
+	strings[DITHER_NC]			= "RedÄenje (NC)";
+	strings[NOISE]				= "Å um";
+	strings[HUE_SHIFT]			= "Barvni zamik";			// filter not yet written
+	strings[DISPERSION]			= "RazprÅ¡itev";
+	strings[STRENGTH]			= "Jakost";
+	strings[LUMINANCE_ONLY]		= "Samo svetlost";
+	strings[WARPSHARP]			= "Warpsharp";
+	strings[LAMBDA]				= "Lambda";
+	strings[MU]					= "Âµ";
+	strings[NON_MAXIMAL_SUPPRESSION] = "NMS";
+
+	strings[PROPERTY]			= "Lastnost";
+	strings[UNKOWN_PROPERTY]	= "<unknown>";
+
+	strings[SWATCHES]			= "Barvna paleta";			// color palette
+	strings[ZOOM]				= "Zoom";
+	strings[ALPHA]				= "Prosojnost";			// keep this as short as possible
+	strings[ALPHA_CHANNEL]		= "Alfa kanal";		// used for properties
+	strings[COLOR]				= "Barva";				// used for properties
+	strings[GRADIENT]			= "Barvni preliv";			// used for properties (?)
+
+	// gradient options
+	strings[GRADIENT_TYPE]					= "Tip";
+	strings[GRADIENT_TYPE_LINEAR]			= "Linearen";
+	strings[GRADIENT_TYPE_RADIAL]			= "Radialen";
+	strings[GRADIENT_TYPE_DIAMONT]			= "Diamant";
+	strings[GRADIENT_TYPE_CONIC]			= "StoÅŸec";
+	strings[GRADIENT_TYPE_XY]				= "X-Y";
+	strings[GRADIENT_TYPE_XY_SQRT]			= "Sqrt(X-Y)";
+	strings[GRADIENT_INTERPOLATION]			= "Interpolacija";
+	strings[GRADIENT_INTERPOLATION_LINEAR]	= "Linearna";
+	strings[GRADIENT_INTERPOLATION_SMOOTH]	= "Mehka";
+	strings[GRADIENT_INHERITS_TRANSFORM]	= "Podeduj transformacijo";
+
+	// brush options
+	strings[OPACITY]			= "Prosojnost";
+	strings[MIN_OPACITY]		= "prozorno";			// property label (keep short)
+	strings[DYN_OPACITY]		= "din. prosoj.";			// property label (keep short)
+	strings[RADIUS]				= "Polmer";
+	strings[MIN_RADIUS]			= "min polmer";			// property label (keep short)
+	strings[DYN_RADIUS]			= "din. polmer";			// property label (keep short)
+	strings[HARDNESS]			= "Trdota";			// controls brush shape (soft...hard)
+	strings[MIN_HARDNESS]		= "min trdota";			// property label (keep short)
+	strings[DYN_HARDNESS]		= "din. trdota";			// property label (keep short)
+	strings[SPACING]			= "Razmak";			// distance in % of brush diameter at wich brush
+														// shapes will be put into the bitmap along the
+														// line of a stroke,
+														// ! also used for Text tool (spacing between chars)
+	strings[MIN_SPACING]		= "min presl.";		// property label (keep short), not yet used
+	strings[DYN_SPACING]		= "din. presl.";		// property label (keep short), not yet used
+	strings[SUBPIXELS]			= "Subpiksli";			// allow subpixel precise positioning of tools
+	strings[SOLID]				= "Enotno";				// solid (fixed) opacity for all pixels
+	strings[TILT]				= "Naklon";				// tablet specific, tilt of pen
+	strings[BLUR_RADIUS]		= "Radij zabrisanja";		// property label (keep short), also used for Dispersion filter
+	// translate options
+	strings[X_LABEL]			= "X";
+	strings[Y_LABEL]			= "Y";
+	strings[X_SCALE]			= "Faktor X";
+	strings[Y_SCALE]			= "Faktor Y";
+	strings[TRANSLATION_X]		= "X";
+	strings[TRANSLATION_Y]		= "Y";
+	strings[SCALE_X]			= "X";
+	strings[SCALE_Y]			= "Y";
+	strings[ANGLE]				= "Kot";
+
+	strings[X_OFFSET]			= "X odmik";
+	strings[Y_OFFSET]			= "Y odmik";
+	// crop options
+	strings[LEFT]				= "Levo";
+	strings[TOP]				= "Zgoraj";
+	strings[ENTIRE_CANVAS]		= "Vse";
+	// bucket fill options
+	strings[TOLERANCE]			= "Toleranca";
+	strings[SOFTNESS]			= "Mehkost";
+	strings[CONTIGUOUS_AREA]	= "Sklenjeno podroÄje";
+	// shape options
+	strings[PATH]				= "Pot";				// property label
+	strings[OUTLINE]			= "Obris";
+	strings[TRANSFORM]			= "Transformiraj";
+	strings[CLOSED]				= "Zapri";				// ie first and last point of path
+														// are connected
+	strings[CAP_MODE]			= "ZakljuÄki";
+	strings[BUTT_CAP]			= "Topi";
+	strings[SQUARE_CAP]			= "Kvadratni";
+	strings[ROUND_CAP]			= "Okrogli";
+	strings[JOIN_MODE]			= "Älenki";
+	strings[MITER_JOIN]			= "Ostri";
+	strings[ROUND_JOIN]			= "Okrogli";
+	strings[BEVEL_JOIN]			= "IzboÄeni";
+
+	strings[CIRCLE]				= "Krog";				// not yet used
+	strings[RECT]				= "Pravokotnik";				// not yet used
+	strings[ROUND_CORNERS]		= "Zaobljeni vogali";		// not yet used
+	// text options
+	strings[FONT]				= "Pisava";
+	strings[SIZE]				= "Velikost";
+	strings[ROTATION]			= "Smer";
+	strings[TEXT_INPUT]			= "Besedilo";				// label for text input control (not used anymore)
+	strings[ADVANCE_SCALE]		= "Razmak";			// additional spacing between chars
+														// (not used anymore)
+	strings[HINTING]			= "Hinting";			// hinting means that the shapes
+														// of chars are modified to more directly hit pixels,
+														// enhances readability of text on screen
+	strings[KERNING]			= "Kerning";			// kerning means that the distance between two
+														// glyphs is individual per their combination
+	strings[TEXT_LINE_SPACING]	= "Razmak med Ärtami";		// font height * line spacing = vertical line dist
+	// color picker tool
+	strings[TIP_SIZE]			= "Velikost konice";
+	strings[PIXEL_1x1]			= "1x1 piksel";
+	strings[PIXEL_3x3]			= "3x3 piksli";
+	strings[PIXEL_5x5]			= "5x5 pikslov";
+	strings[INCLUDE_ALL_LAYERS]	= "VkljuÄi vse plasti";
+	// tools
+	strings[BRUSH]				= "ÄopiÄ";
+	strings[CLONE]				= "Kloniraj";				// clone brush (transfers parts of an image to
+														// another place)
+	strings[ERASER]				= "Radirka";
+	strings[PEN]				= "SvinÄnik";
+	strings[PEN_ERASER]			= "SvinÄnik-radirka";
+	strings[RESTORE]			= "Obnovi";			// opposite of eraser (restores alpha channel)
+	strings[DROPPER]			= "Kapalka";			// color picker
+	strings[TEXT]				= "Besedilo";
+	strings[BLUR]				= "ZabriÅ¡i";
+	strings[BITMAP]				= "Bitna slika";
+	strings[SELECT]				= "Izberi";
+	strings[TRANSLATE]			= "Prestavi";
+	strings[CROP]				= "ObreÅŸi";
+	strings[BUCKET_FILL]		= "Zapolnjevanje";
+	strings[SHAPE]				= "Lik";
+	strings[ELLIPSE]			= "Elipsa";
+	strings[ROUND_RECT]			= "(Zaobljen) pravokotnik";	// the tool also creates non-round rectangles
+	strings[EDIT_GRADIENT]		= "Urejaj gradient";
+
+	// zoom
+	strings[ZOOM_IN]			= "Zoom +";			// tool tips
+	strings[ZOOM_OUT]			= "Zoom -";
+
+	// actions
+	strings[ADD_LAYER]			= "Dodaj plast";			// the following strings are for display in the
+														// undo/redo menu
+	strings[REMOVE_LAYER]		= "Odstrani plast";		// a "modifier" is a step of changing the bitmap,
+														// ie a brush stroke or something else.
+	strings[REMOVE_LAYERS]		= "Odstrani plasti";
+	strings[MOVE_LAYER]			= "Premakni plast";			// ie drag sorting to another pos in list
+	strings[MOVE_LAYERS]		= "Premakni plasti";
+	strings[MERGE_LAYERS]		= "ZdruÅŸi plasti";
+	strings[UNKOWN_MODIFIER]	= "Neznan objekt";
+	strings[ADD_MODIFIER]		= "Dodaj objekt";
+	strings[ADD_MODIFIERS]		= "Dodaj objekte";
+	strings[CHANGE_COLOR]		= "Spremeni barvo";
+	strings[CHANGE_COLORS]		= "Spremeni barve";
+	strings[REMOVE_MODIFIER]	= "Odstrani objekt";
+	strings[REMOVE_MODIFIERS]	= "Odstrani objekte";
+	strings[MOVE_MODIFIER]		= "Premakni objekt";
+	strings[MOVE_MODIFIERS]		= "Premakni objekte";
+	strings[TRANSLATE_MODIFIER]	= "Prestavi objekt";
+	strings[TRANSLATE_MODIFIERS]	= "Prenesi objekte";
+	strings[CHANGE_LAYER_SETTINGS]	= "Spremeni nastavitve plasti";
+	strings[CROP_CANVAS]		= "ObreÅŸi platno";
+	strings[RESIZE_CANVAS]		= "Spremeni velikost platna";
+	strings[ROTATE_CANVAS]		= "ObraÄaj platno";
+	strings[INSERT_CANVAS]		= "Vstavi platno";
+	strings[CHANGE_OPACITY]		= "Spremeni prosojnost";
+	strings[EDIT_MODIFIER]		= "Spremeni objekt";
+
+	// pasting properties
+	strings[PASTE_PROPERTY]		= "Prilepi lastnost";				// paste one property to one object
+	strings[PASTE_PROPERTIES]	= "Prilepi lastnosti";			// paste multiple properties to one object
+	strings[MULTI_PASTE_PROPERTY] = "Prilepi lastnost veÄim";		// paste one property to multiple objects
+	strings[MUTLI_PASTE_PROPERTIES] = "Prilepi lastnosti veÄim";	// paste multiple property to multiple objects
+
+	// shape tool history
+	strings[ADD_CONTROL_POINT]	= "Dodaj kontrolno toÄko";
+	strings[TOGGLE_OUTLINE]		= "Preklopi obris";
+	strings[CHANGE_OUTLINE_WIDTH] = "Spremeni Å¡irino obrisa";
+	strings[CHANGE_CAP_MODE]	= "Spremeni zakljuÄke";
+	strings[CHANGE_JOIN_MODE]	= "Spremeni Älenke";
+	strings[MODIFY_CONTROL_POINT] = "Spremeni kontrolno toÄko";
+	strings[CLOSE_PATH_ACTION]	= "ZakljuÄi pot";
+	strings[INSERT_CONTROL_POINT] = "Vstavi kontrolno toÄko";
+	strings[REMOVE_CONTROL_POINT] = "Odstrani kontrolno toÄko";
+	strings[REMOVE_CONTROL_POINTS] = "Odstrani kontrolne toÄke";
+	strings[CHANGE_POINT_SELECTION] = "Spremeni izbiro";
+	strings[NUDGE_CONTROL_POINT] = "Zamakni kontrolno toÄko";
+	strings[NUDGE_CONTROL_POINTS] = "Zamakni kontrolne toÄke";
+	// text tool history
+	strings[CHANGE_FONT_SIZE]	= "Spremeni velikost pisave";
+	strings[CHANGE_TEXT_ROTATION] = "Spremeni orientacijo pisave";
+	strings[MOVE_TEXT]			= "Premakni besedilo";
+	strings[CHANGE_FONT]		= "Spremeni pisavo";
+	strings[CHANGE_TEXT]		= "Spremeni besedilo";
+	strings[CHANGE_FONT_ADVANCE_SCALE] = "Spremeni razmak";
+	// crop tool
+	strings[MODIFY_CROP_RECT]	= "Spremeni pravokotnik izreza";
+	// select tool
+	strings[MODIFY_SELECT_RECT]	= "Spremeni pravokotnik izbire";
+	// transformations
+	strings[TRANSFORMATION]		= "Preoblikovanje";
+	strings[BEGIN_TRANSFORMATION] = "ZaÄni preoblikovanje";
+	strings[FINISH_TRANSFORMATION]	= "KonÄaj preoblikovanje";
+	strings[MOVE]				= "Premakni";
+	strings[ROTATE]				= "Smer";
+	strings[SCALE]				= "Faktor velikosti";
+	strings[MOVE_PIVOT]			= "Premakni srediÅ¡Äe";
+	strings[TRANSFORM_OBJECT]	= "Preoblikuj objekt";
+	strings[TRANSFORM_OBJECTS]	= "Preoblikuj objekte";
+	// general
+	strings[OK]					= "Ok";
+	strings[CONFIRM]			= "Potrdi";			// apply changes
+	strings[CANCEL]				= "PrekliÄi";
+	strings[REVERT]				= "Povrni";				// revert changes made in panel
+	strings[NAME]				= "Ime";				// name of project
+	strings[UNNAMED]			= "Neimenovan";
+	strings[DEFAULT]			= "Privzeto";
+	strings[MERGED]				= "ZdruÅŸeno";				// default name for merged layer
+	strings[TOOL]				= "Orodje";				// for tool tips
+	strings[ANY_MODIFIER]		= "Katerikoli modifikator (shift)";		// as in modifier key on the keyboard (shift,
+														// option, alt etc)
+	strings[RETURN]				= "Enter";
+	strings[ESCAPE]				= "Escape";
+	strings[SET]				= "Nastavi";
+	// panels
+	strings[PICK_COLOR]			= "Izberi barvo";			// window title of color picker
+	strings[WIDTH]				= "Å irina";				// pixel count
+	strings[HEIGHT]				= "ViÅ¡ina";
+	strings[BRUSH_PANEL]		= "Izberi ÄopiÄ";
+	strings[BRUSH_NAME]			= "Ime ÄopiÄa";
+	strings[PROGRAM_SETTINGS]	= "Nastavitve programa";
+	// program settings
+	strings[ON_STARTUP]			= "Ob zagonu";
+	strings[DO_NOTHING]			= "Ne naredi niÄ";
+	strings[ASK_OPEN]			= "Odpri dokument";
+	strings[ASK_NEW]			= "PrikaÅŸi okno za nov dokument";
+	strings[AUTO_SIZE]			= "Ustvari novo platno velikosti";
+	strings[LIVE_UPDATES]		= "Sprotno obnavljanje v ikonah navigatorja in plasti";
+	strings[USE_SYSTEM_LANGUAGE] = "Uporabi isti jezik kot sistem";
+	strings[STARTUP_ACTION]		= "Akcija ob zagonu";
+	strings[INTERFACE]			= "Vmesnik";
+	// requestors
+	strings[AKS_SAVE_CHANGES]	= "Zapri dokument in zavrzi spremembe?";
+	strings[DISCARD]			= "Zavrzi";
+	strings[SAVING_FAILED]		= "Shranjevanje ni uspelo!";
+	strings[ERROR]				= "Napaka";				// alias reason for above
+	strings[BLIP]				= "Blip!";				// As in "Mission Earth"
+
+	strings[DEMO_MODE]			= "WonderBrush teÄe v demo naÄinu. "
+								  "Shranjevanje projektov je onemogoÄeno.\n\n"
+								  "Prosim, registrirajte se za pridobitev "
+								  "kljuÄa za odklepanje dodatnih funkcij.";
+	strings[NEVER_MIND]			= "Ni vaÅŸno";
+	strings[OPEN_TRANSLATIONKIT_ERROR]	= " '%s' se ne da odpreti s Translation Kitom.\n\n"
+								  "Datoteka ali ne vsebuje slike "
+								  "ali ni translatorja za ta format.";
+	strings[OPEN_NATIVE_ERROR]	= "Ni uspelo odpreti '%s' kot "
+								  "WonderBrush dokumenta.\n\n";		// yes, that's two \n
+	strings[UNSUPPORTED_CURSOR_SIZE] = "Platno mora biti 16 x 16 "
+								  "pikslov veliko. Druge velikosti kurzorjev "
+								  "niso podprte.";
+	strings[SELECTED_AREA_EMPTY] = "Izbrano podroÄje je bilo prazno.";
+	// tool tips										// please test the appearance of the tips and
+														// try to align them manually by putting the
+														// '\n' in the right spot!
+
+	strings[TOOL_TIPS]			= "Prikazuj nasvete";
+	strings[ALPHA_TIP]			= "Nastavi globalno vrednost alfa kanala za aktivno plast.";
+	strings[VISIBILITY_TIP]		= "Preklaplja vidnost aktivne plasti.";
+	strings[PRESSURE_CONTROL_TIP]	= "VkljuÄi nadzor s pritiskom peresa.";
+	strings[BRUSH_PREVIEW_TIP]	= "Predogled ÄopiÄa. Klikni za upravljanje.";
+	strings[CURRENT_COLOR_TIP]	= "Trenutna barva. Klikni za izbiro barve.";
+	strings[NAVIGATOR_TIP]		= "Pregled platna. Klikni za premikanje vidnega dela.\n"
+								  "Uporabi koleÅ¡Äek miÅ¡ke za zoom.";
+	strings[LAYER_LIST_TIP]		= "Uredi z vleÄenjem na pravo mesto. Klikni oko za preklapljanje vidnosti.\n"
+								  "Dvojni klik za preimenovanje.";
+	strings[HISTORY_LIST_TIP]	= "Uredi z vleÄenjem na pravo mesto. Spusti barvo iz palete\n"
+								  "za spremembo barve.";
+	strings[PROPERTY_LIST_TIP]	= "Urejaj, kopiraj in prilepi lastnosti objektov.";
+	strings[SUB_PIXEL_TIP]		= "Sledi miÅ¡ki/peresu s subpikselsko natanÄnostjo.";
+	strings[SOLID_TIP]			= "Ne spreminjaj prosojnosti za vsak piksel posebej.";
+	strings[TILT_TIP]			= "ZmaliÄi obliko ÄopiÄa glede na nagib peresa.";
+	strings[FULLSCREEN_TIP]		= "Preklopi med okenskim in celozaslonskim naÄinom.";
+	strings[GRADIENT_CONTROL_TIP] = "Spusti barve sem za dodajanje ali urejanje glavnih barv.\n"
+									"Dvakrat klikni na glavno  barvo za uporabo.";
+	strings[GRADIENT_INHERITS_TRANSFORM_TIP] = "Podeduj transformacijo od objekta.";
+
+	// quick help
+	strings[READY]				= "Pripravljen.";
+	strings[NO_CANVAS_HELP]		= "Ustvari novo platno ali naloÅŸi projekt ali sliko.";
+	strings[NO_HELP]			= "Ni dodatnih trikov.";
+	strings[CROP_HELP]			= "Nastavi meje, pritisni<Enter> za potrditev.\n<Shift>omeji razmerje med Å¡irino in viÅ¡ino.";
+	strings[TRANSLATE_HELP]		= "Izberi objekte za preoblikovanje.\n<Shift> omeji smer ali razmerje med Å¡irino in viÅ¡ino.";
+	strings[EDIT_GRADIENT_HELP]	= "Uredi barvo preliva, glavne barve, tip in transformacijo.";
+	strings[STROKE_HELP]		= "Uporabi <Shift> za nadaljevanje prejÅ¡nje poteze v ravni Ärti.";
+	strings[CLONE_HELP]			= "Prvi klik doloÄi izvorno lokacijo, drugi odmik.\nPritisni <Ctrl> za resetiranje odmika.";
+	strings[BUCKET_FILL_HELP]	= "\"Mehkost\" nadzira polnost barve za zapolnjevanje.";
+	strings[TEXT_HELP]			= "Pritisni <Enter> za potrditev uÄinka orodja.";
+	strings[SHAPE_HELP]			= "DrÅŸi <Ctrl>, <Shift> ali <Alt> za dodatne moÅŸnosti urejanja toÄk.\nPritisni <Enter> za konec.";
+	strings[SELECT_HELP]		= "DoloÄi obmoÄje. Pritisni <Enter> za kopiranje (clipboard).";
+	strings[ELLIPSE_HELP]		= "Klikni in vleÄi za novo elipso.\n<Shift> omeji razmerje med Å¡irino in viÅ¡ino.";
+	strings[ROUND_RECT_HELP]	= "Klikni in vleÄi za nov pravokotnik.\n<Shift> omeji razmerje med Å¡irino in viÅ¡ino.";
+
+
+	strings[SELECTABLE]			="MoÅŸna izbira";			// which object types are "selectable"
+	strings[GUIDES]				= "Vodniki";
+	strings[SHOW_GUIDES]			= "PrikaÅŸi vodnike";
+	strings[GUIDES_HELP]			= "Ustvari, uredi ali odstrani vodnike (pomoÄ pri risanju).";
+ 	strings[HORIZONTAL]			= "Vodoravno";
+ 	strings[VERTICAL]			= "NavpiÄno";
+ 	strings[UNIT]				= "Enota";
+
+	strings[WARN_SVG_DATA_LOSS]	= "WonderBrush mogoÄe ni prebral "
+ 								  "vseh podatkov iz SVG."
+ 								  "S prepisom izvirnika bo ta informacija izgubljena";
+
+
+ 	strings[SPECIAL]			= "Posebno";
+ 	strings[SOLID_AREA]			= "PodroÄje";
+ 	// pick objects tool
+
+ 	strings[PICK_OBJECTS]		= "Izberi objekte";
+ 	strings[CLIPBOARD]			= "OdloÅŸiÅ¡Äe";
+ 	strings[SELECT_PATH]		= "Izberi pot";
+ 	strings[CREATE_NEW_PATH]	= "Nova pot";
+ 	strings[DELETE_PATH]		= "Odstrani pot";
+ 	strings[TEXT_TO_SHAPE]		= "Besedilo v lik";
+ 	strings[TEXTS_TO_SHAPES]	= "Besedila v oblike";
+ 	strings[TRANSFORM_CONTROL_POINTS] = "Preoblikuj kontrolne toÄke";
+ 
+ 	strings[FILLING_RULE]		= "Zapolnitev";
+ 	strings[NON_ZERO]			= "Ne-niÄ";
+ 	strings[EVEN_ODD]			= "Sodo-liho";
+
+ 	strings[REMOVE]				= "Odstrani";
+ 	strings[COUNT]				= "Å tevilo";
+ 	strings[ENTRY_DOES_NOT_EXIST] = "'%s' ni bilo moÅŸno prebrati, ker ne obstaja.";
+ 	strings[ENTRY_IS_A_FOLDER]	= "'%s' ni bilo moÅŸno prebrati, ker je imenik.";
+
+ 	strings[SHAPE_HELP]			= "DrÅŸi <Ctrl>, <Shift> ali <Alt> za dodatne\nmoÅŸnosti pri urejanju.\n<Enter> za konec.";
+ 	strings[PICK_OBJECTS_HELP]	= "Izberi objekte s klikanjem nanje ali vleÄenjem Å¡katle.\n<Shift> ohrani preÅ¡njo izbiro.";
+
+	 
+}

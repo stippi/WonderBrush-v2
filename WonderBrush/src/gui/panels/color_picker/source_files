@@ -1,0 +1,7 @@
+SOURCE_FILES +=
+	ColorField.cpp
+	ColorPickerPanel.cpp
+	ColorPickerView.cpp
+	ColorPreview.cpp
+	ColorSlider.cpp
+;

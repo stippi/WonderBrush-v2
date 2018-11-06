@@ -1,0 +1,11 @@
+SOURCE_FILES +=
+	AIExporter.cpp
+	CursorExporter.cpp
+	Exporter.cpp
+	load.cpp
+	PSDFile.cpp
+	RDefExporter.cpp
+	SourceExporter.cpp
+	SVGExporter.cpp
+	TranslatorExporter.cpp
+;

@@ -1,0 +1,8 @@
+SOURCE_FILES +=
+	AppendCanvasAction.cpp
+	CanvasAction.cpp
+	CropAction.cpp
+	MergeLayersAction.cpp
+	ResizeAction.cpp
+	RotateAction.cpp
+;

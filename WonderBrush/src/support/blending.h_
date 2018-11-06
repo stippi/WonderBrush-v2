@@ -1,0 +1,853 @@
+// blending.h
+
+#ifndef BLENDING_H
+#define BLENDING_H
+
+#include <SupportDefs.h>
+
+#define GAMMA_BLEND 1
+
+#if PRE_MULTIPLIED
+// bit error version:
+//#define INT_MULT(a, b, t)		((t)=(a) * (b), ((((t) >> 8) + (t)) >> 8))
+// correct version
+#define INT_MULT(a, b, t)			((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
+
+#define INT_LERP(p, q, a, t)		((p) + INT_MULT(a, ((q) - (p)), t))
+
+#define INT_PRELERP(p, q, a, t)		((p) + (q) - INT_MULT(a, p, t))
+
+// color components are not yet premultiplied with alpha
+// put_color
+inline void
+put_color(uint8* dest, uint8 alpha,
+			uint16 c1, uint16 c2, uint16 c3)
+{
+	// dest is assumed to contain alpha-premultiplied color components
+	if (alpha > 0) {
+		// premultiply color components with alpha
+		c1 = (c1 * alpha) / 255;
+		c2 = (c2 * alpha) / 255;
+		c3 = (c3 * alpha) / 255;
+		// do the compositing
+		if (dest[3] == 0 || alpha == 255) {
+			dest[0] = c1;
+			dest[1] = c2;
+			dest[2] = c3;
+			dest[3] = alpha;
+		} else {
+			// taking dest alpha into account
+			uint32 temp;
+			dest[0] = INT_PRELERP(dest[0], c1, alpha, temp);
+			dest[1] = INT_PRELERP(dest[1], c2, alpha, temp);
+			dest[2] = INT_PRELERP(dest[2], c3, alpha, temp);
+			dest[3] = INT_PRELERP(dest[3], alpha, alpha, temp);
+		}
+	}
+}
+
+// color components are not yet premultiplied with alpha
+// computes the blended pixel from dest and supplied parameters and puts the result into dest pixel
+// put_color
+inline void
+put_color_copy(uint8* source, uint8* dest, uint8 alpha,
+			   uint16 c1, uint16 c2, uint16 c3)
+{
+	// dest is assumed to contain alpha-premultiplied color components
+	// source will contain alpha-premultiplied color components 
+	if (alpha > 0) {
+		// premultiply color components with alpha
+		c1 = (c1 * alpha) / 255;
+		c2 = (c2 * alpha) / 255;
+		c3 = (c3 * alpha) / 255;
+		// do the compositing
+		if (source[3] == 0 || alpha == 255) {
+			dest[0] = c1;
+			dest[1] = c2;
+			dest[2] = c3;
+			dest[3] = alpha;
+		} else {
+			// taking dest alpha into account
+			uint32 temp;
+			dest[0] = INT_PRELERP(source[0], c1, alpha, temp);
+			dest[1] = INT_PRELERP(source[1], c2, alpha, temp);
+			dest[2] = INT_PRELERP(source[2], c3, alpha, temp);
+			dest[3] = INT_PRELERP(source[3], alpha, alpha, temp);
+		}
+	} else {
+		*((uint32*)dest) = *((uint32*)source);
+	}
+}
+
+// blending two 800x600 bitmaps with "50" on each component (and alpha): 16501  usecs
+
+// color components are assumed to be alpha-premultiplied
+// blend_colors
+inline void
+blend_colors(uint8* dest, uint8* source)
+{
+	// dest is assumed to contain alpha-premultiplied color components
+	if (source[3] > 0) {
+		// do the compositing
+		if (dest[3] == 0 || source[3] == 255) {
+			dest[0] = source[0];
+			dest[1] = source[1];
+			dest[2] = source[2];
+			dest[3] = source[3];
+		} else {
+			// taking dest alpha into account
+			uint32 temp;
+			dest[0] = INT_PRELERP(dest[0], source[0], source[3], temp);
+			dest[1] = INT_PRELERP(dest[1], source[1], source[3], temp);
+			dest[2] = INT_PRELERP(dest[2], source[2], source[3], temp);
+			dest[3] = INT_PRELERP(dest[3], source[3], source[3], temp);
+		}
+	}
+}
+
+
+
+// color components are assumed to be alpha-premultiplied
+// put_color_demultiply
+inline void
+put_color_demultiply(uint8* dest, uint8* source)
+{
+	// dest is assumed to contain alpha-premultiplied color components
+	if (source[3] > 0) {
+		// do the compositing
+		if (dest[3] == 0 || source[3] == 255) {
+			// no need to demultiply
+			dest[0] = source[0];
+			dest[1] = source[1];
+			dest[2] = source[2];
+			dest[3] = source[3];
+		} else {
+			// taking dest alpha into account
+			uint32 temp;
+/*			uint8 alpha = source[3];
+			dest[0] = (INT_PRELERP(source[0], dest[0],alpha, temp) / alpha) / 255;
+			dest[1] = (INT_PRELERP(source[1], dest[1], alpha, temp) / alpha) / 255;
+			dest[2] = (INT_PRELERP(source[2], dest[2], alpha, temp) / alpha) / 255;
+			dest[3] = INT_PRELERP(alpha, dest[3], alpha, temp);*/
+			dest[0] = INT_PRELERP(dest[0], source[0], source[3], temp);
+			dest[1] = INT_PRELERP(dest[1], source[1], source[3], temp);
+			dest[2] = INT_PRELERP(dest[2], source[2], source[3], temp);
+			dest[3] = INT_PRELERP(dest[3], source[3], source[3], temp);
+		}
+	}
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+#elif GAMMA_BLEND
+
+extern uint16* kGammaTable;
+extern uint8* kInverseGammaTable;
+
+// blend
+inline void
+blend_gamma(uint16 b1, uint16 b2, uint16 b3, uint8 ba,	// bottom components
+			uint16 t1, uint16 t2, uint16 t3, uint8 ta,	// top components
+			uint8* d1, uint8* d2, uint8* d3, uint8* da)	// dest components
+{
+	if (ba == 255) {
+		uint32 destAlpha = 255 - ta;
+		*d1 = kInverseGammaTable[(b1 * destAlpha + t1 * ta) >> 8];// / 255];
+		*d2 = kInverseGammaTable[(b2 * destAlpha + t2 * ta) >> 8];// / 255];
+		*d3 = kInverseGammaTable[(b3 * destAlpha + t3 * ta) >> 8];// / 255];
+		*da = 255;
+	} else {
+		uint8 alphaRest = 255 - ta;
+		uint32 alphaTemp = (65025 - alphaRest * (255 - ba));
+		uint32 alphaDest = ba * alphaRest;
+		uint32 alphaSrc = ta << 8;//;255 * ta;
+		*d1 = kInverseGammaTable[(b1 * alphaDest + t1 * alphaSrc) / alphaTemp];
+		*d2 = kInverseGammaTable[(b2 * alphaDest + t2 * alphaSrc) / alphaTemp];
+		*d3 = kInverseGammaTable[(b3 * alphaDest + t3 * alphaSrc) / alphaTemp];
+		*da = alphaTemp >> 8;// / 255;
+	}
+/*	if (ta) {
+		if (ta == 255) {
+			*d1 = kInverseGammaTable[t1];
+			*d2 = kInverseGammaTable[t2];
+			*d3 = kInverseGammaTable[t3];
+			*da = ta;
+		} else {
+			int r = b1;
+			int g = b2;
+			int b = b3;
+			int a = ba;
+			*d1 = kInverseGammaTable[(uint8)((((t1 - r) * ta) + (r << 8)) >> 8)];
+			*d2 = kInverseGammaTable[(uint8)((((t2 - g) * ta) + (g << 8)) >> 8)];
+			*d3 = kInverseGammaTable[(uint8)((((t3 - b) * ta) + (b << 8)) >> 8)];
+			*da = (uint8)((((ta + a) << 8) - ta * a) >> 8);
+		}
+	} else {
+		*d1 = kInverseGammaTable[b1];
+		*d2 = kInverseGammaTable[b2];
+		*d3 = kInverseGammaTable[b3];
+		*da = ba;
+	}*/
+}
+
+// blend
+inline void
+blend(uint8 b1, uint8 b2, uint8 b3, uint8 ba,		// bottom components
+	  uint8 t1, uint8 t2, uint8 t3, uint8 ta,		// top components
+	  uint8* d1, uint8* d2, uint8* d3, uint8* da)	// dest components
+{
+	// convert to linear rgb
+	uint16 gt1 = kGammaTable[t1];
+	uint16 gt2 = kGammaTable[t2];
+	uint16 gt3 = kGammaTable[t3];
+
+	uint16 gb1 = kGammaTable[b1];
+	uint16 gb2 = kGammaTable[b2];
+	uint16 gb3 = kGammaTable[b3];
+
+	blend_gamma(gb1, gb2, gb3, ba,
+				gt1, gt2, gt3, ta,
+				d1, d2, d3, da);
+}
+
+// init_gamma_blending
+void
+init_gamma_blending();
+
+// convert_to_gamma
+//
+// converted value will be gamma corrected in the range [0...2550]
+// and can be passed on to the other functions that take uint16 components
+uint16
+convert_to_gamma(uint8 value);
+
+// blend_colors_copy
+inline void
+blend_colors_copy(uint8* bottom, uint8 alpha, uint8* dest,
+				  uint8 c1, uint8 c2, uint8 c3,
+				  uint16 gc1, uint16 gc2, uint16 gc3)
+{
+	if (alpha > 0) {
+		if (bottom[3] == 0 || alpha == 255) {
+			dest[0] = c1;
+			dest[1] = c2;
+			dest[2] = c3;
+			dest[3] = alpha;
+		} else {
+			// only bottom components need to be gamma corrected
+			uint16 gb1 = kGammaTable[bottom[0]];
+			uint16 gb2 = kGammaTable[bottom[1]];
+			uint16 gb3 = kGammaTable[bottom[2]];
+
+			blend_gamma(gb1, gb2, gb3, bottom[3],
+						gc1, gc2, gc3, alpha,
+						&dest[0], &dest[1], &dest[2], &dest[3]);
+		}
+	} else {
+		*((uint32*)dest) = *((uint32*)bottom);
+	}
+}
+
+// blend_colors
+inline void
+blend_colors(uint8* bottom, uint8 alpha,
+			 uint8 c1, uint8 c2, uint8 c3,
+			 uint16 gc1, uint16 gc2, uint16 gc3)
+{
+	if (alpha > 0) {
+		if (bottom[3] == 0 || alpha == 255) {
+			bottom[0] = c1;
+			bottom[1] = c2;
+			bottom[2] = c3;
+			bottom[3] = alpha;
+		} else {
+			// only bottom components need to be gamma corrected
+			uint16 gb1 = kGammaTable[bottom[0]];
+			uint16 gb2 = kGammaTable[bottom[1]];
+			uint16 gb3 = kGammaTable[bottom[2]];
+
+			blend_gamma(gb1, gb2, gb3, bottom[3],
+						gc1, gc2, gc3, alpha,
+						&bottom[0], &bottom[1], &bottom[2], &bottom[3]);
+		}
+	}
+}
+
+// blend_colors_copy
+inline void
+blend_colors_copy(uint8* bottom, uint8 alpha, uint8* dest,
+				  uint8 c1, uint8 c2, uint8 c3)
+{
+	if (alpha > 0) {
+		if (bottom[3] == 0 || alpha == 255) {
+			dest[0] = c1;
+			dest[1] = c2;
+			dest[2] = c3;
+			dest[3] = alpha;
+		} else {
+			blend(bottom[0], bottom[1], bottom[2], bottom[3],
+				  c1, c2, c3, alpha,
+				  &dest[0], &dest[1], &dest[2], &dest[3]);
+		}
+	} else {
+		*((uint32*)dest) = *((uint32*)bottom);
+	}
+}
+
+// blend_colors
+inline void
+blend_colors(uint8* bottom, uint8 alpha, uint8 c1, uint8 c2, uint8 c3)
+{
+	if (alpha > 0) {
+		if (bottom[3] == 0 || alpha == 255) {
+			bottom[0] = c1;
+			bottom[1] = c2;
+			bottom[2] = c3;
+			bottom[3] = alpha;
+		} else {
+			blend(bottom[0], bottom[1], bottom[2], bottom[3],
+				  c1, c2, c3, alpha,
+				  &bottom[0], &bottom[1], &bottom[2], &bottom[3]);
+		}
+	}
+}
+
+// blend_colors
+inline void
+blend_colors(uint8* bottom, uint8* source, uint8 alphaOverride)
+{
+	uint8 alpha = (source[3] * alphaOverride) / 255;
+	if (alpha > 0) {
+		if (bottom[3] == 0 || alpha == 255) {
+			bottom[0] = source[0];
+			bottom[1] = source[1];
+			bottom[2] = source[2];
+			bottom[3] = alpha;
+		} else {
+			blend(bottom[0], bottom[1], bottom[2], bottom[3],
+				  source[0], source[1], source[2], alpha,
+				  &bottom[0], &bottom[1], &bottom[2], &bottom[3]);
+		}
+	}
+}
+
+// blend_colors
+inline void
+blend_colors(uint8* bottom, uint8* source)
+{
+	if (source[3] > 0) {
+		if (bottom[3] == 0 || source[3] == 255) {
+			bottom[0] = source[0];
+			bottom[1] = source[1];
+			bottom[2] = source[2];
+			bottom[3] = source[3];
+		} else {
+			blend(bottom[0], bottom[1], bottom[2], bottom[3],
+				  source[0], source[1], source[2], source[3],
+				  &bottom[0], &bottom[1], &bottom[2], &bottom[3]);
+		}
+	}
+}
+
+// blend_colors_copy
+inline void
+blend_colors_copy(uint8* dest, uint8* bottom, uint8* top)
+{
+	if (bottom[3] == 0 || top[3] == 255) {
+		dest[0] = top[0];
+		dest[1] = top[1];
+		dest[2] = top[2];
+		dest[3] = top[3];
+	} else {
+			blend(bottom[0], bottom[1], bottom[2], bottom[3],
+				  top[0], top[1], top[2], top[3],
+				  &dest[0], &dest[1], &dest[2], &dest[3]);
+	}
+}
+
+// blend_pixels
+inline void
+blend_pixels(uint8* bottom, uint8* top, uint8 alpha)
+{
+	if (alpha > 0) {
+		if (alpha == 255) {
+			bottom[0] = top[0];
+			bottom[1] = top[1];
+			bottom[2] = top[2];
+			bottom[3] = top[3];
+		} else {
+			// convert to linear rgb
+			uint16 t1 = kGammaTable[top[0]];
+			uint16 t2 = kGammaTable[top[1]];
+			uint16 t3 = kGammaTable[top[2]];
+			uint16 b1 = kGammaTable[bottom[0]];
+			uint16 b2 = kGammaTable[bottom[1]];
+			uint16 b3 = kGammaTable[bottom[2]];
+
+			uint8 mergeAlpha = bottom[3] ? (top[3] * alpha) >> 8 : 255;// / 255 : 255;
+			uint8 invAlpha = 255 - mergeAlpha;
+			bottom[0] = kInverseGammaTable[(b1 * invAlpha + t1 * mergeAlpha) >> 8];// / 255];
+			bottom[1] = kInverseGammaTable[(b2 * invAlpha + t2 * mergeAlpha) >> 8];// / 255];
+			bottom[2] = kInverseGammaTable[(b3 * invAlpha + t3 * mergeAlpha) >> 8];// / 255];
+			bottom[3] = (bottom[3] * (255 - alpha) + top[3] * alpha) >> 8;// / 255;
+		}
+	}
+}
+
+// blend_pixels_copy
+inline void
+blend_pixels_copy(uint8* bottom, uint8* top, uint8* dest, uint8 alpha)
+{
+	if (alpha > 0) {	
+		if (alpha == 255) {
+			dest[0] = top[0];
+			dest[1] = top[1];
+			dest[2] = top[2];
+			dest[3] = top[3];
+		} else {
+			// convert to linear rgb
+			uint16 t1 = kGammaTable[top[0]];
+			uint16 t2 = kGammaTable[top[1]];
+			uint16 t3 = kGammaTable[top[2]];
+			uint16 b1 = kGammaTable[bottom[0]];
+			uint16 b2 = kGammaTable[bottom[1]];
+			uint16 b3 = kGammaTable[bottom[2]];
+
+			uint8 mergeAlpha = bottom[3] ? (top[3] * alpha) >> 8 : 255;// / 255 : 255;
+			uint8 invAlpha = 255 - mergeAlpha;
+			dest[0] = kInverseGammaTable[(b1 * invAlpha + t1 * mergeAlpha) >> 8];// / 255];
+			dest[1] = kInverseGammaTable[(b2 * invAlpha + t2 * mergeAlpha) >> 8];// / 255];
+			dest[2] = kInverseGammaTable[(b3 * invAlpha + t3 * mergeAlpha) >> 8];// / 255];
+			dest[3] = (bottom[3] * (255 - alpha) + top[3] * alpha) >> 8;// / 255;
+		}
+	} else {
+		dest[0] = bottom[0];
+		dest[1] = bottom[1];
+		dest[2] = bottom[2];
+		dest[3] = bottom[3];
+	}
+}
+
+// blend_pixels_overlay
+inline void
+blend_pixels_overlay(uint8* bottom, uint8* top, uint8 alphaOverride)
+{
+	uint8 alpha = (top[3] * alphaOverride) / 255;
+	if (alpha > 0) {
+		if (alpha == 255) {
+			bottom[0] = top[0];
+			bottom[1] = top[1];
+			bottom[2] = top[2];
+			bottom[3] = top[3];
+		} else {
+			// convert to linear rgb
+			uint16 t1 = kGammaTable[top[0]];
+			uint16 t2 = kGammaTable[top[1]];
+			uint16 t3 = kGammaTable[top[2]];
+			uint16 b1 = kGammaTable[bottom[0]];
+			uint16 b2 = kGammaTable[bottom[1]];
+			uint16 b3 = kGammaTable[bottom[2]];
+
+			uint8 mergeAlpha = bottom[3] ? alpha : 255;
+			uint8 invAlpha = 255 - mergeAlpha;
+			bottom[0] = kInverseGammaTable[(b1 * invAlpha + t1 * mergeAlpha) >> 8];// / 255];
+			bottom[1] = kInverseGammaTable[(b2 * invAlpha + t2 * mergeAlpha) >> 8];// / 255];
+			bottom[2] = kInverseGammaTable[(b3 * invAlpha + t3 * mergeAlpha) >> 8];// / 255];
+			bottom[3] = (bottom[3] * (255 - alpha) + top[3] * alpha) >> 8;// / 255;
+		}
+	}
+}
+
+// blend_pixels_overlay_copy
+inline void
+blend_pixels_overlay_copy(uint8* bottom, uint8* top, uint8* dest, uint8 alphaOverride)
+{
+	uint8 alpha = (top[3] * alphaOverride) / 255;
+	if (alpha > 0) {
+		if (alpha == 255) {
+			dest[0] = top[0];
+			dest[1] = top[1];
+			dest[2] = top[2];
+			dest[3] = top[3];
+		} else {
+			// convert to linear rgb
+			uint16 t1 = kGammaTable[top[0]];
+			uint16 t2 = kGammaTable[top[1]];
+			uint16 t3 = kGammaTable[top[2]];
+			uint16 b1 = kGammaTable[bottom[0]];
+			uint16 b2 = kGammaTable[bottom[1]];
+			uint16 b3 = kGammaTable[bottom[2]];
+
+			uint8 mergeAlpha = bottom[3] ? alpha : 255;
+			uint8 invAlpha = 255 - mergeAlpha;
+			dest[0] = kInverseGammaTable[(b1 * invAlpha + t1 * mergeAlpha) >> 8];// / 255];
+			dest[1] = kInverseGammaTable[(b2 * invAlpha + t2 * mergeAlpha) >> 8];// / 255];
+			dest[2] = kInverseGammaTable[(b3 * invAlpha + t3 * mergeAlpha) >> 8];// / 255];
+			dest[3] = (bottom[3] * (255 - alpha) + top[3] * alpha)  >> 8;// / 255;
+		}
+	} else {
+		dest[0] = bottom[0];
+		dest[1] = bottom[1];
+		dest[2] = bottom[2];
+		dest[3] = bottom[3];
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+#else // GAMMA_BLEND
+
+// blend_colors_copy
+inline void
+blend_colors_copy(uint8* bottom, uint8 alpha, uint8* dest,
+				  uint8 c1, uint8 c2, uint8 c3)
+{
+	if (alpha > 0) {
+		if (bottom[3] == 0 || alpha == 255) {
+			dest[0] = c1;
+			dest[1] = c2;
+			dest[2] = c3;
+			dest[3] = alpha;
+		} else {
+			if (bottom[3] == 255) {
+				uint32 destAlpha = 255 - alpha;
+				dest[0] = (uint8)((bottom[0] * destAlpha + c1 * alpha) / 255);
+				dest[1] = (uint8)((bottom[1] * destAlpha + c2 * alpha) / 255);
+				dest[2] = (uint8)((bottom[2] * destAlpha + c3 * alpha) / 255);
+				dest[3] = 255;
+			} else {
+//				float srcAlpha = alpha / 255.0;
+//				float dstAlpha = bottom[3] / 255.0;
+//				float rltAlpha = (1.0 - (1.0 - srcAlpha) * (1.0 - dstAlpha));
+//				dest[0] = (uint8)(((dstAlpha * (1.0 - srcAlpha)) * bottom[0] + srcAlpha * c1) / rltAlpha);
+//				dest[1] = (uint8)(((dstAlpha * (1.0 - srcAlpha)) * bottom[1] + srcAlpha * c2) / rltAlpha);
+//				dest[2] = (uint8)(((dstAlpha * (1.0 - srcAlpha)) * bottom[2] + srcAlpha * c3) / rltAlpha);
+//				dest[3] = (uint8)(255.0 * rltAlpha);
+				uint8 alphaRest = 255 - alpha;
+				uint32 alphaTemp = (65025 - alphaRest * (255 - bottom[3]));
+				uint32 alphaDest = bottom[3] * alphaRest;
+				uint32 alphaSrc = 255 * alpha;
+				dest[0] = (bottom[0] * alphaDest + c1 * alphaSrc) / alphaTemp;
+				dest[1] = (bottom[1] * alphaDest + c2 * alphaSrc) / alphaTemp;
+				dest[2] = (bottom[2] * alphaDest + c3 * alphaSrc) / alphaTemp;
+				dest[3] = alphaTemp / 255;
+			}
+		}
+	} else {
+		*((uint32*)dest) = *((uint32*)bottom);
+	}
+/*	if (alpha) {
+		if (alpha == 255) {
+			dest[0] = c1;
+			dest[1] = c2;
+			dest[2] = c3;
+			dest[3] = alpha;
+		} else {
+			int r = bottom[0];
+			int g = bottom[1];
+			int b = bottom[2];
+			int a = bottom[3];
+			dest[0] = (uint8)((((c1 - r) * alpha) + (r << 8)) >> 8);
+			dest[1] = (uint8)((((c2 - g) * alpha) + (g << 8)) >> 8);
+			dest[2] = (uint8)((((c3 - b) * alpha) + (b << 8)) >> 8);
+			dest[3] = (uint8)((((alpha + a) << 8) - alpha * a) >> 8);
+		}
+	} else {
+		*((uint32*)dest) = *((uint32*)bottom);
+	}*/
+}
+
+// blend_colors
+inline void
+blend_colors(uint8* bottom, uint8 alpha, uint8 c1, uint8 c2, uint8 c3)
+{
+	if (alpha > 0) {
+		if (bottom[3] == 0 || alpha == 255) {
+			bottom[0] = c1;
+			bottom[1] = c2;
+			bottom[2] = c3;
+			bottom[3] = alpha;
+		} else {
+			if (bottom[3] == 255) {
+				uint32 destAlpha = 255 - alpha;
+				bottom[0] = (uint8)((bottom[0] * destAlpha + c1 * alpha) / 255);
+				bottom[1] = (uint8)((bottom[1] * destAlpha + c2 * alpha) / 255);
+				bottom[2] = (uint8)((bottom[2] * destAlpha + c3 * alpha) / 255);
+			} else {
+				uint8 alphaRest = 255 - alpha;
+				uint32 alphaTemp = (65025 - alphaRest * (255 - bottom[3]));
+				uint32 alphaDest = bottom[3] * alphaRest;
+				uint32 alphaSrc = 255 * alpha;
+				bottom[0] = (bottom[0] * alphaDest + c1 * alphaSrc) / alphaTemp;
+				bottom[1] = (bottom[1] * alphaDest + c2 * alphaSrc) / alphaTemp;
+				bottom[2] = (bottom[2] * alphaDest + c3 * alphaSrc) / alphaTemp;
+				bottom[3] = alphaTemp / 255;
+			}
+		}
+	}
+/*
+	if (alpha) {
+		if (alpha == 255) {
+			bottom[0] = c1;
+			bottom[1] = c2;
+			bottom[2] = c3;
+			bottom[3] = alpha;
+		} else {
+			int r = bottom[0];
+			int g = bottom[1];
+			int b = bottom[2];
+			int a = bottom[3];
+			bottom[0] = (uint8)((((c1 - r) * alpha) + (r << 8)) >> 8);
+			bottom[1] = (uint8)((((c2 - g) * alpha) + (g << 8)) >> 8);
+			bottom[2] = (uint8)((((c3 - b) * alpha) + (b << 8)) >> 8);
+			bottom[3] = (uint8)((((alpha + a) << 8) - alpha * a) >> 8);
+		}
+	}*/
+}
+
+// blend_colors
+inline void
+blend_colors(uint8* bottom, uint8* source, uint8 alphaOverride)
+{
+/*	uint8 alpha = (source[3] * alphaOverride) / 255;
+	if (alpha > 0) {
+		if (bottom[3] == 0 || alpha == 255) {
+			bottom[0] = source[0];
+			bottom[1] = source[1];
+			bottom[2] = source[2];
+			bottom[3] = alpha;
+		} else {
+			if (bottom[3] == 255) {
+				uint32 destAlpha = 255 - alpha;
+				bottom[0] = (uint8)((bottom[0] * destAlpha + source[0] * alpha) / 255);
+				bottom[1] = (uint8)((bottom[1] * destAlpha + source[1] * alpha) / 255);
+				bottom[2] = (uint8)((bottom[2] * destAlpha + source[2] * alpha) / 255);
+			} else {
+				uint8 alphaRest = 255 - alpha;
+				uint32 alphaTemp = (65025 - alphaRest * (255 - bottom[3]));
+				uint32 alphaDest = bottom[3] * alphaRest;
+				uint32 alphaSrc = 255 * alpha;
+				bottom[0] = (bottom[0] * alphaDest + source[0] * alphaSrc) / alphaTemp;
+				bottom[1] = (bottom[1] * alphaDest + source[1] * alphaSrc) / alphaTemp;
+				bottom[2] = (bottom[2] * alphaDest + source[2] * alphaSrc) / alphaTemp;
+				bottom[3] = alphaTemp / 255;
+			}
+		}
+	}*/
+	int alpha = int(alphaOverride) * source[3];
+
+	if (alpha) {
+		if (alpha == 255 * 255) {
+			bottom[0] = source[0];
+			bottom[1] = source[1];
+			bottom[2] = source[2];
+			bottom[3] = source[3];
+		} else {
+			int r = bottom[0];
+			int g = bottom[1];
+			int b = bottom[2];
+			int a = bottom[3];
+			bottom[0] = (uint8)((((source[0] - r) * alpha) + (r << 16)) >> 16);
+			bottom[1] = (uint8)((((source[1] - g) * alpha) + (g << 16)) >> 16);
+			bottom[2] = (uint8)((((source[2] - b) * alpha) + (b << 16)) >> 16);
+			bottom[3] = (uint8)(((alpha + (a << 8)) - ((alpha * a) >> 8)) >> 8);
+		}
+	}
+}
+
+// blend_colors
+inline void
+blend_colors(uint8* bottom, uint8* source)
+{
+/*	if (source[3] > 0) {
+		if (bottom[3] == 0 || source[3] == 255) {
+			bottom[0] = source[0];
+			bottom[1] = source[1];
+			bottom[2] = source[2];
+			bottom[3] = source[3];
+		} else {
+			if (bottom[3] == 255) {
+				uint32 destAlpha = 255 - source[3];
+				bottom[0] = (uint8)((bottom[0] * destAlpha + source[0] * source[3]) / 255);
+				bottom[1] = (uint8)((bottom[1] * destAlpha + source[1] * source[3]) / 255);
+				bottom[2] = (uint8)((bottom[2] * destAlpha + source[2] * source[3]) / 255);
+			} else {
+				uint8 alphaRest = 255 - source[3];
+				uint32 alphaTemp = (65025 - alphaRest * (255 - bottom[3]));
+				uint32 alphaDest = bottom[3] * alphaRest;
+				uint32 alphaSrc = 255 * source[3];
+				bottom[0] = (bottom[0] * alphaDest + source[0] * alphaSrc) / alphaTemp;
+				bottom[1] = (bottom[1] * alphaDest + source[1] * alphaSrc) / alphaTemp;
+				bottom[2] = (bottom[2] * alphaDest + source[2] * alphaSrc) / alphaTemp;
+				bottom[3] = alphaTemp / 255;
+			}
+		}
+	}*/
+	if (source[3]) {
+		if (source[3] == 255) {
+			bottom[0] = source[0];
+			bottom[1] = source[1];
+			bottom[2] = source[2];
+			bottom[3] = source[3];
+		} else {
+			int r = bottom[0];
+			int g = bottom[1];
+			int b = bottom[2];
+			int a = bottom[3];
+			bottom[0] = (uint8)((((source[0] - r) * source[3]) + (r << 8)) >> 8);
+			bottom[1] = (uint8)((((source[1] - g) * source[3]) + (g << 8)) >> 8);
+			bottom[2] = (uint8)((((source[2] - b) * source[3]) + (b << 8)) >> 8);
+			bottom[3] = (uint8)((((source[3] + a) << 8) - source[3] * a) >> 8);
+		}
+	}
+}
+
+// blend_colors_copy
+inline void
+blend_colors_copy(uint8* dest, uint8* bottom, uint8* top)
+{
+/*	if (bottom[3] == 0 || top[3] == 255) {
+		dest[0] = top[0];
+		dest[1] = top[1];
+		dest[2] = top[2];
+		dest[3] = top[3];
+	} else {
+		if (bottom[3] == 255) {
+			uint32 destAlpha = 255 - top[3];
+			dest[0] = (uint8)((bottom[0] * destAlpha + top[0] * top[3]) / 255);
+			dest[1] = (uint8)((bottom[1] * destAlpha + top[1] * top[3]) / 255);
+			dest[2] = (uint8)((bottom[2] * destAlpha + top[2] * top[3]) / 255);
+			dest[3] = 255;
+		} else {
+			uint8 alphaRest = 255 - top[3];
+			uint32 alphaTemp = (65025 - alphaRest * (255 - bottom[3]));
+			uint32 alphaDest = bottom[3] * alphaRest;
+			uint32 alphaSrc = 255 * top[3];
+			dest[0] = (bottom[0] * alphaDest + top[0] * alphaSrc) / alphaTemp;
+			dest[1] = (bottom[1] * alphaDest + top[1] * alphaSrc) / alphaTemp;
+			dest[2] = (bottom[2] * alphaDest + top[2] * alphaSrc) / alphaTemp;
+			dest[3] = alphaTemp / 255;
+		}
+	}*/
+	if (top[3]) {
+		if (top[3] == 255) {
+			dest[0] = top[0];
+			dest[1] = top[1];
+			dest[2] = top[2];
+			dest[3] = top[3];
+		} else {
+			int r = bottom[0];
+			int g = bottom[1];
+			int b = bottom[2];
+			int a = bottom[3];
+			dest[0] = (uint8)((((top[0] - r) * top[3]) + (r << 8)) >> 8);
+			dest[1] = (uint8)((((top[1] - g) * top[3]) + (g << 8)) >> 8);
+			dest[2] = (uint8)((((top[2] - b) * top[3]) + (b << 8)) >> 8);
+			dest[3] = (uint8)((((top[3] + a) << 8) - top[3] * a) >> 8);
+		}
+	} else {
+		dest[0] = top[0];
+		dest[1] = top[1];
+		dest[2] = top[2];
+		dest[3] = top[3];
+	}
+}
+
+// blend_pixels
+inline void
+blend_pixels(uint8* bottom, uint8* top, uint8 alpha)
+{
+	if (alpha > 0) {
+		if (alpha == 255) {
+			bottom[0] = top[0];
+			bottom[1] = top[1];
+			bottom[2] = top[2];
+			bottom[3] = top[3];
+		} else {
+			uint8 mergeAlpha = bottom[3] ? (top[3] * alpha) / 255 : 255;
+			uint8 invAlpha = 255 - mergeAlpha;
+			bottom[0] = (bottom[0] * invAlpha + top[0] * mergeAlpha) / 255;
+			bottom[1] = (bottom[1] * invAlpha + top[1] * mergeAlpha) / 255;
+			bottom[2] = (bottom[2] * invAlpha + top[2] * mergeAlpha) / 255;
+			bottom[3] = (bottom[3] * (255 - alpha) + top[3] * alpha) / 255;
+		}
+	}
+}
+
+// blend_pixels_copy
+inline void
+blend_pixels_copy(uint8* bottom, uint8* top, uint8* dest, uint8 alpha)
+{
+	if (alpha > 0) {
+		if (alpha == 255) {
+			dest[0] = top[0];
+			dest[1] = top[1];
+			dest[2] = top[2];
+			dest[3] = top[3];
+		} else {
+			uint8 mergeAlpha = bottom[3] ? (top[3] * alpha) / 255 : 255;
+			uint8 invAlpha = 255 - mergeAlpha;
+			dest[0] = (bottom[0] * invAlpha + top[0] * mergeAlpha) / 255;
+			dest[1] = (bottom[1] * invAlpha + top[1] * mergeAlpha) / 255;
+			dest[2] = (bottom[2] * invAlpha + top[2] * mergeAlpha) / 255;
+			dest[3] = (bottom[3] * (255 - alpha) + top[3] * alpha) / 255;
+		}
+	} else {
+		dest[0] = bottom[0];
+		dest[1] = bottom[1];
+		dest[2] = bottom[2];
+		dest[3] = bottom[3];
+	}
+}
+
+// blend_pixels_overlay
+inline void
+blend_pixels_overlay(uint8* bottom, uint8* top, uint8 alphaOverride)
+{
+	uint8 alpha = (top[3] * alphaOverride) / 255;
+	if (alpha > 0) {
+		if (alpha == 255) {
+			bottom[0] = top[0];
+			bottom[1] = top[1];
+			bottom[2] = top[2];
+			bottom[3] = top[3];
+		} else {
+			uint8 mergeAlpha = bottom[3] ? alpha : 255;
+			uint8 invAlpha = 255 - mergeAlpha;
+			bottom[0] = (bottom[0] * invAlpha + top[0] * mergeAlpha) / 255;
+			bottom[1] = (bottom[1] * invAlpha + top[1] * mergeAlpha) / 255;
+			bottom[2] = (bottom[2] * invAlpha + top[2] * mergeAlpha) / 255;
+			bottom[3] = (bottom[3] * (255 - alpha) + top[3] * alpha) / 255;
+		}
+	}
+}
+
+// blend_pixels_overlay_copy
+inline void
+blend_pixels_overlay_copy(uint8* bottom, uint8* top, uint8* dest, uint8 alphaOverride)
+{
+	uint8 alpha = (top[3] * alphaOverride) / 255;
+	if (alpha > 0) {
+		if (alpha == 255) {
+			dest[0] = top[0];
+			dest[1] = top[1];
+			dest[2] = top[2];
+			dest[3] = top[3];
+		} else {
+			uint8 mergeAlpha = bottom[3] ? alpha : 255;
+			uint8 invAlpha = 255 - mergeAlpha;
+			dest[0] = (bottom[0] * invAlpha + top[0] * mergeAlpha) / 255;
+			dest[1] = (bottom[1] * invAlpha + top[1] * mergeAlpha) / 255;
+			dest[2] = (bottom[2] * invAlpha + top[2] * mergeAlpha) / 255;
+			dest[3] = (bottom[3] * (255 - alpha) + top[3] * alpha) / 255;
+		}
+	} else {
+		dest[0] = bottom[0];
+		dest[1] = bottom[1];
+		dest[2] = bottom[2];
+		dest[3] = bottom[3];
+	}
+}
+
+#endif	// GAMMA_BLEND
+
+# endif // BLENDING_H

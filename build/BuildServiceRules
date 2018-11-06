@@ -1,0 +1,105 @@
+# BuildServiceRules
+#
+# Service rules that are used by the build system internally.
+
+rule Filter
+{
+        # Filter <list> : <excludes> ;
+        # Removes all occurrences of <excludes> in <list>.
+
+        local list = $(1) ;
+        local excludes = $(2) ;
+        local newList ;
+        local item ;
+        for item in $(list) {
+                local skip ;
+                local exclude ;
+                for exclude in $(excludes) {
+                        if $(item) = $(exclude) {
+                                skip = true ;
+                        }
+                }
+                if ! $(skip) {
+                        newList += $(item) ;
+                }
+        }
+        return $(newList) ;
+}
+
+rule LinkSharedOSLibs
+{
+	# LinkSharedOSLibs <name> : <libs> ;
+	# Valid elements for <libs> are e.g. "be" or "libopenbeos.so" or
+	# "/boot/.../libfoo.so". If the basename starts with "lib" or the thingy
+	# has a dirname or grist, it is added to the NEEDLIBS variable (i.e. the
+	# file will be bound!), otherwise it is prefixed "-l" and added to
+	# LINKLIBS.
+	
+	for i in $(>)
+	{
+		local isfile = ;
+		if $(i:D) || $(i:G) {
+			isfile = true ;
+		} else {
+			switch $(i:B)
+			{
+				case lib*	: isfile = true ;
+				case *		: isfile = ;
+			}
+		}
+		if $(isfile) {
+			NEEDLIBS on $(1) = [ on $(1) return $(NEEDLIBS) ] $(i) ;
+			Depends $(1) : $(i) ;
+		} else {
+			LINKLIBS on $(1) = [ on $(1) return $(LINKLIBS) ] -l$(i) ;
+		}
+	}
+}
+
+rule AddResources
+{
+	# AddResources <name> : <resourcefiles> ;
+
+	SEARCH on $(2) += $(SEARCH_SOURCE) ;
+	RESFILES on $(1) += $(2) ;
+}
+
+if $(TARGET_PLATFORM) = linux {
+
+rule XRes { }
+
+rule MimeSet { }
+
+} else {
+
+rule XRes
+{
+	# XRes <target> : <resource files>
+	if $(2)
+	{
+		Depends $(1) : $(2) ;
+		XRes1 $(1) : $(2) ;
+	}
+}
+
+actions XRes1
+{
+	xres -o "$(1)" "$(2)" ;
+}
+
+actions MimeSet
+{
+	mimeset -f "$(1)" ;
+}
+
+}	# $(TARGET_PLATFORM) != linux
+
+rule SysSubDirHdrs
+{
+	SYSSUBDIRHDRS += [ FDirName $(<) ] ;
+}
+
+rule FSysIncludes
+{
+	return $(HDRS_SYSTEM_INCLUDES_OPTION)$(<) ;
+}

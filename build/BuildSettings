@@ -1,0 +1,83 @@
+# BuildSettings
+#
+# Setup global variables.
+
+# warnings settings
+if $(WARNINGS) != 0 {
+	CCFLAGS += -Wall -Wno-multichar -Wmissing-prototypes ;
+	CCFLAGS += -Wpointer-arith -Wcast-align -Wsign-compare ;
+	C++FLAGS += -Wall -Wno-multichar ;
+	C++FLAGS += -Wno-ctor-dtor-privacy -Woverloaded-virtual ;
+	C++FLAGS += -Wpointer-arith -Wcast-align -Wsign-compare ;
+}
+
+# debugging settings
+if $(DEBUG) {
+	OPTIMIZE = 0 ;
+	CCFLAGS += -g -DDEBUG=$(DEBUG) ;
+	C++FLAGS += -g -DDEBUG=$(DEBUG)  ;
+	LINKFLAGS += -g ;
+}
+
+# optimization settings
+if $(OPTIMIZE) = 0 {
+	if $(OSPLAT) = X86 {
+		OPTIM ?= -O0 ;
+	} else {
+		OPTIM ?= -O0 ;
+	}
+} else {
+	if $(OSPLAT) = X86 {
+		OPTIM ?= -O2 ;
+	} else {
+		OPTIM ?= -O7 ;
+	}
+}
+
+# Use nasm for assembling. ELF32 output format.
+ASFLAGS = -f elf ;
+
+# C and C++ flags
+if $(OSPLAT) = PPC {
+	# filter out -nosyspath
+	CFLAGS = [ Filter $(CFLAGS) : -nosyspath ] ;
+	C++FLAGS = [ Filter $(C++FLAGS) : -nosyspath ] ;
+}
+
+# target platform: Supported are "r5" and "zeta", default is haiku.
+TARGET_PLATFORM ?= haiku ;
+switch $(TARGET_PLATFORM)
+{
+	case haiku :
+	{
+		AS = yasm ;
+		DEFINES += TARGET_PLATFORM_HAIKU ;
+		LIBSTDC++ = stdc++.r4 ;
+	}
+
+	case r5 :
+	{
+		AS = nasm ;
+		DEFINES += TARGET_PLATFORM_R5 ;
+		LIBSTDC++ = stdc++.r4 ;
+	}
+
+	case zeta : 
+	{
+		AS = nasm ;
+		DEFINES += TARGET_PLATFORM_ZETA ;
+		LIBSTDC++ = stdc++.r4 ;
+	}
+
+	case linux :
+	{
+		AS = nasm ;
+		DEFINES += TARGET_PLATFORM_LINUX ;
+		LIBSTDC++ = stdc++ ;
+	}
+	
+	case * :
+	{
+		Exit ERROR: Unsupported TARGET_PLATFORM: $(TARGET_PLATFORM) ;
+	}
+}

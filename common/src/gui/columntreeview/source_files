@@ -1,0 +1,23 @@
+SOURCE_FILES +=
+	Column.cpp
+	ColumnHeader.cpp
+	ColumnHeaderView.cpp
+	ColumnHeaderViewStates.cpp
+	ColumnItem.cpp
+	ColumnListModel.cpp
+	ColumnTreeItem.cpp
+	ColumnTreeItemCompare.cpp
+	ColumnTreeItemHandle.cpp
+	ColumnTreeModel.cpp
+	ColumnTreeModelListener.cpp
+	ColumnTreeView.cpp
+	ColumnTreeViewColors.cpp
+	ColumnTreeViewStates.cpp
+	DefaultColumnTreeItemHandle.cpp
+	DefaultColumnTreeModel.cpp
+	EasyColumnTreeItem.cpp
+	LabelColumnHeader.cpp
+	TextColumnTreeItem.cpp
+
+	ColumnTreeViewTest.cpp
+;

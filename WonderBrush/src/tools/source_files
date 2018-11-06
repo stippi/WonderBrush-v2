@@ -1,0 +1,15 @@
+SOURCE_FILES +=
+	ArchivableTransformable.cpp
+	BitmapStroke.cpp
+	BlurStroke.cpp
+	BrushStroke.cpp
+	CloneStroke.cpp
+	FillStroke.cpp
+	ObjectObserver.cpp
+	Observable.cpp
+	PenStroke.cpp
+	ShapeStroke.cpp
+	Stroke.cpp
+	TextStroke.cpp
+	Transformable.cpp
+;

@@ -1,0 +1,4 @@
+SOURCE_FILES +=
+	PointSelection.cpp
+	VectorPath.cpp
+;

@@ -1,0 +1,8 @@
+SOURCE_FILES +=
+;
+
+if $USE_LZO {
+	SOURCE_FILES +=
+		minilzo.c
+	;
+}

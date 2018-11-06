@@ -1,0 +1,5 @@
+SOURCE_FILES +=
+	addon.cpp
+	LanguageManager.cpp
+	Strings.cpp
+;

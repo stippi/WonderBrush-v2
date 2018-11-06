@@ -1,0 +1,6 @@
+SOURCE_FILES +=
+	agg_font_freetype.cpp
+	AGGTextRenderer.cpp
+	FontManager.cpp
+	TextRenderer.cpp
+;

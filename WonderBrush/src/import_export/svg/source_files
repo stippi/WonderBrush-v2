@@ -1,0 +1,6 @@
+SOURCE_FILES +=
+	DocumentBuilder.cpp
+	PathTokenizer.cpp
+	SVGGradients.cpp
+	SVGParser.cpp
+;

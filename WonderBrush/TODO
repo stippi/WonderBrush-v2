@@ -1,0 +1,129 @@
+
+High Priority:
+==============
+
+* use less memory, support export to bitmap formats with lossless upscaling
+
+* do a Black & White filter
+
+* do a Hue Shift filter
+
+* zoom towards mouse button, not center of view
+
+* "Object->Special->Freeze Form Transformation"
+
+* "Object->Reset Transformation"
+
+* Text along a path and Text in arbitrary area functionality
+
+* more negotiated drag&drop with Tracker
+	-> dragging objects and layers to Tracker to save them?
+
+* "EditObjectAction" is now used much more frequently, it needs to tell
+	its copies of objects to forget their cache, otherwise RAM is wasted.
+
+* port more filters from ArtPaint (maybe Emboss and some of the auto
+	correction filters?)
+
+* find solution for "cache becomes invalid unnecessarily" problem in
+	BrushStroke::SetToPropertyObject()
+
+* using Shift when clicking to create a new Fill object merges with a previous
+	Fill object (if one exists)
+
+---
+
+* support B_MOUSE_WHEEL_CHANGED in Property list and Text tool's text input view
+
+* "Merge Layers" mode that keeps objects
+
+* "Freeze" only selected objects
+
+* display common Properties for multiple selected objects and allow editing
+	them, applying the value to each same property of the selected objects
+
+---
+
+* reimplement string lookup using map (string->string instead of index->string)
+
+* progress display when saving
+	-> detaching of saving into a separate thread would be nice
+
+* redesign Stroke::Draw() (break up in non-virtual Stroke::Draw()
+	(which uses cache if available) and non-cache based virtual
+	implementation)
+
+* investigate transparency problems when blending in linear RGB
+
+
+Medium Priority:
+================
+
+* better slider control width numerical input (text/slider combo)
+
+* invers order for selected history items
+
+* implement flattening a BMessage in a TIFF tag
+	-> reimplement project saving to use TIFF
+	-> thereby avoid having stuff in RAM twice while loading/saving
+
+* display a popup menu when a file gets dropped into the window,
+	so that the option to "append" the image to the current document
+	is less hidden (this is already possible by dropping an image/document
+	into the layers list while holding down <Shift>)
+
+Low Priority:
+=============
+
+* numbering of unnamed canvas
+
+* more program settings:
+	- the gamma used to linearize R'G'B'
+
+
+Would be nice:
+==============
+
+* Lasso mode for Pick Objects tool
+
+* try to obtain LZO licence
+	-> using ZLIB for now
+
+* search and replace for object colors,
+* contrast and brightness for object colors?
+
+* combine bottom layers to speed up blending while drawing
+
+* grouping of objects
+	- needs outline listviews
+
+* selections
+	-> "done" for copying rectangular area to the system clipboard
+
+* attachable layer effects
+
+* redesign layers to use something else than bitmaps (tiles)
+
+* it might be smart to split up pixel data into indiviual channels
+	(would help compression)
+
+* use swapping to lay off unused tiles of layers
+	-> tile should be system page size, so we would actually use the
+		systems VM automatically
+
+* full implementation of compositing tree rather than list of layers
+	-> needs outline list view too
+
+* implement global settings (class) file for DimensionControl
+	(user addable dimensions), NodeWatching!
+
+* per canvas "styles" and color palette, referenced by objects,
+	with overrides for individual paremeters.
+
+* clip dirty bounds to actually visible area in CanvasView::Draw() (need to replace BRect with BRegion though)!
+  -> should be awesome improvement in speed when zoomed in far enough
+  -> on the other hand, user will most likely do changes to pretty much the
+     visible region anyways
+
+* make progress indication and coordinate info two separate parts in the info view
+

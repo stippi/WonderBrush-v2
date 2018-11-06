@@ -1,0 +1,7 @@
+SOURCE_FILES +=
+	Scrollable.cpp
+	ScrollableView.cpp
+	Scroller.cpp
+	ScrollView.cpp
+	YBMScrollView.cpp
+;

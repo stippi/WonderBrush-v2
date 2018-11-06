@@ -1,0 +1,6 @@
+SOURCE_FILES +=
+	GlobalSettings.cpp
+	Settings.cpp
+	SettingsFile.cpp
+	SettingsPanel.cpp
+;

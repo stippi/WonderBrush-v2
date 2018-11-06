@@ -1,0 +1,486 @@
+// Japanese for WonderBrush v2.0.0 (2005.09.23)
+// author: Koichi_Kimura (a.k.a. KiM) <bem@jcom.home.ne.jp>
+
+// addon stuff
+extern "C" {
+_EXPORT void init_strings(const char* strings[]);
+_EXPORT const char* language() { return "ja"; }
+}
+
+// init_strings
+void
+init_strings(const char* strings[])
+{
+	strings[FILE_MENU]			= "ファイル(F)";
+	strings[NEW]				= "新規作成(N)";				// will show up in Canvas menu
+	strings[NEW_CANVAS]			= "新規作成";			// tool tip
+	strings[NEW_LAYER]			= "新規作成(N)";				// these strings were added
+	strings[NEW_BRUSH]			= "新規作成(N)";				// by request to be able to
+	strings[NEW_PALETTE]		= "新規作成(N)";				// reflect different genders in "New"
+	strings[OPEN]				= "開く(O)";
+	strings[LOAD]				= "読込(O)";
+	strings[OPEN_CANVAS]		= "開く";
+	strings[EXPORT_CANVAS]		= "プロジェクトの書き出し";		// title of Export panel	// add v1.6.0
+	strings[EXPORT]				= "書き出し(E)";					// add v1.6.0
+	strings[EXPORT_AS]			= "形式を指定して書き出し(S)";		// add v1.6.0
+	strings[SAVE_CANVAS]		= "プロジェクトを保存";
+	strings[SAVE]				= "保存(A)";
+	strings[SAVE_AS]			= "名前を付けて保存(V)";
+	strings[SETUP_PAGE]			= "ページ設定(P)";
+	strings[PRINT]				= "印刷(R)";
+	strings[CLOSE]				= "閉じる(C)";
+	strings[CLOSE_CANVAS]		= "閉じる";			// tool tip
+	strings[ABOUT]				= "バージョン情報(B)";
+	strings[QUIT]				= "終了(Q)";
+	
+	strings[LOADING_FILE]		= "ファイルの読込中:";	// add v1.5.0
+	
+	strings[EDIT]				= "編集(E)";
+	strings[UNDO]				= "元に戻す";
+	strings[REDO]				= "やり直し";
+	
+	strings[SETTINGS]			= "設定(S)";
+	strings[FULLSCREEN]			= "全画面表示(F)";
+	strings[SHOW_GRID]			= "ピクセルグリッドを表示(S)";	// if zoomed in far enough,
+																// display a grid arround each pixel
+	strings[LANGUAGE]			= "言語";
+	strings[CANVAS]				= "キャンバス(C)";				// ie project, document
+	strings[IMAGE]				= "イメージ";					// ie bitmap
+	strings[CLEAR]				= "クリア(C)";
+	strings[RESIZE]				= "サイズ変更(R)";				// resize canvas (new resolution)
+	strings[ROTATE_90]			= "90°";	// add v1.5.0
+	strings[ROTATE_180]			= "180°";	// add v1.5.0
+	strings[ROTATE_270]			= "-90°";	// add v1.5.0
+	
+	strings[FORMAT]				= "フォーマット";				// color space of the canvas (RGB, Lab etc)
+	
+	strings[EXPORT_FORMAT]		= "フォーマット";				// ie PNG, SVG etc	// add v1.6.0
+	strings[CURSOR_SOURCE]		= "カーソルソースコード";		// add v1.6.0
+	strings[BITMAP_SOURCE]		= "ビットマップソースコード";			// add v1.6.0
+	strings[SVG_FORMAT]			= "SVG (一部のオブジェクトタイプのみ)";		// add v1.6.0
+	strings[AI_FORMAT]			= "Adobe Illustrator (一部のオブジェクトタイプのみ)";		// add v1.6.0
+	strings[RDEF_FORMAT]		= "RDef ソースコード";		// add v1.7.0
+	
+	strings[LAYER]				= "レイヤ(L)";
+	strings[DUPLICATE]			= "複製(D)";
+	strings[MERGE_DOWN]			= "下位レイヤと合併(O)";		// combining of current layer and the
+																// one underneath it
+	strings[MERGE_VISIBLE]		= "可視レイヤと合併(V)";		// combining of all visible layers
+	strings[RENAME]				= "名前の変更(E)";
+	strings[DELETE]				= "削除(L)";
+	strings[DELETE_ALL]			= "すべて削除(A)";
+	
+	// layer blending modes
+	strings[MODE]				= "モード(M)";
+	strings[NORMAL]				= "ノーマル(N)";
+	strings[ERASE]				= "消去(E)";							//add v1.5.0
+	strings[MULTIPLY]			= "乗算(M)";
+	strings[INVERSE_MULTIPLY]	= "逆乗数(I)";
+	strings[LUMINANCE]			= "輝度(U)";
+	strings[MULTIPLY_ALPHA]		= "アルファ(A)";
+	strings[MULTIPLY_INVERSE_ALPHA]	= "逆アルファ(V)";
+	strings[REPLACE_RED]		= "赤で置き換え(R)";		// add v1.6.0
+	strings[REPLACE_GREEN]		= "緑で置き換え(G)";		// add v1.6.0
+	strings[REPLACE_BLUE]		= "青で置き換え(B)";		// add v1.6.0
+	strings[DARKEN]				= "暗(D)";		// add v1.6.0
+	strings[LIGHTEN]			= "明(L)";		// add v1.6.0
+
+	strings[HISTORY]			= "履歴(H)";			// as in "modifier stack"
+	strings[OBJECT]				= "オブジェクト(O)";				// new name for the "History"
+	strings[FREEZE]				= "凍結(F)";			// renders the result of the modifier stack
+														// into one "bitmap modifier" and replaces
+														// all previous modifiers (ie, you cannot edit
+														// them anymore) by the single bitmap modifier
+	strings[CUT]				= "切り取り(U)";
+	strings[COPY]				= "コピー(O)";
+	strings[PASTE]				= "貼り付け(P)";
+	strings[MULTI_PASTE]		= "複数貼り付け(M)";		// paste one ore more properties to
+														// *multiple* objects at once
+	strings[REMOVE_ALL]			= "クリア";
+	
+	strings[OBJECT_SELECTION]	= "選択(S)";				// change selection shortcuts
+	strings[SELECT_ALL_OBJECTS]	= "すべて選択(A)";				// in Object and Property list
+	strings[SELECT_NO_OBJECTS]	= "選択の解除(N)";
+	strings[INVERT_SELECTION]	= "選択の切替(I)";
+	strings[ALL_OBJECTS]		= "すべて(A)";
+	strings[PROPERTY_SELECTION]	= "選択(S)";
+	strings[SELECT_ALL_PROPERTIES] = "すべて選択(A)";
+	strings[SELECT_NO_PROPERTIES] = "選択の解除(N)";
+	strings[SPECIAL]			= "特別(E)";		//add v1.7.2
+
+	// filters
+	strings[ADD_FILTER]			= "フィルタ(F)";				// the actual menu
+	strings[DROP_SHADOW]		= "シャドウ";
+	strings[GAUSSIAN_BLUR]		= "ぼかし(ガウス)";
+	strings[INVERT]				= "反転";
+	strings[BRIGHTNESS]			= "輝度";
+	strings[CONTRAST]			= "コントラスト";
+	strings[SATURATION]			= "彩度";
+	strings[MOTION_BLUR]		= "ぼかし(モーション)";
+	strings[HALFTONE]			= "ハーフトーン";
+	strings[DOT]				= "ドット";				// mode options of Halftone
+	strings[LINE]				= "ライン";
+	strings[DITHER]				= "ディザ";
+	strings[DITHER_FS]			= "ディザ (FS)";
+	strings[DITHER_NC]			= "ディザ (NK)";
+	strings[NOISE]				= "ノイズ";
+	strings[HUE_SHIFT]			= "色彩変更";			// filter not yet written
+	strings[DISPERSION]			= "拡散";
+	strings[STRENGTH]			= "強度";
+	strings[LUMINANCE_ONLY]		= "輝度のみ";
+	strings[WARPSHARP]			= "ワープシャープ";		// add v1.7.0
+	strings[LAMBDA]				= "ラムダ";		// add v1.7.0
+	strings[MU]					= "µ";		// add v1.7.0
+	strings[NON_MAXIMAL_SUPPRESSION] = "NMS";		// add v1.7.0
+	strings[SOLID_AREA]			= "エリア";		// add v2.0.0
+
+	strings[PROPERTY]			= "プロパティ(P)";
+	strings[UNKOWN_PROPERTY]	= "<不明>";
+
+	strings[SWATCHES]			= "カラーパレット(S)";	// color palette
+	strings[ZOOM]				= "ズーム";
+	strings[ALPHA]				= "アルファ";			// keep this as short as possible
+	strings[ALPHA_CHANNEL]		= "アルファチャンネル";		// used for properties
+	strings[COLOR]				= "カラー";				// used for properties
+	strings[GRADIENT]			= "グラディエント";		// add v1.7.0
+	
+	// pick objects tool
+	strings[SELECTABLE]			= "選択可能なオブジェクト";		// add v2.0.0
+	
+	// gradient options
+	strings[GRADIENT_TYPE]					= "形状";		// add v1.7.0
+	strings[GRADIENT_TYPE_LINEAR]			= "線型";		// add v1.7.0
+	strings[GRADIENT_TYPE_RADIAL]			= "放射型";		// add v1.7.0
+	strings[GRADIENT_TYPE_DIAMONT]			= "ダイアモント";		// add v1.7.0
+	strings[GRADIENT_TYPE_CONIC]			= "円錐";		// add v1.7.0
+	strings[GRADIENT_TYPE_XY]				= "X-Y";		// add v1.7.0
+	strings[GRADIENT_TYPE_XY_SQRT]			= "平方根(X-Y)";		// add v1.7.0
+	strings[GRADIENT_INTERPOLATION]			= "補完";		// add v1.7.0
+	strings[GRADIENT_INTERPOLATION_LINEAR]	= "線型";		// add v1.7.0
+	strings[GRADIENT_INTERPOLATION_SMOOTH]	= "平滑化";		// add v1.7.0
+	strings[GRADIENT_INHERITS_TRANSFORM]	= "変形を継承";		// add v1.7.1
+
+	// brush options
+	strings[OPACITY]			= "不透明度";
+	strings[MIN_OPACITY]		= "最小";			// property label (keep short)
+	strings[DYN_OPACITY]		= "動的";			// property label (keep short)
+	strings[RADIUS]				= "半径";
+	strings[MIN_RADIUS]			= "最小";			// property label (keep short)
+	strings[DYN_RADIUS]			= "動的";			// property label (keep short)
+	strings[HARDNESS]			= "硬度";				// controls brush shape (soft...hard)
+	strings[MIN_HARDNESS]		= "最小";			// property label (keep short)
+	strings[DYN_HARDNESS]		= "動的";			// property label (keep short)
+	strings[SPACING]			= "間隔";				// distance in % of brush diameter at wich brush
+														// shapes will be put into the bitmap along the
+														// line of a stroke
+														// ! also used for Text tool (spacing between chars)
+	strings[MIN_SPACING]		= "最小";		// property label (keep short), not yet used
+	strings[DYN_SPACING]		= "動的";		// property label (keep short), not yet used
+	strings[SUBPIXELS]			= "サブピクセル";		// allow subpixel precise positioning of tools
+	strings[SOLID]				= "べた塗り";
+	strings[TILT]				= "傾斜";		// add v1.7.0
+	strings[BLUR_RADIUS]		= "ぼかし半径";		// property label (keep short), also used for Dispersion filter
+	// translate options
+	strings[X_LABEL]			= "X";
+	strings[Y_LABEL]			= "Y";
+	strings[X_SCALE]			= "X スケール";	// add v1.5.0
+	strings[Y_SCALE]			= "Y スケール";	// add v1.5.0
+	strings[TRANSLATION_X]		= "X";
+	strings[TRANSLATION_Y]		= "Y";
+	strings[SCALE_X]			= "X";
+	strings[SCALE_Y]			= "Y";
+	strings[ANGLE]				= "角度";	// add v1.5.0
+
+	strings[X_OFFSET]			= "X オフセット";	// add v1.5.0
+	strings[Y_OFFSET]			= "Y オフセット";	// add v1.5.0
+	// crop & select options
+	strings[LEFT]				= "左";
+	strings[TOP]				= "上";
+	strings[ENTIRE_CANVAS]		= "すべて";	// add v1.7.1
+	// bucket fill options
+	strings[TOLERANCE]			= "許容誤差";
+	strings[SOFTNESS]			= "柔らかさ";
+	strings[CONTIGUOUS_AREA]	= "隣接範囲";	// add v1.6.0
+	// shape options
+	strings[PATH]				= "パス";				// property label
+	strings[OUTLINE]			= "輪郭のみ";
+	strings[TRANSFORM]			= "変形";				// add v1.3.2
+	strings[CLOSED]				= "閉鎖";				// ie first and last point of path
+														// are connected
+	strings[CAP_MODE]			= "頂点";	// add v1.6.0
+	strings[BUTT_CAP]			= "突当り";	// add v1.6.0
+	strings[SQUARE_CAP]			= "四角";	// add v1.6.0
+	strings[ROUND_CAP]			= "丸";	// add v1.6.0
+	strings[JOIN_MODE]			= "継ぎ目";	// add v1.6.0
+	strings[MITER_JOIN]			= "斜め継ぎ";	// add v1.6.0
+	strings[ROUND_JOIN]			= "丸";	// add v1.6.0
+	strings[BEVEL_JOIN]			= "斜角";	// add v1.6.0
+	
+	strings[CIRCLE]				= "円形";				// not yet used
+	strings[RECT]				= "矩形";				// not yet used
+	strings[ROUND_CORNERS]		= "丸面取り";		// not yet used
+	strings[TOGGLE_ROUND_CORNERS]		= "円形のコーナーの切替";	// add v2.0.0		// not yet used
+	strings[ROUND_CORNER_RADIUS]		= "半径";	// add v2.0.0	// not yet used
+	strings[CHANGE_ROUND_CORNER_RADIUS]	= "円形のコーナーの半径の変更";	// add v2.0.0	// not yet used
+	// text options
+	strings[FONT]				= "フォント";
+	strings[SIZE]				= "サイズ";
+	strings[ROTATION]			= "回転";
+	strings[TEXT_INPUT]			= "テキスト";
+	strings[ADVANCE_SCALE]		= "間隔";			// additional spacing between chars
+														// (not used anymore)
+	strings[HINTING]			= "ヒンティング";			// not used, hinting means that the shapes
+														// of chars are modified to more directly
+														// hit pixels
+	strings[KERNING]			= "カーニング";	// add v1.7.0
+	strings[TEXT_LINE_SPACING]	= "ライン間隔";		// font height * line spacing = vertical line dist
+	// color picker tool
+	strings[TIP_SIZE]			= "先端の大きさ";
+	strings[PIXEL_1x1]			= "1x1 ピクセル";
+	strings[PIXEL_3x3]			= "3x3 ピクセル";
+	strings[PIXEL_5x5]			= "5x5 ピクセル";
+	strings[INCLUDE_ALL_LAYERS]	= "すべてのレイヤを含む";
+	// tools
+	strings[BRUSH]				= "ブラシ";
+	strings[CLONE]				= "クローン";			// clone bursh (transfers parts of an image to
+														// another place)
+	strings[ERASER]				= "消しゴム";
+	strings[PEN]				= "鉛筆";
+	strings[PEN_ERASER]			= "消しゴム付き鉛筆";
+	strings[RESTORE]			= "修復";				// opposite of eraser (restores alpha channel)
+	strings[DROPPER]			= "スポイト";			// color picker
+	strings[TEXT]				= "テキスト";
+	strings[BLUR]				= "ぼかし";
+	strings[BITMAP]				= "ビットマップ";
+	strings[SELECT]				= "選択";
+	strings[TRANSLATE]			= "移動";
+	strings[CROP]				= "切り抜き";
+	strings[BUCKET_FILL]		= "塗りつぶし";
+	strings[SHAPE]				= "形状塗りつぶし";
+	strings[ELLIPSE]			= "楕円";	// add v1.7.0
+	strings[ROUND_RECT]			= "(完全な)長方形";	// add v1.7.0 rectangles
+	strings[EDIT_GRADIENT]		= "グラディエントの編集";	// add v1.7.0
+	strings[GUIDES]				= "ガイド";	// add v2.0.0
+	strings[PICK_OBJECTS]		= "オブジェクト選択";	// add v2.0.0
+	strings[CLIPBOARD]			= "クリップボード";	// add v2.0.0
+	
+	// zoom
+	strings[ZOOM_IN]			= "拡大";				// tool tips
+	strings[ZOOM_OUT]			= "縮小";
+	// actions
+	strings[ADD_LAYER]			= "レイヤの追加";		// the following strings are for display in the
+														// undo/redo menu
+	strings[REMOVE_LAYER]		= "レイヤの削除";		// a "modifier" is a step of changing the bitmap,
+														// ie a brush stroke or something else.
+	strings[REMOVE_LAYERS]		= "レイヤの削除";
+	strings[MOVE_LAYER]			= "レイヤの移動";
+	strings[MOVE_LAYERS]		= "レイヤの移動";
+	strings[MERGE_LAYERS]		= "レイヤの合併";
+	strings[UNKOWN_MODIFIER]	= "不明な変更";
+	strings[ADD_MODIFIER]		= "追加修正";
+	strings[ADD_MODIFIERS]		= "追加修正";
+	strings[CHANGE_COLOR]		= "カラー変更";
+	strings[CHANGE_COLORS]		= "カラー変更";
+	strings[REMOVE_MODIFIER]	= "切り取り";
+	strings[REMOVE_MODIFIERS]	= "切り取り";
+	strings[MOVE_MODIFIER]		= "履歴の移動";
+	strings[MOVE_MODIFIERS]		= "履歴の移動";
+	strings[TRANSLATE_MODIFIER]	= "ブラシストロークの移動";
+	strings[TRANSLATE_MODIFIERS]	= "ブラシストロークの移動";
+	strings[CHANGE_LAYER_SETTINGS]	= "レイヤ設定";
+	strings[CROP_CANVAS]		= "キャンバスの切抜き";
+	strings[RESIZE_CANVAS]		= "キャンバスサイズ変更";
+	strings[ROTATE_CANVAS]		= "キャンバスの回転";
+	strings[INSERT_CANVAS]		= "キャンバスへ挿入";
+	strings[CHANGE_OPACITY]		= "透明度の変更";
+	strings[EDIT_MODIFIER]		= "編集した変更";
+	
+	// pasting properties
+	strings[PASTE_PROPERTY]		= "プロパティの貼り付け";				// paste one property to one object
+	strings[PASTE_PROPERTIES]	= "プロパティの貼り付け";			// paste multiple properties to one object
+	strings[MULTI_PASTE_PROPERTY] = "プロパティの複数貼り付け";		// paste one property to multiple objects
+	strings[MUTLI_PASTE_PROPERTIES] = "プロパティの複数貼り付け";	// paste multiple property to multiple objects
+	
+	// shape tool history
+	strings[ADD_CONTROL_POINT]	= "制御点の追加";
+	strings[TOGGLE_OUTLINE]		= "輪郭の切替え";
+	strings[CHANGE_OUTLINE_WIDTH] = "輪郭幅の変更";
+	strings[CHANGE_CAP_MODE]	= "頂点の変更";		// add v1.6.0
+	strings[CHANGE_JOIN_MODE]	= "継ぎ目の変更";		// add v1.6.0
+	strings[MODIFY_CONTROL_POINT] = "制御点の変更";
+	strings[CLOSE_PATH_ACTION]	= "クローズ パス";
+	strings[INSERT_CONTROL_POINT] = "制御点の挿入";
+	strings[REMOVE_CONTROL_POINT] = "制御点の除去";
+	strings[REMOVE_CONTROL_POINTS] = "制御点の除去";		// add v1.7.1
+	strings[CHANGE_POINT_SELECTION] = "選択の変更";		// add v1.3.2
+	strings[NUDGE_CONTROL_POINT] = "押しのけた制御点";		// add v1.6.0
+	strings[NUDGE_CONTROL_POINTS] = "押しのけた制御点";		// add v1.6.0
+	strings[SELECT_PATH]		= "パスの選択";		// add v1.7.2
+	strings[CREATE_NEW_PATH]	= "新規パス";		// add v1.7.2
+	strings[DELETE_PATH]		= "パスの除去";		// add v1.7.2
+	strings[TEXT_TO_SHAPE]		= "テキストを図形に変換(T)";		// add v1.7.2
+	strings[TEXTS_TO_SHAPES]	= "テキストを図形に変換";		// add v1.7.2
+	strings[TRANSFORM_CONTROL_POINTS] = "制御点の変形";		// add v1.7.2
+	strings[MERGE_SHAPE_OBJECTS] = "図形を合併";	// add v2.0.0
+
+	strings[FILLING_RULE]		= "塗りつぶし規則";		// add v1.7.2
+	strings[NON_ZERO]			= "ノンゼロ";		// add v1.7.2
+	strings[EVEN_ODD]			= "偶奇";		// add v1.7.2
+	// text tool history
+	strings[CHANGE_FONT_SIZE]	= "フォントサイズの変更";
+	strings[CHANGE_TEXT_ROTATION] = "テキストの回転";
+	strings[MOVE_TEXT]			= "テキストの移動";
+	strings[CHANGE_FONT]		= "フォントの変更";
+	strings[CHANGE_TEXT]		= "テキストの変更";
+	strings[CHANGE_FONT_ADVANCE_SCALE] = "間隔の変更";	// add v1.5.0
+	strings[ALIGNMENT]			= "整列";	// add v2.0.0
+	strings[CHANGE_ALIGNMENT]	= "位置そろえの変更";	// add v2.0.0
+	strings[ALIGNMENT_LEFT]		= "左";	// add v2.0.0
+	strings[ALIGNMENT_CENTER]	= "中央";	// add v2.0.0
+	strings[ALIGNMENT_RIGHT]	= "右";	// add v2.0.0
+	strings[ALIGNMENT_JUSTIFY]	= "そろえる";	// add v2.0.0
+	strings[CHANGE_TEXT_WIDTH]	= "テキスト幅の変更";	// add v2.0.0
+	strings[PARAGRAPH_INSET]	= "挿入";	// add v2.0.0
+	strings[CHANGE_PARAGRAPH_INSET]	= "挿入の変更";	// add v2.0.0
+	strings[PARAGRAPH_SPACING]	= "段落間隔";	// add v2.0.0		// additional spacing between paragraphs
+	// crop tool
+	strings[MODIFY_CROP_RECT]	= "切抜き矩形の変更";
+	// select tool
+	strings[MODIFY_SELECT_RECT]	= "選択矩形の変更";
+	// transformations
+	strings[TRANSFORMATION]		= "変形";				// add v1.3.2
+	strings[BEGIN_TRANSFORMATION] = "変形の開始";		// add v1.3.2
+	strings[FINISH_TRANSFORMATION]	= "変形の確定";		// add v1.3.2
+	strings[MOVE]				= "移動";				// add v1.3.2
+	strings[ROTATE]				= "回転";				// add v1.3.2
+	strings[SCALE]				= "サイズ変更";			// add v1.3.2
+	strings[MOVE_PIVOT]			= "旋回軸の移動";		// add v1.3.2
+	strings[TRANSFORM_OBJECT]	= "オブジェクトの変形";		// add v1.5.0
+	strings[TRANSFORM_OBJECTS]	= "オブジェクトの変形";	//add v1.5.0
+	// guide tool
+	strings[SHOW_GUIDES]		= "ガイドを表示";	//add v2.0.0
+	strings[HORIZONTAL]			= "水平";	//add v2.0.0
+	strings[VERTICAL]			= "垂直";	//add v2.0.0
+	strings[UNIT]				= "単位";	//add v2.0.0
+	strings[UNIT_PERCENT]		= "%";	//add v2.0.0
+	strings[UNIT_PIXEL]			= "px";	//add v2.0.0
+	strings[UNIT_CM]			= "cm";	//add v2.0.0
+	strings[UNIT_MM]			= "mm";	//add v2.0.0
+	strings[UNIT_INCH]			= "inch";	//add v2.0.0
+	strings[UNIT_DPI]			= "dpi";	//add v2.0.0
+	// general
+	strings[OK]					= "OK";
+	strings[CONFIRM]			= "確定";
+	strings[CANCEL]				= "中止(C)";
+	strings[REVERT]				= "復元(R)";
+	strings[REMOVE]				= "除去";	//add v2.0.0
+	strings[NAME]				= "名前";				// name of project
+	strings[UNNAMED]			= "無題";
+	strings[DEFAULT]			= "デフォルト";
+	strings[MERGED]				= "合併";				// default name for merged layer
+	strings[TOOL]				= "ツール";				// for tool tips
+	strings[ANY_MODIFIER]		= "Alt";				// as in modifier key on the keyboard (shift,
+														// option, alt etc)
+	strings[RETURN]				= "Enter";
+	strings[ESCAPE]				= "Esc";
+	strings[SET]				= "セット";
+	strings[COUNT]				= "計算";		//add v2.0.0
+	strings[INTERPOLATION]		= "補間";	// add v2.0.0
+	strings[NEAREST_NEIGHBOR]	= "繰り返し";	// add v2.0.0
+	strings[BILINEAR]			= "バイリニア";	// add v2.0.0
+	strings[RETRY]				= "再試行";	// add v2.0.0
+	strings[OVERWRITE]			= "上書き";	// add v2.0.0
+	// panels
+	strings[PICK_COLOR]			= "カラーピッカー";		// window title of color picker
+	strings[WIDTH]				= "幅";					// pixel count
+	strings[HEIGHT]				= "高さ";
+	strings[BRUSH_PANEL]		= "ブラシパネル";
+	strings[BRUSH_NAME]			= "ブラシ名";
+	strings[PROGRAM_SETTINGS]	= "プログラム設定";
+	// program settings
+	strings[ON_STARTUP]			= "動作";
+	strings[DO_NOTHING]			= "なにもしない";
+	strings[ASK_OPEN]			= "オープンパネルを表示";
+	strings[ASK_NEW]			= "新規作成パネルを表示";
+	strings[AUTO_SIZE]			= "新規キャンバスを既定サイズで作成";
+	strings[LIVE_UPDATES]		= "ナビゲーターとレイヤーアイコンの Live アップデート";
+	strings[USE_SYSTEM_LANGUAGE] = "システムと同じ言語を使用";	// add v1.7.0
+	strings[STARTUP_ACTION]		= "起動時の動作";
+	strings[INTERFACE]			= "インタフェース";
+	// requestors
+	strings[AKS_SAVE_CHANGES]	= "このファイルは変更されています。保存しますか?";
+	strings[DISCARD]			= "破棄(D)";
+	strings[SAVING_FAILED]		= "保存できませんでした!";
+	strings[ERROR]				= "エラー";				// alias reason for above
+	strings[BLIP]				= "一時的な異常!";		// As in "Mission Earth"
+
+	strings[DEMO_MODE]			= "WonderBrush はデモモードで稼働しています。"
+								  "プロジェクトファイルの保存ができません。\n\n"
+								  "Kagi オンラインストアにて登録し、解除するためのキーファイルを"
+								  "受け取ってください";
+	strings[NEVER_MIND]			= "気にしない";	
+	strings[OPEN_TRANSLATIONKIT_ERROR]	= "Translation Kit を使用してファイル '%s' を"
+								  "開けませんでした。\n\nファイルはイメージを含んで"
+								  "いません。あるいは、"
+								  "そのフォーマットをハンドルする Translator がインストール"
+								  "されていません";
+	strings[OPEN_NATIVE_ERROR]	= "WonderBrush ドキュメントとしてファイル '%s' を"
+								  "開けませんでした。\n\n";
+	strings[UNSUPPORTED_CURSOR_SIZE] = "キャンバスのサイズは 16 x 16 ピクセルである"
+								  "必要があります。 他のカーソルサイズ"
+								  "はサポートされていません";
+	strings[SELECTED_AREA_EMPTY] = "選択された範囲には何もありません";
+	strings[ENTRY_DOES_NOT_EXIST] = "%s' は存在しないため、読み込めませんでした。";		//add v1.7.2
+	strings[ENTRY_IS_A_FOLDER]	= "'%s' はディレクトリであるため、読み込めませんでした。";		//add v1.7.2
+	strings[WARN_SVG_DATA_LOSS]	= "WonderBrush は SVG から全ての"		//add v2.0.0
+								  "データを読み込むことができません。"
+								  "オリジナルのファイルを上書きする"
+								  "ことによって、この情報は失われる"
+								  "でしょう。";
+	// tool tips										// please test the appearance of the tips and
+														// try to align them manually by putting the
+														// '\n' in the right spot!
+
+	strings[TOOL_TIPS]			= "ツールチップを表示(T)";
+	strings[ALPHA_TIP]			= "アクティブレイヤにグローバルなアルファ値をセットします";
+	strings[VISIBILITY_TIP]		= "アクティブレイヤの可視の切替";
+	strings[PRESSURE_CONTROL_TIP]	= "筆圧のコントロールを有効にします";
+	strings[BRUSH_PREVIEW_TIP]	= "ブラシのプレビューです。クリックするとブラシマネージャーパネルが開きます";
+	strings[CURRENT_COLOR_TIP]	= "現在のカラーです。クリックするとカラーピッカーパネルが開きます";
+	strings[NAVIGATOR_TIP]		= "キャンバスの概略です。クリックして可視部分を移動できます。\n"
+								  "マウスホイールを使ってズームイン/アウトができます";
+	strings[LAYER_LIST_TIP]		= "ドラッグ アンド ドロップで並べ替えができます。 \n目のアイコンをクリックすると"
+								  "可視/不可視の切替ができます。\nダブルクリックすると名前の変更ができます";
+	strings[HISTORY_LIST_TIP]	= "ドラッグ アンド ドロップで並べ替えができます。 \nカラーをドロップすると"
+								  "選択中の履歴のカラー\nを変更できます";
+	strings[PROPERTY_LIST_TIP]	= "オブジェクトプロパティの編集, コピーと貼り付け";	// add v1.5.0
+	strings[SUB_PIXEL_TIP]		= "マウス/ペン の軌跡の位置をサブピクセル精度にする";
+	strings[SOLID_TIP]			= "画素を異なる不透明度にしない";
+	strings[TILT_TIP]			= "ブラシの形を歪めることにより、ペンを傾斜させます。";		//add v1.7.2
+	strings[FULLSCREEN_TIP]		= "全画面モードとウィンドウモード間の切替え";
+	strings[GRADIENT_CONTROL_TIP] = "ここにカラーをドロップすると追加またはカラー ストップの編集をします。\n"
+									"ダブルクリックするとカラー ストップをピックアップします";	// add v1.7.0
+	strings[GRADIENT_INHERITS_TRANSFORM_TIP] = "オブジェクトの変形を継承する";	// add v1.7.1
+	
+	// quick help
+	strings[READY]				= "準備完了";
+	strings[NO_CANVAS_HELP]		= "新しいキャンバスを作成するか、プロジェクトまたは画像ファイルをロードしてください";
+	strings[NO_HELP]			= "追加のトリックはありません";
+	strings[CROP_HELP]			= "矩形の境界を調整してください。<Enter> キーで適用されます。<Shift> キーで方向を抑制します";
+	strings[TRANSLATE_HELP]		= "移動するオブジェクトを選択してください。<Shift> キーで方向を抑制します";
+	strings[EDIT_GRADIENT_HELP]	= "グラディエントの形状と変形、カラー ストップの編集";	// add v1.7.0
+	strings[STROKE_HELP]		= "直前のストロークを拡張し、且つ直線を引くには <Shift> キーを使います";
+	strings[CLONE_HELP]			= "初めのクリックはソースの位置を定義します。次にオフセット。<Ctrl> キーでオフセットのリセット";
+	strings[BUCKET_FILL_HELP]	= "\"柔らかさ\" は塗りつぶしカラーの堅さを制御します";
+	strings[TEXT_HELP]			= "<Enter> キーでツールを適用します";
+	strings[SHAPE_HELP]			= "オプションの追加には <Command> もしくは <Alt> キーを押しながら <Enter> キーで確定させます";
+	strings[SELECT_HELP]		= "システム クリップボードにコピーする範囲を選択してください";
+	strings[ELLIPSE_HELP]		= "クリック アンド ドラッグで楕円を作成します。\n縦横比の拘束には <Shift> キーを使います";	// add v1.7.0
+	strings[ROUND_RECT_HELP]	= "クリック アンド ドラッグで長方形を作成します。\n縦横比の拘束には <Shift> キーを使います";	// add v1.7.0
+	strings[PICK_OBJECTS_HELP]	= "オブジェクトの選択にはクリックかボックスをドラッグしてください。\n<Shift> キーで前の選択を保持します";	// add v2.0.0
+	strings[GUIDES_HELP]		= "ガイドの作成、編集または除去";	// add v2.0.0
+
+	strings[ENTER_SERIAL_NUMBER] = "WonderBrush のコピーと共に来たシリアルナンバー"
+								   "を入力してください。";	// add v2.0.0
+	strings[WRONG_SERIAL_NUMBER] = "あなたの入力したシリアルナンバーは無効です。";	// add v2.0.0
+}

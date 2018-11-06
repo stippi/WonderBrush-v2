@@ -1,0 +1,734 @@
+Overview:
+
+WonderBrush is an editor for bitmap graphics. The main window holds any number of documents, which are called Canvas. A canvas has an associated name and pixel resolution as well as some other properties. It also references up to two files, which represent it on disk, one is a file in some export format (ie. an SVG document, a flat Translator bitmap or soure code), the other a full-featured project file.
+Each canvas can have any number of Layers, currently arranged as a list. Each layer represents an individual bitmap in the size of the canvas. Depending on each layers blending mode, they are composed on top of each other to form the final canvas bitmap.
+Each layer can contain any number of Objects, which are created by WonderBrushs tools. Each object has a set of properties which define the unique appearance of the object on the layer.
+At any time, it is possible to reorder the layers, or the objects they contain. This could be called non-linear editing. It is also possible to change most of an objects properties later on. This could be called non-destructive editing, because adding another object (like a filter) does not actually destroy any pixel data.
+
+
+The Interface:
+
+WonderBrush features a "single window" design. Additional windows are only in the form of popup panels, which are usually not supposed to float above the workspace. Along the left side of the main window, is the structured contents of the document, first the overview, then the list of layers, then the list of objects on the active layer, then the list of properties of the active object. Along the top of the window are the tools. The top part will display the configuration fields of the active tool. At the right top is an area reserved for color swatches.
+
+
+Usage:
+
+A layer is completely transparent by default. The contents of a layer are only produced by objects, for example strokes of the Brush tool. Each layer has it's own list of objects attached to it, which is basically the layer's construction history. However, this history is non-linear, since the objects can be rearranged by drag sorting and each of their properties can be adjusted later. The relevant part of that layer's bitmap will then be rerendered by rendering every object again, that touches this area. Dependencies in the history will be taken into account. For example, if a part of the layer was cloned with the Clone tool, and that part is changed, the area containing the Clone tool strokes will also be rerendered.
+WonderBrush uses the system clipboard to hold pixel data and to exchange it with other applications. There is a special Copy tool for this purpose. It also maintains two private clipboards for holding objects and properties of objects. These clipboards are persistent until the next system reboot and are accessed via the menu of the Object and Property list. Using the clipboards, objects can be transfered from one layer to another (even across canvas) and properties of one object can be copied to multiple other objects at once.
+Layers and objects can also be duplicated by holding down <Shift> when drag-sorting with the mouse. 
+
+The "non-linear" design has some adventages as well as handicaps. Some adventages are, that the object stack uses only little memory - and that it is non-linear, of course. It is also saved in the project file. Calculations are more precise, resizing the canvas simply renders all layers with scaled objects. One disadventage is the sometimes low undo/redo speed, because sometimes many objects need to be rerendered.
+
+Some operations known from other graphics applications are achieved differently in WonderBrush. For example, locking the alpha channel can be done by duplicating a layer, and setting the new layers blending mode to "Alpha". Additional painting on the original layer will then be masked away by the duplicate. Unfortunately, the mask will apply to every other layer as well. In the future however, WonderBrush will have a compositing tree rather than a list of layers, so that the effect of one layer can be restricted to layers of that branch only.
+
+WonderBrush features the concept of interchangable properties. This means that a set of properties from one object can be transfered to any number of other objects, even if their type is different. The set of properties that an object can have, depends on its type. But some properties are common to two or more types of objects. For example, many types feature "Opacity", some feature "Radius". The ability to transfer any number of properties to any number of objects at once is a pretty powerful concept. The implementation is quite simple though. There is a Property list that will display the set of properties with their specific values for the selected object in the Object list. If multiple objects are selected, the list will be empty. Most properties can be edited directly in the Property list, with different types of properties having different ways of being edited. Multiple properties can be selected at once and can be copied to a custom (and persistent until reboot) Property clipboard. Using the same Property menu, the properties from the clipboard can be pasted back to the selection of objects. The objects will be changed according to what properties from the clipboard they understand.
+
+
+Current Pros:
+
+One important feature of WonderBrush, is that blending is calculated in gamma converted RGB space. This gets rid of incorrect intermediate colors and is a unique feature among BeOS graphics programs.
+
+The brush system, though not feature complete at all, is offering some unique options. Since the brush shapes are calculated on the fly, pen pressure can be set to control various aspects of the shape. The brush is also rendered with subpixel precision. I think this is not available on any other BeOS painting program.
+
+The way in which objects and properties can be duplicated and copied arround makes for some interesting possibilities and saves a lot of time when changing many objects at once.
+
+Some editing modes in WonderBrush use their own temporary undo stack, which can be quite convenient. It means, that you can for example undo single modifications *while* doing a transformation of objects, and *after* you're done and "apply" the thing, you can undo it all at once.
+
+WonderBrush is fully font sensitive and the interface language can be switched on the fly. The language files can even be modified while the application is running, changes will take effect immediately.
+
+This is a fully native BeOS application. It launches quite fast and makes use of hardware accelerated drawing, though this is something I will have to review when I want to avoid flickering of some of the controls on the canvas in the future.
+
+I haven't tested this on anything else than my machines, but I can honestly say, there are no crashing bugs *known* to me. Please contact me if your opinion differs. There are some less annoying bugs left in this release, though they should not hinder workflow. See the file BUGS if you're interested.
+
+Also see the file TODO, if you're curious what's planned. The LOG might also offer some interesting insights into the WonderBrush development.
+
+
+Current Cons:
+
+WonderBrush is unable to export project files in Photoshop or even TIFF format, this however is one of the most desirable features for professional use. Unfortunately, WonderBrush is developping options, which are hard to represent in these alien file formates. As soon as WonderBrush uses a compositing tree rather than a list, things will start to look even more complicated.
+
+There is currently no tiled memory architecture, therefor, only smaller bitmaps can be created (up to 3000x3000 pixels is Ok, after that... good luck!).
+
+I have not yet optained a license to include the compression code I want to include (LZO). So compression is disabled in this release. RAM usage would be greatly reduced if it was enabled. I contacted the LZO developer more than once, but have not heard back. Project files use zlib compression as of version 1.5.0.
+
+Selection of pixel data is currently implemented in a very simple way. Like in some of the BeOS image viewers, a rectangular area can be defined and copied to the system clipboard. From there, it can be pasted as a Bitmap object. This also provides the means for interoperability between other image editors, like for example ArtPaint.
+
+
+Keyboard Shortcuts:
+
+<space>		toggles canvas panning mode (scrolling as soon as mouse is pressed)
+
++			when a modifier is held down -> zooms to next zoom in level
+
+			without modifier, it depends on the active tool:
+				stroke based tools (Brush, Clone, Blur ...):
+					when <shift> is held down, adds 1.0 to brush radius
+					without any modifier, scales brush radius by 1.1
+				Text:
+					when <shift> is held down, adds 1.0 to text size
+					without any modifier, scales text size by 1.1
+					
+
+-			opposite of +
+
+cursor		nudging of selected objects in Transform tool, nudging text
+keys		in Text tool, nudging selected path control points or entire
+			path in Shape tool
+
+z, y		undo
+
+Z, Y		redo
+
+b			switch to Brush tool
+
+c			switch to Clone tool
+
+p			switch to Pen tool
+
+s			switch to Shape tool
+
+e			switch to Erasor tool
+
+d			switch to Dropper (color picker) tool
+
+r			switch to Blur tool
+
+x			switch to Crop tool
+
+f			switch to Fill tool
+
+t			switch to Text tool
+
+v			switch to Transform tool
+
+Additional keyboard control for Shape tool:
+
+When a Shape path is being edited, the <Command> (<Ctrl>/<Alt>) and
+<Option> (<Alt>/<Ctrl>) key switch the editing option when clicking a
+control point.
+
+<Command> will break the connection between the small in/out curve
+control points, or - when dragging after the initial click -
+reestablish it. Holding down <Option> while clicking a control point
+removes the point. The smaller in/out curve controls can individually
+be removed to get a sharp edge in only one direction of the main control
+point. To get the in/out curve control points back onto the main
+control point, simply use the <Command> click again and drag them out.
+
+Dragging a smaller in/out curve control point will drag the other
+curve control point too, so that they always line up and give a smooth
+curve. The connection can also be broken by pressing <Command> while
+clicking, it then drags only the one curve control point. Clicking the
+main control point with <Command> held down will remove both in/out
+points to give a sharp edge at the main point. (Just in case this was
+unclear yet.) Dragging with the mouse button still down will drag
+out both the in/out curve control points again.
+
+
+Layer Blending Modes:
+
+Normal				Composes the color of the pixel on top of the bottom pixel.
+
+Multiply			Multiplies color components, but depending on bottom pixel
+					alpha, top color is unchanged. This means, white will
+					show if bottom is transparent, but will be invisible if
+					bottom is fully opaque!
+
+Inverse Multiply	Same as above, but multiplies with inverted color channels.
+
+Luminance			Replaces the luminance of the bottom pixel with the top 						pixel luminance.
+					This is done in Lab colorspace and can be used as a
+					light/shadow map. (Very slow though!)
+
+Alpha				The bottom pixels alpha is multiplied with the top pixels
+					alpha. The layer acts as a mask.
+
+Invers Alpha		The bottom pixels alpha is multiplied with the inverse
+					of top pixels alpha. The layer acts as an inverse mask.
+
+
+Keyfiles, Unlocking WonderBrush:
+
+Contained in this release is a somewhat crippled "demo version" of WonderBrush: 
+
+	- The application can not save project files, export to SVG and Adobe
+		Illustrator format is disabled.
+	- There is a "watermark" rendered on top of the canvas so that export to
+		normal Translator bitmaps is also crippled.
+	- When copying to the clipboard, the watermark will be rendered as well.
+
+To license WonderBrush to use it commercially and to unlock this demo version, you can pay using the Kagi and Mensys online store at
+
+	- Kagi: <http://order.kagi.com/?8JD>
+	- Mensys: <http://shop.mensys.nl/catalogue/mns_Wonderbrush.html>
+
+A single licence is EUR 17.50. Keyfile(s) unlocking the project saving feature will then be sent to you. Thank you very much for considering buying a keyfile.
+
+If you have previously bought a keyfile, it will continue to work.
+
+
+Translating WonderBrush:
+
+The folder "Languages - incomplete" contains some translations of WonderBrush to other languages which have strings missing. You can make your own Translation by starting from the "_English_" reference translation in the "Languages -  incomplete" folder. The file format is "easy". Languages are compiled as addons from within WonderBrush. So everything you can do in C/C++, you can do in the language file. As a side effect, you need to have the developer tools installed or get a compiled addon from someone else.
+
+I am very grateful to the orginal translators of the incomplete translations. I have stated their names in the respective language file. Some of them continue to provide me with updated translations, thanks a lot. Also many thanks to everyone having send translations in the meantime.
+
+
+Anti-Grain Geometry:
+
+WonderBrush's rendering engine is now based in large part on Anti-Grain Geometry by Maxim Shemanarev. This enabled me to include the new feature of Affine Transformations in a decent way without much time to program. The Shape tool uses AGG for rendering vector shapes. The anti-aliasing is of very high quality, as it calculates anti-aliasing based on exact geometry coverage values giving 256 shades in all cases. Many professional tools, as for example Photoshop, give only as much as 16 shades of gray in many common cases (sub-sampling).
+
+
+FreeType:
+
+The initial implementation of the Text tool was based on FreeType. Now it is based on Anti-Grain Geometry, which in turn is based on FreeType. FreeType is an excellent font renderer, also calculating the anti-aliasing from exact geometry coverage.
+
+
+ArtPaint:
+
+Many filters in WonderBrush are based on ArtPaint filters. The ArtPaint code was donated to BeUnited by Heikki Suhonen and is maintained there. The internal designs in WonderBrush and ArtPaint are highly different, and thus only the very algorithms were ported. They have also been adopted to better handle transparency in colors. Sometimes a speed up of the algorithm could be achieved. If there is interest in backporting some of my improvements, please let me know.
+
+
+Special Thanks:
+
+I am very grateful to Marcin Konicki (ahwayakchih) for his numerous comprehensive bug reports and generally for being a great guy. Without him, the recent releases would certainly be of lower quality. Also many thanks to DarkWyrm for providing detailed feedback on possible UI improvements. Pierre Arnaud has helped me more than once by providing bits of useful code for the Shape tool implementation.
+
+
+History:
+Januar 16 2007 (2.1.0)
+	- updated underlaying transformation code to support perspective
+	  transformation, the transformation box already supports dragging
+	  the corners freely
+	- 10x speed increase of DropShadow and Gaussian Blur filters,
+	  the filter time is almost independent of the filter radius
+	  (due to problems, the Gaussian Blur is the old one for now)
+	- implemented new bitmap interpolation "Resample", which gives
+	  best results for downscaled bitmaps
+	- added De-Noise filter based on CImg.h by David Tschumperlé
+	  (also known as GREYCstoration in other packages), the license is
+	  similar to LGPL and I was allowed to use the header as long as
+	  I mention where I got from.
+	- added Color Reduction filter, currently it converts to the
+		system palette
+	- RDef exporter optionally saves as an icon resource if the canvas
+		happens to be 16x16 or 32x32
+	- now uses the previously edited path when entering Shape edit mode
+	- vector paths are drawn with gaps to make them look better on Haiku
+	- improved start up time a little
+	- bug fixes:
+		- gradient control created invalid bitmap to display gradient
+		  on start up
+		- fixed memory leak when removing points of a Shape's path
+		- finally fixed the bug of the Transformation tool which caused the
+		  undo steps to be messed up
+		- fixed the bug that the confirmation icons stayed enabled in the
+		  Transformation tool after the mouse was relased without changing
+		  the transformation
+		- fixed WonderBrush's external editor feature, now bitmaps
+		  will load in WonderBrush again when for example eXposer
+		  uses WonderBrush as an external editor. Native images can
+		  be edited in this way as well now
+		- fixed the behaviour of the splitters between the list views
+		- dragging and dropping layers or objects in such a way that no
+		  change takes place, there is no unnecessary undo step inserted
+		  anymore
+		- fixed usage of clipping at the rasterizer level, can sometimes
+		  result in huge performance improvements, and avoids program
+		  appearing to freeze in some worst cases due to long unnecessary
+		  calculations
+
+November 17 2005 (2.0.2)
+	- bug fixes:
+		- the Path property was not updated when changing the round
+			corner radius in the Rect tool
+		- small bug fix in the SVG polyline parsing
+		- fixed a small problem in the sliders in the Brush config: There was
+			a gap of one pixel height in which clicking onto the slider moved
+			neither the min nor the max thumb
+
+October 31 2005 (2.0.1)
+	- added Tilt setting to Brush objects properties
+	- holding down <shift> while launching WonderBrush will cause the
+		app to rewrite the document MIME type
+	- on ZETA, an SVG icon is added to the document MIME type
+	- bug fixes:
+		- drag & drop in a list view with a tablet could be misbehaving
+		- tilt information in Brush objects was not correctly restored
+			from saved WonderBrush files
+		- the Brush cursor jumped to an offset under ZETA when clicking
+			into zoomed documents
+		- if Properties were pasted to Objects, it was very likely
+			that editing Gradients had no effect anymore
+		- changing a Gradients transformation did not update the
+			Gradient Property correctly
+		- fixed interpolation of alpha when double clicking to create a
+			new Gradient stop
+		- fixed broken interpolation of Gradients stops with alpha
+		- some GUI layout problems (some popup menus, file panel)
+		- serial number is now displayed in About panel instead of
+			"<running in demo mode>"
+
+October 23 2005 (2.0.0)
+	- new Tools:
+		- "Guides" (create guide lines to align stuff on the canvas)
+		- "Pick Objects" (select objects directly on the canvas)
+
+	- renamed "Copy" tool to "Clipboard"
+
+	- improvements to Shape tool:
+		- support creating and editing sub-paths (multiple paths per
+			Shape object to define holes etc)
+		- added Filling Rule property for better sub-path support
+		- added icons for "New (sub) Path", "Transform",
+			"Delete", and "Reverse Path"
+		- when dragging one of many selected control points, the whole
+			set will be dragged
+		- use special Bresenham rasterizer for outlines with about one
+			pixel width, to dramatically improve the quality of
+			aliased outlines
+		- snap control points to center of pixels when creating outlines
+			with subpixels off
+		- do not show "Cap" and "Join Mode" properties on non-outline Shape
+			objects
+		- improved behaviour of Closed checkbox
+
+	- improvements to Text tool:
+		- complete rework of text and glyph layout algorithm, should add
+			a little speed up even and supports left, center, right and
+			justify alignment in a given text block width
+		- displays handles for paragraph indention and text block width
+		- improvements for hinted text rendering (crisper text)
+		- speed improvement for clipped text rendering
+
+	- Text and Shape tool remember all properties for creating a new object,
+		the non-GUI properties are saved with the program settings
+
+	- new stuff in Object menu:
+		- cool "Duplicate" (with transformation) function
+		- new "Special" menu:
+			- added "Text to Shape" conversion
+			- added "Merge Shapes" function, available when	at least
+				two Shape objects are selected. The merged Shape will
+				have all the paths from the original Shapes and the
+				properties of the first original Shape.
+
+	- improvements to Bitmap objects:
+		- added Interpolation property (Nearest Neighbor, Bilinear)
+		- added Opacity property
+
+	- improvements to keyboard handling:
+		- "Select All" (Command-A) used in many more places
+		- TAB navigation in text controls no longer deselects text
+		- reworked cut/copy/paste behaviour, the shortcuts work in
+			Object list, and also finally in the Text tools text input
+
+	- improvements to Edit Gradient tool:
+		- double clicking between gradient stops creates a new stop
+			with the interpolated color from that location
+		- when a Gradient stop is active (keyboard focus), the current
+			color and the stop will be synced (and stay synced)
+		- support for defining transparency at Gradient stops
+
+	- improvements to import/export:
+		- reduced SVG export file size by various means
+		- removal of duplicate path control points after SVG import
+		- support for path command A/a (arcs) in SVG import
+		- the SVG export is now smart enough to warn the user when atempting
+			to overwrite an SVG file, that originally had tags ignored
+			by the SVG import
+		- Adobe Illustrator export handles sub-paths
+
+	- improvements to Ellipse and (Round) Rect tool:
+		- much more accurate aproximation of circles and ellipses
+		- added Round Rect Radius so that the Rect tool finally
+			deserves the "Round" in its name
+
+	- added new "Area" filter, that is simply spanning the entire Layer
+		and fills it with the given rendering mode
+
+	- improvements to drag & drop:
+		- full support for drag & drop of objects onto layers
+		- made negotiated drag & drop (other app->WonderBrush) work correctly
+			(tested with ShowImage)
+		- added drag & drop of colors onto layers list, which uses the new
+			"Area" filter
+
+	- show less properties on Brush based objects, if dynamic control
+		is turned off
+
+	- added a couple more commonly used resolutions to size popups
+
+	- font manager uses a more reliable family name
+
+	- replaced Canvas "tabs" with a real list view, so that the main
+		window does not grow indefinitely with more open documents
+
+	- documents can be dragged from the new list to the Tracker to
+		save them
+
+	- added SVG icon to ZETA version
+
+	- bug fixes:
+		- fixed missing cursor updates on ZETA
+		- fixes for UI updates on gradient related controls
+		- fixed pressing Delete key to delete objects when the Shape tool
+			was active
+		- minor drawing glitch in Pen and Brush objects
+		- fixed nonworking "All" button in Clipboard tool
+		- fixed SVG export of transformed linear gradients
+		- when removing points in Shape tool with the Delete key, the
+			Path property was not updated
+		- fixed pasting into text controls, including the text input
+			of the Text tool
+		- minor fixes on Bitmap objects
+		- fixed crashing bug that happened sometimes on program exit
+		- SVG Export uses the "closed" property of each sub path
+		- fixed wrong rotation of mouse cursors when displaying
+			the transformation box of a Gradient
+		- fixed ugly scrollviews under ZETA, also fixes Drag&Drop flickering
+			because of focus color animation
+		- fixed Brush cursor sticking arround when mouse leaves Canvas
+			under ZETA
+		- fixed problems with hit testing with subpixels off in Shape tool
+		- fixed nudging with cursor keys in Shape tool when a transformation
+			box was showing, hitting delete will finish transformation first
+		- nudging in Shape tool updates Path property too
+		- hue is now updated correctly when the color has no saturation
+		- prevent giving objects a zero scale in one or both directions, this
+			prevents an obscure app_server crash from happening, besides, who
+			would want zero scale objects anyways...
+		- fixed scrolling of regions outside of canvas
+		- updated Canvas context menu to new tools
+		- fixed (most) tearing problems of the canvas view
+		- disallow keyboard events when mouse is pressed in Canvas view
+		- fixed many potential and real "low memory" crashing bugs
+
+
+August 14 2005 (1.7.2)
+	- now supports SVG path commands "T" and "t"
+	- bug fixes:
+		- fixed a syntax bug when exporting transparent gradient stops in SVG
+		- fixed SVG quadratic curve import, those curves are now converted
+			to cubic curves for easier editing
+		- fixed a pretty obscure bug in the export modules when writing
+			floating point numbers. It effected mostly transformations,
+			especially radial gradients in SVG files. Basically, a number
+			like "0.073" would have been written as "0.73"... (thanks Andreas)
+		- fixed a bad buffer overrun bug in the SVG export. More than ten
+			gradients in a file triggered it. (thanks Andreas)
+		- fixed crashing bug in Shape tool introduced in 1.7.1, when
+			pressing the delete key with no points selected (thanks Mikael)
+		- can no longer do anything in the canvas view when no layer
+			is set (thanks Marcin)
+
+July 30 2005 (1.7.1)
+	- added "inherit transformation" option to Gradients, useful
+		for using the same Gradient on multiple objects that
+		are already transformed in different ways
+	- implemented cleaning up of paths, this means that
+		WonderBrush Image -> SVG -> WonderBrush Image will restore
+		pretty much the same Shape objects with no extra points
+		and no broken in-out control points connections
+	- added auto scrolling to Select, Crop, Transform, Edit Graident,
+		Text and Shape tool (there you go Christian)
+	- added "All" buttons to Crop and Select tool which set the
+		rectangle to the entire canvas for the changes to be based
+		on that
+
+	- bug fixes:
+		- fixed printing (tested with Preview and PDF printer on ZETA)
+		- fixed a crashing bug in the Edit Gradient tool, which happened
+			when a gradient object was selected when switching to another
+			tool from the Edit Gradient tool and then undoing something
+			which affected the selected object (thanks Mikael!)
+		- fixed memory leak in VectorPath::operator=()
+		- WarpSharp filter no longer tries to sharp homogenous areas,
+			which appeared to take forever (thanks Axel)
+		- fixed crashing bug in PopupSlider control (eg Zoom slider)
+			when clicking it more than once while the window thread
+			was busy (thanks Axel)
+		- fixed bug in PopupSlider control which caused the slider
+			to stick to the mouse cursor even if the mouse was
+			already released (thanks Axel)
+		- fixed a bug in Shape tool when removing path points so
+			that only one or no points remained: if the path was
+			closed before, it is unclosed, so that new points can be
+			added again
+		- tracked down a pretty obscure bug in the AGG path storage
+			code, which caused some SVGs to load incorrectly (thanks Paco)
+		- hitting Return or Escape in Ellipse and Rect tools applies
+			or cancels the tools as it should (thanks stargater)
+		- fixed last minute crashing bug in pasting a Path property
+			to Shapes that had mutliple subpaths
+		- trash icon for layer list is disabled when launching WonderBrush
+			in "Do Nothing" mode (thanks Marcin)
+
+July 26 2005 (1.7.0)
+	- Gradient object fill mode and new Edit Gradient tool
+	- new Ellipse and Rectangle tools
+	- basic SVG import capability (pretty much path objects only,
+		but with gradient support)
+	- support for gradients when exporting SVG
+	- support for arbitrary number of sub-paths per Shape object,
+		but they cannot be selected for editing right now
+	- speedup for Brush drawing (especially with hardness = 100%)
+	- selection of control points in Shape tool can now be
+		deleted with delete key
+	- Fill tool/objects have an opacity setting
+	- basic tablet tilt support (the brush shape is squashed
+		and rotated towards the tilt direction)
+	- anti-aliasing in Text and Shape tools can be turned off
+		(in Property list)
+	- Hinting and Kerning are now Text object properties
+	- updated to AGG 2.3 (which comes with speed improvements)
+	- huge improvement for "insert point on path" code, the insert
+		cursor should no longer appear when not really on a path
+		segment
+	- added (horribly slow but pretty effective) Warpsharp filter
+	- added RDef source export
+	- added Trash icons to Layer and Object list view to quickly
+		remove selected items
+	- new About animation
+	- states of proportion locks in New and Resize panel are
+		persistent
+	- Optionally changes language according to ZETA system
+		language
+	- work arround for pre ZETA 1.0 mouse moved bug
+	- improved help strings for Tools
+
+	- bug fixes:
+		- crashing bug when drawing Brush outside of Canvas and it was
+			"auto-removed"
+		- fixed drop shadow bug that caused some shadow pixels to
+			appear along the bottom of the canvas in certain situations
+		- fixed a bug where you couldn't do anything in the canvas after
+			some operation took quite a while (for example resizing a
+			canvas with many objects)
+		- many GUI fixes for WonderBrush on ZETA, though some issues
+			remain
+		- Dropper tool no longer switches to the last color Tool
+		- Language add-ons are now correctly moved to the WonderBrush
+			installation when that is on another volume than /boot
+		- proportion lock in Resize panel did not affect scale controls
+		- when using a tablet pen on the eraser side, the Pen tool
+			will switch to Pen Eraser mode just like the Brush tool
+			switches to Eraser mode
+
+February 2 2005 (1.6.1)
+	- bug fix: the sliders controlling the Canvas zoom and Layer alpha did
+		not live-update during dragging
+
+January 17 2005 (1.6.0)
+	- rewritten and unified Export feature
+		- SVG export module, supporting many WonderBrush object types, but
+			no Brush and Filter objects, Layer blending modes are not
+			handled yet
+		- Adobe Illustrator export module, handling less object types than SVG
+		- improved Export panel, the export formats are now better visible
+		- clean up in File menu
+	- better remembrance of last folder used for saving/exporting
+	- support for line cap and line join modes in Outline Shapes
+	- new Layer blending modes: "Replace Red/Green/Blue", "Lighten", "Darken"
+		- the Replace Red/Green/Blue modes can be used to work in one image
+			channel only or to separate the channels of one image
+		- the algorithm for "Alpha", "Inverse Alpha" and "Inverse Multiply"
+			(PS: "Screen") has been improved and should give better results
+	- it is now possible to cycle through all installed fonts by the means of 
+		<Command>+<Up>/<Down> while the Text tool is active
+	- the Fill tool now supports filling the entire canvas ignoring the fact
+		wether the resulting area is contiguous or not
+	- the keyfile can be installed while WonderBrush is running and unlocks it
+		live
+	- the demo mode restrictions have been made more "demo" mode like, "demo
+		mode" is now much more of an "evaluate the product before buying mode"
+		- water mark is rendered on entire canvas, also when copying to
+			the clipboard
+		- exporting to SVG and Adobe Illustrator is disabled
+
+	- bug fixes:
+		- some fonts could crash the font manager in WonderBrush
+		- much improved font sorting, no more duplicate styles (check your
+			installed fonts though!) or second family entries with additonal
+			styles
+		- fixed memory leak in text rendering
+		- fixed invalidation bug when switching layer blending modes involving
+			"Alpha" and "Inverse Alpha"
+		- fixed invalidation glitch in the Popup Slider control (eg Zoom)
+		- fixed irritating bug in Copy and Crop tool, which didn't "auto-cancel"
+			when another tool was selected
+		- fixed glitch in invalidation of splitter GUI object
+		- using the Shape tool should be smoother now when working on new
+			Shape objects
+		- fixed flickering in Property list view when object properties change
+			and/or another object is selected
+		- font popup menu now behaves like a normal BMenuField and tries to
+			locate the currently marked item under the mouse
+		- fixed keyboard controlled paramaters of Text tool to update in the GUI
+			when no Text object is being edited
+
+November 8 2004 (1.5.3)
+	- Subpixel precision can now be turned off for the Shape tool
+		(path control points can then only be located at integer pixel
+		coordinates)
+	- Navigator (Canvas overview) and Layer icons are never scaled up,
+		when editing small bitmaps, like icons, this looks much better
+		and even gives a good preview of the bitmap at 100%
+	- maximum zoom level is now 3200% for all ya icon artists
+	- tab navigatation between properties and additional keyboard control in
+		some of the editing fields is now available in the Property list view
+	- nudging control points when editing a path (translating with the cursor
+		keys), either all selected points or entire path if no selection
+	- reimplemented Fill algorithm with more than two times speed up
+	- bug fixes:
+		- tracked down that nasty Fill tool crashing bug that could
+			sometimes happen, the fix could potentially have fixed more
+			crashing bugs, though I don't know if it was triggered elsewhere
+		- fixed a couple of undo actions to not update the Object list view,
+			if it is showing a different layer than the changed object(s)
+			live(s) on
+		- changed a couple of things in the shutdown sequence, hopefully fixes a
+			rare crash in the Filepanel destructor when quitting WonderBrush,
+			the crash is hard to reproduce, so I don't know if I really fixed it
+		- tweaked the approximation scale of the Shape objects in outline mode,
+			gives much smoother results
+		- a bug with the stroke generator in AGG was fixed, which fixes a
+			problem in WonderBrush when generating the outline of a path
+			when it had very sharp edges
+
+
+October 25 2004 (1.5.2)
+	- fixed a critical crashing bug in the Text tool when spaces where
+		in front of some text. When switching to the Transform tool, the
+		whole system could freeze up.
+	- drawing straight line by holding down shift in Brush tool was
+		unbearably slow in 1.5.0 and 1.5.1
+
+October 24 2004 (1.5.1)
+	- improved brush spacing code, so that when scaling up Brush objects,
+		they look perfectly smooth now (instead of the spacing becoming
+		visible)
+	- bug fixes:
+		- crashing bug in localization add-on building on Zeta
+		- crashing bug in Multi Paste Property when at least one of
+			the objects was not caused to change (stupid last minute change...)
+		- work around for app_server bug in Zeta, which apparently filters
+			mouse moved messages, so that when these events are generated by
+			a tablet, they would not always contain all fields (pressure,
+			tilt, etc.)
+		- work around for Zeta app_server bug (the one concerning drawing
+			segments of a circle)
+		- fixed picking pivot of transform box when zoomed in or out
+		- fixed a bug in Shape and Text tool which caused the config GUI to
+			incorrectly reflect the Shape/Text object having been double
+			clicked to be edited
+
+October 15 2004 (1.5.0)
+	- Affine Transformations of objects (Translate, Rotate, Scale
+		(and indirectly Skew))
+	- Resizing and Rotating (-90°, 90°, 180°) of the canvas
+	- reimplementation of many object types rendering using AGG
+		- Bitmap, Fill, Text, Brush and Eraser
+	- Text tool uses AGG font caching
+	- Filters (many ported from ArtPaint):
+		- Brightness,
+		- Contrast,
+		- Saturation,
+		- Invert,
+		- Gaussian Blur,
+		- Motion Blur,
+		- Dispersion,
+		- Drop Shadow,
+		- Halftone,
+		- Noise
+	- interchangable Object Properties with custom clipboard
+	- Text tool is now multiline
+	- Text tool has spacing property for adjusting the spacing between letters
+	- new behaviour for closing a path when the Shape is in outline mode
+		(to be able to move the first point of an open path)
+	- more convenience menu items in Object menu, Freeze and Remove can no
+		longer be mistaken for ignoring the selection
+	- WonderBrush now goes to the current workspace when a document is loaded
+	- Shape and Text tools automatically apply when the selection changes
+	- Object listview is now much less restrictive when currently editing
+		a Text or Shape object
+	- made cute little Undo/Redo icons
+
+	- bug fixes:
+		- big memory leak in Crop tool
+		- many Fill tool bugfixes
+		- Canvas is now correctly rerendered when one of the merged layers
+			was invisible
+		- fixed "Blur tool doesn't blur edge pixels" bug
+		- fixed "transform box shows wrong cursors when flipped" bug
+		- fixed "transform box leaves dirty pixels when zoomed out far
+			enough" bug
+		- fixed input of invalid chars in text inputs for numerical values
+		- fixed Select tools text input (Top coordinate was used where
+			Left coordinate should have been used)
+		- fixed picking a color from the actual Color Picker panel was
+			not undoable in Text and Shape tools
+		- the tool help message can now contain '\n' so that it line breaks in
+			the bubble help
+		- fixed a bug with dragsorting objects, in certain situations,
+			the dragged objects could just disappear
+		- canvas name is now updated in canvas list when saving under a new name
+
+September 1 2004
+	- in Shape tool:
+		- much improved selection of control points when editing paths
+		- transformation of selected control points with complete undo/redo
+	- image data is now removed at pixels with alpha = 0 when saving, so that
+		the file can be compressed more efficiently
+	- bugfixes in Text tool when no settings file was present, better default
+		font selection
+	- bugfix when pasting from clipboard while editing Text or Shape
+		(history got confused)
+	- all icons are truely transparent now, so when rendered in Zeta on
+		non gray-216 panel background, they look good.
+
+August 11 2004
+	- new Copy tool, which copies a rectangular area to the
+		system clipboard
+	- small bugfixes in Crop tool
+	- "Paste" menu item is now actually translated
+	- more up to date Japanese and Polish language files included
+
+August 5 2004
+	- Confirm/Cancel Crop and Transform Tools
+	- Shape tool has outline mode with variable width
+	- bounding box for selected objects in Transform tool
+	- new global "Program Settings" panel, startup action can be picked
+	- numerous bug fixes in Shape, Text, Move, Crop and Fill tools
+	- numerous usability fixes
+	- new loading mechanism in separate thread
+	- native documents can now be inserted into existing documents
+		(drop document into main window (or better layer list) while
+		pressing <shift>)
+	- bug fix for layer alpha mask blending
+	- better generation of Bitmap objects when chosing Object->Freeze
+		(excluding empty parts is now smarter)
+	- all strings translatable again
+	- renamed History list -> Object list
+	- pressure control for Brush radius & opacity is off by default
+		(Zeta app_server bug is not triggered in default config)
+	- other small fixes
+
+June 12 2004
+	- New tool: Shape
+		missing:	transforming selections of control points,
+					multiple paths for definging holes etc.
+	- Confirm/Cancel Text and Shape tools
+	- editing of Text and Shape modifiers at any time,
+		just double click the objects in the History list
+
+Mai 19 2004	- public development release
+	- New tools: Crop, Transform, Fill and Text
+	- changes in the GUI layout
+	- many bug fixes
+	- work in progress...
+
+August 25 2003 - initial public release
+
+
+
+

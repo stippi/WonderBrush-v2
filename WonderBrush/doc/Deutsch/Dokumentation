@@ -1,0 +1,178 @@
+
+Überblick
+
+WonderBrush dient dem Erstellen und Bearbeiten von Pixelgrafiken. Das sind die WonderBrush Dokumente. Das Hauptfenster beinhaltet eine beliebige Anzahl von solchen Dokumenten. Jedes Bilddokument kann sich aus mehreren Ebenen zusammensetzen. Von der untersten zur obersten überlagert jede Ebene entsprechend ihrem gesetzten Modus die vorherigen und formt so das fertige Bild. Jede Ebene, die von Natur aus leer und somit völlig transparent ist, kann eine beliebige Anzahl von grafischen Objekten enthalten, die sich wiederum auf der Ebene gegenseitig überlagern. Diese Objekte werden mit Hilfe der WonderBrush Werkzeugen erstellt. Es gibt verschiedene Typen, wie Pinselstriche, Textobjekte oder Filter. Jedes einzelne Objekt besitzt eine Liste von Eigenschaften, die seine Erscheinung definieren. Die Stärke von WonderBrush besteht darin, dass die Objekte jederzeit beliebig in ihrer Reihenfolge vertauscht und in ihren Eigenschaften verändert werden können. Damit der Zugriff auf Objekte und ihre Eigenschaften vereinfacht wird, zeigt WonderBrush neben dem eigentlichen Bilddokument drei Listen an: Die Ebenen-, die Objekt- und die Eigenschaftenliste. In der Ebenenliste wird die aktive Ebene gesetzt, in der Objektliste werden nur die Objekte aufgelistet, die sich auf der aktiven Ebene befinden. Ist nur ein Objekt ausgewählt, so werden seine grafischen Parameter in der Eigenschaftenliste angezeigt. Die Objekt- und die Eigenschaftenliste besitzen jeweils eine eigene Zwischenablage, damit Objekte oder Eigenschaften schnell kopiert oder übertragen werden können. Eigenschaften mit gleichem Namen sind zwischen den verschiedenen Objekttypen kompatibel.
+
+
+Objekte
+
+Abstrakt gesprochen füllen Objekte eine Ebene mit Bildinhalt. Die meisten Objekte erzeugen zu diesem Zweck eine Art Maske oder Schablone, die in einem bestimmten Modus über den bereits vorhandenen Objekten angewendet wird. Es gibt unterschiedliche Objekttypen, die sich vornehmlich darin unterscheiden, wie sie ihre Maske erzeugen. Die meisten Typen haben eine Vielzahl von Eigenschaften, die die Entstehung der Maske beeinflussen. 
+
+Um ein Objekt des gewünschten Typs zu erzeugen, muss zuerst das entsprechende Werkzeug aktiviert werden. Zu jedem Werkzeug zeigt WonderBrush Kontrollfelder an, mit denen sich bestimmen lässt, welche Eigenschaften ein neues Objekt aufweisen wird. Zum Erzeugen eines Objektes wird dann einfach in die Bildfläche geklickt und gegebenenfalls mit der Maus oder dem Stift gezogen. Manche Werkzeuge, speziell das Formwerkzeug, bieten während der Objekterstellung umfangreiche Bearbeitungsmöglichkeiten. Filterobjekte nehmen eine Sonderrolle ein, indem sie nur durch Auswählen im Filtermenü erzeugt werden. Bilddatenobjekte werden ebenfalls nicht durch ein Werkzeug erzeugt, sondern repräsentieren geladene Bilddateien oder "eingefrorene Objekte". Grundsätzlich werden Objekte immer an oberster Stelle in der aktiven Ebene angelegt (letzte Position in der Liste). Durch simples Ziehen und Fallenlassen können sie an eine andere Stelle in der Liste verschoben werden. Durch zusätzliches Drücken der Umschalttaste <Shift>, können Objekte dabei auch dupliziert werden. Manche Objekttypen, wie die Form- und Textobjekte, können durch Doppelklicken in der Liste wieder mit dem entsprechenden Werkzeug weiterbearbeitet werden. Andere Objekttypen, wie Pinsel- und Filterobjekte, lassen sich nur noch über ihre Eigenschaftenliste bearbeiten.
+
+
+Laden von Dateien
+
+WonderBrush verwaltet grundsätzlich zwei verschiedene Typen von Dateien. Das eine sind WonderBrush Dokumentdateien, welche sämtliche Ebenen- und Objektinformationen enthalten. Bei den anderen handelt es sich um verschiedene Bildformate wie JPG, TIFF oder PNG, die WonderBrush öffnen kann. Solche Dateien werden als ein Dokument dargestellt, welches eine Ebene mit einem Bilddatenobjekt (dem Bild aus der Datei) enhält.
+Eine Sonderrolle nehmen Scalable Vector Graphics (SVG) Dateien ein, die von WonderBrush in begrenztem Umfang unterstützt werden. Einige SVG Objekte werden vom Programm als Formobjekte verarbeitet, die auch Farbverläufe enthalten können.
+WonderBrush kann Dateien auf verschiedene Arten laden. Die größte Flexibilität bietet das Laden per Ziehen und Fallenlassen aus dem Tracker. Werden Dateien mit gedrückter <Shift>-Taste in die Ebenenliste gezogen, so kann ein Dokument oder eine Bilddatei in ein bereits geöffnetes Dokument geladen werden. In diesem Fall werden entsprechend zusätzliche Ebenen angelegt.
+
+
+Speichern von Dateien
+
+WonderBrush unterscheidet zwischen "Speichern" und "Exportieren", wobei "Speichern" WonderBrush Dokumentdateien mit sämtlichen Ebenen- und Objektinformationen erzeugt. Zum "Exportieren" stehen verschieden Dateiformate zur Auswahl, wobei die erzeugten Dateien keine oder nicht alle Ebenen- und Objektinformationen enthalten. Die meisten Formate enthalten nur noch die visuellen Bildinformationen.
+Ein in WonderBrush geöffnetes Dokument merkt sich den Ort sowohl der Dokument- als auch der Exportdatei auf der Festplatte. Es lassen sich also ohne Umständliches Hin- und Herspringen beide Dateiversionen durch Auswahl von "Speichern" bzw. "Exportieren" speichern. Bei "neuen" Dokumenten sind beide Dateiorte noch unbekannt, bei frisch "geöffneten" Dateien ist entsprechend ihres Formats einer der beiden Speicherorte bereits bekannt.
+
+
+Rückgängigmachen und Wiederherstellen
+
+Grundsätzlich merkt sich WonderBrush alle Bearbeitungsschritte, so dass Änderungen leicht rückgängig gemacht oder wieder hergestellt werden können.
+
+
+Farben
+
+In der WonderBrush Oberfläche ist ein spezieller Bereich für Farben reserviert. Es gibt eine "momentan gesetzte Farbe" (größeres Feld links), sowie eine Anzahl von "Farbnäpfchen", welche sich über das Farbenmenü auch als Palette speichern oder laden lassen. Durch Ziehen und Fallenlassen kann die aktuelle Farbe in einem Farbfeld abgelegt werden. In vielen anderen Bereichen des Programms wird das Ziehen und Fallenlassen von Farben ebenfalls unterstützt (z.B. auf die Objektliste). Durch Klicken auf die aktive Farbe öffnet sich ein Farbauswahldialog, der eine feinere Abstimmung der Farbe erlaubt, als es durch die beiden Farbbearbeitungsfelder unter der Palette schon möglich ist.
+Ist das Farbverlaufswerkzeug momentan gesetzt und das Verlaufsbearbeitungsfeld aktiviert, so überträgt sich die aktuelle Farbe automatisch auf den aktiven Verlaufspunkt, um eine vereinfachte Bearbeitung der Verlaufspunkte zu ermöglichen.
+
+
+Werkzeuge
+
+Die Auswahl eines Werkzeugs durch Anklicken des entsprechenden Icons bedeutet, das Programm in einen bestimmten Arbeitsmodus zu versetzen. Die meisten WonderBrush Werkzeuge dienen dem Erzeugen von grafischen Objekten auf der aktiven Ebene. Mit anderen lassen sich bereits vorhandene Objekte bearbeiten (Transformationswerkzeug, Farbverlaufswerkzeug). Manche Werkzeuge beziehen sich auch direkt auf das Bilddokument (Beschneidenwerkzeug, Hilfslinienwerkzeug), oder erlauben das Kopieren von Bilddaten in die Zwischenablage des Systems.
+Viele der Werkzeuge benutzen das "Bestätigen oder Abbrechen" Konzept. Wird eine Bearbeitung eingeleitet, verfärbt sich der Bereich mit dem "Anwenden" und "Abbrechen" Icon. Dieser Bereich enthält auch die Icons für das Rückgängigmachen bzw. Wiederherstellen der Bearbeitungsschritte. In den meisten Fällen kann eine Bearbeitung nach ihrem Anwenden nur noch als Ganzes rückgängig gemacht werden. Dieses Konzept erleichtert das schnelle Zurückkehren zu markanten Zuständen des Dokuments.
+
+Die einzelnen Werkzeuge werden im Folgenden näher vorgestellt.
+
+
+Objekte auswählen
+
+Dieses Werkzeug ermöglicht das direkte Auswählen von Objekten auf der Bildfläche durch Anklicken oder Aufziehen eines Rahmens. Der Konfigurationsbereich des Werkzeugs enthält eine Auswahlmaske, die die anwählbaren Objekttypen festlegt. Mit den Knöpfen "Alles" bzw. "Keines" können schnell sämtliche oder gar keine Objekte ausgewählt werden. Die gleichen Knöpfe im "Anwählbar"-Bereich beziehen sich hingegen nur auf die Auswahlmaske.
+
+
+Zwischenablage
+
+Dieses Wekzeug dient dem Kopieren von Bilddaten in die systemweite Zwischenablage. Es erlaubt die Definition eines rechteckigen Bereichs auf der Bildfläche, welcher als Bilddaten kopiert wird. Diese können in WonderBrush oder anderen Programmen wieder eingefügt werden. In WonderBrush können Daten aus der Zwischenablage durch Wahl von Bearbeiten->Einfügen eingefügt werden. Das Vorhandensein von Bilddaten in der Zwischenablage wird durch die Anwählbarkeit dieses Menüpunktes angezeigt. Das Einfügen erzeugt ein neues Bilddatenobjekt und wechselt automatisch zum Transformationswerkzeug.
+
+
+Beschneiden
+
+Mit dem Beschneiden Werkzeug können Dokumente sowohl zugeschnitten als auch erweitert werden. Wenn die "Subpixel" Option aktiviert ist, rastet der Rahmen, mit dem die neue Bildgröße angegeben wird, nicht nur auf feste Pixelpositionen ein. Dies führt dazu, dass Objekte bei Bestätigung des Werkzeugs geringfügig verschoben werden.
+
+
+Transformieren
+
+Dieses Werkzeug stellt einen Rahmen um in der Liste ausgewählte Objekte dar, mit hilfe dessen diese als Gruppe verschoben, gedreht oder skaliert werden können. Sobald der Rahmen manipuliert wird, startet die Transformation, welche solange bearbeitet werden kann, bis der Anwenden-Knopf betätigt wird. Innerhalb dieser Aktion können einzelne Bearbeitungsschritte an der Transformation rückgängig gemacht werden. Wurde die Transformation angewendet, kann sie nur noch als Ganzes rückgängig gemacht werden. Außerdem wird der Rahmen zurückgesetzt, so dass eine neue Transformation begonnen werden kann.
+
+
+Farbverlauf bearbeiten
+
+Mit diesem Werkzeug kann die "Farbverlauf"-Eigenschaft eines ausgewählten Objektes bearbeitet werden. Dazu muss die (Füll-)"Modus"-Eigenschaft des Objekts auf "Farbverlauf" stehen. Wenn ein entsprechendes Objekt ausgewählt ist, zeigt das Werkzeug einen Rahmen um die Fläche an, über die sich der Farbverlauf erstreckt. Mit diesem Rahmen kann der Farbverlauf transformiert werden. Der Konfigurationsbereich des Werkzeugs zeigt neben weiteren Einstellungen ein Kontrollfeld an, mit welchem die Farben des Verlaufs bearbeitet werden können. Der Deckkraft Regler bezieht sich auf den momentan aktiven Verlaufspunkt, der durch Klicken im Verlaufsfeld festgelegt wird. Neue Verlaufspunkte können entweder durch Doppelklicken in einen leeren Abschnitt, oder durch Fallenlassen einer Farbe erzeugt werden. Der aktive Verlaufspunkt kann durch Drücken der <Entf> Taste gelöscht werden.
+Die Option "Transformation erben" legt fest, ob die Farbverlaufstransformation unabhängig vom Objekt sein soll oder nicht. Standardmäßig wird ein Farbverlauf zusammen mit dem Objekt verschoben, welches er füllt.
+
+
+Pinsel
+
+Am besten funktioniert das Pinselwerkzeug mit einem Grafiktablet, weil dann Deckkraft, Radius und Schärfe dynamisch mit dem Stiftandruck kontrolliert werden können. Momentan werden nur kreisförmige Pinselspitzen unterstützt. Ein Klick auf die Pinselvorschau öffnet ein Fenster, in dem Sets von Pinseln bearbeitet und abgespeichert werden können. Die Option "Subpixel" bezieht sich darauf, ob Maus bzw. Stiftpositionen auch zwischen festen Pixelkoordinaten abgetastet werden sollen. Die Option "Fest" verursacht, dass keine Zwischenwerte für die Deckkraft des Pinselobjektes erzeugt werden. Der "Abstände" Regler kontrolliert die Positionierung der Pinselform entlang des Pinselpfades.
+
+
+Stift
+
+Dieses Werkzeug funktioniert sehr ähnlich zum Pinselwerkzeug, nur dass die Werkzeugspitze immer nur einen Bildpunkt breit ist. Deshalb gelten die Radius-, Schärfe- und Abständeparameter nicht.
+
+
+Radiergummi
+
+In der Benutzung entspricht dieses Werkzeug genau dem Pinselwerkzeug, nur dass es automatisch die "Modus"-Eigenschaft der erzeugten Pinselobjekte auf "Radieren" setzt. Im Nachhinein können durch Setzen der "Modus"-Eigenschaft Pinselobjekte in Radiergummiobjekte umgewandelt werden und umgekehrt.
+
+
+Radierstift
+
+Dieses Werkzeug hat die gleiche Beziehung zum Stiftwerkzeug, wie das Radiergummi- zum Pinselwerkzeug: Es werden Stiftobjekte im "Radieren" Modus erzeugt.
+
+
+Stempel
+
+Mit diesem Werkzeug können Bildteile von einem Ort zum einem anderen übertragen werden, wobei die Objektform genau wie beim Pinselwerkzeug entsteht. Wird das Werkzeug aktiviert, so muss mit dem ersten Klick der Ursprungsort definiert werden. Der zweite Klick setzt dann die Verschiebungsrichtung und -länge fest und beginnt die Stempelfunktion. Um den Verschiebungsvektor neu festzulegen, muss kurz die Kommandotaste gedrückt werden (je nach Systemeinstellung ist das die <Ctrl> oder <Alt> Taste).
+Das interessante an der Stempelfunktion in WonderBrush ist, dass die Stempelobjekte aktualisiert werden, wenn sich der zu übertragende Bildinhalt ändert. Die Stempelfunktion wird also dynamisch erzeugt.
+
+
+Weichzeichner
+
+Der Weichzeichner ist ein weiteres "pinselbasiertes" Werkzeug. Mit ihm lassen sich Bildbereiche verwischen, wobei dies selektiv innerhalb der gedachten Pinselform geschieht.
+
+
+Farbeimer
+
+Dieses Werkzeug kann Flächen mit ähnlicher Farbe mit einer anderen Farbe füllen. Wie ähnlich die Farben innerhalb der Fläche sein dürfen, bestimmt der "Toleranz"-Parameter. Die Einstellung "Weichheit" wirkt sich auf den Deckkraftskanal des erzeugten Objektes aus, indem die benötigte Toleranz einzeln für jeden Bildpunkt ausgewertet wird. Ein Klick in die Bildfläche definiert die Basisfarbe für die Toleranz und erzeugt ein neues Farbeimerobjekt. Ein solches Objekt besitzt eine feste Deckkraftmaske (siehe Abschnitt "Objekte"), die in dem gesetzten Modus auf die Ebene übertragen wird. Durch Anpassen der "Modus"-Eigenschaft lassen sich Füllobjekte also auch zum Radieren oder für einen Farbverlauf verwenden.
+
+
+Text
+
+Mit dem Textwerkzeug lassen sich nicht nur einfache Beschriftungen anlegen, sondern ganze Textblöcke setzen. Die Einstellungsmöglichkeiten sind entsprechend umfangreicher, bieten aber viele schon aus anderen Programmen bekannte Funktionen. Ein Klick in die Bildfläche erzeugt ein neues Textobjekt mit den momentan eingestellten Parametern. Das Textwerkzeug zeigt auf der Arbeitsoberfläche eine Linie mit zwei Anfassern an, mit denen sich die Textblockbreite und Absatzeinrückung einstellen lässt. Der Text wird momentan nicht direkt auf der Bildfläche eingegeben, sondern in dem Textfeld innerhalb des Werkzeugbereichs. Die wichtigsten Parameter wie Schriftart und -größe werden ebenfalls dort eingestellt, aber eine Vielzahl weiterer Parameter kann in der Eigenschaftenliste des Textobjektes angepasst werden. Einige vielleicht unverständliche Eigenschaften werden im Folgenden erklärt.
+
+"Abstände" ist ein Faktor für die Buchstabenlaufweite, mit Hilfe dessen sich die Buchstaben enger oder weiter auseinandersetzen lassen.
+
+"Zeilenabst." ist ein Faktor für den Zeilenabstand, wobei als Basis für den Abstand die Schriftgröße gilt.
+
+"Absatzabst." ist wiederum ein Faktor und bezieht sich auf den Zeilenabstand zwischen zwei Absätzen in Relation zum sonst verwendeten Zeilenabstand.
+
+"Hinting" bedeutet, dass die Buchstabenformen etwas verzerrt und verschoben werden, so dass die wichtigen Formelemente besser auf Bildpixel passen und somit die Lesbarkeit auf Bildschirmen verbessert wird. Bei skalierten oder rotierten Textobjekten verliert diese Option allerdings ihren Schärfungseffekt.
+
+"Kerning" beeinflusst die Abstände zwischen einzelnen Buchstaben und benutzt in der Schriftdatei eventuell vorhandene Zusatzinformationen, die das Schriftbild verbessern können. Wenn zum Beispiel auf ein großes "T" ein kleines "e" folgt, kann das "e" näher an das T herangeschoben werden, obwohl dadurch die normale Laufweite des "T"s unterschritten wird. Folgt auf ein "T" ein "h", wird die normale Laufweite des "T"s benutzt, damit die Buchstaben sich nicht überschneiden. Ist "Kerning" deaktiviert, so wird immer die "normale" Laufweite benutzt, unabhängig von der Buchstabenkombination.
+
+"Fest" schaltet die Kantenglättung für die Buchstaben ab. Diese Option wird auch von anderen Objekttypen angeboten.
+
+
+Form
+
+Mit dem Formwerkzeug lassen sich sogenannte Vektorpfade erstellen. Sie können die Begrenzung einer Fläche beschreiben oder als Linien bzw. Kurven mit bestimmter Breite dargestellt werden. Ein Vektorpfad verläuft durch sogenannte "Kontrollpunkte", und eben diese werden mit dem Formwerkzeug erstellt oder bearbeitet. Ein Kontrollpunkt besteht aus maximal drei "Unterpunkten". Der Vektorpfad verläuft in jedem Fall durch den Hauptkontrollpunkt. Die zwei weiteren Punkte legen die Tangenten fest, mit der der Pfad in den Hauptpunkt eintritt und wieder austritt. Somit lassen sich sehr einfach beliebige Kurven beschreiben. Die vielfältigen Bearbeitungsmöglichkeiten zeigt WonderBrush anhand des Mauszeigers an.
+
+Neuen Punkt erzeugen 
+Wird mit der Maus in einen leeren Bereich geklickt, so wird ein neuer Kontrollpunkt erzeugt, wobei der Klick die Position des Hauptkontrollpunktes festlegt. Mit der gedrückten Maustaste lässt sich dann die Austrittstangente bearbeiten, wobei die Eintrittstangente automatisch gespiegelt wird.
+
+Punkt bearbeiten
+Wird die Maus über einen bestehenden Punkt bewegt, so lässt sich dessen Position verschieben. Wird der Hauptkontrollpunkt verschoben, so werden die Tangentenpunkte mit verschoben. Beim Verschieben eines der Tangentenpunkte passt WonderBrush den anderen so an, dass sie in einer Linie bleiben. Diese Verbindung lässt sich auch aufheben, um eine Ecke im Pfad zu erzeugen (dazu gleich mehr).
+
+Punkt einfügen
+Wird die Maus über den Vektorpfad selbst bewegt, so lässt sich an dieser Stelle ein neuer Punkt einfügen. Vorerst wird der Punkt so eingefügt, dass der Verlauf des Pfades erhalten bleibt, dazu werden der vorhergehende und nachfolgende Punkt angepasst. Wird mit gedrückter Maustaste gezogen, so wird wie beim "Punkt erzeugen" die Austrittstangente bearbeitet.
+
+Erweiterte Funktionen
+
+Punkt löschen
+Mit gedrückter <Alt> Taste (bzw. <Strg> falls Sie <Alt> als Befehlstaste eingestellt haben), wird ein angeklickter Punkt gelöscht. Dabei kann es sich auch um einen der beiden Tangentenpunkte handeln.
+
+Scharfe Ecken
+Um gleich beide Tangentenpunkte zu löschen, kann der Hauptkontrollpunkt mit gedrückter <Strg> Taste (bzw. <Alt> falls Sie <Strg> als Befehlstaste eingestellt haben) geklickt werden. Nachfolgend kann mit gedrückter Maustaste der Austrittstangentenpunkt wieder herausgezogen werden, wobei der Eintrittspunkt entsprechend gespiegelt wird.
+Wird die <Strg> (oder <Alt>) Taste auf einem Tangentenpunkt angewendet, so kann man diesen verschieben, ohne dass der gegenüberliegende Tangentenpunkt mitbewegt wird. Auf diese Weise kann also die Verbindung der Tangentenpunkte aufgehoben werden, so dass sie nicht mehr auf einer Linie liegen. Fortan können sie unabhängig voneinander bewegt werden. Um die Verbindung wieder herzustellen, klicken Sie einfach mit gedrückter <Strg> (oder <Alt>) Taste auf den Hauptkontrollpunkt und ziehen die Tangentenpunkte neu heraus.
+
+Pfad schließen
+Wird der erste Kontrollpunkt angeklickt, so wird der Pfad "geschlossen". Der Standardmodus für Bereiche außerhalb des Pfads ist dann nicht mehr "Punkte hinzufügen", sondern "Punkte auswählen". Pfade im Umrissmodus können nicht durch Klicken des ersten Punktes geschlossen werden. Bei diesen Pfaden erreicht man dies durch Aktivierung des Kontrollfeldes "Geschlossen".
+
+Punkte auswählen
+Sie werden bemerkt haben, dass der zuletzt angeklickte Kontrollpunkt immer markiert ist. Sie können Punkte zur Auswahlgruppe hinzunehmen (oder wieder herausnehmen), indem Sie sie mit gedrückter <Shift> (Umschalt-) Taste anklicken. Die <Shift> Taste erzwingt immer den "Punkte auswählen" Modus, so dass ein Auswahlrahmen aufgezogen wird, wenn man außerhalb des Pfades klickt. Für Punkte, die innerhalb des Rahmens liegen, wird dann der Auswahlstatus umgekehrt.
+
+Auswahl transformieren
+Die ausgewählten Punkte können als Gruppe verschoben oder transformiert werden. Entweder man benutzt die Pfeiltasten auf der Tastatur, um die Punkte pixelweise zu verschieben (feinere Verschiebung mit zusätzlich gedrückter <Shift> Taste), oder man klickt auf das "Transformieren" Ikon im Formwerkzeugbereich (nicht das allgemeine Transformationswerkzeug für Objekte). Im letzteren Fall kann auf die Auswahlgruppe eine komplexere Transformation angewendet werden.
+
+Auswahl löschen
+Durch Klicken des Ikons "Kontrollpunkte löschen" werden die ausgewählten Punkte gelöscht; im Falle, dass alle Punkte eines Pfades ausgewählt waren, wird der gesamte (Sub-)pfad vom Formobjekt gelöscht. Alternativ zum Ikon kann auch die <Entf> Taste zum Löschen benutzt werden.
+
+Subpfade
+Ein einzelnes Formobjekt kann mehrere eigenständige Pfade enthalten. Überschneiden sich die Pfade, so legt die "Füllregel"-Eigenschaft fest, ob ein Bereich als "außerhalb" oder "innerhalb" der Formfläche gezählt wird. "Linksdrehend" bedeutet, dass die Umlaufrichtung der Kontrollpunkte einen Einfluss auf die "außerhalb"/"innerhalb" Entscheidung hat. "Abwechselnd" bedeutet, dass sich "innerhalb" und "außerhalb" jedes Mal abwechseln, wenn ein Subpfad einen neuen Bereich abgrenzt. In diesem Modus beschreiben Subpfade, die innerhalb der Fläche anderer Pfaden liegen, auf jeden Fall ein "Loch".
+Um einen neuen Subpfad anzulegen, muss das Ikon "Neuer Pfad" aktiviert werden. Es bleibt aktiv, bis außerhalb der bestehenden Pfade geklickt wird, um den ersten Kontrollpunkt eines neuen Pfades zu setzen.
+
+
+Ellipse/Rechteck
+
+Diese Werkzeuge erzeugen ein vordefiniertes Formobjekt: eine Ellipse oder ein Rechteck. Durch Klicken und Ziehen wird das Objekt erzeugt und die Größe bestimmt. Mit zusätzlich gedrückter <Shift> (Umschalt) Taste kann das Seitenverhältnis beibehalten werden, so dass auch Kreise und Quadrate angelegt werden können. Später werden die Objekte wie normale Formobjekte behandelt, so dass die weitere Bearbeitung wieder im Formwerkzeug stattfindet.
+
+
+Pipette
+
+Die Pipette dient dem Aufnehmen von Farben aus der Bild. Entsprechend wird einfach die aktive Farbe gesetzt. Entsprechend der "Größe der Spitze" werden dabei auch eine Mischfarbe aus mehreren Bildpunkten berechnet.
+
+
+Hilfslinien
+
+Hilfslinien helfen bei der Ausrichtung von Objekten, sind aber selbst nicht Bestandteil des Bildes und können auch ausgeblendet werden. Mit dem "Neu" Ikon wird eine neue Hilfslinie an der durch die anderen Kontrollfelder definierten Stelle angelegt. Eine aktive Hilfslinie wird hellrot dargestellt und kann mit den Eingabefeldern exakt positioniert werden. Bei einem Winkel von Null Grad sind Hilfslinien genau senkrecht und bei 90 Grad entsprechend waagerecht.
+
+

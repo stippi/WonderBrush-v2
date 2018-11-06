@@ -1,0 +1,452 @@
+<html><head><title>Wonderbrush - Erstellen eines Knopfes</title>
+
+
+
+		
+<style type="text/css">
+p.info { border:1px solid blue; background-color:#e0e0ff; padding:10px; margin:10px;}
+</style></head><body bgcolor="#ffffff">
+
+<center>
+<table border="0">
+<tbody><tr>
+	<td width="600">
+		<br>
+		<br>
+		<h3>Wonderbrush - Erstellen eines Knopfes</h3>
+		<br>
+		<br>
+		<b>Unser Ziel: </b><img src="images/final_button.gif"><br>
+		<br>
+		Dieses Tutorial zeigt den Gebrauch von mehreren Ebenen, die eine Art
+		<i>Filterkette</i> formen, um das Bild eines Knopfes zu erzeugen. <i>Filterkette</i> bedeutet, 
+		dass die Bilddaten von einer zur n&auml;chsten Ebene immer weiter ver&auml;ndert werden, 
+		bis der fertige Knopf entstanden ist. Durch die
+		nicht-destruktiven Bearbeitungsm&ouml;glichkeiten, die diese Kette erm&ouml;glicht,
+		kann jeglicher Akspekt des Bildes sp&auml;ter noch ver&auml;ndert werden. Durch
+		einfaches &Auml;ndern der Farbe des F&uuml;llobjekts auf der untersten Ebene kann die
+		Farbe des gesamten Knopfes ver&auml;ndert werden, der metallische Effekt und die
+		abgeflachten Kanten werden einfach automatisch neu berechnet. Weil alle
+		involvierten Objekte auf Vektorpfaden basieren, kann das Knopfbild
+		jederzeit vergr&ouml;&szlig;ert werden, ohne dass st&ouml;rende Artefakte durch Skalieren
+		von Pixeln entstehen.<br>
+		<br>
+		<br>
+		<b>Erstellen des Grundlooks</b><br>
+		<b>Ziel:</b> <img src="images/step01.jpg"><br>
+		<br>
+		Erstellen Sie zuerst ein neues Dokument (<b>Dokument</b>-Men&uuml;) mit der richtigen 
+		Gr&ouml;&szlig;e f&uuml;r das Knopfbild.<br>
+		<br>
+		<center><img src="images/new_document.png">&nbsp;<img src="images/document_size.png"></center><br>
+		<br>		 
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					Alternativ kann aber auch das
+					Beschneidenwerkzeug <img src="images/crop_icon.png"> auf dem
+					leeren Standarddokument angewendet werden,  um die Gr&ouml;&szlig;e
+					festzulegen.
+				</font></td>
+			</tr>
+		</table>
+
+		<br>
+		<br>
+		Benutzen Sie das F&uuml;llwerkzeug <img src="images/fill_icon.png"> mit grauer Farbe 
+		auf der leeren Standardebene. <br>
+		<br>
+		<center><img src="images/color_and_fill.png"></center><br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					Sie k&ouml;nnen die Farbe von bestehenden Objekten 
+					(auch F&uuml;llobjekten) jederzeit &auml;ndern, indem Sie sie
+					in der Objektliste ausw&auml;hlen, und dann eine neue Farbe
+					drauffallen lassen.
+				</font></td>
+			</tr>
+		</table>
+
+		<br>
+		<br>
+		Erzeugen Sie danach einen <i>"Rauschen" Filter.</i><br>
+		<br>
+		<center><img src="images/noise_filter.jpg"></center><br>
+		<br>
+		Die "St&auml;rke" Eigenschaft des Filters kann erh&ouml;ht werden, damit sp&auml;ter der 
+		metallische Effekt deutlicher sichtbar ist. Wenn man im Rauschenfilter
+		die "Nur Helligkeit" Eigenschaft aktiviert, beschr&auml;nkt sich das Rauschen
+		entsprechend nur auf die Helligkeit und l&auml;sst die Farbe eines Pixels
+		unber&uuml;hrt.<br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					Die Parameter eines Filters lassen sich
+					momentan nur nachtr&auml;glich in der <i>Eigenschaftenliste</i>
+					angeben. F&uuml;r jedes neue Filterobjekt werden automatisch die
+					Einstellungen benutzt, die zuletzt f&uuml;r einen Filter des
+					gleichen Typs festgelegt wurden. 
+				</font></td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		 Um den metallischen, "geb&uuml;rsteten" Effekt zu erzielen, wurde ein
+		 <i>Bewegungsunsch&auml;rfe Filter</i> hinzugef&uuml;gt.<br>
+		<br>
+		<center><img src="images/motion_blur_filter.jpg"></center><br>
+		<br>
+		Dieses Objekt besitzt nur zwei
+		Eigenschaften: Den <i>Weichzeichnungsradius</i>, der gewisserma&szlig;en die Ausdehnung
+		der Unsch&auml;rfe festsetzt, und den <i>Winkel</i>, also die Richtung. F&uuml;r den Knopf
+		m&uuml;ssen Sie den Winkel auf 90 Grad einstellen, womit die Unsch&auml;rfe in
+		horizontaler Richtung wirkt. Ein eher weiter Radius, etwa 25 - 40 Pixel ist
+		f&uuml;r den Knopf angemessen.<br> 
+		<br>
+		<center><img src="images/noise_added.png"></center><br>
+		<br>
+		Diese nun entstandene erste Ebene mit den drei Objekten dient als
+		Farbgrundlage f&uuml;r die weiteren Glieder in der eingangs erw&auml;hnten
+		"Filterkette".<br>
+		
+		<br>
+		<br>
+		<b>Erstellen der Form des Knopfes</b><br>
+		<b>Ziel:</b> <img src="images/step02.png"><br>
+		<br>
+		 Legen Sie nun &uuml;ber das <b>Ebene</b>-Men&uuml; eine zweite Ebene an.<br>
+		<br>
+		<center><img src="images/new_layer.jpg"></center><br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					Neue Ebenen werden eine Position <i>&uuml;ber</i> der aktuell
+					ausgew&auml;hlten Ebene erzeugt.
+				</font></td>
+			</tr>
+		</table>
+
+		<br>
+		<br>
+		 Die neue
+		Ebene soll die Farbfl&auml;che der unteren Ebene in der abgerundeten Form des
+		Knopfes "abschneiden". Eine solche Funktion nennt man auch "Maskieren". <br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					In WonderBrush besitzt jede Ebene eine <i>"Modus"
+					Einstellung</i> (siehe <b>Modus</b>-Men&uuml;), die bestimmt,
+					wie diese Ebene darunter liegende Ebenen beeinflusst. Der "Normal"
+					Modus &uuml;bertr&auml;gt einfach die Farbe an jedem Pixel
+					entsprechend seiner Deckkraft. Die "Deckkraft" eines Pixels wird
+					auch als sein "Alphakanal" bezeichnet. Es handelt sich einfach um
+					einen zus&auml;tzlichen Kanal zu den drei Farbkan&auml;len Rot,
+					Gr&uuml;n und Blau, in dem die Deckkraft einzeln f&uuml;r jeden
+					Pixel gespeichert wird. 
+				</font></td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		Um die Ebene als
+		eine Maske f&uuml;r die darunter befindliche Ebene wirken zu lassen, kann man
+		ihren "Modus" einfach auf "<i>Alphakanal</i>" setzen. <br>
+		<br>
+		<center><img src="images/mode_alpha.jpg"></center><br>
+		<br>
+		Die Farbigkeit der Ebene wird
+		dabei v&ouml;llig ignoriert, w&auml;hrend ihr Alphakanal dazu benutzt wird, den
+		Alphakanal der darunter liegenden Ebene zu ersetzen.
+		Da sich auf der Maskenebene noch keine Objekte befinden, verschwindet die
+		Farbfl&auml;che erstmal komplett. <br>
+		Sie taucht nur dort auf, wo Objekte auf der
+		Maskenebene die Deckkraft erh&ouml;hen. F&uuml;r die Form des Knopfes eignet sich
+		beispielsweise ein <i>gerade gezogener Pinselstich</i>. Wechseln Sie also zum
+		Pinselwerkzeug <img src="images/brush_icon.png">. <br>
+		Die Gr&ouml;&szlig;e der Pinselspitze
+		("Radius"-Schieberegler) sollte so eingestellt werden, dass sie fast der
+		H&ouml;he des Bildes entspricht.<br> 
+		<br>
+		<center><img src="images/brush_settings.png"></center><br>
+		<br>
+		Dazu k&ouml;nnen Sie die Maus &uuml;ber die Arbeitsfl&auml;che
+		bewegen und sehen anhand des Zeigers, wie gro&szlig; ein erzeugter Pinsel sein
+		w&uuml;rde. Au&szlig;erdem sollte der Pinsel eine <i>scharfe Kante</i> aufweisen, wozu der
+		"Sch&auml;rfe"-Schieberegler auf 100% stehen muss. Die Option <i>"Fest" sollte
+		abgeschaltet</i> sein, denn sie veranlasst, das keine Zwischenwerte f&uuml;r die
+		Deckkraft des Pinselstriches erzeugt werden (Kantengl&auml;ttung). Stellen Sie
+		<i>"Abst&auml;nde" auf den niedrigsten Wert.</i> Auch <i>die "Subpixel" Option ist im
+		Moment nicht von Vorteil</i>. Sie bewirkt, dass in einer vergr&ouml;&szlig;erten
+		Darstellung die Mauspositionen gewisserma&szlig;en auch "zwischen" den Pixeln
+		abgetastet werden. Jedenfalls kommt es Ihnen entgegen, wenn die Option
+		ausgeschaltet ist, weil dann die Pinselpositionen auf ganzen Pixeln
+		einrasten. Sie werden gleich sehen, warum.<br>
+		<br>
+		Um einen geraden Pinselstrich zu erzeugen, klicken Sie erst auf der linken Seite
+		des Bildes, und dann, mit gedr&uuml;ckter <i>&lt;Shift&gt;-Taste</i>, auf der
+		rechten.<br> 
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					Solange die <i>&lt;Shift&gt;-Taste</i> gedr&uuml;ckt bleibt, und der
+					Mausknopf noch nicht losgelassen wurde, kann man das Ende des
+					Pinselstriches immer noch verschieben, bis man mit etwas Geschick
+					einen genau waagerechten Pinselstrich erzeugt hat. Falls Ihnen das
+					nicht sofort gelingt, benutzen Sie einfach die
+					<i>"R&uuml;ckg&auml;ngig"-Funktion</i> <img src="images/undo_icon.png">.
+				</font></td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		Mit dem ersten Klick, der den Startpunkt festgelegt hatte, wurde
+		bereits ein Pinselobjekt erzeugt, so dass die Ebene nun zwei Pinselobjekte
+		enth&auml;lt. Das erste kann einfach ausgew&auml;hlt und durch Klicken
+		des <i>Papierkorb-Icons</i> <img src="images/delete_icon.png"> f&uuml;r
+		Objekte gel&ouml;scht werden.<br>
+		<br>
+		Jetzt hat der Knopf bereits seine Form.<br>
+		<br>
+		<br>
+		<b>Erstellen der 3-dimensionalen R&auml;nder</b><br>
+		<b>Ziel:</b> <img src="images/step03.png"><br>
+		<br>
+		Dazu k&ouml;nnen Sie die gesamte Ebene einfach kopieren.<br>
+		<br>
+		<center><img src="images/duplicate_layer.jpg"></center><br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					Dies kann entweder &uuml;ber das <b>Ebenen</b>-Men&uuml; geschehen,
+					oder aber <i>durch Ziehen+Fallenlassen der Ebene mit gedr&uuml;ckter
+					&lt;Shift&gt;-Taste.</i> 
+				</font></td>
+			</tr>
+		</table>
+		<br>
+		<br>
+
+		Die Kopie der Ebene sollte <i>vor, also
+		&uuml;ber</i> den anderen beiden Ebenen sein. Mit einem weiteren "Modus" kann die
+		Helligkeit der unter einer Ebene befindlichen Bilddaten beeinflusst werden.
+		Stellen Sie also den <i>"Modus" der Kopie auf "Helligkeit"</i>. <br>
+		<br>
+		<center><img src="images/mode_luminace.jpg"></center><br>
+		<br>
+		Dabei spielt die
+		Farbe des Pinselobjektes jetzt eine Rolle (bei der Maskenebene war sie
+		egal). W&auml;hlen Sie also das Pinselobjekt <img src="images/brush_icon.png"> aus, 
+		stellen Sie eine wei&szlig;e Farbe ein,<br>
+		<br>
+		<center><img src="images/color_white.png"></center><br>
+		<br> 
+		und <i>lassen Sie die Farbe auf das ausgew&auml;hlte Pinselobjekt fallen.</i><br>
+		<br>
+		<center><img src="images/three_layers.png"></center><br>
+		<br> 
+		Momentan erhellt der Pinsel den gesamten Knopf. Damit nur die obere und
+		linke Seite erhellt wird, muss das Pinselobjekt teilweise wegradiert werden.
+		Dazu kann es einfach im <b>Objekt</b>-Men&uuml; kopiert werden,<br> 
+		<br>
+		<center><img src="images/copy_object.jpg">&nbsp;<img src="images/paste_object.jpg"></center><br>
+		<br> 
+		oder auch durch Ziehen+Fallenlassen mit
+		gedr&uuml;ckter &lt;Shift&gt;-Taste. Die Kopie sollte sich <i>unter</i> dem Pinselobjekt
+		befinden. In der Eigenschaftenliste dieses Objekts kann man den <i>"Modus" auf
+		"Radieren"</i> setzen.<br>
+		<br>
+		<center><img src="images/mode_erase.png"></center><br>
+		<br> 
+		 <i>Aus dem Pinselobjekt wird ein Radiergummiobjekt.</i> Damit
+		die Kante des Radiergummiobjekts weich wird, kann man die Eigenschaft
+		"Sch&auml;rfe" von 100% runtersetzen.<br>
+		<br>
+		<center><img src="images/hardness.png"></center><br>
+		<br> 
+		Au&szlig;erdem muss das Objekt noch verschoben
+		werden. Wechslen Sie also zum <i>Transformationswerkzeug</i> <img src="images/transform_icon.png">.<br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					<i>Dieses Werkzeug stellt immer eine Box um alle in der Liste
+					ausgew&auml;hlten Objekte dar.</i> Sobald die Box verschoben,
+					gedreht oder verzerrt wird, wirkt eine Transformation auf diese
+					Objekte, die solange bearbeitet werden kann, bis das Werkzeug
+					durch Klicken auf den gr&uuml;nen
+					Haken <img src="images/apply_icon.png"> angewendet wurde.
+				</font></td>
+			</tr>
+		</table>
+
+		<br>
+		<br>
+		Verschieben und Verzerren Sie also das Radiergummiobjekt solange, bis es den
+		gew&uuml;nschten Bereich vom wei&szlig;en Pinselobjekt abschneidet oder tragen sie die 
+		Verschiebung einfach wie hier per Tastatur ein.<br>
+		<br>
+		<center><img src="images/transform_settings_1.png"></center><br>
+		<br> 
+		Fehlt noch die dunke Kante. Dazu kann einfach die gesamte Ebene nochmals
+		kopiert werden.<br> 
+		<br>
+		<center><img src="images/duplicate_layer.jpg"></center><br>
+		<br> 
+		Das <i>Pinselobjekt in der Kopie</i> muss ausgew&auml;hlt werden und
+		seine Farbe erneut durch Fallenlassen auf Schwarz gesetzt werden. <br> 
+		<br>
+		<center><img src="images/color_black.jpg">&nbsp;<img src="images/brush_and_eraser.png"></center><br>
+		<br> Mit dem
+		Transformationswerkzeug kann das ausgew&auml;hlte Radiergummiobjekt in die
+		<i>entgegengesetzte Richtung</i> verschoben werden, damit das schwarze Pinselobjekt
+		auf die rechte, untere Kante wirkt. <br> 
+		<br>
+		<center><img src="images/transform_settings_2.png"></center><br>
+		<br> 		
+		Damit w&auml;ren die abgeflachten Kanten fertiggestellt.<br>
+		<br>
+		<br>
+		<b>Erstellen der schwarzen Umrandung</b><br>
+		<b>Ziel:</b> <img src="images/step04.png"><br>
+		<br>
+		 Um einen schwarzen Rand um den Knopf zu ziehen, k&ouml;nnen Sie die oberste Ebene
+		<i>erneut kopieren</i>. <br> 
+		<br>
+		<center><img src="images/duplicate_layer.jpg"></center><br>
+		<br> 	
+		Bei dieser Ebene soll es sich um eine ganz normale
+		Farbebene handeln, deshalb muss der <i>"Modus" auf "Normal"</i> zur&uuml;ckgestellt
+		werden.<br> 
+		<br>
+		<center><img src="images/mode_normal.jpg"></center><br>
+		<br> 		
+		Wir brauchen auch auf dieser Ebene ein Radiergummiobjekt, aber das
+		bereits vorhandene weist eine Transformation auf. <i>L&ouml;schen Sie also dieses
+		Radiergummiobjekt.</i><br> 
+		<br>
+		<center>
+			<img src="images/eraser.png">&nbsp; 
+			<img src="images/delete_icon.png">&nbsp;
+			<img src="images/brush.png">
+		</center>
+		<br>
+		<br> 	 
+		Kopieren Sie das verbliebene schwarze Pinselobjekt erneut
+		(an unterste Stelle),<br> 
+		<br>
+		<center><img src="images/copy_object.jpg">&nbsp;<img src="images/paste_object.jpg"></center><br>
+		<br> 	  
+		und setzen sie die Eigenschaft <i>"Modus" der Kopie
+		wieder auf "Radieren".</i><br> 
+		<br>
+		<center><img src="images/brush_to_eraser.png"></center><br>
+		<br>
+		W&auml;hlen Sie erneut das <i>schwarze Pinselobjekt</i> aus,<br> 
+		<br>
+		<center><img src="images/enlarged_brush_1.png"></center><br>
+		<br>
+		und	<i>vergr&ouml;&szlig;ern Sie es.</i> Dies k&ouml;nnen Sie am besten durch Setzen der Eigenschaft
+		<i>"Radius"</i> auf einen etwas h&ouml;heren Wert erreichen.<br> 
+		<br>
+		<center><img src="images/enlarged_brush_2.png"></center><br>
+		<br>
+		 Da das Radiergummiobjekt
+		momentan noch genau auf dem von der Maskierungsebene freigestellen Bereich
+		liegt, und dadurch eine feine L&uuml;cke in der Deckkraft des Knopfinneren
+		entsteht, ist es ratsam, <i>das Objekt ewas zu verkleinern.</i> Sie k&ouml;nnen mit dem
+		Transformationswerkzeug sicher schnell ein Optimum finden. Noch schneller geht es, 
+		wenn sie einfach den Radius per Tastatur verkleinern.<br>
+		<br> 
+		<center><img src="images/smaller_eraser.png"></center><br>
+		<br>
+		<br>
+		<b>Erstellen der Beschriftung</b><br>
+		<b>Ziel:</b> <img src="images/step05.png"><br>
+		<br>
+		Der Text des Knopfes kann mit Hilfe des Textwerkzeuges <img src="images/text_icon.png"> auf der
+		<i>selben Ebene</i> angelegt werden.<br> 
+		<br>
+		<center><img src="images/font_settings.png"></center><br>
+		<br> 
+		<center><img src="images/text_object_1.png"></center><br>
+		<br> 
+		Um den Text so erscheinen zu lassen, dass er
+		etwas in die Knopfoberfl&auml;che versenkt ist, kann das Textobjekt <i>zweimal
+		kopiert</i> werden. <br> 
+		<br>
+		<center><img src="images/copy_object.jpg">&nbsp;<img src="images/paste_object.jpg"></center><br>
+		<br>Die Kopien sollten sich <i>hinter</i> dem Original befinden (also
+		in der Liste dar&uuml;ber) und werden jeweils auf schwarz und wei&szlig; gesetzt.<br> 
+		<br>
+		<center><img src="images/color_white.png">&nbsp;<img src="images/three_text_objects.jpg"></center><br>
+		<br> 
+		Die <i>schwarze Kopie</i> wird mit dem Transformationswerkzeug nach <i>links oben</i>
+		verschoben, was sehr feinstufig geschehen kann, wenn man im
+		Transformationswerkzeug die "Subpixel"-Option aktiviert hat und das Dokument
+		ausreichend vergr&ouml;&szlig;ert ist. Die <i>wei&szlig;e Kopie</i> wird analog dazu nach <i>rechts
+		unten</i> verschoben. Auch hier bietet sich wieder die alternative Anpassung per Tastatur an.<br> 
+		<br>
+		<center><img src="images/transform_settings_3.png"></center><br>
+		<br>  
+		Die Deckkraft der beiden Textobjekte kann durch setzen der
+		<i>"Deckkraft" Eigenschaft</i> herabgesetzt werden. <br>
+		<br>
+		<center><img src="images/opacity.png"></center><br>
+		<br>
+
+		<table width="100%" cellpadding=0 cellspacing=10 bgcolor="#FFF3AF" >
+			<tr>
+				<td><img src="images/info_icon.png"></td>
+				<td><font size="2">
+					Ein <i>Doppelklick auf ein Textobjekt</i> startet die erneute
+					Bearbeitung im Textwerkzeug. Dort kann die Deckkraft dann
+					wieder &uuml;ber den Schieberegler angepasst werden.
+				</font></td>
+			</tr>
+		</table>
+
+		<br>
+		<br>
+		Als Ergebnis erhalten wir nun einen Knopf wie diesen:<br> 
+		<br>
+		<center><img src="images/step06.jpg"></center><br>
+		<br>
+		<br>
+		<br>
+		<center>
+		<font size="-2">
+		Anleitung erstellt durch Christian L&ouml;rchner (BeAthlon) August 2005<br>
+		basierend auf einem Text von Stephan A&szlig;mus 
+		(<a href="http://www.yellowbites.com/">YellowBites</a>)<br>
+		Urspr&uuml;nglich erschienen auf <a href="http://besly.mittilgart.de/" target="_top">BeSly</a>, 
+		der BeOS &amp; Zeta Wissensbasis.<br>
+		</font>
+		</center>
+		<br>
+	</td>
+</tr>
+</tbody></table>
+</center>
+</body></html>

@@ -1,0 +1,99 @@
+// Esperanto
+// author: Va Milushnikov
+
+// addon stuff
+extern "C" {
+_EXPORT void init_strings(const char* strings[]);
+}
+
+// init_strings
+void
+init_strings(const char* strings[])
+{
+	strings[FILE_MENU]			= "Dosiero";
+	strings[NEW]				= "Nova";
+//	strings[NEW_CANVAS]			= "New Canvas";			// tool tip
+	strings[OPEN]				= "Malfermi";
+//	strings[OPEN_CANVAS]		= "Open Canvas";
+	strings[SAVE_CANVAS]		= "Konservi projekton";
+	strings[SAVE]				= "Konservi";
+	strings[SAVE_AS]			= "Konservi kiel";
+	strings[EXPORT_CANVAS]		= "Exporti projekton";
+	strings[EXPORT]				= "Exporti";
+	strings[EXPORT_AS]			= "Exporti kiel";
+	strings[CLOSE]				= "Fermi";
+//	strings[CLOSE_CANVAS]		= "Close Canvas";		// tool tip
+	strings[QUIT]				= "Eliri";
+	strings[EDIT]				= "Fermi";
+	strings[UNDO]				= "Malfari";
+	strings[REDO]				= "Refari";
+//	strings[SETTINGS]			= "Fenestro";
+	strings[FULLSCREEN]			= "Plenekrane";
+	strings[LANGUAGE]			= "Lingvo";
+//	strings[CANVAS]				= "Canvas";				// ie project, document
+	strings[IMAGE]				= "Bildo";				// ie bitmap
+	strings[CLEAR]				= "Purigi";				// empties a layer or the entire image (not delete!)
+
+	strings[FORMAT]				= "Formato";			// color space of the image (RGB, Lab etc)
+
+	strings[LAYER]				= "Tavolo";
+	strings[MERGE_DOWN]			= "Miksi kun suba";		// combining of of current layer and the one underneath it
+	strings[MERGE_VISIBLE]		= "Miksi videblajn";	// combining of all visible layers
+	strings[DELETE]				= "Forigi";
+// layer blending modes
+	strings[MODE]				= "Reĝimo";
+//	strings[NORMAL]				= "Normal";
+//	strings[MULTIPLY]			= "Multiply";
+//	strings[INVERSE_MULTIPLY]	= "Inverse Multiply";
+
+	strings[HISTORY]			= "Historio";			// as in "modifier stack"
+	strings[FREEZE]				= "Fiksi";				// renders the result of the modifier stack and removes the modifiers (ie, you cannot edit it anymore)
+	strings[CUT]				= "Tondi";
+	strings[COPY]				= "Kopii";
+	strings[PASTE]				= "Alglui";
+
+	strings[SWATCHES]			= "Koloroj";			// color palette
+
+	strings[ZOOM]				= "Skalo";
+//	strings[ALPHA]				= "Alpha";				// keep this as short as possible
+// brush options
+//	strings[OPACITY]			= "Opacity";
+	strings[RADIUS]				= "Radiuso";
+//	strings[HARDNESS]			= "Hardness";			// controls brush shape (soft...hard)
+//	strings[SPACING]			= "Spacing";			// distance in % of brush diameter at wich brush shapes will be put into the bitmap along the line of a stroke
+//	strings[SUBPIXELS]			= "Subpixels";			// allow subpixel precise positioning of tools
+	strings[UNNAMED]			= "Sennoma";
+	strings[DEFAULT]			= "Laŭsilenta";
+	strings[TOOL]				= "Rimedoj";			// for tool tips
+	strings[ANY_MODIFIER]		= "Ajna modifo";		// as in modifier key on the keyboard (shift, option, alt etc)
+// tools
+	strings[BRUSH]				= "Peniko";
+	strings[CLONE]				= "Kopiilo";			// clone bursh (transfers parts of an image to another place)
+	strings[ERASER]				= "Purigilo";
+	strings[PEN]				= "Krajono";
+	strings[RESTORE]			= "Restarigilo";		// opposite of eraser (restores alpha channel)
+	strings[DROPPER]			= "Kolorprenilo";		// color picker
+	strings[TEXT]				= "Teksto";
+// zoom
+	strings[ZOOM_IN]			= "Pligrandigi";		// tool tips
+	strings[ZOOM_OUT]			= "Malgrandigi";
+// actions
+	strings[ADD_LAYER]			= "Aldoni tavolon";		// the following strings are for display in the undo/redo menu
+	strings[MERGE_LAYERS]		= "Miksi tavolon";		// a "modifier" is a step of changing the bitmap, ie a brush stroke or something else.
+	strings[UNKOWN_MODIFIER]	= "Nekonata modifo";
+	strings[ADD_MODIFIER]		= "Aldoni modifon";
+	strings[ADD_MODIFIERS]		= "Aldoni modifojn";
+	strings[CHANGE_COLOR]		= "Ŝanĝi koloron";
+	strings[CHANGE_COLORS]		= "Ŝanĝi kolorojn";
+	strings[REMOVE_MODIFIER]	= "Forigi modifon";
+	strings[REMOVE_MODIFIERS]	= "Forigi modifojn";
+	strings[MOVE_MODIFIER]		= "Movi modifon";
+	strings[MOVE_MODIFIERS]		= "Movi modifojn";
+
+	strings[OK]					= "Bone";
+	strings[CANCEL]				= "Neigi";
+	strings[NAME]				= "Nomo";				// name of project
+	strings[PICK_COLOR]			= "Kolorojn";			//  window title of color picker
+	strings[WIDTH]				= "Vasteco";			// pixel count
+	strings[HEIGHT]				= "Alteco";
+}

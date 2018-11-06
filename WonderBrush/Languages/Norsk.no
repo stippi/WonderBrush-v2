@@ -1,0 +1,455 @@
+// Norsk bokmål
+// translator: Frank Paul Silye <frank.silye@yellowtab.com>
+
+// addon stuff
+extern "C" {
+_EXPORT void init_strings(const char* strings[]);
+}
+
+// NOTES: Try to be as crisp as possible. If possible, try to make super menu labels
+// and sub-items read as one command, ie consider the sub-item label as within the
+// context of the super item label.
+// Fine tune the alignment of tool tips by manually putting the linebreak character
+// '\n' at the best position. You can change the Translation while WonderBrush is running!
+// Try to sound professional, prefer passive over active voice. In the English translation,
+// I don't follow this myself everywhere, but for example in German it sounds more professional
+// to say "Doubleclick opens panel." than to say "Doubleclick to open panel!".
+// "opens panel" is also better than to say "will open panel". Keep "professional" in mind.
+// If you can still manage to add a certain level of coolness to the formulation, even better! :-)
+
+// IMPORTANT: Translations are compiled as addons during runtime!
+// If for some reason WonderBrush doesn't show your translation, it is most likely
+// a syntaxt error in the file. Launch WonderBrush from the command line and see what it has to say.
+// If you see an error message from GCC, it might be helpful, but be aware that the line number where it failed
+// does not reference the correct line number in the original translation, since WonderBrush prepends
+// some lines before compiling the addon.
+
+// init_strings
+void
+init_strings(const char* strings[])
+{
+	strings[FILE_MENU]			= "Fil";
+	strings[NEW]				= "Ny";				// will show up in Canvas menu
+	strings[NEW_CANVAS]			= "Ny kanvas";			// tool tip
+	strings[NEW_LAYER]			= "Ny";				// these strings were added
+	strings[NEW_BRUSH]			= "Ny";				// by request to be able to
+	strings[NEW_PALETTE]		= "Ny";				// reflect different genders in "New"
+	strings[OPEN]				= "Åpne";
+	strings[LOAD]				= "Last";
+	strings[OPEN_CANVAS]		= "Åpne kanvas";
+	strings[EXPORT_CANVAS]		= "Eksporter kanvas";		// title of Export panel
+	strings[EXPORT]				= "Eksporter";
+	strings[EXPORT_AS]			= "Eksporter som";
+	strings[SAVE_CANVAS]		= "Lagre kanvas";		// title of Save panel
+	strings[SAVE]				= "Lagre";
+	strings[SAVE_AS]			= "Lagre som";
+	strings[SETUP_PAGE]			= "Sideoppsett";
+	strings[PRINT]				= "Skriv ut";
+	strings[CLOSE]				= "Lukk";
+	strings[CLOSE_CANVAS]		= "Lukk kanvas";		// tool tip
+	strings[ABOUT]				= "Om";
+	strings[QUIT]				= "Avslutt";
+
+	strings[LOADING_FILE]		= "Laster fil:";
+
+	strings[EDIT]				= "Rediger";
+	strings[UNDO]				= "Angre";
+	strings[REDO]				= "Gjenopprett";
+
+	strings[SETTINGS]			= "Innstillinger";
+	strings[FULLSCREEN]			= "Fullskjerm";
+	strings[SHOW_GRID]			= "Vis piksel rutenett";	// if zoomed in far enough,
+														// display a grid arround each pixel
+	strings[LANGUAGE]			= "Språk";
+	strings[CANVAS]				= "Kanvas";				// ie project, document
+	strings[IMAGE]				= "Bilde";				// ie bitmap
+	strings[CLEAR]				= "Tømme";
+	strings[RESIZE]				= "Endre størrelse";				// resize canvas (new resolution)
+	strings[ROTATE_90]			= "90°";
+	strings[ROTATE_180]			= "180°";
+	strings[ROTATE_270]			= "-90°";
+
+	strings[FORMAT]				= "Format";				// color space of the canvas (RGB, Lab etc)
+
+	strings[EXPORT_FORMAT]		= "Format";				// ie PNG, SVG etc
+	strings[CURSOR_SOURCE]		= "Markør kildekode";
+	strings[BITMAP_SOURCE]		= "Bitmap kildekode";
+	strings[SVG_FORMAT]			= "SVG (Ikke alle objekttyper)";
+	strings[AI_FORMAT]			= "Adobe Illustrator (Ikke alle objekttyper)";
+	strings[RDEF_FORMAT]		= "RDef kildekode";
+
+	strings[LAYER]				= "Lag";
+	strings[DUPLICATE]			= "Dupliser";
+	strings[MERGE_DOWN]			= "Flette ned";			// combining of current layer and the
+														// one underneath it
+	strings[MERGE_VISIBLE]		= "Flette synlig";		// combining of all visible layers
+	strings[RENAME]				= "Endre navn";
+	strings[DELETE]				= "Slett";
+	strings[DELETE_ALL]			= "Fjern alt";
+
+	// layer blending modes
+	strings[MODE]				= "Modus";
+	strings[NORMAL]				= "Normal";
+	strings[ERASE]				= "Slett";
+	strings[MULTIPLY]			= "Multipliser";
+	strings[INVERSE_MULTIPLY]	= "Invers multipliser";
+	strings[LUMINANCE]			= "Luminanse";
+	strings[MULTIPLY_ALPHA]		= "Alfa";
+	strings[MULTIPLY_INVERSE_ALPHA]	= "Invers alfa";
+	strings[REPLACE_RED]		= "Erstatt rød";
+	strings[REPLACE_GREEN]		= "Erstatt grønn";
+	strings[REPLACE_BLUE]		= "Erstatt blå";
+	strings[DARKEN]				= "Gjør mørkere";
+	strings[LIGHTEN]			= "Gjør lysere";
+
+	strings[HISTORY]			= "Historie";			// as in "modifier stack"
+	strings[OBJECT]				= "Objekt";				// new name for the "History"
+	strings[FREEZE]				= "Frys";				// renders the result of the modifier stack
+														// into one "bitmap modifier" and replaces
+														// all previous modifiers (ie, you cannot edit
+														// them anymore) by the single bitmap modifier
+	strings[CUT]				= "Klipp ut";
+	strings[COPY]				= "Kopier";
+	strings[PASTE]				= "Lim inn";
+	strings[MULTI_PASTE]		= "Multi lim inn";		// paste one ore more properties to
+														// *multiple* objects at once
+	strings[REMOVE_ALL]			= "Fjern alt";
+
+	strings[OBJECT_SELECTION]	= "Velg";				// change selection shortcuts
+	strings[SELECT_ALL_OBJECTS]	= "Alt";				// in Object and Property list
+	strings[SELECT_NO_OBJECTS]	= "Ingen";
+	strings[INVERT_SELECTION]	= "Inverter utvalg";
+	strings[ALL_OBJECTS]		= "Alt";
+	strings[PROPERTY_SELECTION]	= "Velg";
+	strings[SELECT_ALL_PROPERTIES] = "Alt";
+	strings[SELECT_NO_PROPERTIES] = "Ingen";
+	strings[SPECIAL]			= "Spesial";
+
+	// filters
+	strings[ADD_FILTER]			= "Filter";				// the actual menu
+	strings[DROP_SHADOW]		= "Dropp skygge";
+	strings[GAUSSIAN_BLUR]		= "Gaussisk uklar";
+	strings[INVERT]				= "Inverter";
+	strings[BRIGHTNESS]			= "Lys";
+	strings[CONTRAST]			= "Kontrast";
+	strings[SATURATION]			= "Metning";
+	strings[MOTION_BLUR]		= "Bevegelse uklar";
+	strings[HALFTONE]			= "Halvtone";
+	strings[DOT]				= "Punkt";				// mode options of Halftone
+	strings[LINE]				= "Linje";
+	strings[DITHER]				= "Fargereduseringskompensasjon";
+	strings[DITHER_FS]			= "Fargereduseringskompensasjon (FS)";
+	strings[DITHER_NC]			= "Fargereduseringskompensasjon (NK)";
+	strings[NOISE]				= "Støy";
+	strings[HUE_SHIFT]			= "Glød skift";			// filter not yet written
+	strings[DISPERSION]			= "Dispersjon";
+	strings[STRENGTH]			= "Styrke";
+	strings[LUMINANCE_ONLY]		= "Luminanse bare";
+	strings[WARPSHARP]			= "Warpskarp";
+	strings[LAMBDA]				= "Lambda";
+	strings[MU]					= "µ";
+	strings[NON_MAXIMAL_SUPPRESSION] = "NMS";
+
+	strings[PROPERTY]			= "Egenskap";
+	strings[UNKOWN_PROPERTY]	= "<ukjent>";
+
+	strings[SWATCHES]			= "Swatches";			// color palette
+	strings[ZOOM]				= "Zoom";
+	strings[ALPHA]				= "Ugjennomsiktighet";			// keep this as short as possible
+	strings[ALPHA_CHANNEL]		= "Alfa kanal";		// used for properties
+	strings[COLOR]				= "Farge";				// used for properties
+	strings[GRADIENT]			= "Gradient";			// used for properties (?)
+
+	// gradient options
+	strings[GRADIENT_TYPE]					= "Type";
+	strings[GRADIENT_TYPE_LINEAR]			= "Lineær";
+	strings[GRADIENT_TYPE_RADIAL]			= "Radial";
+	strings[GRADIENT_TYPE_DIAMONT]			= "Diamant";
+	strings[GRADIENT_TYPE_CONIC]			= "Konik";
+	strings[GRADIENT_TYPE_XY]				= "X-Y";
+	strings[GRADIENT_TYPE_XY_SQRT]			= "Sqrt(X-Y)";
+	strings[GRADIENT_INTERPOLATION]			= "Interpolasjon";
+	strings[GRADIENT_INTERPOLATION_LINEAR]	= "Lineær";
+	strings[GRADIENT_INTERPOLATION_SMOOTH]	= "Glatt";
+	strings[GRADIENT_INHERITS_TRANSFORM]	= "Arv transformasjon";
+
+	// brush options
+	strings[OPACITY]			= "Ugjennomsiktighet";
+	strings[MIN_OPACITY]		= "Min ugjennomsiktighet";			// property label (keep short)
+	strings[DYN_OPACITY]		= "Dyn ugjennomsiktighet";			// property label (keep short)
+	strings[RADIUS]				= "Radius";
+	strings[MIN_RADIUS]			= "Min radius";			// property label (keep short)
+	strings[DYN_RADIUS]			= "Dyn radius";			// property label (keep short)
+	strings[HARDNESS]			= "Hardhet";			// controls brush shape (soft...hard)
+	strings[MIN_HARDNESS]		= "Min hardhet";			// property label (keep short)
+	strings[DYN_HARDNESS]		= "Dyn hardhet";			// property label (keep short)
+	strings[SPACING]			= "Mellomrom";			// distance in % of brush diameter at wich brush
+														// shapes will be put into the bitmap along the
+														// line of a stroke,
+														// ! also used for Text tool (spacing between chars)
+	strings[MIN_SPACING]		= "Mitt mellomrom";		// property label (keep short), not yet used
+	strings[DYN_SPACING]		= "Dyn mellomrom";		// property label (keep short), not yet used
+	strings[SUBPIXELS]			= "Subpiksler";			// allow subpixel precise positioning of tools
+	strings[SOLID]				= "Solid";				// solid (fixed) opacity for all pixels
+	strings[TILT]				= "Vending";				// tablet specific, tilt of pen
+	strings[BLUR_RADIUS]		= "Uklar radius";		// property label (keep short), also used for Dispersion filter
+	// translate options
+	strings[X_LABEL]			= "X";
+	strings[Y_LABEL]			= "Y";
+	strings[X_SCALE]			= "Skaler X";
+	strings[Y_SCALE]			= "Skaler Y";
+	strings[TRANSLATION_X]		= "X";
+	strings[TRANSLATION_Y]		= "Y";
+	strings[SCALE_X]			= "X";
+	strings[SCALE_Y]			= "Y";
+	strings[ANGLE]				= "Vinkel";
+
+	strings[X_OFFSET]			= "X avstand";
+	strings[Y_OFFSET]			= "Y avstand";
+	// crop & select options
+	strings[LEFT]				= "Venstre";
+	strings[TOP]				= "Topp";
+	strings[ENTIRE_CANVAS]		= "Alt";
+	// bucket fill options
+	strings[TOLERANCE]			= "Toleranse";
+	strings[SOFTNESS]			= "Mykhet";
+	strings[CONTIGUOUS_AREA]	= "Sammenhengende areal";
+	// shape options
+	strings[PATH]				= "Sti";				// property label
+	strings[OUTLINE]			= "Omriss";
+	strings[TRANSFORM]			= "Forandre";
+	strings[CLOSED]				= "Lukket";				// ie first and last point of path
+														// are connected
+	strings[CAP_MODE]			= "Caps";
+	strings[BUTT_CAP]			= "Butt";
+	strings[SQUARE_CAP]			= "Firkant";
+	strings[ROUND_CAP]			= "Rund";
+	strings[JOIN_MODE]			= "Joints";
+	strings[MITER_JOIN]			= "Miter";
+	strings[ROUND_JOIN]			= "Rund";
+	strings[BEVEL_JOIN]			= "Bevel";
+
+	strings[CIRCLE]				= "Sirkel";				// not yet used
+	strings[RECT]				= "Rekt";				// not yet used
+	strings[ROUND_CORNERS]		= "Avrundede hjørner";		// not yet used
+	// text options
+	strings[FONT]				= "Font";
+	strings[SIZE]				= "Størrelse";
+	strings[ROTATION]			= "Rotasjon";
+	strings[TEXT_INPUT]			= "Tekst";				// label for text input control (not used anymore)
+	strings[ADVANCE_SCALE]		= "Mellomrom";			// additional spacing between chars
+														// (not used anymore)
+	strings[HINTING]			= "Hinting";			// hinting means that the shapes
+														// of chars are modified to more directly hit pixels,
+														// enhances readability of text on screen
+	strings[KERNING]			= "Kerning";			// kerning means that the distance between two
+														// glyphs is individual per their combination
+	strings[TEXT_LINE_SPACING]	= "Linje mellomrom";		// font height * line spacing = vertical line dist
+	// color picker tool
+	strings[TIP_SIZE]			= "Tip størrelse";
+	strings[PIXEL_1x1]			= "1x1 piksler";
+	strings[PIXEL_3x3]			= "3x3 piksler";
+	strings[PIXEL_5x5]			= "5x5 piksler";
+	strings[INCLUDE_ALL_LAYERS]	= "Inkluder alle lag";
+	// tools
+	strings[BRUSH]				= "Pensel";
+	strings[CLONE]				= "Klone";				// clone brush (transfers parts of an image to
+														// another place)
+	strings[ERASER]				= "Fjern";
+	strings[PEN]				= "Penn";
+	strings[PEN_ERASER]			= "Penn fjerner";
+	strings[RESTORE]			= "Gjennopprett";			// opposite of eraser (restores alpha channel)
+	strings[DROPPER]			= "Fargevelger";			// color picker
+	strings[TEXT]				= "Tekst";
+	strings[BLUR]				= "Uklar";
+	strings[BITMAP]				= "Bitmap";
+	strings[SELECT]				= "Velg";
+	strings[TRANSLATE]			= "Oversett";
+	strings[CROP]				= "Beskjær";
+	strings[BUCKET_FILL]		= "Bøttefylling";
+	strings[SHAPE]				= "Form";
+	strings[ELLIPSE]			= "Elipse";
+	strings[ROUND_RECT]			= "(Rund) rektangel";	// the tool also creates non-round rectangles
+	strings[EDIT_GRADIENT]		= "Rediger gradient";
+
+	// zoom
+	strings[ZOOM_IN]			= "Zoom inn";			// tool tips
+	strings[ZOOM_OUT]			= "Zoom ut";
+
+	// actions
+	strings[ADD_LAYER]			= "Legg til lag";			// the following strings are for display in the
+														// undo/redo menu
+	strings[REMOVE_LAYER]		= "Fjern lag";		// a "modifier" is a step of changing the bitmap,
+														// ie a brush stroke or something else.
+	strings[REMOVE_LAYERS]		= "Fjern lagene";
+	strings[MOVE_LAYER]			= "Flytt lag";			// ie drag sorting to another pos in list
+	strings[MOVE_LAYERS]		= "Flytt lagene";
+	strings[MERGE_LAYERS]		= "Flett lagene";
+	strings[UNKOWN_MODIFIER]	= "Ukjent objekt";
+	strings[ADD_MODIFIER]		= "Legg til objekt";
+	strings[ADD_MODIFIERS]		= "Legg til objekter";
+	strings[CHANGE_COLOR]		= "Endre farge";
+	strings[CHANGE_COLORS]		= "Endre farger";
+	strings[REMOVE_MODIFIER]	= "Fjern objekt";
+	strings[REMOVE_MODIFIERS]	= "Fjern objekter";
+	strings[MOVE_MODIFIER]		= "Flytt objekt";
+	strings[MOVE_MODIFIERS]		= "Flytt objekter";
+	strings[TRANSLATE_MODIFIER]	= "Oversett objekt";
+	strings[TRANSLATE_MODIFIERS]	= "Oversett objekter";
+	strings[CHANGE_LAYER_SETTINGS]	= "Endre lag innstillinger";
+	strings[CROP_CANVAS]		= "Beskjær kanvas";
+	strings[RESIZE_CANVAS]		= "Endre størrelse kanvas";
+	strings[ROTATE_CANVAS]		= "Roter kanvas";
+	strings[INSERT_CANVAS]		= "Sett inn kanvas";
+	strings[CHANGE_OPACITY]		= "Endre ugjennomsiktighet";
+	strings[EDIT_MODIFIER]		= "Rediger modifikator";
+
+	// pasting properties
+	strings[PASTE_PROPERTY]		= "Lim inn egenskap";				// paste one property to one object
+	strings[PASTE_PROPERTIES]	= "Lim inn egenskaper";			// paste multiple properties to one object
+	strings[MULTI_PASTE_PROPERTY] = "Multi lim inn egenskap";		// paste one property to multiple objects
+	strings[MUTLI_PASTE_PROPERTIES] = "Multi lim inn egenskaper";	// paste multiple property to multiple objects
+
+	// shape tool history
+	strings[ADD_CONTROL_POINT]	= "Legg til kontrollpunkt";
+	strings[TOGGLE_OUTLINE]		= "Slå av på omriss";
+	strings[CHANGE_OUTLINE_WIDTH] = "Endre omriss vidde";
+	strings[CHANGE_CAP_MODE]	= "Endre caps";
+	strings[CHANGE_JOIN_MODE]	= "Endre joints";
+	strings[MODIFY_CONTROL_POINT] = "Modifiser kontrollpunkt";
+	strings[CLOSE_PATH_ACTION]	= "Lukk sti";
+	strings[INSERT_CONTROL_POINT] = "Sett inn kontrollpunkt";
+	strings[REMOVE_CONTROL_POINT] = "Fjern kontrollpunkt";
+	strings[REMOVE_CONTROL_POINTS] = "Fjern alle kontrollpunkt";
+	strings[CHANGE_POINT_SELECTION] = "Endre utvalg";
+	strings[NUDGE_CONTROL_POINT] = "Skubbe kontrollpunkt";
+	strings[NUDGE_CONTROL_POINTS] = "Skubbe kontrollpunkter";
+	strings[SELECT_PATH]		= "Velg sti";
+	strings[CREATE_NEW_PATH]	= "Ny sti";
+	strings[DELETE_PATH]		= "Fjern sti";
+	strings[TEXT_TO_SHAPE]		= "Tekst til form";
+	strings[TEXTS_TO_SHAPES]	= "Tekster til former";
+	strings[TRANSFORM_CONTROL_POINTS] = "Transformer kontrollpunkter";
+
+	strings[FILLING_RULE]		= "Fyll regel";
+	strings[NON_ZERO]			= "Ikke null";
+	strings[EVEN_ODD]			= "Partall-Oddetall";
+	// text tool history
+	strings[CHANGE_FONT_SIZE]	= "Endre font størrelse";
+	strings[CHANGE_TEXT_ROTATION] = "Endre tekst rotasjon";
+	strings[MOVE_TEXT]			= "Flytt tekst";
+	strings[CHANGE_FONT]		= "Endre font";
+	strings[CHANGE_TEXT]		= "Endre tekst";
+	strings[CHANGE_FONT_ADVANCE_SCALE] = "Endre mellomrom";
+	// crop tool
+	strings[MODIFY_CROP_RECT]	= "Endre beskjær rekt";
+	// select tool
+	strings[MODIFY_SELECT_RECT]	= "Endre valg rekt";
+	// transformations
+	strings[TRANSFORMATION]		= "Transformasjon";
+	strings[BEGIN_TRANSFORMATION] = "Begynn transformasjon";
+	strings[FINISH_TRANSFORMATION]	= "Avslutt transformasjon";
+	strings[MOVE]				= "Flytt";
+	strings[ROTATE]				= "Rotér";
+	strings[SCALE]				= "Skalér";
+	strings[MOVE_PIVOT]			= "Flytt pivot";
+	strings[TRANSFORM_OBJECT]	= "Transformer objekt";
+	strings[TRANSFORM_OBJECTS]	= "Transformer objekter";
+	// general
+	strings[OK]					= "Ok";
+	strings[CONFIRM]			= "Bekreft";			// apply changes
+	strings[CANCEL]				= "Avbryt";
+	strings[REVERT]				= "Forkast";				// revert changes made in panel
+	strings[NAME]				= "Navn";				// name of project
+	strings[UNNAMED]			= "Uten navn";
+	strings[DEFAULT]			= "Standard";
+	strings[MERGED]				= "Flettet";				// default name for merged layer
+	strings[TOOL]				= "Verktøy";				// for tool tips
+	strings[ANY_MODIFIER]		= "En hver modifier";		// as in modifier key on the keyboard (shift,
+														// option, alt etc)
+	strings[RETURN]				= "Return";
+	strings[ESCAPE]				= "Escape";
+	strings[SET]				= "Sett";
+	// panels
+	strings[PICK_COLOR]			= "Velg farge";			// window title of color picker
+	strings[WIDTH]				= "Bredde";				// pixel count
+	strings[HEIGHT]				= "Høyde";
+	strings[BRUSH_PANEL]		= "Velg pensel";
+	strings[BRUSH_NAME]			= "Pensel navn";
+	strings[PROGRAM_SETTINGS]	= "Program innstillinger";
+	// program settings
+	strings[ON_STARTUP]			= "Ved oppstart";
+	strings[DO_NOTHING]			= "Gjør ingenting";
+	strings[ASK_OPEN]			= "Vis åpent panel";
+	strings[ASK_NEW]			= "Vis nytt panel";
+	strings[AUTO_SIZE]			= "Lag nytt kanvas av størrelse";
+	strings[LIVE_UPDATES]		= "Levende oppdateringer i navigator og lag ikoner";
+	strings[USE_SYSTEM_LANGUAGE] = "Bruk samme språk som systemet";
+	strings[STARTUP_ACTION]		= "Oppstartshandling";
+	strings[INTERFACE]			= "Grensesnitt";
+	// requestors
+	strings[AKS_SAVE_CHANGES]	= "Lukk dokument og avvis ulagrede endringer?";
+	strings[DISCARD]			= "Avvis";
+	strings[SAVING_FAILED]		= "Lagring feilet!";
+	strings[ERROR]				= "Feil";				// alias reason for above
+	strings[BLIP]				= "Blip!";				// As in "Mission Earth"
+
+	strings[DEMO_MODE]			= "WonderBrush kjører i demo modus. "
+								  "Lagring av prosjekt filer er skrudd av.\n\n"
+								  "Vennligst registrer for å motta din "
+								  "nøkkelfil på en av disse nettbaserte butikkene.";
+	strings[NEVER_MIND]			= "Glem det";
+	strings[OPEN_TRANSLATIONKIT_ERROR]	= "Feilet i å åpne filen '%s' med "
+								  "the Translation Kit.\n\nEnten inneholder "
+								  "filen ikke et bilde, eller "
+								  "det finnes ikke en Translator installert "
+								  "som håndterer formatet.";
+	strings[OPEN_NATIVE_ERROR]	= "Klarte ikke å åpne filen '%s' som "
+								  "et WonderBrush dokument.\n\n";		// yes, that's two \n
+	strings[UNSUPPORTED_CURSOR_SIZE] = "Kanvasen må være 16 x 16 "
+								  "piksler i størrelse. Andre markør "
+								  "størrelser er ikke støttet.";
+	strings[SELECTED_AREA_EMPTY] = "Det valgte området var tomt.";
+	strings[ENTRY_DOES_NOT_EXIST] = "%s' kunne ikke bli lastet, fordi det ikke eksisterer.";
+	strings[ENTRY_IS_A_FOLDER]	= "'%s' kunne ikke bli lastet, fordi det er en katalog.";
+	// tool tips										// please test the appearance of the tips and
+														// try to align them manually by putting the
+														// '\n' in the right spot!
+
+	strings[TOOL_TIPS]			= "Vis verktøy tips";
+	strings[ALPHA_TIP]			= "Setter det aktive lagets globale alfa verdi.";
+	strings[VISIBILITY_TIP]		= "Slå av/på synligheten til det aktive laget.";
+	strings[PRESSURE_CONTROL_TIP]	= "Aktiverer kontroll ved pennetrykk.";
+	strings[BRUSH_PREVIEW_TIP]	= "Pensle forhåndsvisning. Klikk for å åpne penslebehandlerpanelet.";
+	strings[CURRENT_COLOR_TIP]	= "Nåværende farge. Klikk for å åpne fargeplukkerpanelet.";
+	strings[NAVIGATOR_TIP]		= "Kanvas oversikt. Klikk for å flytte synlig part.\n"
+								  "Bruk musehjul til å zoome inn/ut.";
+	strings[LAYER_LIST_TIP]		= "Sorter med Drag'N'Drop. Klikk øye ikon for å skru\n"
+								  "synlighet av/på. Dobbeltklikk for å endre navn.";
+	strings[HISTORY_LIST_TIP]	= "Sorter med Drag'N'Drop. Dropp farge for å endre\n"
+								  "valgte modifikatorers farger.";
+	strings[PROPERTY_LIST_TIP]	= "Rediger, kopier og lim inn objekt rettigheter.";
+	strings[SUB_PIXEL_TIP]		= "Spor mus/penn posisjon med subpiksel presisjon.";
+	strings[SOLID_TIP]			= "Ikke varier ugjennomsiktighet per piksel.";
+	strings[TILT_TIP]			= "Forvreng pensel form i henhold til pennens vending.";
+	strings[FULLSCREEN_TIP]		= "Skifte mellom fullskjerm og vindusmodus.";
+	strings[GRADIENT_CONTROL_TIP] = "Dropp farger her for å legge til eller redigere farge stopp.\n"
+									"Dobbeltklikk på et stopp for å plukke opp dens farge.";
+	strings[GRADIENT_INHERITS_TRANSFORM_TIP] = "Arv transformasjon fra Objekt";
+
+	// quick help
+	strings[READY]				= "Klar.";
+	strings[NO_CANVAS_HELP]		= "Lag en ny kanvas eller last inn et prosjekt eller en bilde fil.";
+	strings[NO_HELP]			= "No ekstra triks.";
+	strings[CROP_HELP]			= "Juster grensene rektangel, trykk <Return> for å aktivere.\n<Shift> fikserer størrelsesforholdet.";
+	strings[TRANSLATE_HELP]		= "Velg objektene som skal forandres.\n<Shift> fikserer retningen eller størrelsesforholdet.";
+	strings[EDIT_GRADIENT_HELP]	= "Rediger gradient farge stopp, type og transformasjon.";
+	strings[STROKE_HELP]		= "Bruk <Shift> for å utvide en tidligere strykning og tegn en rett linje.";
+	strings[CLONE_HELP]			= "Første klikk definerer kilde lokasjonen, den andre avstanden.\nTrykk <Ctrl> for å nullstille forskyvningen.";
+	strings[BUCKET_FILL_HELP]	= "\"Softness\" kontrollerer the soliditeten til fyllfargen.";
+	strings[TEXT_HELP]			= "Trykk <Return> når du er klar til å aktivere verktøyet.";
+	strings[SHAPE_HELP]			= "Hold nede <Ctrl>, <Shift>, <Alt> eller <Option> for\nekstra punt redigerings opsjoner.\nTrykk <Return> når ferdig.";
+	strings[SELECT_HELP]		= "Definer et område. Trykk <Return> for å kopiere det til system utklippstavlen.";
+	strings[ELLIPSE_HELP]		= "Klikk og dra for å lage en ellipse.\n<Shift> fikserer størrelsesforholdet.";
+	strings[ROUND_RECT_HELP]	= "Klikk og dra for å lage en rektangel.\n<Shift> fikserer størrelsesforholdet.";
+}

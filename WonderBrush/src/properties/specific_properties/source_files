@@ -1,0 +1,17 @@
+SOURCE_FILES +=
+	BoolProperty.cpp
+	BoolValueView.cpp
+	ColorProperty.cpp
+	ColorValueView.cpp
+	FloatProperty.cpp
+	FloatValueView.cpp
+	IconProperty.cpp
+	IconValueView.cpp
+	IntProperty.cpp
+	IntValueView.cpp
+	NummericalInputValueView.cpp
+	NummericalTextView.cpp
+	OptionProperty.cpp
+	OptionValueView.cpp
+	SwatchValueView.cpp
+;

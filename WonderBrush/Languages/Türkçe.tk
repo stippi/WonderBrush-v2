@@ -1,0 +1,478 @@
+// Türkçe Yerelleştirme, TürkBUG.
+// author: Atillâ Öztürk AKA 'pasha', <atilla@turkbug.org>
+
+// addon stuff
+extern "C" {
+_EXPORT void init_strings(const char* strings[]);
+}
+
+// init_strings
+void
+init_strings(const char* strings[])
+{
+	strings[FILE_MENU]			= "Dosya";
+	strings[NEW]				= "Yeni";
+	strings[NEW_CANVAS]			= "Yeni Taslak";			// tool tip
+	strings[NEW_LAYER]			= "Yeni Layer";				// these strings were added
+	strings[NEW_BRUSH]			= "Yeni Fırça";				// by request to be able to
+	strings[NEW_PALETTE]		= "Yeni Palet";				// reflect different genders in "New"
+	strings[OPEN]				= "Aç";
+	strings[LOAD]				= "Yükle";
+	strings[OPEN_CANVAS]		= "Projeyi aç..";
+	strings[EXPORT_CANVAS]		= "Taslağı ihraç et";
+	strings[EXPORT]				= "İhraç et";
+	strings[EXPORT_AS]			= "İhraç edilecek obje";
+	strings[SAVE_CANVAS]		= "Projeyi sakla";
+	strings[SAVE]				= "Sakla";
+	strings[SAVE_AS]			= "Buraya kaydet";
+	strings[SETUP_PAGE]			= "Yazıcı Ayarları";
+	strings[PRINT]				= "Yazdır";
+	strings[CLOSE]				= "Kapat";
+	strings[CLOSE_CANVAS]		= "Taslakyu kapat";		// tool tip
+	strings[ABOUT]				= "Yazılım hakkında";
+	strings[QUIT]				= "Çık";
+
+	strings[LOADING_FILE]		= "Yüklenilen Dosya:";
+
+	strings[EDIT]				= "Değiştir";
+	strings[UNDO]				= "İşlem iptali";
+	strings[REDO]				= "İşlemi tekrarla";
+
+	strings[SETTINGS]			= "Ayarlar";
+	strings[FULLSCREEN]			= "Tam Ekran";
+	strings[SHOW_GRID]			= "Piksel Ağını göster";	// if zoomed in far enough,
+														// display a grid arround each pixel
+	strings[LANGUAGE]			= "Dil";
+	strings[CANVAS]				= "Taslak";				// ie project, document
+	strings[IMAGE]				= "Resim";				// ie bitmap
+	strings[CLEAR]				= "Temizle";
+	strings[RESIZE]				= "Ebadı derle";				// resize canvas (new resolution)
+	strings[ROTATE_90]			= "90° çevir";
+	strings[ROTATE_180]			= "180° çevir";
+	strings[ROTATE_270]			= "-90° çevir";
+
+	strings[FORMAT]				= "Resim Formatı";			// color space of the canvas (RGB, Lab etc)
+
+	strings[EXPORT_FORMAT]		= "Boyutu ihraç et";
+	strings[CURSOR_SOURCE]		= "Gösterge kaynağı";
+	strings[BITMAP_SOURCE]		= "Bitmap kaynağı";
+	strings[SVG_FORMAT]			= "SVG";
+	strings[AI_FORMAT]			= "AI";
+	strings[RDEF_FORMAT]		= "RDEF";
+
+	strings[LAYER]				= "Kat";
+	strings[DUPLICATE]			= "Çiftleştir";
+	strings[MERGE_DOWN]			= "Boyutları birleştir";			// combining of current layer and the one underneath it
+	
+	strings[MERGE_VISIBLE]		= "Tüm görüntü boyutlarını birleştir";		// combining of all visible layers
+	strings[RENAME]				= "Adını değiştir";
+	strings[DELETE]				= "Sil";
+	strings[DELETE_ALL]			= "Hepsini Sil";
+
+	// layer blending modes
+	strings[MODE]				= "Çalışma türü";
+	strings[NORMAL]				= "Normal";
+	strings[ERASE]				= "Sil";
+	strings[MULTIPLY]			= "Çarpma metodu";
+	strings[INVERSE_MULTIPLY]	= "Ters Çarpma metodu";
+	strings[LUMINANCE]			= "Parlaklık";
+	strings[MULTIPLY_ALPHA]		= "Alfa kanalları";
+	strings[MULTIPLY_INVERSE_ALPHA]	= "Alfa kanalını ters çevir";
+	strings[REPLACE_RED]		= "Kırmızının yerine koy";
+	strings[REPLACE_GREEN]		= "Yeşilin yerine koy";
+	strings[REPLACE_BLUE]		= "Mavinin yerine koy";
+	strings[DARKEN]				= "Karartma";
+	strings[LIGHTEN]			= "Aydınlatma";
+	
+	strings[HISTORY]			= "İşlemler Kümülesi";			// as in "modifier stack"
+	strings[OBJECT]				= "Obje'ler";				// new name for the "History"
+	strings[FREEZE]				= "Sabitleştir";				// renders the result of the modifier stack
+														// into one "bitmap modifier" and replaces
+														// all previous modifiers (ie, you cannot edit
+														// them anymore) by the single bitmap modifier
+	strings[CUT]				= "Kes";
+	strings[COPY]				= "Kopyala";
+	strings[PASTE]				= "Yapıştır";
+	strings[MULTI_PASTE]		= "Çok basamaklı Yapıştırma";		// paste one ore more properties to
+														// *multiple* objects at once
+	strings[REMOVE_ALL]			= "Hepsini sil";
+
+	strings[OBJECT_SELECTION]	= "Seç...";				// change selection shortcuts
+	strings[SELECT_ALL_OBJECTS]	= "Hepsini seç";				// in Object and Property list
+	strings[SELECT_NO_OBJECTS]	= "Obje seçme";
+	strings[INVERT_SELECTION]	= "Seçenekler ters çevir";
+	strings[ALL_OBJECTS]		= "Hepsini";
+	strings[PROPERTY_SELECTION]	= "Seç";
+	strings[SELECT_ALL_PROPERTIES] = "Tüm seçenekler";
+	strings[SELECT_NO_PROPERTIES] = "Hiç biri";
+	strings[SPECIAL]			= "Özel";
+
+	// filters
+	strings[ADD_FILTER]			= "Filitre";				// the actual menu
+	strings[DROP_SHADOW]		= "Gölge düşür";
+	strings[GAUSSIAN_BLUR]		= "Gauss Dağıtıcısı";
+	strings[INVERT]				= "Tersine çevir";
+	strings[BRIGHTNESS]			= "Parlaklık";
+	strings[CONTRAST]			= "Kontrast";
+	strings[SATURATION]			= "Doygunluk";
+	strings[MOTION_BLUR]		= "Hareketli Dağıtıcı";
+	strings[HALFTONE]			= "Yarı ton";
+	strings[DOT]				= "Nokta";				// mode options of Halftone
+	strings[LINE]				= "Çizgi";
+	strings[DITHER]				= "Dağıt";
+	strings[DITHER_FS]			= "Dağıtma (FS)";
+	strings[DITHER_NC]			= "Dağıtma (NK)";
+	strings[NOISE]				= "Parazit";
+	strings[HUE_SHIFT]			= "Hue Ayarı";			// filter not yet written
+	strings[DISPERSION]			= "Ayırım";
+	strings[STRENGTH]			= "Kuvvetlilik";
+	strings[LUMINANCE_ONLY]		= "Saadece Aydınlık değeri";
+	strings[WARPSHARP]			= "Çözgücü netleştir";
+	strings[LAMBDA]				= "Lambda";
+	strings[MU]					= "MU";
+	strings[NON_MAXIMAL_SUPPRESSION] = "NMS";
+	strings[SOLID_AREA]			= "Alan";
+
+	strings[PROPERTY]			= "Ayarlar";
+	strings[UNKOWN_PROPERTY]	= "<bilinmiyor>";
+
+	strings[SWATCHES]			= "Renkler";			// color palette
+	strings[ZOOM]				= "Zoom";
+	strings[ALPHA]				= "Alpha Boyutu";				// keep this as short as possible
+	strings[ALPHA_CHANNEL]		= "Alpha Kanalı";		// used for properties
+	strings[COLOR]				= "Renk";				// used for properties
+	strings[GRADIENT]			= "Renk değişimi";
+
+	// pick objects tool
+	strings[SELECTABLE]			= "Seçilebilir";
+
+	// gradient options
+	strings[GRADIENT_TYPE]					= "Renk değişim tipi";
+	strings[GRADIENT_TYPE_LINEAR]			= "Çizgisel";
+	strings[GRADIENT_TYPE_RADIAL]			= "Radyal";
+	strings[GRADIENT_TYPE_DIAMONT]			= "Elmas şeklinde";
+	strings[GRADIENT_TYPE_CONIC]			= "Konik";
+	strings[GRADIENT_TYPE_XY]				= "X-Y";
+	strings[GRADIENT_TYPE_XY_SQRT]			= "(X-Y) Kökü";
+	strings[GRADIENT_INTERPOLATION]			= "Enterpolasyon";
+	strings[GRADIENT_INTERPOLATION_LINEAR]	= "Çizgisel Enterpolasyon";
+	strings[GRADIENT_INTERPOLATION_SMOOTH]	= "Yumuşak Enterpolasyon";
+	strings[GRADIENT_INHERITS_TRANSFORM]	= "Transformasyon'u miras edilerek";
+
+	// brush options
+	strings[OPACITY]			= "Örtme";
+	strings[MIN_OPACITY]		= "Asgari Örtm.";			// property label (keep short)
+	strings[DYN_OPACITY]		= "Dinamik Örtm.";			// property label (keep short)
+	strings[RADIUS]				= "Çap";
+	strings[MIN_RADIUS]			= "Asgari Çap";			// property label (keep short)
+	strings[DYN_RADIUS]			= "Dinamik Çap";			// property label (keep short)
+	strings[HARDNESS]			= "Sertlik";			// controls brush shape (soft...hard)
+	strings[MIN_HARDNESS]		= "Asgari Sertl.";			// property label (keep short)
+	strings[DYN_HARDNESS]		= "Dinamik Sertl.";			// property label (keep short)
+	strings[SPACING]			= "Boşluk";			// distance in % of brush diameter at wich brush
+														// shapes will be put into the bitmap along the
+														// line of a stroke,
+														// ! also used for Text tool (spacing between chars)
+	strings[MIN_SPACING]		= "Asgari Boşluk";		// property label (keep short), not yet used
+	strings[DYN_SPACING]		= "Din. Boşluk";		// property label (keep short), not yet used
+	strings[SUBPIXELS]			= "Piksel-altı Düzeltme";			// allow subpixel precise positioning of tools
+	strings[SOLID]				= "Sert";
+	strings[TILT]				= "Eğim";
+	strings[BLUR_RADIUS]		= "Dağıtma Çapı";		// property label (keep short), also used for Dispersion filter
+	// translate options
+	strings[X_LABEL]			= "X";
+	strings[Y_LABEL]			= "Y";
+	strings[X_SCALE]			= "X Faktörü";
+	strings[Y_SCALE]			= "Y Faktörü";
+	strings[TRANSLATION_X]		= "X";
+	strings[TRANSLATION_Y]		= "Y";
+	strings[SCALE_X]			= "X";
+	strings[SCALE_Y]			= "Y";
+	strings[ANGLE]				= "Açı";
+
+	strings[X_OFFSET]			= "X Ofset";
+	strings[Y_OFFSET]			= "Y Ofset";
+	// crop options
+	strings[LEFT]				= "Sol";
+	strings[TOP]				= "Üst";
+	strings[ENTIRE_CANVAS]		= "Tüm Taslak";
+	// bucket fill options
+	strings[TOLERANCE]			= "Tolerans";
+	strings[SOFTNESS]			= "Yumuşaklık";
+	strings[CONTIGUOUS_AREA]	= "Bağlı Alanalar";
+	// shape options
+	strings[PATH]				= "İpucu";				// property label
+	strings[OUTLINE]			= "Kenarlar";
+	strings[TRANSFORM]			= "Transform'la";
+	strings[CLOSED]				= "Kapalı";				// ie first and last point of path
+														// are connected
+	strings[CAP_MODE]			= "Uçlar";
+	strings[BUTT_CAP]			= "Kıt Uçlu";
+	strings[SQUARE_CAP]			= "Köşe Uçlu";
+	strings[ROUND_CAP]			= "Yuvarlak Uçlu";
+	strings[JOIN_MODE]			= "Köşe";
+	strings[MITER_JOIN]			= "Sürekleyici";
+	strings[ROUND_JOIN]			= "Yuvarlak";
+	strings[BEVEL_JOIN]			= "Düz kesimli";
+
+	strings[CIRCLE]				= "Çember";				// not yet used
+	strings[RECT]				= "Dörtken";				// not yet used
+	strings[ROUND_CORNERS]		= "Yuvarlak Köşeler";		// not yet used
+	strings[TOGGLE_ROUND_CORNERS]	= "Yuavarlak Köşe etkinleştir/sıfırla";
+	strings[ROUND_CORNER_RADIUS]	= "Yarıçap";
+	strings[CHANGE_ROUND_CORNER_RADIUS]	= "Yuavarlak Köşe Yarıçaplarını derle";
+	// text options
+	strings[FONT]				= "Karakter";
+	strings[SIZE]				= "Ebat";
+	strings[ROTATION]			= "Döngü";
+	strings[TEXT_INPUT]			= "Yazı";				// label for text input control (not used anymore)
+	strings[ADVANCE_SCALE]		= "Boşluk";			// additional spacing between chars
+														// (not used anymore)
+	strings[HINTING]			= "Tesadüf";			// not used, hinting means that the shapes
+														// of chars are modified to more directly
+														// hit pixels
+	strings[KERNING]			= "Kerning"; //"Karakter Arası Mesafe (Kerning)";
+	strings[TEXT_LINE_SPACING]	= "Satır boşluğu";		// font height * line spacing = vertical line dist
+	// color picker tool
+	strings[TIP_SIZE]			= "Uç Boyutu";
+	strings[PIXEL_1x1]			= "1x1 piksel";
+	strings[PIXEL_3x3]			= "3x3 piksel";
+	strings[PIXEL_5x5]			= "5x5 piksel";
+	strings[INCLUDE_ALL_LAYERS]	= "Tüm Layerleri dahil et";
+	// tools
+	strings[BRUSH]				= "Fırça";
+	strings[CLONE]				= "Klonla";				// clone bursh (transfers parts of an image to another place)
+	
+	strings[ERASER]				= "Silici";
+	strings[PEN]				= "Kalem";
+	strings[PEN_ERASER]			= "Silgeç";
+	strings[RESTORE]			= "Muhafaza et";			// opposite of eraser (restores alpha channel)
+	strings[DROPPER]			= "Renk seçim Taslaksu";			// color picker
+	strings[TEXT]				= "Tekst";
+	strings[BLUR]				= "Yumuşatıcı";
+	strings[BITMAP]				= "Resim bilgileri";
+	strings[SELECT]				= "Seç";
+	strings[TRANSLATE]			= "Kaydır";
+	strings[CROP]				= "Kes";
+	strings[BUCKET_FILL]		= "Boya Kovası";
+	strings[SHAPE]				= "Form";
+	strings[ELLIPSE]			= "Elips";
+	strings[ROUND_RECT]			= "Yuvarlak köşeli Dikdörtgen";
+	strings[EDIT_GRADIENT]		= "Renk değişimi ayarla";
+	strings[GUIDES]				= "Kılavuz Çizgiler";
+	strings[PICK_OBJECTS]		= "Obje seç";
+	strings[CLIPBOARD]			= "Ara Bellek";
+	// zoom
+	strings[ZOOM_IN]			= "Büyüt";			// tool tips
+	strings[ZOOM_OUT]			= "Küçült";
+	// actions
+	strings[ADD_LAYER]			= "Boyut ekle";			// the following strings are for display in the undo/redo menu
+	
+	strings[REMOVE_LAYER]		= "Boyut sil";
+	
+	strings[REMOVE_LAYERS]		= "Boyutları sil";
+	strings[MOVE_LAYER]			= "Boyutları derle";
+	strings[MOVE_LAYERS]		= "Boyutları farklı derle";
+	strings[MERGE_LAYERS]		= "Boyutları birleştir";		// a "modifier" is a step of changing the bitmap, ie a brush stroke or something else.
+	strings[UNKOWN_MODIFIER]	= "Bilinmeyen Araç";
+	strings[ADD_MODIFIER]		= "Araç ekle";
+	strings[ADD_MODIFIERS]		= "Araçlar ekle";
+	strings[CHANGE_COLOR]		= "Renk değiştir";
+	strings[CHANGE_COLORS]		= "Renkleri değiştir";
+	strings[REMOVE_MODIFIER]	= "Aracı sil";
+	strings[REMOVE_MODIFIERS]	= "Araçları sil";
+	strings[MOVE_MODIFIER]		= "Aracı değiştir";
+	strings[MOVE_MODIFIERS]		= "Araçları değiştir";
+	strings[TRANSLATE_MODIFIER]	= "Modifiyeciği kaydır";
+	strings[TRANSLATE_MODIFIERS]	= "Modifiye basamaklarını kaydır";
+	strings[CHANGE_LAYER_SETTINGS]	= "Boyut özelliklerini değiştir";
+	strings[CROP_CANVAS]		= "Taslakı Kes";
+	strings[RESIZE_CANVAS]		= "Taslak'ı düzelt";
+	strings[ROTATE_CANVAS]		= "Taslak'ı çevir";
+	strings[INSERT_CANVAS]		= "Taslak'ı oturt";
+	strings[CHANGE_OPACITY]		= "Şeffaflığı düzelt";
+	strings[EDIT_MODIFIER]		= "Modifyeciyi düzelt";
+	// pasting properties
+	strings[PASTE_PROPERTY]		= "Özelliği yapıştır";				// paste one property to one object
+	strings[PASTE_PROPERTIES]	= "Özellikleri yapıştır";			// paste multiple properties to one object
+	strings[MULTI_PASTE_PROPERTY] = "Çok seçenekli Özellik Yapıştırma";		// paste one property to multiple objects
+	strings[MUTLI_PASTE_PROPERTIES] = "Çaok seçenekli Özellikleri yapıştırma";	// paste multiple property to multiple objects
+	// shape tool history
+	strings[ADD_CONTROL_POINT]			= "Kontrol Noktasını ekle";
+	strings[TOGGLE_OUTLINE]				= "Kenarları etkinleştir";
+	strings[CHANGE_OUTLINE_WIDTH]		= "Kenar kalınlığı";
+	strings[CHANGE_CAP_MODE]			= "Uçları derle";
+	strings[CHANGE_JOIN_MODE]			= "Köşeleri derle";
+	strings[MODIFY_CONTROL_POINT]		= "Kontrol Noktasını derle";
+	strings[CLOSE_PATH_ACTION]			= "İpuçları buldurt";
+	strings[INSERT_CONTROL_POINT]		= "Kontrol Noktası yapıştır";
+	strings[REMOVE_CONTROL_POINT]		= "Kontrol Noktasını düzelt";
+	strings[REMOVE_CONTROL_POINTS]		= "Kontrol noktaları sil";
+	strings[CHANGE_POINT_SELECTION]		= "seçenekleri derle";
+	strings[NUDGE_CONTROL_POINT]		= "Kontrol noktayı taşı";
+	strings[NUDGE_CONTROL_POINTS]		= "Kontrol noktaları taşı";
+	strings[SELECT_PATH]				= "İpucu seçin";
+	strings[CREATE_NEW_PATH]			= "Yeni İpucu";
+	strings[DELETE_PATH]				= "İpucu sil";
+	strings[TEXT_TO_SHAPE]				= "Karakteri vektörle";
+	strings[TEXTS_TO_SHAPES]			= "Karakterleri vektörle";
+	strings[TRANSFORM_CONTROL_POINTS]	= "Kontrol noktaları düzenle";
+	strings[MERGE_SHAPE_OBJECTS]		= "Objeleri kaynat";
+	strings[FILLING_RULE]				= "Doldurma kriterleri";
+	strings[NON_ZERO]					= "Sola döner";
+	strings[EVEN_ODD]					= "Değişken";
+	// text tool history
+	strings[CHANGE_FONT_SIZE]	= "Karakter Boyunu düzelt";
+	strings[CHANGE_TEXT_ROTATION] = "Karakter Dönmesini düzelt";
+	strings[MOVE_TEXT]			= "Yazıyı kaydır";
+	strings[CHANGE_FONT]		= "Karakter Boyu değiştir";
+	strings[CHANGE_TEXT]		= "Yazıyı değiştir";
+	strings[CHANGE_FONT_ADVANCE_SCALE] = "Boşluğu değiştir";
+	strings[ALIGNMENT]			= "Hiza";
+	strings[CHANGE_ALIGNMENT]	= "Hiza düzelt";
+	strings[ALIGNMENT_LEFT]		= "Sol hizalı";
+	strings[ALIGNMENT_CENTER]	= "Merkez hizalı";
+	strings[ALIGNMENT_RIGHT]	= "Sağ hizalı";
+	strings[ALIGNMENT_JUSTIFY]	= "Sağ Kenar taşırmadan düzeltme";
+	strings[CHANGE_TEXT_WIDTH]	= "Karakter genişliği derle";
+	strings[PARAGRAPH_INSET]	= "Gömme";
+	strings[CHANGE_PARAGRAPH_INSET]	= "Gömmeyi derle";
+	strings[PARAGRAPH_SPACING]	= "Parağraf Mesafesi";
+	// crop tool
+	strings[MODIFY_CROP_RECT]	= "Kesme Karesini düzelt";
+	// select tool
+	strings[MODIFY_SELECT_RECT]	= "Seçenek Karesini düzelt";
+	// transformations
+	strings[TRANSFORMATION]		= "Transformasiyon";
+	strings[BEGIN_TRANSFORMATION] = "Transformasiyon'u başlat";
+	strings[FINISH_TRANSFORMATION]	= "Transformasiyon'u bitir";
+	strings[MOVE]				= "Kaydır";
+	strings[ROTATE]				= "Çevir";
+	strings[SCALE]				= "Boyunu Düzelt";
+	strings[MOVE_PIVOT]			= "Anker'i düzelt";
+	strings[TRANSFORM_OBJECT]	= "Obje transformla";
+	strings[TRANSFORM_OBJECTS]	= "Objeleri transformla";
+	// guide tool
+	strings[SHOW_GUIDES]		= "Kılavuz Çizgileri görüntüle";
+	strings[HORIZONTAL]			= "Yatay";
+	strings[VERTICAL]			= "Dikey";
+	strings[UNIT]				= "Birim";
+	strings[UNIT_PERCENT]		= "Yüzde";
+	strings[UNIT_PIXEL]			= "Piksel";
+	strings[UNIT_CM]			= "cm";
+	strings[UNIT_MM]			= "mm";
+	strings[UNIT_INCH]			= "inç";
+	strings[UNIT_DPI]			= "dpi";
+	// general
+	strings[OK]					= "Tamam";
+	strings[CONFIRM]			= "Sorgulama";			// apply changes
+	strings[CANCEL]				= "İptal";
+	strings[REVERT]				= "Ters kullan";				// revert changes made in panel
+	strings[REMOVE]				= "sil";
+	strings[NAME]				= "İsim";				// name of project
+	strings[UNNAMED]			= "İsimsiz";
+	strings[DEFAULT]			= "Standart";
+	strings[MERGED]				= "Kaynaşmış";				// default name for merged layer
+	strings[TOOL]				= "Araç";				// for tool tips
+	strings[ANY_MODIFIER]		= "Komut butonları";		// as in modifier key on the keyboard (shift,
+														// option, alt etc)
+	strings[RETURN]				= "Enter Tuşu";
+	strings[ESCAPE]				= "Escape";
+	strings[SET]				= "Etkinleştir";
+	strings[COUNT]				= "Miktar";
+	strings[INTERPOLATION]		= "enterpolasyon";
+	strings[NEAREST_NEIGHBOR]	= "Tekrarla";
+	strings[BILINEAR]			= "Bilinear";
+	strings[RETRY]				= "Tekrar dene";
+	strings[OVERWRITE]			= "Üzerine Yaz";
+	// panels
+	strings[PICK_COLOR]			= "Renk seç";			// window title of color picker
+	strings[WIDTH]				= "Eni";				// pixel count
+	strings[HEIGHT]				= "Yüksekliği";
+	strings[BRUSH_PANEL]		= "Fırça türü seç";
+	strings[BRUSH_NAME]			= "Fırça adı";
+	strings[PROGRAM_SETTINGS]	= "Yazılım Ayarları";
+	// program settings
+	strings[ON_STARTUP]			= "Yazılım başında";
+	strings[DO_NOTHING]			= "Bir şey yapma";
+	strings[ASK_OPEN]			= "Açma Panel'ini göster";
+	strings[ASK_NEW]			= "Yeni Panel göster";
+	strings[AUTO_SIZE]			= "Bu Ebat'da Taslak kur";
+	strings[LIVE_UPDATES]		= "Gerçek Zamanlı Görüntüleme";
+	strings[USE_SYSTEM_LANGUAGE] = "Sistem dilini kullan";
+	strings[STARTUP_ACTION]		= "Başlangıç Aksiyonu";
+	strings[INTERFACE]			= "Yazılım yüzeyi";
+	// requestors
+	strings[AKS_SAVE_CHANGES]	= "Dokümanlar farksız kapatılsın mı?";
+	strings[DISCARD]			= "Evet, unut";
+	strings[SAVING_FAILED]		= "Saklanamadı!";
+	strings[ERROR]				= "Hata";				// alias reason for above
+	strings[BLIP]				= "Küt!";				// As in "Mission Earth"
+
+	strings[DEMO_MODE]			= "WonderBrush demo mod'unda işlemekte. "
+								  "Projeler saklanamıyor.\n\n"
+								  "Yazılım anahtarını lütfen "
+								  "Kagi online store'unda lisanslayın.";
+	strings[NEVER_MIND]			= "Boş ver";
+	strings[OPEN_TRANSLATIONKIT_ERROR]	= "'%s' Dosyası açilamadı "
+								  "Translation Kit araçları ile.\n\n "
+								  "Ya bu dosya bir resim değil "
+								  "ya da bu dosya için Translatör "
+								  "mevcut değil.";
+	strings[OPEN_NATIVE_ERROR]	= "'%s' Dosyası Wonderbrush "
+								  "dokümanı olarak açılamadı.\n\n";		// yes, that's two \n
+	strings[UNSUPPORTED_CURSOR_SIZE] = "Taslak ebatları 16 x 16 "
+								  "Piksel olmalıdır. Başka Kursör boyu "
+								  "desteklenmiyor.";
+	strings[SELECTED_AREA_EMPTY] = "Seçilen alan boş.";
+	strings[ENTRY_DOES_NOT_EXIST] = "'%s' yüklenemedi, çünkü öğe mevcut değil";
+	strings[ENTRY_IS_A_FOLDER]	= "'%s' yüklenemedi, çünkü seçilen öğe klasör";
+	strings[WARN_SVG_DATA_LOSS]	= "Wonderbrush muhtemelen tüm bilgilere sahip değil";
+	// tool tips										// please test the appearance of the tips and
+														// try to align them manually by putting the
+														// '\n' in the right spot!
+
+	strings[TOOL_TIPS]			= "Aktif desteği görüntüle";
+	strings[ALPHA_TIP]			= "Aktif olan boyutun örtmesini belirler.";
+	strings[VISIBILITY_TIP]		= "Aktif boyutun ertmesini açar/kapatır.";
+	strings[PRESSURE_CONTROL_TIP]	= "Kontrol'ü kalem dokunması ile başlatır";
+	strings[BRUSH_PREVIEW_TIP]	= "Fırça önizlemesi. Tıklama Fırça Mönüsünü görüntüler";
+	strings[CURRENT_COLOR_TIP]	= "Kulanılan renk. Tıklama Renk Mönüsünü görüntüler";
+	strings[NAVIGATOR_TIP]		= "Doküman görünümü. Tıklama kesme alanını belirltir.\n"
+								  "Fare Tekerleği büyütür/küçültür.";
+	strings[LAYER_LIST_TIP]		= "Drag'n'Drop ile derleme. Göz ikonuna tıklayın\n"
+								  "Görülmesini sağlar/iptal eder. Çift Tıklama ile Ad değiştirin";
+	strings[HISTORY_LIST_TIP]	= "Drag'n'Drop iile derleme. Rengi saadece salıverildiğinde\n"
+								  "seçilen rengi işlemlere etkin kılar";
+	strings[PROPERTY_LIST_TIP]	= "Obje Özelliklerini kopyalar/keser.";
+	strings[SUB_PIXEL_TIP]		= "Fare Pozisyonunu Piksel-altı tolerans ile takip et.";
+	strings[SOLID_TIP]			= "Örtmeyi Piksel başına kullanma.";
+	strings[TILT_TIP]			= "Fırça ucunu fırça meyili ile dağıt";
+	strings[FULLSCREEN_TIP]		= "Tam Ekran - pencere görünümününe değiştirir.";
+	strings[GRADIENT_CONTROL_TIP] = "Renk değişim ayarı için renkleri düşürün."
+								   "Renk değişim noktasını çift tıklama seçilen "
+								   "rengi etkinleştirir";
+	strings[GRADIENT_INHERITS_TRANSFORM_TIP] = "Öğelerin transforme miras edin";
+	// quick help
+	strings[READY]				= "Tamam.";
+	strings[NO_CANVAS_HELP]		= "Yeni Taslak veya Resim projesi kur.";
+	strings[NO_HELP]			= "Başka dümenler yok!";
+	strings[CROP_HELP]			= "Kesilecek Dörtkeni belirleyin, etkinleştirmek için <Return> tıklayın. <Shift> ebatları sabitleştirir.";
+	strings[TRANSLATE_HELP]		= "Kaydırılacak Obje'leri belirleyin. <Shift> kaydırma pozisyonu sabitleştir.";
+	strings[EDIT_GRADIENT_HELP]	= "Renk geçiş noktalarını, tiplerini, vs. derleyin";
+	strings[STROKE_HELP]		= "Çizgi eklemek veya uzatmak için <Shift> tıklayın.";
+	strings[CLONE_HELP]			= "İlk tıklama Kaynak noktayı belirler, ikinci tıklama kaydırmayı. İptal için <Ctrl> tıklayın.";
+	strings[BUCKET_FILL_HELP]	= "\"Yumuşaklık\" Doldurma alanların düzeninini belirler.";
+	strings[TEXT_HELP]			= "Tamam ise <Return> tıklayın.";
+	strings[SHAPE_HELP]			= "Fazla özellik için <Command> veya <Alt> tıklayın. <Return> ile geri dönün.";
+	strings[SELECT_HELP]		= "Ara belleğe kopyalamak istediğiniz alanı belirleyin.";
+	strings[ELLIPSE_HELP]		= "Tıkla - Çekme elips geliştiriyor, \n<Shift> tuşu elipsi sabitleştiriyor.";
+	strings[ROUND_RECT_HELP]	= "Tıkla - Çekme daire geliştiriyor, \n<Shift> tuşu elipsi sabitleştiriyor.";
+	strings[PICK_OBJECTS_HELP]	= "Tıkla - Çekme ile obje seçin,";
+										"/n<Shift> ile evvelki seçeneği etkinleştirir";
+	strings[GUIDES_HELP]		= "Kılavuz Çizgi etkinleştri, derle veya sil.";
+
+	strings[ENTER_SERIAL_NUMBER] = "Lütfen Seri Numarınızı girin";
+	strings[WRONG_SERIAL_NUMBER] = "Yanlış Seri Numara girdiniz";
+
+}

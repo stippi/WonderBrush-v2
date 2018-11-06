@@ -1,0 +1,6 @@
+SOURCE_FILES +=
+	ChangeGradientAction.cpp
+	GradientAction.cpp
+	MasterGradientAction.cpp
+	TransformGradientAction.cpp
+;

@@ -1,0 +1,13 @@
+SOURCE_FILES +=
+	ChangeFontAdvanceScaleAction.cpp
+	ChangeFontSizeAction.cpp
+	ChangeTextAlignmentAction.cpp
+	ChangeTextInsetAction.cpp
+	ChangeTextOpacityAction.cpp
+	ChangeTextWidthAction.cpp
+	MoveTextAction.cpp
+	SetColorAction.cpp
+	SetFontAction.cpp
+	SetTextAction.cpp
+	TextAction.cpp
+;
