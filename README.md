@@ -1,4 +1,6 @@
 # WonderBrush 2.1.2
+WonderBrush is a vector/bitmap graphics application for the Haiku operating system. See http://yellowbites.com/wonderbrush.html for more details. To learn more about Haiku, visit https://haiku-os.org.
+
 This is the last known version of the code for WonderBrush as it is included in Haiku, restored from a backup and stripped
 off the SVN stuff and most code which should not be necessary to build WonderBrush.
 
