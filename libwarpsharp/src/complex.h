@@ -1,5 +1,5 @@
 // This may look like C code, but it is really -*- C++ -*-
-/* 
+/*
 Copyright (C) 1988 Free Software Foundation
     written by Doug Lea (dl@rocky.oswego.edu)
 
@@ -23,8 +23,12 @@ Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 #define _complex_h 1
 
 
-#include <iostream.h>
+#include <iostream>
 #include <math.h>
+
+using std::ostream;
+using std::istream;
+
 
 class complex
 {
@@ -57,8 +61,8 @@ public:
   complex&         operator *= (const complex& y);
   complex&         operator *= (double y);
 
-  complex&         operator /= (const complex& y); 
-  complex&         operator /= (double y); 
+  complex&         operator /= (const complex& y);
+  complex&         operator /= (double y);
 
   void             error(const char* msg) const;
 };
@@ -83,7 +87,7 @@ complex   pow(const complex& x, int p);
 complex   pow(const complex& x, const complex& p); // not implemented yet
 complex   pow(const complex& x, double y); // not implemented yet
 complex   sqrt(const complex& x); // not yet
-   
+
 istream&  operator >> (istream& s, complex& x);
 ostream&  operator << (ostream& s, const complex& x);
 

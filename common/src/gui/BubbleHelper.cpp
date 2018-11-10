@@ -12,7 +12,7 @@
 	  application). It is safe to create one on the stack or as a global.
 	- Call SetHelp(view,text) for each view to which you wish to attach a text.
 	- Use SetHelp(view,NULL) to remove text from a view.
-	
+
 	This could be implemented as a BMessageFilter as well, but that means using
 	one bubblehelp-instance for each window to which you wish to add help-bubbles.
 	Using a single looping thread for everything turned out to be the most practical
@@ -32,6 +32,8 @@
 #include <Window.h>
 
 #include "BubbleHelper.h"
+
+using std::nothrow;
 
 // static variables
 long			BubbleHelper::fRunCount = 0;
@@ -175,7 +177,7 @@ void
 BubbleHelper::_DisplayHelp(const char* text, BPoint where)
 {
 	fTextView->SetText(text);
-	
+
 	float height = fTextView->TextHeight(0, 2E6) + 4;
 	float width = 0;
 	int numlines = fTextView->CountLines();
@@ -185,7 +187,7 @@ BubbleHelper::_DisplayHelp(const char* text, BPoint where)
 			width = linewidth;
 	fTextWindow->ResizeTo(width + 4, height);
 	fTextView->SetTextRect(BRect(2.0, 2.0, width + 2.0, height + 2.0));
-	
+
 	BScreen screen;
 	BPoint dest = where + BPoint(0.0, 20.0);
 	BRect screenframe = screen.Frame();
@@ -206,7 +208,7 @@ BubbleHelper::_Helper()
 	// someone creates this as a global variable.
 	while (!be_app_messenger.IsValid())
 		snooze(200000);
-	 
+
 	fTextWindow = new BWindow(BRect(-100.0, -100.0, -50.0, -50.0), "",
 		B_BORDERED_WINDOW_LOOK, B_FLOATING_ALL_WINDOW_FEEL,
 		B_NOT_MOVABLE | B_AVOID_FOCUS);
@@ -266,7 +268,7 @@ BubbleHelper::_Helper()
 								fTextView->ConvertToScreen(&where2);
 							} while (!buttons && where2 == where
 									 && (displaycounter++ < displaytime));
-						
+
 							_HideBubble();
 							do {
 								fTextWindow->Unlock();

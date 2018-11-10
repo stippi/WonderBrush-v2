@@ -83,7 +83,7 @@ LIBPATHS =  ;
 #	additional paths to look for system headers
 #	thes use the form: #include <header>
 #	source file directories are NOT auto-included here
-SYSTEM_INCLUDE_PATHS = [ FDirName $(YB_TOP) third_party liblayout ]
+SYSTEM_INCLUDE_PATHS = /system/develop/headers/x86/liblayout/
 					   [ FDirName $(YB_TOP) libwarpsharp src ] ;
 
 #	additional paths to look for local headers

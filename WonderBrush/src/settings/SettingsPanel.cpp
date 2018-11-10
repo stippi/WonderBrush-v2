@@ -35,11 +35,11 @@ enum {
 };
 
 // constructor
-SettingsPanel::SettingsPanel(BRect frame, BMessage* message, BWindow* target)
+SettingsPanel::SettingsPanel(BRect frame, BMessage* msg, BWindow* target)
 	: Panel(frame, "Settings",
 			B_FLOATING_WINDOW_LOOK, B_FLOATING_SUBSET_WINDOW_FEEL,
 			B_ASYNCHRONOUS_CONTROLS | B_NOT_ZOOMABLE),
-	  fMessage(message),
+	  fMessage(msg),
 	  fTarget(target)
 {
 	fStartupActionPU = new LabelPopup("On Startup");
@@ -69,7 +69,7 @@ SettingsPanel::SettingsPanel(BRect frame, BMessage* message, BWindow* target)
 
 	fLiveUpdatesCB = new MCheckBox("Live Updates in Navigator and Layer Icons", 0, true);
 
-	fUseSystemLanguageCB = new MCheckBox("Use Same Language as the System", 
+	fUseSystemLanguageCB = new MCheckBox("Use Same Language as the System",
 										 new BMessage(MSG_USE_SYSTEM_LANGUAGE),
 										 this, true);
 
@@ -319,7 +319,7 @@ SettingsPanel::_SetToSettings()
 			enableAutoSize = true;
 			break;
 	}
-	// startup auto "create new" size 
+	// startup auto "create new" size
 	fStartupSizeDC->SetEnabled(enableAutoSize);
 	uint32 width, height;
 	settings->GetAutoSize(&width, &height);
@@ -343,7 +343,7 @@ SettingsPanel::_ApplySettings()
 		if (index >= 0)
 			settings->SetStartupAction(index);
 	}
-	// startup auto "create new" size 
+	// startup auto "create new" size
 	settings->SetAutoSize(fStartupSizeDC->Width(), fStartupSizeDC->Height());
 	// live updates
 	settings->SetLiveUpdates(fLiveUpdatesCB->Value() == B_CONTROL_ON);

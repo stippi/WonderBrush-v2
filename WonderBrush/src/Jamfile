@@ -98,8 +98,8 @@ RSRCS = WonderBrush.rsrc ;
 #		naming scheme you need to specify the path to the library
 #		and it's name
 #		library: my_lib.a entry: my_lib.a or path/my_lib.a
-LIBS = be layout tracker translation stdc++.r4 textencoding
-	   freetype libagg.a libybcommon.a expat z libwarpsharp.a ;
+LIBS = libagg.a libybcommon.a libwarpsharp.a be tracker translation stdc++.r4 textencoding
+	   freetype layout expat z ;
 
 if $(TARGET_PLATFORM) = zeta {
 	LIBS += zeta ;
@@ -111,15 +111,15 @@ if $(TARGET_PLATFORM) = zeta {
 #	be recursive, so include all of the paths where libraries can
 #	be found.  Directories where source files are found are
 #	automatically included.
-LIBPATHS = [ FDirName $(YB_TOP) lib ] ;
+LIBPATHS = ;
 
 #	additional paths to look for system headers
 #	thes use the form: #include <header>
 #	source file directories are NOT auto-included here
-SYSTEM_INCLUDE_PATHS = [ FDirName $(YB_TOP) third_party liblayout ]
+SYSTEM_INCLUDE_PATHS = /system/develop/headers/liblayout/
 					   [ FDirName $(YB_TOP) libwarpsharp src ]
+					   [ FDirName $(YB_TOP) third_party agg "font_freetype" ]
 					   [ FDirName $(YB_TOP) third_party agg "include" ]
-					   [ FDirName $(YB_TOP) third_party expat ]
 					   /system/develop/headers/freetype2/
 ;
 

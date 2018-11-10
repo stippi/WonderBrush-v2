@@ -3,8 +3,10 @@
 #ifndef HISTORY_MANAGER_H
 #define HISTORY_MANAGER_H
 
-#include <stack.h>
+#include <stack>
 #include <Locker.h>
+
+using std::stack;
 
 class Action;
 class CanvasView;

@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.3
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -35,8 +35,8 @@ namespace agg
     public:
         typedef int8u cover_type;
         typedef amask_no_clip_u8_precise<Step, Offset> self_type;
-        enum 
-        { 
+        enum
+        {
             cover_none  = 0,
             cover_full  = 255
         };
@@ -46,14 +46,15 @@ namespace agg
 
         void attach(rendering_buffer& rbuf) { m_rbuf = &rbuf; }
 
+#if 0
         //--------------------------------------------------------------------
         cover_type pixel(int x, int y) const
         {
             return (cover_type)m_mask_function.calculate(
                                    m_rbuf->row(y) + x * Step + Offset);
         }
+#endif
 
-        
         //--------------------------------------------------------------------
         cover_type combine_pixel(int x, int y, cover_type val) const
         {

@@ -44,10 +44,10 @@ namespace agg
 {
 	//=============================================span_image_filter_rgba_nn_conv
 	template<class ColorT,
-			 class Order, 
+			 class Order,
 			 class Interpolator,
-			 class Allocator = span_allocator<ColorT> > 
-	class span_image_filter_rgba_nn_conv : 
+			 class Allocator = span_allocator<ColorT> >
+	class span_image_filter_rgba_nn_conv :
 	public span_image_filter<ColorT, Interpolator, Allocator>
 	{
 	public:
@@ -72,7 +72,7 @@ namespace agg
 
 		//--------------------------------------------------------------------
 		span_image_filter_rgba_nn_conv(alloc_type& alloc,
-								  const rendering_buffer& src, 
+								  const rendering_buffer& src,
 								  const color_type& back_color,
 								  interpolator_type& inter)
 			: base_type(alloc, src, back_color, inter, 0),
@@ -88,7 +88,7 @@ namespace agg
 		//--------------------------------------------------------------------
 		color_type* generate(int x, int y, unsigned len)
 		{
-			base_type::interpolator().begin(x + base_type::filter_dx_dbl(), 
+			base_type::interpolator().begin(x + base_type::filter_dx_dbl(),
 											y + base_type::filter_dy_dbl(), len);
 
 			calc_type fg[4];
@@ -108,7 +108,7 @@ namespace agg
 				y >>= image_subpixel_shift;
 
 				if(x >= 0	&& y >= 0 &&
-				   x <= maxx && y <= maxy) 
+				   x <= maxx && y <= maxy)
 				{
 					fg_ptr = (const value_type*)base_type::source_image().row(y) + (x << 2);
 					fg[0] = *fg_ptr++;
@@ -146,10 +146,10 @@ namespace agg
 
 
 	//=======================================span_image_filter_rgba32_bilinear_conv
-	template<class Order, 
+	template<class Order,
 			 class Interpolator,
-			 class Allocator = span_allocator<rgba8> > 
-	class span_image_filter_rgba32_bilinear_conv : 
+			 class Allocator = span_allocator<rgba8> >
+	class span_image_filter_rgba32_bilinear_conv :
 	public span_image_filter<rgba8, Interpolator, Allocator>
 	{
 	public:
@@ -166,7 +166,7 @@ namespace agg
 
 		//--------------------------------------------------------------------
 		span_image_filter_rgba32_bilinear_conv(alloc_type& alloc,
-										  const rendering_buffer& src, 
+										  const rendering_buffer& src,
 										  const color_type& back_color,
 										  interpolator_type& inter)
 			: base_type(alloc, src, back_color, inter, 0),
@@ -215,18 +215,18 @@ namespace agg
 				int weight;
 
 				if(x_lr >= 0	&& y_lr >= 0 &&
-				   x_lr <  maxx && y_lr <  maxy) 
+				   x_lr <  maxx && y_lr <  maxy)
 				{
-					fg[0] = 
-					fg[1] = 
-					fg[2] = 
+					fg[0] =
+					fg[1] =
+					fg[2] =
 					fg[3] = image_subpixel_size * image_subpixel_size / 2;
 
 					x_hr &= image_subpixel_mask;
 					y_hr &= image_subpixel_mask;
 					fg_ptr = base_type::source_image().row(y_lr) + (x_lr << 2);
 
-					weight = (image_subpixel_size - x_hr) * 
+					weight = (image_subpixel_size - x_hr) *
 							 (image_subpixel_size - y_hr);
 					fg[0] += weight * *fg_ptr++;
 					fg[1] += weight * *fg_ptr++;
@@ -270,15 +270,15 @@ namespace agg
 					}
 					else
 					{
-						fg[0] = 
-						fg[1] = 
-						fg[2] = 
+						fg[0] =
+						fg[1] =
+						fg[2] =
 						fg[3] = image_subpixel_size * image_subpixel_size / 2;
 
 						x_hr &= image_subpixel_mask;
 						y_hr &= image_subpixel_mask;
 
-						weight = (image_subpixel_size - x_hr) * 
+						weight = (image_subpixel_size - x_hr) *
 								 (image_subpixel_size - y_hr);
 						if(x_lr >= 0	&& y_lr >= 0 &&
 						   x_lr <= maxx && y_lr <= maxy)
@@ -683,7 +683,7 @@ BitmapStroke::MergeWithBitmap(BBitmap* dest, BBitmap* strokeBitmap,
 														   subdiv_adaptor_type,
 														   span_alloc_type> span_gen_type;
 				typedef agg::renderer_scanline_aa<renderer_base, span_gen_type> renderer_type;
-				
+
 				agg::image_filter_hanning filterKernel;
 				agg::image_filter_lut filter(filterKernel, true);
 
@@ -701,12 +701,12 @@ BitmapStroke::MergeWithBitmap(BBitmap* dest, BBitmap* strokeBitmap,
 															agg::order_bgra,
 															interpolator_type> span_gen_type;
 				typedef agg::renderer_scanline_aa<renderer_base, span_gen_type> renderer_type;
-		
+
 				span_gen_type sg(sa, srcBuffer, agg::rgba(0, 0, 0, 0), interpolator);
 				sg.set_opacity(fOpacity);
-		
+
 				renderer_type ri(rb, sg);
-		
+
 				agg::render_scanlines(pf, sl, ri);
 				break;
 			}
@@ -715,12 +715,12 @@ BitmapStroke::MergeWithBitmap(BBitmap* dest, BBitmap* strokeBitmap,
 				typedef agg::span_image_filter_rgba32_bilinear_conv<agg::order_bgra,
 																	interpolator_type> span_gen_type;
 				typedef agg::renderer_scanline_aa<renderer_base, span_gen_type> renderer_type;
-		
+
 				span_gen_type sg(sa, srcBuffer, agg::rgba(0, 0, 0, 0), interpolator);
 				sg.set_opacity(fOpacity);
-		
+
 				renderer_type ri(rb, sg);
-		
+
 				agg::render_scanlines(pf, sl, ri);
 			}
 		}

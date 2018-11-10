@@ -47,7 +47,7 @@ calc_angle(BPoint origin, BPoint from, BPoint to, bool degree)
 		double c = dist(to, origin);
 		if (a > 0.0 && b > 0.0 && c > 0.0) {
 			angle = acos((b*b + c*c - a*a) / (2.0*b*c));
-		
+
 			if (d < 0.0)
 				angle = -angle;
 
@@ -284,10 +284,10 @@ push_bitmap(BDataIO* object, BBitmap* bitmap, ssize_t& total)
 	color_space format = bitmap->ColorSpace();
 	uint32 bytesPerRow = bitmap->BytesPerRow();
 	uint32 size = bitmap->BitsLength();
-	
+
 	uint32 tagSize = sizeof(width) + sizeof(height)
 					 + sizeof(format) + sizeof(bytesPerRow) + size;
-	
+
 	uint32 tag = TAG_BITMAP;
 	status_t status = push_data(object, &tag, sizeof(tag), total);
 	if (status >= B_OK) {
@@ -320,7 +320,7 @@ status_t
 pull_bitmap(BDataIO* object, BBitmap** bitmapPointer, ssize_t tagSize)
 {
 	// assumtion:
-	// objects position is at the byte after the tag size 
+	// objects position is at the byte after the tag size
 	// (at the beginning of the actual tag data)
 	uint32 header[4];
 	status_t status = object->Read(header, 16);
@@ -369,7 +369,7 @@ write_string(BPositionIO* stream, BString& string)
 
 // append_float
 void
-append_float(BString& string, float n, int32 maxDigits = 4)
+append_float(BString& string, float n, int32 maxDigits)
 {
 	int32 rounded = n >= 0.0 ? (int32)fabs(floorf(n)) : (int32)fabs(ceilf(n));
 
@@ -406,7 +406,7 @@ append_float(BString& string, float n, int32 maxDigits = 4)
 // gauss
 double
 gauss(double f)
-{ 
+{
 	// this aint' a real gauss function
 /*	if (f >= -1.0 && f <= 1.0) {
 		if (f < -0.5) {

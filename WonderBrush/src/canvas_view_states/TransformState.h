@@ -8,6 +8,7 @@
 #include "CanvasViewState.h"
 #include "Transformable.h"
 
+class ObjectSelection;
 class HistoryManager;
 class TransformAction;
 class TransformObjectsAction;

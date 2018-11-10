@@ -207,7 +207,7 @@ load_from_svg(entry_ref* ref)
 // load
 //
 // tries to load a given file as BMessage archive or Translation bitmap
-// and returns a Canvas object if successful  
+// and returns a Canvas object if successful
 Canvas*
 load(entry_ref* ref)
 {
@@ -228,8 +228,9 @@ load(entry_ref* ref)
 
 // load
 int32
-load(load_info* info)
+load(void* arg)
 {
+	load_info* info = (load_info*)arg;
 	if (info && info->window && info->message) {
 		// see if message contains a target (external messenger)
 		// that wants to be notified of editing changes

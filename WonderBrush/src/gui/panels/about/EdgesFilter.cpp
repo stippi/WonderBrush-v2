@@ -34,13 +34,13 @@ EdgesFilter::Run(const BBitmap* input, const BBitmap* output) const
 			uint32 outWidth = output->Bounds().IntegerWidth() + 1;
 			uint32 outHeight = output->Bounds().IntegerHeight() + 1;
 			if (inWidth == outWidth && inHeight == outHeight) {
-	
+
 				uint8* src = (uint8*)input->Bits();
 				uint8* dst = (uint8*)output->Bits();
 				uint32 dstBPR = output->BytesPerRow();
-		
+
 				memset(dst, 0, output->BitsLength());
-		
+
 				uint32 left, right, top, bottom, edge;
 				dst += dstBPR + 4;
 				// TODO: use dstBPR instead of width * 4!
@@ -54,8 +54,8 @@ EdgesFilter::Run(const BBitmap* input, const BBitmap* output) const
 						top = (src[pos] + src[pos + 1] * 2 + src[pos + 2]) >> 2;
 						pos += (inWidth * 4 * 2);
 						bottom = (src[pos] + src[pos + 1] * 2 + src[pos + 2]) >> 2;
-						edge = (abs(left - right) + abs(top - bottom)) >> 1;
-						
+						edge = ((left - right) + (top - bottom)) >> 1;
+
 						dst[0] = edge;
 						dst[1] = edge;
 						dst[2] = edge;

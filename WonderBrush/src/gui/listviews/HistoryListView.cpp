@@ -32,6 +32,8 @@
 
 #include "HistoryListView.h"
 
+using std::nothrow;
+
 enum {
 	MSG_SELECT_ALL			= B_SELECT_ALL,
 	MSG_SELECT_NONE			= 'slnn',
@@ -473,7 +475,7 @@ HistoryListView::SetHistoryMenu(BMenu* menu)
 		fHistoryMenu->AddItem(fSelectM);
 
 		fHistoryMenu->AddSeparatorItem();
-		
+
 		fCutMI = new BMenuItem("Cut", new BMessage(B_CUT), 'X');
 		fHistoryMenu->AddItem(fCutMI);
 		fCopyMI = new BMenuItem("Copy", new BMessage(B_COPY), 'C');
@@ -670,11 +672,11 @@ HistoryListView::UpdateStrings()
 		fSelectAllMI->SetLabel(manager->GetString(SELECT_ALL_OBJECTS, "All"));
 		fSelectNoneMI->SetLabel(manager->GetString(SELECT_NO_OBJECTS, "None"));
 		fInvertSelectionMI->SetLabel(manager->GetString(INVERT_SELECTION, "Invert Selection"));
-	
+
 		fAllM->Superitem()->SetLabel(manager->GetString(ALL_OBJECTS, "All"));
 		fFreezeMI->SetLabel(manager->GetString(FREEZE, "Freeze"));
 		fRemoveAllMI->SetLabel(manager->GetString(DELETE, "Remove"));
-	
+
 		fCutMI->SetLabel(manager->GetString(CUT, "Cut"));
 		fCopyMI->SetLabel(manager->GetString(COPY, "Copy"));
 		fPasteMI->SetLabel(manager->GetString(PASTE, "Paste"));
@@ -751,7 +753,7 @@ HistoryListView::_CheckMenuStatus()
 			}
 			fClipboard->Unlock();
 		}
-	
+
 		fPasteMI->SetEnabled(clipboardHasData);
 //	}
 }

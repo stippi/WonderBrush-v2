@@ -23,7 +23,7 @@ TYPE = STATIC ;
 
 SRCS =
 	# font_freetype
-#	agg_font_freetype.cpp
+	agg_font_freetype.cpp
 
 	# src
 	agg_arc.cpp
@@ -66,6 +66,8 @@ if $(OSPLAT) = PPC {
 
 #	specify additional linker flags
 LINKER_FLAGS = ;
+
+SYSTEM_INCLUDE_PATHS = /system/develop/headers/freetype2/ ;
 
 #	specify a unique string for the current configuration of the build.
 #	Default is "common". The string will be used a) as name of the subdirectory

@@ -13,6 +13,8 @@
 
 #include "StatusBar.h"
 
+using std::nothrow;
+
 const bigtime_t TICK_PERIOD				= 40000;
 const bigtime_t TEXT_DECAY_DELAY		= 10 * 1000 * 1000;
 const bigtime_t TEXT_DECAY_TIME			= 3 * 1000 * 1000;
@@ -211,7 +213,7 @@ StatusBar::layoutprefs()
 		borderWidth = 2.0;
 	if (fBorderStyle == B_PLAIN_BORDER)
 		borderWidth = 1.0;
-	
+
 //	mpm.mini.x = borderWidth + 10.0 + ceil(StringWidth(fDefaultMessage.String())) + 10.0 + borderWidth;
 	mpm.mini.x = borderWidth + 10.0 + 25.0 + 10.0 + borderWidth;
 	mpm.maxi.x = 10000.0;
@@ -261,7 +263,7 @@ StatusBar::SetStatus(const char *message, status_type type)
 				break;
 		}
 		fFadedColor = fBaseColor;
-	
+
 		fDirty = true;
 		_StartFade();
 		Invalidate();
@@ -335,7 +337,7 @@ StatusBar::JobProgress(float percent, const char* message)
 			percent = 100.0;
 		if (percent < 0.0)
 			percent = 0.0;
-		
+
 		fJobProgress = percent;
 		fDirty = true;
 		Invalidate();
@@ -399,7 +401,7 @@ StatusBar::IsIndicatingBusy() const
 }
 
 // _DrawInto
-void 
+void
 StatusBar::_DrawInto(BView *v, BRect updateRect)
 {
 	BRect b(Bounds()); // not v->Bounds()!

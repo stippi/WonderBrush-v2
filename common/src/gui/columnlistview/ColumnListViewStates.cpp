@@ -1,6 +1,6 @@
 // ColumnListViewStates.cpp
 
-#include <algobase.h>
+#include <algorithm>
 #include <stdio.h>
 
 #include <InterfaceDefs.h>
@@ -181,8 +181,8 @@ InsideState::Pressed(BPoint point, uint32 buttons, uint32 modifiers,
 			// shift
 			if (modifiers & B_SHIFT_KEY && !selectionEmpty
 				&& fListView->SelectionMode() == CLV_MULTIPLE_SELECTION) {
-				firstSelected = min(firstSelected, index);
-				lastSelected = max(lastSelected, index);
+				firstSelected = std::min(firstSelected, index);
+				lastSelected = std::max(lastSelected, index);
 				fListView->Select(firstSelected, lastSelected, true);
 			// option
 			} else if (modifiers & B_OPTION_KEY) {

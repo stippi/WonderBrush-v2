@@ -6,7 +6,7 @@
 
 */
 
-#include <new.h>
+#include <new>
 #include <stdio.h>
 
 #include <OS.h>
@@ -43,7 +43,7 @@ ImageProcessingLibrary::gaussian_blur(BBitmap *bitmap, float radius)
 	intermediate_bounds.right = bitmap_bounds.bottom;
 	intermediate_bounds.bottom = bitmap_bounds.right;
 
-	intermediate = new(nothrow) BBitmap(intermediate_bounds, 0, B_RGB32);
+	intermediate = new(std::nothrow) BBitmap(intermediate_bounds, 0, B_RGB32);
 	status_t ret = B_NO_MEMORY;
 	if (!intermediate || (ret = intermediate->InitCheck() < B_OK)) {
 fprintf(stderr, "ImageProcessingLibrary::gaussian_blur(): not enough memory to create temporary bitmap!\n");
@@ -193,7 +193,7 @@ ImageProcessingLibrary::gaussian_blur(BBitmap *bitmap,float radius, int32 thread
 	BRect bitmap_bounds = bitmap->Bounds();
 	BRect intermediate_bounds(0,0,bitmap_bounds.Height(),bitmap_bounds.Width());
 
-	BBitmap* intermediate = new(nothrow) BBitmap(intermediate_bounds, 0, B_RGB32);
+	BBitmap* intermediate = new(std::nothrow) BBitmap(intermediate_bounds, 0, B_RGB32);
 	status_t ret = B_NO_MEMORY;
 	if (!intermediate || (ret = intermediate->InitCheck() < B_OK)) {
 fprintf(stderr, "ImageProcessingLibrary::gaussian_blur(): not enough memory to create temporary bitmap!\n");

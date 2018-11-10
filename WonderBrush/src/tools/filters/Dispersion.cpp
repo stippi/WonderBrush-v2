@@ -1,7 +1,7 @@
 // Dispersion.cpp
 
 #include <math.h>
-#include <new.h>
+#include <new>
 #include <stdio.h>
 #include <string.h>
 
@@ -127,9 +127,9 @@ Dispersion::ProcessBitmap(BBitmap* dest, BBitmap* strokeBitmap, BRect area) cons
 		// constrain rect to passed bitmap bounds
 		area = area & dest->Bounds();
 
-		BBitmap* original = new(nothrow) BBitmap(dest);
+		BBitmap* original = new(std::nothrow) BBitmap(dest);
 		if (original && original->IsValid()) {
-	
+
 			int32 blurRadius = (int32)(fRadius * scale());
 
 			int32 left, top, right, bottom;
@@ -139,7 +139,7 @@ Dispersion::ProcessBitmap(BBitmap* dest, BBitmap* strokeBitmap, BRect area) cons
 			uint8 *src = (uint8*)original->Bits();
 
 			uint32 bpr = original->BytesPerRow();
-		
+
 			int32 dx, dy;
 
 			src += top * bpr + left * 4;
