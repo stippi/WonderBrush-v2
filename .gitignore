@@ -1,0 +1,9 @@
+/objs
+common/libybcommon.a
+common/objs/
+libwarpsharp/libwarpsharp.a
+libwarpsharp/objs/
+WonderBrush/WonderBrush
+WonderBrush/objs/
+build/header_cache
+build/jamfile_cache
