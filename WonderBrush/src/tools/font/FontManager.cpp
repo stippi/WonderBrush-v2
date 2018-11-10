@@ -42,7 +42,7 @@ FontManager::FontManager()
 										 B_LOW_PRIORITY, this);
 	if (fontScanner >= B_OK)
 		resume_thread(fontScanner);
-	
+
 	Run();
 }
 
@@ -278,11 +278,7 @@ FontManager::_update(void* cookie)
 //bigtime_t now = system_time();
 		// update from system, common and user fonts folders
 		BPath path;
-		if (find_directory(B_BEOS_FONTS_DIRECTORY, &path) >= B_OK) {
-			BDirectory fontFolder(path.Path());
-			fm->_Update(&fontFolder);
-		}
-		if (find_directory(B_COMMON_FONTS_DIRECTORY, &path) >= B_OK) {
+		if (find_directory(B_SYSTEM_FONTS_DIRECTORY, &path) >= B_OK) {
 			BDirectory fontFolder(path.Path());
 			fm->_Update(&fontFolder);
 		}
@@ -344,7 +340,7 @@ FontManager::_Update(BDirectory* fontFolder)
 											fontFile->full_family_name = (char*)malloc(fontName.string_len + 1);
 											memcpy(fontFile->full_family_name, fontName.string, fontName.string_len);
 											fontFile->full_family_name[fontName.string_len] = 0;
-											
+
 											if (fontFile->family_name)
 												free(fontFile->family_name);
 											fontFile->family_name = strdup(fontFile->full_family_name);
@@ -404,7 +400,7 @@ free(name);
 								   && strcasecmp(fontFile->style_name, ff->style_name) >= 0) {
 								if (strcasecmp(fontFile->style_name, ff->style_name) == 0) {
 									duplicate = true;
-									break;		
+									break;
 								} else
 								   i++;
 							}

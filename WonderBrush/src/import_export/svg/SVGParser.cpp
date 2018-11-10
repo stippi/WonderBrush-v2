@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.2
 // Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -38,7 +38,7 @@ struct named_color
 	int8u r, g, b, a;
 };
 
-named_color colors[] = 
+named_color colors[] =
 {
 	{ "aliceblue",240,248,255, 255 },
 	{ "antiquewhite",250,235,215, 255 },
@@ -188,7 +188,7 @@ named_color colors[] =
 	{ "yellow",255,255,0, 255 },
 	{ "yellowgreen",154,205,50, 255 },
 	{ "zzzzzzzzzzz",0,0,0, 0 }
-}; 
+};
 
 
 
@@ -233,10 +233,10 @@ parse_color(const char* str)
 			throw exception("parse_color: Invalid color name '%s'", str);
 		}
 		strcpy(c.name, str);
-		const void* p = bsearch(&c, 
-								colors, 
-								sizeof(colors) / sizeof(colors[0]), 
-								sizeof(colors[0]), 
+		const void* p = bsearch(&c,
+								colors,
+								sizeof(colors) / sizeof(colors[0]),
+								sizeof(colors[0]),
 								cmp_color);
 		if(p == 0)
 		{
@@ -432,7 +432,7 @@ Parser::start_element(void* data, const char* el, const char** attr)
 		self.parse_gradient_stop(attr);
 	}
 	//else
-	//if(strcmp(el, "<OTHER_ELEMENTS>") == 0) 
+	//if(strcmp(el, "<OTHER_ELEMENTS>") == 0)
 	//{
 	//}
 	// . . .
@@ -441,7 +441,7 @@ Parser::start_element(void* data, const char* el, const char** attr)
 		fprintf(stderr, "SVGParser igoring tag: \"%s\"\n", el);
 		self.fTagsIgnored = true;
 	}
-} 
+}
 
 // end_element
 void
@@ -470,7 +470,7 @@ Parser::end_element(void* data, const char* el)
 		self.fBuilder.EndGradient();
 	}
 	//else
-	//if(strcmp(el, "<OTHER_ELEMENTS>") == 0) 
+	//if(strcmp(el, "<OTHER_ELEMENTS>") == 0)
 	//{
 	//}
 	// . . .
@@ -487,7 +487,7 @@ Parser::content(void* data, const char* s, int len)
 	if(self.fTitleFlag)
 	{
 		if(len + self.fTitleLength > 255) len = 255 - self.fTitleLength;
-		if(len > 0) 
+		if(len > 0)
 		{
 			memcpy(self.fTitle + self.fTitleLength, s, len);
 			self.fTitleLength += len;
@@ -565,9 +565,9 @@ void Parser::parse_path(const char** attr)
 
 	for(i = 0; attr[i]; i += 2)
 	{
-		// The <path> tag can consist of the path itself ("d=") 
+		// The <path> tag can consist of the path itself ("d=")
 		// as well as of other parameters like "style=", "transform=", etc.
-		// In the last case we simply rely on the function of parsing 
+		// In the last case we simply rely on the function of parsing
 		// attributes (see 'else' branch).
 		if(strcmp(attr[i], "d") == 0)
 		{
@@ -655,7 +655,7 @@ Parser::parse_attr(const char* name, const char* value)
 		fGradientStopColor.opacity(parse_double(value));
 	}
 	//else
-	//if(strcmp(el, "<OTHER_ATTRIBUTES>") == 0) 
+	//if(strcmp(el, "<OTHER_ATTRIBUTES>") == 0)
 	//{
 	//}
 	// . . .
@@ -703,14 +703,14 @@ bool Parser::parse_name_value(const char* nv_start, const char* nv_end)
 	const char* val = str;
 
 	// Right Trim
-	while(str > nv_start && 
+	while(str > nv_start &&
 		(*str == ':' || isspace(*str))) --str;
 	++str;
 
 	copy_name(nv_start, str);
 
 	while(val < nv_end && (*val == ':' || isspace(*val))) ++val;
-	
+
 	copy_value(val, nv_end);
 	return parse_attr(fAttrName, fAttrValue);
 }
@@ -727,7 +727,7 @@ void Parser::parse_style(const char* str)
 		const char* nv_end = str;
 
 		// Right Trim
-		while(nv_end > nv_start && 
+		while(nv_end > nv_start &&
 			(*nv_end == ';' || isspace(*nv_end))) --nv_end;
 		++nv_end;
 
@@ -839,7 +839,7 @@ Parser::parse_rect(const char** attr)
 			if(strcmp(attr[i], "y") == 0)	  y = parse_double(attr[i + 1]);
 			if(strcmp(attr[i], "width") == 0)  w = parse_double(attr[i + 1]);
 			if(strcmp(attr[i], "height") == 0) h = parse_double(attr[i + 1]);
-			// rx - to be implemented 
+			// rx - to be implemented
 			// ry - to be implemented
 		}
 	}
@@ -928,11 +928,11 @@ Parser::parse_transform(const char* str)
 	trans_affine transform;
 	while (*str) {
 		if (islower(*str)) {
-			if (strncmp(str, "matrix", 6) == 0)		str += parse_matrix(str, transform);	else 
-			if (strncmp(str, "translate", 9) == 0)	str += parse_translate(str, transform);	else 
-			if (strncmp(str, "rotate", 6) == 0)		str += parse_rotate(str, transform);	else 
-			if (strncmp(str, "scale", 5) == 0)		str += parse_scale(str, transform);		else 
-			if (strncmp(str, "skewX", 5) == 0)		str += parse_skew_x(str, transform);	else 
+			if (strncmp(str, "matrix", 6) == 0)		str += parse_matrix(str, transform);	else
+			if (strncmp(str, "translate", 9) == 0)	str += parse_translate(str, transform);	else
+			if (strncmp(str, "rotate", 6) == 0)		str += parse_rotate(str, transform);	else
+			if (strncmp(str, "scale", 5) == 0)		str += parse_scale(str, transform);		else
+			if (strncmp(str, "skewX", 5) == 0)		str += parse_skew_x(str, transform);	else
 			if (strncmp(str, "skewY", 5) == 0)		str += parse_skew_y(str, transform);	else
 			{
 				++str;
@@ -1016,9 +1016,9 @@ is_numeric(char c)
 
 // parse_transform_args
 static unsigned
-parse_transform_args(const char* str, 
-					 double* args, 
-					 unsigned max_na, 
+parse_transform_args(const char* str,
+					 double* args,
+					 unsigned max_na,
 					 unsigned* na)
 {
 	*na = 0;
@@ -1088,7 +1088,7 @@ Parser::parse_rotate(const char* str, trans_affine& transform)
 	double args[3];
 	unsigned na = 0;
 	unsigned len = parse_transform_args(str, args, 3, &na);
-	if(na == 1) 
+	if(na == 1)
 	{
 		transform.premultiply(trans_affine_rotation(deg2rad(args[0])));
 	}
