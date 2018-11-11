@@ -98,8 +98,8 @@ RSRCS = WonderBrush.rsrc ;
 #		naming scheme you need to specify the path to the library
 #		and it's name
 #		library: my_lib.a entry: my_lib.a or path/my_lib.a
-LIBS = libagg.a libybcommon.a libwarpsharp.a be tracker translation stdc++.r4 textencoding
-	   freetype layout expat z ;
+LIBS = libagg.a libybcommon.a libwarpsharp.a
+	be tracker translation stdc++ textencoding freetype layout expat z ;
 
 if $(TARGET_PLATFORM) = zeta {
 	LIBS += zeta ;
