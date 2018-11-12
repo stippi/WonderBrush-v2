@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.2
 // Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -148,7 +148,7 @@ DocumentBuilder::curve3(double x, double y, bool rel)		   // T, t
 // curve4
 void
 DocumentBuilder::curve4(double x1, double y1,				   // C, c
-						double x2, double y2, 
+						double x2, double y2,
 						double x,  double y, bool rel)
 {
 	if (rel) {
@@ -174,7 +174,7 @@ DocumentBuilder::curve4(double x2, double y2,				   // S, s
 void
 DocumentBuilder::elliptical_arc(double rx, double ry, double angle,
 							    bool large_arc_flag, bool sweep_flag,
-							    double x, double y, bool rel = false)
+							    double x, double y, bool rel)
 {
 	angle = angle / 180.0 * pi;
 	if (rel) {
@@ -383,7 +383,7 @@ DocumentBuilder::parse_path(PathTokenizer& tok)
 			case 'H': case 'h':
 				hline_to(tok.last_number(), cmd == 'h');
 				break;
-			
+
 			case 'Q': case 'q':
 				arg[0] = tok.last_number();
 				for(i = 1; i < 4; i++) {
@@ -545,18 +545,18 @@ DocumentBuilder::GetCanvas(const char* fallbackName)
 		// now we need to render the layer
 		BRect mergeRect = bounds;
 		BBitmap alphaMap(bounds, 0, B_GRAY8);
-	
+
 		if (alphaMap.InitCheck() >= B_OK) {
 			for (int32 i = 0; Stroke* stroke = history->ModifierAt(i); i++) {
 				if (stroke->Bounds().Intersects(bounds)) {
 					clear_area(&alphaMap, mergeRect);
 					mergeRect = bounds & stroke->Bounds();
-		
+
 					mergeRect.left = floorf(mergeRect.left);
 					mergeRect.top = floorf(mergeRect.top);
 					mergeRect.right = ceilf(mergeRect.right);
 					mergeRect.bottom = ceilf(mergeRect.bottom);
-		
+
 					stroke->Draw(&alphaMap, mergeRect);
 					stroke->MergeWithBitmap(layer->Bitmap(), &alphaMap, mergeRect, 0);
 				}
@@ -576,7 +576,8 @@ DocumentBuilder::StartGradient(bool radial)
 						"previous gradient (%s) not finished!\n", fCurrentGradient->ID());
 	}
 
-	fCurrentGradient = radial ? new SVGRadialGradient() : new SVGLinearGradient();
+	fCurrentGradient = radial ? (SVGGradient*)(new SVGRadialGradient())
+		: (SVGGradient*)(new SVGLinearGradient());
 
 	_AddGradient(fCurrentGradient);
 }

@@ -26,7 +26,7 @@ TextToShapeAction::TextToShapeAction(Layer* layer,
 	  fPerformed(false)
 {
 	if (fTextObjects && fCount > 0) {
-		fShapeObjects = new(nothrow) ShapeStroke*[fCount];
+		fShapeObjects = new(std::nothrow) ShapeStroke*[fCount];
 		// convert the text objects
 		for (int32 i = 0; i < fCount; i++) {
 			TextStroke* textObject = fTextObjects[i];
@@ -139,8 +139,8 @@ TextToShapeAction::_SwapObjects(CanvasView* view, bool textToShape)
 
 		for (int32 i = 0; i < fCount && ret >= B_OK; i++) {
 
-			Stroke* srcObject = textToShape ? fTextObjects[i] : fShapeObjects[i];
-			Stroke* dstObject = textToShape ? fShapeObjects[i] : fTextObjects[i];
+			Stroke* srcObject = textToShape ? (Stroke*)fTextObjects[i] : (Stroke*)fShapeObjects[i];
+			Stroke* dstObject = textToShape ? (Stroke*)fShapeObjects[i] : (Stroke*)fTextObjects[i];
 
 			if (srcObject && dstObject) {
 				int32 index = history->IndexOf(srcObject);

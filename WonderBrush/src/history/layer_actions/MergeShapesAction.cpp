@@ -1,6 +1,6 @@
 // MergeShapesAction.cpp
 
-#include <new.h>
+#include <new>
 #include <stdio.h>
 
 #include "Layer.h"
@@ -27,7 +27,7 @@ MergeShapesAction::MergeShapesAction(Layer* layer,
 	  fMerged(false)
 {
 	if (fShapes && fCount > 1) {
-		fIndices = new(nothrow) int32[fCount];
+		fIndices = new(std::nothrow) int32[fCount];
 		if (fIndices && fShapes[0] && (fMergedShape = dynamic_cast<ShapeStroke*>(fShapes[0]->Clone()))) {
 			fMergedShape->FreezeTransformations();
 			for (int32 i = 1; i < fCount; i++) {

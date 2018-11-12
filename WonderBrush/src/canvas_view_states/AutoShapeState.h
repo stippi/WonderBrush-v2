@@ -10,6 +10,7 @@
 class HistoryManager;
 class ShapeStroke;
 class TransformBox;
+class AutoShapeBox;
 
 class AutoShapeState : public CanvasViewState,
 					 public ObjectObserver {
@@ -68,7 +69,7 @@ class AutoShapeState : public CanvasViewState,
 										 bool notify = true);
 
 			void				SetOutline(bool outline,
-										   bool action = false, 
+										   bool action = false,
 										   bool notify = true);
 			bool				Outline() const
 									{ return fOutline; }
@@ -133,7 +134,7 @@ class AutoShapeState : public CanvasViewState,
 			uint32				fOpacityWhat;
 			uint32				fOutlineWhat;
 			uint32				fOutlineWidthWhat;
-			
+
 };
 
 #endif	// AUTOSHAPE_STATE_H

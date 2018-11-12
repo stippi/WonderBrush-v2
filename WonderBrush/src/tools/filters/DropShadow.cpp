@@ -80,7 +80,7 @@ gaussian_blur(BBitmap *bitmap, float radius)
 	int32* fixedKernelArray = new int32[2 * kernelRadius + 1];
 	int32* fixedKernel = &fixedKernelArray[kernelRadius];
 
-	// was before -log(0.002)			
+	// was before -log(0.002)
 	float p = -log(0.004) / (pow(radius, 2) * log(2));
 	for (int32 i=-kernelRadius;i<=kernelRadius;i++) {
 		kernel[i] = pow(2,-p * i * i);
@@ -98,21 +98,21 @@ gaussian_blur(BBitmap *bitmap, float radius)
 	intermediateBounds.top = bitmapBounds.left;
 	intermediateBounds.right = bitmapBounds.bottom;
 	intermediateBounds.bottom = bitmapBounds.right;
-	
+
 	intermediate = new BBitmap(intermediateBounds, 0, bitmap->ColorSpace());
 
-	uint8* bBits = (uint8*)bitmap->Bits(); 
+	uint8* bBits = (uint8*)bitmap->Bits();
 	uint8* iBits = (uint8*)intermediate->Bits();
 	int32 bBPR = bitmap->BytesPerRow();
 	int32 iBPR = intermediate->BytesPerRow();
 
 	// Blur from bitmap to intermediate and rotate
-	int32 width = bitmapBounds.IntegerWidth() + 1;	
+	int32 width = bitmapBounds.IntegerWidth() + 1;
 	int32 height = bitmapBounds.IntegerHeight() + 1;
 	uint8* sourceArray = new uint8[width + kernelRadius * 2];
 	uint8* targetArray = new uint8[width];
 
-		
+
 	for (int32 y = 0; y < height; y++) {
 		// copy first pixel radius times into source array
 		uint8* sourceArrayHandle = sourceArray;
@@ -135,14 +135,14 @@ gaussian_blur(BBitmap *bitmap, float radius)
 						  width,
 						  fixedKernel,
 						  kernelRadius);
-		
+
 		uint8* targetArrayHandle = targetArray;
 		for (int32 x = 0; x < width; x++) {
 			*(iBits + (height - y - 1) + x * iBPR) = *targetArrayHandle++;
-		}	
-				
+		}
+
 	}
-	
+
 
 	bBits = (uint8*)bitmap->Bits();
 	iBits = (uint8*)intermediate->Bits();
@@ -151,13 +151,13 @@ gaussian_blur(BBitmap *bitmap, float radius)
 	delete[] sourceArray;
 	delete[] targetArray;
 
-		
+
 	// Blur from intermediate to bitmap and rotate
-	width = intermediateBounds.IntegerWidth() + 1;	
+	width = intermediateBounds.IntegerWidth() + 1;
 	height = intermediateBounds.IntegerHeight() + 1;
 	sourceArray = new uint8[width + kernelRadius * 2];
 	targetArray = new uint8[width];
-		
+
 	for (int32 y = 0; y < height; y++) {
 		uint8* sourceArrayHandle = sourceArray;
 		for (int32 dx = 0; dx < kernelRadius; dx++) {
@@ -177,20 +177,20 @@ gaussian_blur(BBitmap *bitmap, float radius)
 						  width,
 						  fixedKernel,
 						  kernelRadius);
-		
+
 		uint8* targetArrayHandle = targetArray;
 		for (int32 dx = 0; dx < width; dx++) {
 			*(bBits + y + (width - dx - 1) * bBPR) = *targetArrayHandle++;
-		}	
-				
+		}
+
 	}
-		
+
 	delete[] sourceArray;
 	delete[] targetArray;
 	delete[] kernelArray;
 	delete[] fixedKernelArray;
 	delete intermediate;
-	
+
 	return B_OK;
 }
 
@@ -340,14 +340,14 @@ cropped_bitmap_no_clip(BBitmap* source, BRect bounds)
 	bounds.right = bounds.left + (w + (4 - w % 4)) - 1;
 	bounds.bottom = bounds.top + (h + (4 - h % 4)) - 1;
 
-	BBitmap* ret = new(nothrow) BBitmap(bounds.OffsetToCopy(B_ORIGIN), 0, source->ColorSpace());
+	BBitmap* ret = new(std::nothrow) BBitmap(bounds.OffsetToCopy(B_ORIGIN), 0, source->ColorSpace());
 	if (ret && ret->InitCheck() >= B_OK) {
-	
+
 		uint32 emptyStartLines	= bounds.top	< 0.0		? (uint32)-bounds.top					: 0;
 		uint32 emptyEndLines	= bounds.bottom	> s.bottom	? (uint32)(bounds.bottom - s.bottom)	: 0;
 		uint32 emptyStartPixels	= bounds.left	< 0.0		? (uint32)-bounds.left					: 0;
 		uint32 emptyEndPixels	= bounds.right	> s.right	? (uint32)(bounds.right - s.right)		: 0;
-	
+
 		uint32 lines = bounds.IntegerHeight() + 1 - (emptyStartLines + emptyEndLines);
 		uint32 pixels = bounds.IntegerWidth() + 1 - (emptyStartPixels + emptyEndPixels);
 	// NOTE: we know the color space is B_GRAY8
@@ -368,15 +368,15 @@ cropped_bitmap_no_clip(BBitmap* source, BRect bounds)
 			default:
 				break;
 		}*/
-	
+
 		uint8* src = (uint8*)source->Bits();
 		uint8* dst = (uint8*)ret->Bits();
 		uint32 srcBPR = source->BytesPerRow();
 		uint32 dstBPR = ret->BytesPerRow();
-	
+
 		BRect t = s & bounds;
 		src += (int)(t.left - s.left + (t.top - s.top) * srcBPR);
-	
+
 		// make starting lines empty
 		for (uint32 y = 0; y < emptyStartLines; y++) {
 			memset(dst, 0, dstBPR);
@@ -544,7 +544,7 @@ bigtime_t copy = system_time();
 #if TIMING
 bigtime_t merge = system_time();
 #endif
-		// second pass: 
+		// second pass:
 		// compose shadow (strokeBitmap) with color and dest on top together
 
 		//  this is the area we're actually supposed to render

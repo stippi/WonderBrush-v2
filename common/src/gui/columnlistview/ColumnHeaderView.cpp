@@ -1,6 +1,6 @@
 // ColumnHeaderView.cpp
 
-#include <algobase.h>
+#include <algorithm>
 #include <stdio.h>
 #include <math.h>
 
@@ -209,8 +209,8 @@ ColumnHeaderView::MoveHeader(int32 oldIndex, int32 newIndex)
 		fHeaders.RemoveItem(oldIndex);
 		fHeaders.AddItem((void*)header, newIndex);
 		// Update the graphics stuff.
-		int32 first = min(oldIndex, newIndex);
-		int32 last = max(oldIndex, newIndex);
+		int32 first = std::min(oldIndex, newIndex);
+		int32 last = std::max(oldIndex, newIndex);
 		_RebuildVisibleHeaders();
 		_InvalidateHeaders(first, last - first + 1);
 	}
@@ -227,8 +227,8 @@ ColumnHeaderView::MoveHeaders(int32 index, int32 dest, int32 count)
 		fHeaders.RemoveItems(index, count);
 		fHeaders.AddList(&headers, dest);
 		// Update the graphics stuff.
-		int32 first = min(index, dest);
-		int32 last = max(index, dest) + count - 1;
+		int32 first = std::min(index, dest);
+		int32 last = std::max(index, dest) + count - 1;
 		_RebuildVisibleHeaders();
 		_InvalidateHeaders(first, last - first + 1);
 	}

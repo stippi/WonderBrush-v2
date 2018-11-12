@@ -1,6 +1,6 @@
 // ColumnHeaderViewStates.cpp
 
-#include <algobase.h>
+#include <algorithm>
 #include <stdio.h>
 
 #include <InterfaceDefs.h>

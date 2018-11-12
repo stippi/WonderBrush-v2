@@ -50,7 +50,7 @@ is_legal(int32 value, int32 max)
 
 // clip
 inline uint8
-clip(float value) 
+clip(float value)
 {
 	uint8 clipped = 0;
 	if (value > 255.0)
@@ -115,7 +115,7 @@ mult(complex a, complex b)
 
 // div
 inline complex
-div(complex a, complex b) 
+div(complex a, complex b)
 {
 	if((fabs(b.real()) >= TINY) && (fabs(b.imag()) >= TINY))
 		return complex(a.real() / b.real(), a.imag() / b.imag());
@@ -124,7 +124,7 @@ div(complex a, complex b)
 
 // realdiv
 inline complex
-realdiv(float a, complex b) 
+realdiv(float a, complex b)
 {
 	if ((fabs(b.real()) >= TINY) && (fabs(b.imag()) >= TINY))
 		return complex(a / b.real(), a / b.imag());

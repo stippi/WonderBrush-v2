@@ -14,8 +14,8 @@ template<class T> struct stack_blur_tables
 	static uint8  const g_stack_blur8_shr[255];
 };
 
-template<class T> 
-uint16 const stack_blur_tables<T>::g_stack_blur8_mul[255] = 
+template<class T>
+uint16 const stack_blur_tables<T>::g_stack_blur8_mul[255] =
 {
 	512,512,456,512,328,456,335,512,405,328,271,456,388,335,292,512,
 	454,405,364,328,298,271,496,456,420,388,360,335,312,292,273,512,
@@ -35,32 +35,34 @@ uint16 const stack_blur_tables<T>::g_stack_blur8_mul[255] =
 	289,287,285,282,280,278,275,273,271,269,267,265,263,261,259
 };
 
-template<class T> 
-uint8 const stack_blur_tables<T>::g_stack_blur8_shr[255] = 
+template<class T>
+uint8 const stack_blur_tables<T>::g_stack_blur8_shr[255] =
 {
-	  9, 11, 12, 13, 13, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 17, 
-	 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 18, 19, 
+	  9, 11, 12, 13, 13, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 17,
+	 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 18, 19,
 	 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20,
 	 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 21,
 	 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21,
-	 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 22, 
+	 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 22,
 	 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-	 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23, 
+	 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23,
 	 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
 	 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
-	 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 
-	 23, 23, 23, 23, 23, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 
+	 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+	 23, 23, 23, 23, 23, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24,
 	 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24,
 	 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24,
 	 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24,
 	 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24
 };
 
+#ifndef __HAIKU__
 static inline float
 roundf(float v)
 {
 	return floorf(v + 0.5);
 }
+#endif
 
 
 StackBlurFilter::StackBlurFilter()
@@ -200,17 +202,17 @@ StackBlurFilter::_Filter32(uint8* buffer,
 		stack.allocate(div);
 
 		for (y = 0; y < h; y++) {
-			sum_r = 
-			sum_g = 
-			sum_b = 
-			sum_a = 
-			sum_in_r = 
-			sum_in_g = 
-			sum_in_b = 
-			sum_in_a = 
-			sum_out_r = 
-			sum_out_g = 
-			sum_out_b = 
+			sum_r =
+			sum_g =
+			sum_b =
+			sum_a =
+			sum_in_r =
+			sum_in_g =
+			sum_in_b =
+			sum_in_a =
+			sum_out_r =
+			sum_out_g =
+			sum_out_b =
 			sum_out_a = 0;
 
 			src_pix_ptr = buffer + bpr * y;
@@ -264,7 +266,7 @@ StackBlurFilter::_Filter32(uint8* buffer,
 				sum_g -= sum_out_g;
 				sum_b -= sum_out_b;
 				sum_a -= sum_out_a;
-   
+
 				stack_start = stack_ptr + div - rx;
 				if(stack_start >= div) stack_start -= div;
 				stack_pix_ptr = &stack[stack_start];
@@ -278,12 +280,12 @@ StackBlurFilter::_Filter32(uint8* buffer,
 					src_pix_ptr += 4;
 					++xp;
 				}
-	
+
 				stack_pix_ptr->r = src_pix_ptr[2];
 				stack_pix_ptr->g = src_pix_ptr[1];
 				stack_pix_ptr->b = src_pix_ptr[0];
 				stack_pix_ptr->a = src_pix_ptr[3];
-	
+
 				sum_in_r += src_pix_ptr[2];
 				sum_in_g += src_pix_ptr[1];
 				sum_in_b += src_pix_ptr[0];
@@ -292,7 +294,7 @@ StackBlurFilter::_Filter32(uint8* buffer,
 				sum_g	+= sum_in_g;
 				sum_b	+= sum_in_b;
 				sum_a	+= sum_in_a;
-	
+
 				++stack_ptr;
 				if (stack_ptr >= div)
 					stack_ptr = 0;
@@ -320,17 +322,17 @@ StackBlurFilter::_Filter32(uint8* buffer,
 
 		int stride = bpr;
 		for(x = 0; x < w; x++) {
-			sum_r = 
-			sum_g = 
-			sum_b = 
-			sum_a = 
-			sum_in_r = 
-			sum_in_g = 
-			sum_in_b = 
-			sum_in_a = 
-			sum_out_r = 
-			sum_out_g = 
-			sum_out_b = 
+			sum_r =
+			sum_g =
+			sum_b =
+			sum_a =
+			sum_in_r =
+			sum_in_g =
+			sum_in_b =
+			sum_in_a =
+			sum_out_r =
+			sum_out_g =
+			sum_out_b =
 			sum_out_a = 0;
 
 			src_pix_ptr = buffer + x * 4;
@@ -351,7 +353,7 @@ StackBlurFilter::_Filter32(uint8* buffer,
 			}
 			for (i = 1; i <= ry; i++) {
 				if (i <= hm)
-					src_pix_ptr += stride; 
+					src_pix_ptr += stride;
 				stack_pix_ptr = &stack[i + ry];
 				stack_pix_ptr->r = src_pix_ptr[2];
 				stack_pix_ptr->g = src_pix_ptr[1];
@@ -384,7 +386,7 @@ StackBlurFilter::_Filter32(uint8* buffer,
 				sum_g -= sum_out_g;
 				sum_b -= sum_out_b;
 				sum_a -= sum_out_a;
-   
+
 				stack_start = stack_ptr + div - ry;
 				if (stack_start >= div)
 					stack_start -= div;
@@ -399,12 +401,12 @@ StackBlurFilter::_Filter32(uint8* buffer,
 					src_pix_ptr += stride;
 					++yp;
 				}
-	
+
 				stack_pix_ptr->r = src_pix_ptr[2];
 				stack_pix_ptr->g = src_pix_ptr[1];
 				stack_pix_ptr->b = src_pix_ptr[0];
 				stack_pix_ptr->a = src_pix_ptr[3];
-	
+
 				sum_in_r += src_pix_ptr[2];
 				sum_in_g += src_pix_ptr[1];
 				sum_in_b += src_pix_ptr[0];
@@ -413,7 +415,7 @@ StackBlurFilter::_Filter32(uint8* buffer,
 				sum_g	+= sum_in_g;
 				sum_b	+= sum_in_b;
 				sum_a	+= sum_in_a;
-	
+
 				++stack_ptr;
 				if (stack_ptr >= div)
 					stack_ptr = 0;
@@ -484,8 +486,8 @@ StackBlurFilter::_Filter8(uint8* buffer,
 			}
 			for(i = 1; i <= rx; i++)
 			{
-				if(i <= wm) src_pix_ptr += 1; 
-				pix = *src_pix_ptr; 
+				if(i <= wm) src_pix_ptr += 1;
+				pix = *src_pix_ptr;
 				stack[i + rx] = pix;
 				sum	+= pix * (rx + 1 - i);
 				sum_in += pix;
@@ -502,23 +504,23 @@ StackBlurFilter::_Filter8(uint8* buffer,
 				dst_pix_ptr += 1;
 
 				sum -= sum_out;
-   
+
 				stack_start = stack_ptr + div - rx;
 				if(stack_start >= div) stack_start -= div;
 				sum_out -= stack[stack_start];
 
-				if(xp < wm) 
+				if(xp < wm)
 				{
 					src_pix_ptr += 1;
 					pix = *src_pix_ptr;
 					++xp;
 				}
-	
+
 				stack[stack_start] = pix;
-	
+
 				sum_in += pix;
 				sum	+= sum_in;
-	
+
 				++stack_ptr;
 				if(stack_ptr >= div) stack_ptr = 0;
 				stack_pix = stack[stack_ptr];
@@ -552,8 +554,8 @@ StackBlurFilter::_Filter8(uint8* buffer,
 			}
 			for(i = 1; i <= ry; i++)
 			{
-				if(i <= hm) src_pix_ptr += stride; 
-				pix = *src_pix_ptr; 
+				if(i <= hm) src_pix_ptr += stride;
+				pix = *src_pix_ptr;
 				stack[i + ry] = pix;
 				sum	+= pix * (ry + 1 - i);
 				sum_in += pix;
@@ -570,23 +572,23 @@ StackBlurFilter::_Filter8(uint8* buffer,
 				dst_pix_ptr += stride;
 
 				sum -= sum_out;
-   
+
 				stack_start = stack_ptr + div - ry;
 				if(stack_start >= div) stack_start -= div;
 				sum_out -= stack[stack_start];
 
-				if(yp < hm) 
+				if(yp < hm)
 				{
 					src_pix_ptr += stride;
 					pix = *src_pix_ptr;
 					++yp;
 				}
-	
+
 				stack[stack_start] = pix;
-	
+
 				sum_in += pix;
 				sum	+= sum_in;
-	
+
 				++stack_ptr;
 				if(stack_ptr >= div) stack_ptr = 0;
 				stack_pix = stack[stack_ptr];

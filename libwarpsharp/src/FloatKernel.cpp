@@ -1,8 +1,11 @@
 // FloatKernal.h
 
 #include <stdio.h>
+#include <iostream>
 
 #include "support.h"
+
+using std::cerr;
 
 #include "FloatImage.h"
 
@@ -33,7 +36,7 @@ FloatKernel::FloatKernel(float* elements, int32 diameter,
 						 bool horizontal, uint32 symetry)
 	: fElement(copy(elements, diameter)),
 	  fDiameter(diameter),
-	  fHorizontal(horizontal), 
+	  fHorizontal(horizontal),
       fSymetry(symetry)
 {
 }
@@ -68,8 +71,8 @@ FloatKernel::operator=(FloatKernel& from)
 {
 	if (this != &from) {
 		delete[] fElement;
-		fElement = copy(from.Element(), from.Diameter()); 
-		fDiameter = from.Diameter(); 
+		fElement = copy(from.Element(), from.Diameter());
+		fDiameter = from.Diameter();
 		fHorizontal = from.IsHorizontal();
 		fSymetry = from.Symetry();
 	}
@@ -94,11 +97,11 @@ FloatKernel::operator*(FloatImage* from) const
 			result->SetAllPixels(0.0);
 			float *np = result->Pixel();
 			switch (fSymetry) {
-				case KERNEL_GENERAL: 
+				case KERNEL_GENERAL:
 					if (fHorizontal) {
-						for (j = 0; j < height; j++) 
-							for (i = rad; i < width - rad; i++)  
-						for (k = -rad; k <= rad; k++) 
+						for (j = 0; j < height; j++)
+							for (i = rad; i < width - rad; i++)
+						for (k = -rad; k <= rad; k++)
 							np[i + j * width] += data[(i + k) + j * width] * fElement[k + rad];
 					} else {
 						for (j = rad; j < height - rad; j++) {
@@ -135,7 +138,7 @@ FloatKernel::operator*(FloatImage* from) const
 							}
 						}
 					}
-					break;      
+					break;
 				case KERNEL_ANTISYMETRIC:
 					if (fHorizontal) {
 						for (j = 0; j < height; j++) {

@@ -15,6 +15,7 @@ class AddPointAction;
 class ChangePointAction;
 class EditModifierAction;
 class HistoryManager;
+class NudgePointsAction;
 class InsertPointAction;
 class PointSelection;
 class Selection;
@@ -77,7 +78,7 @@ class ShapeState : public CanvasViewState,
 									{ return fAlpha; }
 
 			void				SetOutline(bool outline,
-										   bool action = false, 
+										   bool action = false,
 										   bool notify = true);
 			bool				Outline() const
 									{ return fOutline; }

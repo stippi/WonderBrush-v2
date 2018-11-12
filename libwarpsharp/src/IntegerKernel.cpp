@@ -8,6 +8,8 @@
 
 #include "IntegerKernel.h"
 
+using std::cerr;
+
 // constructor
 IntegerKernel::IntegerKernel(kernel_func function, int32 radius, bool horizontal)
 	: fElement(NULL),
@@ -45,7 +47,7 @@ IntegerKernel::IntegerKernel(int32* elements, int32 diameter,
 IntegerKernel::IntegerKernel(IntegerKernel& from)
 	: fElement(copy(from.Element(), from.Diameter())),
 	  fDiameter(from.Diameter()),
-	  fHorizontal(from.IsHorizontal()), 
+	  fHorizontal(from.IsHorizontal()),
 	  fSymetry(from.Symetry()),
 	  fScale(from.Scale())
 {
@@ -92,60 +94,60 @@ IntegerKernel::operator*(Gray8Image* from) const
 	    result = new Gray8Image(width, height);
 	    if (result && result->IsValid()) {
 		    result->SetAllPixels(0);
-			uint8* np = result->Pixel();   
+			uint8* np = result->Pixel();
 			uint32 rad = fDiameter / 2;
 			uint32 i, j, k;
 			uint8* data = from->Pixel();
 			switch (fSymetry) {
 				case KERNEL_GENERAL:
 					if (fHorizontal) {
-						for (j = 0; j < height; j++) 
-							for (i = rad; i < width - rad; i++)  
-								for (k = -rad; k <= rad; k++) 
+						for (j = 0; j < height; j++)
+							for (i = rad; i < width - rad; i++)
+								for (k = -rad; k <= rad; k++)
 									np[i + j * width] += data[(i + k) + j * width]
 														 * fElement[k + rad];
 					} else {
-						for (j = rad; j < height - rad; j++) 
-							for (i = 0; i < width; i++) 
-								for (k = -rad; k <= rad; k++) 
+						for (j = rad; j < height - rad; j++)
+							for (i = 0; i < width; i++)
+								for (k = -rad; k <= rad; k++)
 									np[i + j * width] += data[i + (k + j) * width]
 														 * fElement[k + rad];
 					}
 					break;
 				case KERNEL_SYMETRIC:
 					if (fHorizontal) {
-						for (j = 0; j < height; j++) 
+						for (j = 0; j < height; j++)
 							for (i = rad; i < width - rad; i++) {
 								np[i + j * width] = data[i + j * width] * fElement[rad];
-								for (k = 1; k <= rad; k++) 
+								for (k = 1; k <= rad; k++)
 									np[i + j * width] += (data[(i + k) + j * width]
 														  + data[(i - k) + j * width])
 														 * fElement[k + rad];
 							}
 					} else {
-						for (j = rad; j < height - rad; j++) 
+						for (j = rad; j < height - rad; j++)
 							for (i = 0; i < width; i++) {
 								np[i + j * width] = data[i + j * width] * fElement[rad];
-								for (k = 1; k <= rad; k++) 
+								for (k = 1; k <= rad; k++)
 									np[i + j * width] += (data[i + (j + k) * width]
 														  + data[i + (j - k) * width])
 														 * fElement[k + rad];
 							}
 					}
-					break;      
+					break;
 				case KERNEL_ANTISYMETRIC:
-					if (fHorizontal) 
-						for (j = 0; j < height; j++) 
+					if (fHorizontal)
+						for (j = 0; j < height; j++)
 							for (i = rad; i < width - rad; i++) {
-								for(k = 1; k <= rad; k++) 
+								for(k = 1; k <= rad; k++)
 									np[i + j * width] += (data[(i + k) + j * width]
 														  - data[(i - k) + j * width])
 														 * fElement[k + rad];
 							}
 					else {
-						for (j = rad; j < height - rad; j++) 
-							for (i = 0; i < width; i++) 
-								for (k = 1; k <= rad; k++) 
+						for (j = rad; j < height - rad; j++)
+							for (i = 0; i < width; i++)
+								for (k = 1; k <= rad; k++)
 									np[i + j * width] += (data[i + (j + k) * width]
 														  -data[i + (j - k) * width])
 														 * fElement[k + rad];

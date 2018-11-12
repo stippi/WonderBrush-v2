@@ -93,13 +93,13 @@ RSRCS = WonderBrush.rsrc ;
 #	-	if your library follows the naming pattern of:
 #		libXXX.so or libXXX.a you can simply specify XXX
 #		library: libbe.so entry: be
-#		
+#
 #	- 	if your library does not follow the standard library
 #		naming scheme you need to specify the path to the library
 #		and it's name
 #		library: my_lib.a entry: my_lib.a or path/my_lib.a
-LIBS = be layout tracker translation stdc++.r4 textencoding
-	   freetype libagg.a libybcommon.a expat z libwarpsharp.a ;
+LIBS = libagg.a libybcommon.a libwarpsharp.a
+	be tracker translation stdc++ textencoding freetype layout expat z ;
 
 if $(TARGET_PLATFORM) = zeta {
 	LIBS += zeta ;
@@ -111,20 +111,17 @@ if $(TARGET_PLATFORM) = zeta {
 #	be recursive, so include all of the paths where libraries can
 #	be found.  Directories where source files are found are
 #	automatically included.
-LIBPATHS = [ FDirName $(YB_TOP) lib ] ;
+LIBPATHS = ;
 
 #	additional paths to look for system headers
 #	thes use the form: #include <header>
 #	source file directories are NOT auto-included here
-SYSTEM_INCLUDE_PATHS = [ FDirName $(YB_TOP) third_party liblayout ]
+SYSTEM_INCLUDE_PATHS = /system/develop/headers/liblayout/
 					   [ FDirName $(YB_TOP) libwarpsharp src ]
+					   [ FDirName $(YB_TOP) third_party agg "font_freetype" ]
 					   [ FDirName $(YB_TOP) third_party agg "include" ]
-					   [ FDirName $(YB_TOP) third_party expat ]
+					   /system/develop/headers/freetype2/
 ;
-
-if $(TARGET_PLATFORM) != haiku {
-	SYSTEM_INCLUDE_PATHS += [ FDirName $(YB_TOP) third_party freetype ] ;
-}
 
 #	additional paths to look for local headers
 #	thes use the form: #include "header"
@@ -144,7 +141,7 @@ LOCAL_INCLUDE_PATHS = $(SOURCE_DIRS)
 #	to use.  For example, setting DEFINES to "DEBUG=1" will cause the
 #	compiler option "-DDEBUG=1" to be used.  Setting DEFINES to "DEBUG"
 #	would pass "-DDEBUG" on the compiler's command line.
-DEFINES =	USE_LZO=0 
+DEFINES =	USE_LZO=0
 			USE_COLORSPACES=0
 			SLIM_GUI=0
 ;

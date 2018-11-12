@@ -14,7 +14,7 @@ const uint32 TRESHOLD = 0;
 
 // constructor
 SparseMatrix::SparseMatrix()
-	: fOrder(0), 
+	: fOrder(0),
 	  fEntriesPerRow(NULL),
 	  fEntryCount(0),
 	  fEntries(NULL),
@@ -24,7 +24,7 @@ SparseMatrix::SparseMatrix()
 
 // copy constructor
 SparseMatrix::SparseMatrix(const SparseMatrix& copy)
-	: fOrder(0), 
+	: fOrder(0),
 	  fEntriesPerRow(NULL),
 	  fEntryCount(0),
 	  fEntries(NULL),
@@ -49,7 +49,7 @@ SparseMatrix::SparseMatrix(const SparseMatrix& copy)
 SparseMatrix::SparseMatrix(uint32 order, uint32 entryCount,
 						   uint32* entriesPerRow, int32* entries,
 						   float* values)
-	: fOrder(0), 
+	: fOrder(0),
 	  fEntriesPerRow(NULL),
 	  fEntryCount(0),
 	  fEntries(NULL),
@@ -115,7 +115,7 @@ SparseMatrix::operator=(const SparseMatrix& copy)
 		fValues = new float[fEntryCount];
 		for(uint32 i = 0; i < fOrder; i++)
 			fEntriesPerRow[i] = copy.EntriesPerRow(i);
-		for(uint32 i = 0; i < fEntryCount; i++) {      
+		for(uint32 i = 0; i < fEntryCount; i++) {
 			fEntries[i] = copy.EntryAt(i);
 			fValues[i] = copy.ValueAt(i);
 		}
@@ -124,7 +124,7 @@ SparseMatrix::operator=(const SparseMatrix& copy)
 
 // ()
 float
-SparseMatrix::operator()(uint32 row, uint32 column)  
+SparseMatrix::operator()(uint32 row, uint32 column)
 {
 	if (row < fOrder && column < fOrder) {
 		uint32 start = 0;
@@ -132,7 +132,7 @@ SparseMatrix::operator()(uint32 row, uint32 column)
 			start += fEntriesPerRow[i];
 		int32* entry = fEntries + start;
 		float* value = fValues + start;
-		for (start = 0; start < fEntriesPerRow[row]; start++) 
+		for (start = 0; start < fEntriesPerRow[row]; start++)
 			if ((uint32)*(entry + start) == column)
 				return *(value + start);
 	}
@@ -192,7 +192,7 @@ s_sparse_matrix_n_entry(uint32 dx, uint32 dy)
 	uint32* output = new uint32[dx * dy];
 /*	if (output) {
 		for (uint32 j = 0; j < dy; j++)
-			for (uint32 i = 0; i < dx; i++)  
+			for (uint32 i = 0; i < dx; i++)
 				if ((i == 0) || (i == dx - 1)
 					|| (j == 0) || (j == dy - 1))
 					output[i + j * dx] = 1;
@@ -227,8 +227,8 @@ s_sparse_martix_entries(uint32 dx, uint32 dy)
 	int32* entry = new int32[4 * (dx - 2) * (dy - 2) + dx * dy];
 	int32* entryHook = entry;
 	if (entry) {
-		for (uint32 j = 0; j < dy; j++)    
-			for (uint32 i = 0; i < dx; i++) {  
+		for (uint32 j = 0; j < dy; j++)
+			for (uint32 i = 0; i < dx; i++) {
 				*entryHook++ = i + j * dx;
 				if ((i != 0) && (i != dx - 1) && (j != 0) && (j != dy - 1)) {
 					*entryHook++ = i + 1 + j * dx;
@@ -437,22 +437,22 @@ ccd_sparse_martix_n_entry(RGB8Image* source, uint32 color, uint32 &total)
 			for (i = 0; i < size; i++)
 				output[i] = 1;
 			for (j = 2; j < dy - 2; j++)
-				for (i = 2; i < dx - 2; i++) 
+				for (i = 2; i < dx - 2; i++)
 					switch (color) {
 						case GREEN:
 							if (((j % 2) == 0) && ((i % 2) == 1))
-								output[i + j * dx] = 13; 
+								output[i + j * dx] = 13;
 							if (((j % 2) == 1) && ((i % 2) == 0))
 								output[i + j * dx] = 13;
 						break;
 						case RED:
 							if ((j % 2) == 1)
-								output[i + j * dx] = 13; 
+								output[i + j * dx] = 13;
 							if (((j % 2) == 0) && ((i % 2) == 0))
 								output[i+j*dx] = 13;
 						break;
 						case BLUE:
-							if ((j % 2) == 0) 
+							if ((j % 2) == 0)
 								output[i + j * dx] = 13;
 							if (((j % 2) == 1) && ((i % 2) == 1))
 								output[i + j * dx] = 13;
@@ -477,21 +477,21 @@ ccd_sparse_martix_n_entry1(RGB8Image* source, uint32 color, uint32 &total)
 		uint32 j;
 		uint32 size = dx * dy;
 		int32* output = new int32[size];
-		if (output)
+		if (output) {
 			for (i = 0; i < size; i++)
 				output[i] = 1;
 			for (j = 1; j < dy - 1; j++)
-				for (i = 1; i < dx - 1; i++) 
+				for (i = 1; i < dx - 1; i++)
 					switch (color) {
 						case GREEN:
 							if (((j % 2) == 0) && ((i % 2) == 1))
-								output[i + j * dx] = 5; 
+								output[i + j * dx] = 5;
 							if (((j % 2) == 1) && ((i % 2) == 0))
 								output[i + j * dx] = 5;
 						break;
 						case RED:
 							if ((j % 2) == 1)
-								output[i + j * dx] = 5; 
+								output[i + j * dx] = 5;
 							if (((j % 2) == 0) && ((i % 2) == 0))
 								output[i + j * dx] = 5;
 						break;
@@ -502,7 +502,8 @@ ccd_sparse_martix_n_entry1(RGB8Image* source, uint32 color, uint32 &total)
 								output[i + j * dx] = 5;
 					}
 			for (i = 0; i < size; i++)
-				total += output[i];   
+				total += output[i];
+		}
 	}
 	return output;
 }
@@ -589,7 +590,7 @@ ccd_s_sparse_data(RGB8Image* source, uint32 *entry, uint32 entryCount)
 		if (output) {
 			float* hook = output;
 			for (j = 0; j < dy; j++)
-				for(i = 0; i < dx; i++) { 
+				for(i = 0; i < dx; i++) {
 					if (entry[i + j * dx] == 1)
 						*hook++ = 1;
 					else {
@@ -627,7 +628,7 @@ ccd_s_sparse_data1(RGB8Image* source, uint32* entry, uint32 entryCount)
 		if (output) {
 			float* hook = output;
 			for (j = 0; j < dy; j++)
-				for(i = 0; i < dx; i++) { 
+				for(i = 0; i < dx; i++) {
 					if (entry[i + j * dx] == 1)
 						*hook++ = 1;
 					else {
@@ -668,7 +669,7 @@ SparseMatrix::AssembleCCDMatrix(RGB8Image* source, bool first, uint32 color)
 			matrix = new SparseMatrix(a, b, c, dx * dy, entryCount);
 	}
 	return matrix;
-} 
+}
 
 // ---------------------------------------------
 // solving sparse systems

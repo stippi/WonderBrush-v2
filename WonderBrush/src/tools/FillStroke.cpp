@@ -1,7 +1,7 @@
 // FillStroke.cpp
 
 #include <math.h>
-#include <hash_set.h>
+#include <hash_set>
 #include <stdio.h>
 #include <string.h>
 #include <stack>
@@ -44,8 +44,8 @@ namespace agg
 {
 	//=======================================span_image_filter_gray8_bilinear
 	template<class Interpolator,
-			 class Allocator = span_allocator<gray8> > 
-	class span_image_filter_gray8_bilinear : 
+			 class Allocator = span_allocator<gray8> >
+	class span_image_filter_gray8_bilinear :
 	public span_image_filter<gray8, Interpolator, Allocator>
 	{
 		uint8	m_opacity;
@@ -64,7 +64,7 @@ namespace agg
 
 		//--------------------------------------------------------------------
 		span_image_filter_gray8_bilinear(alloc_type& alloc,
-										  const rendering_buffer& src, 
+										  const rendering_buffer& src,
 										  const color_type& back_color,
 										  interpolator_type& inter)
 			: base_type(alloc, src, back_color, inter, 0),
@@ -108,7 +108,7 @@ namespace agg
 				int weight;
 
 				if(x_lr >= 0	&& y_lr >= 0 &&
-				   x_lr <  maxx && y_lr <  maxy) 
+				   x_lr <  maxx && y_lr <  maxy)
 				{
 					fg = image_subpixel_size * image_subpixel_size / 2;
 
@@ -116,7 +116,7 @@ namespace agg
 					y_hr &= image_subpixel_mask;
 					fg_ptr = base_type::source_image().row(y_lr) + (x_lr);
 
-					weight = (image_subpixel_size - x_hr) * 
+					weight = (image_subpixel_size - x_hr) *
 							 (image_subpixel_size - y_hr);
 					fg += weight * *fg_ptr++;
 
@@ -147,7 +147,7 @@ namespace agg
 						x_hr &= image_subpixel_mask;
 						y_hr &= image_subpixel_mask;
 
-						weight = (image_subpixel_size - x_hr) * 
+						weight = (image_subpixel_size - x_hr) *
 								 (image_subpixel_size - y_hr);
 						if(x_lr >= 0	&& y_lr >= 0 &&
 						   x_lr <= maxx && y_lr <= maxy)
@@ -321,15 +321,15 @@ class Filler {
 						int32 redDiff = (int32)fFillColor.red - src[2];
 						int32 alphaDiff = (int32)fFillColor.alpha - src[3];
 						int32 alphaProduct = (int32)fFillColor.alpha * src[3];
-	
+
 						int32 colorDist = blueDiff * blueDiff + greenDiff * greenDiff + redDiff * redDiff;
 						colorDist = (int32)sqrt(colorDist / 3);
 						int32 alphaDist = (int32)sqrt(alphaDiff * alphaDiff);
-	
+
 						int32 value = colorDist * alphaProduct + alphaDist * (65025 - alphaProduct);
-	
+
 						value /= 65025;
-	
+
 						if (value <= fTolerance) {
 							return (uint8)(255 - value * fSoftness / fTolerance);
 						}
@@ -389,20 +389,20 @@ fill(const Filler* filler, FillPoint startPoint,
 		&& startPoint.y >= top && startPoint.y <= bottom) {
 
 		vector<FillPoint> border;
-	
+
 		border.push_back(startPoint);
 		filler->FillPixel(startPoint);
 		int32 filledLeft = startPoint.x;
 		int32 filledRight = startPoint.x;
 		int32 filledTop = startPoint.y;
 		int32 filledBottom = startPoint.y;
-	
+
 		while (!border.empty()) {
 			FillPoint p = border[border.size() - 1];
 			border.pop_back();
 			for (int32 i = 0; i < neighborCount; i++) {
 				FillPoint neighbor = p + neighbors[i];
-	
+
 				if (neighbor.x >= left && neighbor.x <= right
 					&& neighbor.y >= top && neighbor.y <= bottom) {
 					if (!filler->IsPixelFilled(neighbor)) {
@@ -457,12 +457,12 @@ fill2(const Filler* filler, FillPoint startPoint,
 			FillPoint p = points.top();
 			points.pop();
 			if (filler->FillPixel(p)) {
-	
+
 				if (filledTop > p.y)
 					filledTop = p.y;
 				if (filledBottom < p.y)
 					filledBottom = p.y;
-	
+
 				// search neighbors right
 				FillPoint neighbor(p.x + 1, p.y);
 				while (neighbor.x <= right && filler->FillPixel(neighbor)) {
@@ -470,11 +470,11 @@ fill2(const Filler* filler, FillPoint startPoint,
 						filledLeft = neighbor.x;
 					if (filledRight < neighbor.x)
 						filledRight = neighbor.x;
-	
+
 					neighbor.x++;
 				}
 				int32 maxX = neighbor.x - 1;
-	
+
 				// search neighbors left
 				neighbor.x = p.x - 1;
 				while (neighbor.x >= left && filler->FillPixel(neighbor)) {
@@ -482,11 +482,11 @@ fill2(const Filler* filler, FillPoint startPoint,
 						filledLeft = neighbor.x;
 					if (filledRight < neighbor.x)
 						filledRight = neighbor.x;
-	
+
 					neighbor.x--;
 				}
 				int32 minX = neighbor.x + 1;
-	
+
 				// search top and bottom adjacent lines in the range minX -> maxX
 				bool addedLastAbove = false;
 				bool addedLastBelow = false;
@@ -494,7 +494,7 @@ fill2(const Filler* filler, FillPoint startPoint,
 					// above
 					if (p.y - 1 >= top) {
 						FillPoint above(x, p.y - 1);
-		
+
 						if (!filler->IsPixelFilled(above) && filler->FillLevel(above) > 0) {
 							if (!addedLastAbove) {
 								points.push(above);
@@ -507,7 +507,7 @@ fill2(const Filler* filler, FillPoint startPoint,
 					// below
 					if (p.y + 1 <= bottom) {
 						FillPoint below(x, p.y + 1);
-		
+
 						if (!filler->IsPixelFilled(below) && filler->FillLevel(below) > 0) {
 							if (!addedLastBelow) {
 								points.push(below);
@@ -524,7 +524,7 @@ fill2(const Filler* filler, FillPoint startPoint,
 
 		return true;
 	}
-	return false;	
+	return false;
 }
 */
 // fill_contiguous
@@ -555,12 +555,12 @@ fill_contiguous(const Filler* filler, FillPoint startPoint,
 			FillPoint* p = points.Top();
 			points.Pop();
 			if (filler->FillPixel(*p)) {
-	
+
 				if (filledTop > p->y)
 					filledTop = p->y;
 				if (filledBottom < p->y)
 					filledBottom = p->y;
-	
+
 				// search neighbors right
 				FillPoint neighbor(p->x + 1, p->y);
 				while (neighbor.x <= right && filler->FillPixel(neighbor)) {
@@ -568,11 +568,11 @@ fill_contiguous(const Filler* filler, FillPoint startPoint,
 						filledLeft = neighbor.x;
 					if (filledRight < neighbor.x)
 						filledRight = neighbor.x;
-	
+
 					neighbor.x++;
 				}
 				int32 maxX = neighbor.x - 1;
-	
+
 				// search neighbors left
 				neighbor.x = p->x - 1;
 				while (neighbor.x >= left && filler->FillPixel(neighbor)) {
@@ -580,11 +580,11 @@ fill_contiguous(const Filler* filler, FillPoint startPoint,
 						filledLeft = neighbor.x;
 					if (filledRight < neighbor.x)
 						filledRight = neighbor.x;
-	
+
 					neighbor.x--;
 				}
 				int32 minX = neighbor.x + 1;
-	
+
 				// search top and bottom adjacent lines in the range minX -> maxX
 				bool addedLastAbove = false;
 				bool addedLastBelow = false;
@@ -592,7 +592,7 @@ fill_contiguous(const Filler* filler, FillPoint startPoint,
 					// above
 					if (p->y - 1 >= top) {
 						FillPoint above(x, p->y - 1);
-		
+
 						if (!filler->IsPixelFilled(above) && filler->FillLevel(above) > 0) {
 							if (!addedLastAbove) {
 								points.Push(new FillPoint(above.x, above.y));
@@ -605,7 +605,7 @@ fill_contiguous(const Filler* filler, FillPoint startPoint,
 					// below
 					if (p->y + 1 <= bottom) {
 						FillPoint below(x, p->y + 1);
-		
+
 						if (!filler->IsPixelFilled(below) && filler->FillLevel(below) > 0) {
 							if (!addedLastBelow) {
 								points.Push(new FillPoint(below.x, below.y));
@@ -821,7 +821,7 @@ FillStroke::Draw(BBitmap* bitmap)
 	Draw(bitmap, bitmap->Bounds());
 }
 
-typedef agg::pixfmt_gray8											pixfmt; 
+typedef agg::pixfmt_gray8											pixfmt;
 typedef agg::renderer_mclip<pixfmt>									renderer_base;
 typedef agg::span_allocator<agg::gray8>								span_alloc_type;
 typedef agg::span_interpolator_trans<Transformable>					interpolator_type;
@@ -878,7 +878,7 @@ FillStroke::Draw(BBitmap* bitmap, BRect constrainRect)
 		}
 
 		imgMatrix.invert();
-		
+
 		span_alloc_type sa;
 		interpolator_type interpolator(imgMatrix);
 
@@ -972,7 +972,7 @@ FillStroke::Fill(BBitmap* bitmap, BBitmap* strokeBitmap, bool contiguous)
 		clear_area(strokeBitmap, strokeBitmap->Bounds());
 
 		Filler filler(bitmap, strokeBitmap, fFillStart, fTolerance, fSoftness);
-	
+
 		BRect r = strokeBitmap->Bounds();
 		FillPoint startPoint((int32)floorf(fFillStart.x),
 							 (int32)floorf(fFillStart.y));

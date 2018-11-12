@@ -14,6 +14,6 @@ struct load_info {
 	int32				append_index;
 };
 
-int32	load(load_info* info);
+int32	load(void* /*load_info*/ info);
 
 #endif // LOAD_H

@@ -6,8 +6,7 @@
 #include <List.h>
 
 #include "Stroke.h"
-
-class VectorPath;
+#include "VectorPath.h"
 
 enum {
 	FILL_MODE_NON_ZERO = 0,
@@ -194,12 +193,12 @@ ShapeStroke::AddVertexSource(VertexSource& source, int32 index)
 				int32 start = path->CountPoints() - 1;
 				BPoint from;
 				path->GetPointAt(start, from);
-				
+
 				double cx2 = (1.0/3.0) * from.x + (2.0/3.0) * x1;
 				double cy2 = (1.0/3.0) * from.y + (2.0/3.0) * y1;
 				double cx3 = (2.0/3.0) * x1 + (1.0/3.0) * x2;
 				double cy3 = (2.0/3.0) * y1 + (1.0/3.0) * y2;
-				
+
 				path->SetPointOut(start, BPoint(cx2, cy2));
 
 				path->AddPoint(BPoint(x2, y2));

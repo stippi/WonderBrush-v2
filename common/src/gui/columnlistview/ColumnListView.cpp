@@ -1,6 +1,6 @@
 // ColumnListView.cpp
 
-#include <algobase.h>
+#include <algorithm>
 #include <stdio.h>
 
 #include <Message.h>
@@ -186,7 +186,7 @@ ColumnListView::Draw(BView* view, BRect updateRect)
 			BRect rect(updateRect);
 			rect.top = itemsRect.bottom + 1.0f;
 			// don't draw more than necessary:
-			rect.right = min(rect.right, itemsRect.right);
+			rect.right = std::min(rect.right, itemsRect.right);
 			if (rect.IsValid()) {
 				view->SetHighColor(fColors->background);
 				view->FillRect(rect);
@@ -870,7 +870,7 @@ ColumnListView::SetInvocationMessage(BMessage* message)
 {
 	delete fInvocationMessage;
 	fInvocationMessage = message;
-		
+
 }
 
 // InvocationMessage
@@ -1111,8 +1111,8 @@ ColumnListView::MoveVisibleColumns(int32 index, int32 dest, int32 count)
 		} else
 			fColumns.AddList(&columns, 0);
 		// Update the graphics stuff.
-		int32 first = min(index, dest);
-//		int32 last = max(index, dest) + count - 1;
+		int32 first = std::min(index, dest);
+//		int32 last = std::max(index, dest) + count - 1;
 		_UpdateColumnXOffsets(first, true);
 		// move header
 		fHeaderView->MoveHeaders(index, dest, count);
@@ -1831,7 +1831,7 @@ ColumnListView::_HeaderViewRect() const
 {
 	BRect rect;
 	rect.left = -fCurrentScrollOffset.x;
-	rect.right = rect.left + max(DataRect().Width(), Bounds().Width());
+	rect.right = rect.left + std::max(DataRect().Width(), Bounds().Width());
 	rect.top = 0.0f;
 	rect.bottom = rect.top + fHeaderView->Height();
 	return rect;
@@ -1862,8 +1862,8 @@ ColumnListView::_ActualItemsRect() const
 	} else {
 		Column* lastColumn = _VisibleColumnAt(_CountVisibleColumns() - 1);
 		ColumnListItem* lastItem = ItemAt(CountItems() - 1);
-		rect.right = min(rect.right, _VisibleColumnFrame(lastColumn).right);
-		rect.bottom = min(rect.bottom, _ItemFrame(lastItem).bottom);
+		rect.right = std::min(rect.right, _VisibleColumnFrame(lastColumn).right);
+		rect.bottom = std::min(rect.bottom, _ItemFrame(lastItem).bottom);
 	}
 	return rect;
 }

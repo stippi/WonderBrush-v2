@@ -7,6 +7,7 @@
 #include <MenuItem.h>
 #include <Message.h>
 #include <String.h>
+#include <PopUpMenu.h>
 
 #include <HGroup.h>
 #include <MTextControl.h>
@@ -226,7 +227,7 @@ DimensionsControl::DimensionsControl(BMessage* _message,
 	message->AddInt32("format", FORMAT_720_492);
 	item = new BMenuItem("720x492 (TV cropped NTSC)", message);
 	fCommonFormatsPU->Menu()->AddItem(item);*/
-	
+
 	fCommonFormatsPU->Menu()->AddSeparatorItem();
 
 	message = new BMessage(MSG_COMMON_FORMAT);
@@ -290,7 +291,7 @@ DimensionsControl::DimensionsControl(BMessage* _message,
 			new Space(minimax(5.0f, 20.0f, 5.0f, 20.0f, 1.0f)),
 			0
 		),
-		0	
+		0
 	);
 
 	// some last tweaks
@@ -550,7 +551,7 @@ DimensionsControl::SetWidthLimits(uint32 min, uint32 max)
 }
 
 // SetHeightLimits
-void	
+void
 DimensionsControl::SetHeightLimits(uint32 min, uint32 max)
 {
 	if (max < min)
@@ -614,7 +615,7 @@ DimensionsControl::HeightControl() const
 }
 
 // GetLockedWidthFor
-uint32	
+uint32
 DimensionsControl::GetLockedWidthFor(uint32 newHeight)
 {
 	float proportion = (float)fPreviousHeight / (float)fPreviousWidth; // using old height
@@ -622,7 +623,7 @@ DimensionsControl::GetLockedWidthFor(uint32 newHeight)
 }
 
 // GetLockedHeightFor
-uint32	
+uint32
 DimensionsControl::GetLockedHeightFor(uint32 newWidth)
 {
 	float proportion = (float)fPreviousWidth / (float)fPreviousHeight; // using old width

@@ -8,7 +8,7 @@
 
 #include <agg_trans_affine.h>
 
-#include "agg_font_freetype.h"
+#include <agg_font_freetype.h>
 
 class BBitmap;
 class BlurFilter;

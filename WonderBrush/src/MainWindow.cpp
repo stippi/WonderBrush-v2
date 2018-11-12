@@ -18,6 +18,7 @@
 #include <NodeMonitor.h>
 #include <Path.h>
 #include <PrintJob.h>
+#include <PopUpMenu.h>
 #include <RecentItems.h>
 #include <Roster.h>
 #include <Screen.h>
@@ -207,7 +208,7 @@ class PrintView : public BView {
 							else
 								offset.y = (r.Height() - bitmapFrame.Height()) / 2.0;
 							bitmapFrame.OffsetBy(offset);
-							
+
 //							printf("PrintView::Draw()\n");
 //							updateRect.PrintToStream();
 //							fPrintableRect.PrintToStream();
@@ -687,7 +688,7 @@ fFontSizeSB->SetMaxValue(sqrtf((12.0 / 64.0) / 50.0));
 
 	fGuideVPosTC = new NumericalTextControl("Vertical", "50.00",
 										   new BMessage(MSG_SET_GUIDE_V_POS));
-	
+
 	fGuideAngleTC = new NumericalTextControl("Angle", "0.00",
 											new BMessage(MSG_SET_GUIDE_ANGLE));
 
@@ -2734,7 +2735,7 @@ MainWindow::Save(Canvas* canvas, const entry_ref* docRef, Exporter* exporter)
 			// remove temporary file
 			entry.Remove();
 		}
-	
+
 		if (status >= B_OK && ref != docRef) {
 			// move temp file overwriting actual document file
 			BEntry docEntry(docRef, true);
@@ -3230,7 +3231,7 @@ MainWindow::Print(Canvas* canvas)// const
 		// creates its own BPrintJob object).
 //		BRect paperRect;
 		BRect printableRect;
-	
+
 		BMessage* settings = canvas->PageSetupSettings();
 		if (!settings || !job.IsSettingsMessageValid(settings)) {
 			// no user settings or wrong user settings for this document
@@ -3251,12 +3252,12 @@ printf("Print(): no settings or settings not valid - running Setup\n");
 			// setup the driver with user settings
 			settings = canvas->PageSetupSettings();
 			job.SetSettings(new BMessage(*settings));
-			
+
 			status = job.ConfigJob();
 			if (status >= B_OK) {
 				// get the user settings
 				canvas->SetPageSetupSettings(job.Settings());
-				
+
 				// use the new settings for your internal use
 				// they may have changed since the last time you read it
 //				paperRect = job.PaperRect();
@@ -3270,7 +3271,7 @@ printf("Print(): no settings or settings not valid - running Setup\n");
 				printView->Hide();
 				AddChild(printView);
 //				float height = printableRect.Height() / 10.0;
-				
+
 
 				// now we can print the page
 				job.BeginJob();
@@ -3291,11 +3292,11 @@ printf("drawing region:\n");
 
 r.PrintToStream();
 					job.DrawView(printView, r, printableRect.LeftTop());
-					
+
 					// update info view to indicate progress
 					fInfoView->JobProgress(100.0 / ((i + 1) * 10.0));
-					
-	
+
+
 					// cancel the job if needed.
 					// you can for exemple verify if the user pressed the ESC key
 					// or (SHIFT + '.')...
@@ -3768,7 +3769,7 @@ MainWindow::SetStatus(const char* message, uint32 warningLevel, bool permanent)
 	if (fStatusBar) {
 		if (warningLevel > STATUS_ERROR)
 			warningLevel = STATUS_ERROR;
-	
+
 		if (permanent) {
 			BString filtered(message);
 			filtered.IReplaceAll('\n', ' ');
@@ -5029,11 +5030,11 @@ MainWindow::_SaveSettings()
 		fSettings->AddInt32("translator format", format);
 	if (fLastSavePath) {
 		if (fSettings->ReplaceRef("last save path", fLastSavePath) < B_OK)
-			fSettings->AddRef("last save path", fLastSavePath);	
+			fSettings->AddRef("last save path", fLastSavePath);
 	}
 	if (fLastExportPath) {
 		if (fSettings->ReplaceRef("last export path", fLastExportPath) < B_OK)
-			fSettings->AddRef("last export path", fLastExportPath);	
+			fSettings->AddRef("last export path", fLastExportPath);
 	}
 
 	// layer/history weighting
@@ -5491,7 +5492,7 @@ MainWindow::_wait_for_file(void* cookie)
 			break;
 		snooze(100000);
 	}
-	
+
 	node.Unlock();
 	BMessage message(B_REFS_RECEIVED);
 	message.AddRef("refs", &info->ref);
