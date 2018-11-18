@@ -36,7 +36,7 @@
 using std::nothrow;
 
 // static variables
-long			BubbleHelper::fRunCount = 0;
+int32			BubbleHelper::fRunCount = 0;
 BubbleHelper*	BubbleHelper::fDefaultHelper = NULL;
 
 struct help_pair
@@ -236,7 +236,7 @@ BubbleHelper::_Helper()
 
 	while (be_app_messenger.IsValid()) {
 		BPoint where;
-		ulong buttons;
+		uint32 buttons;
 		if (fEnabled) {
 			if (fTextWindow->Lock()) {
 				fTextView->GetMouse(&where,&buttons);
@@ -292,7 +292,7 @@ end:
 }
 
 // _helper
-long
+int
 BubbleHelper::_helper(void *arg)
 {
 	((BubbleHelper*)arg)->_Helper();

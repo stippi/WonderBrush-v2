@@ -17,7 +17,7 @@
 
 #include "addon.h"
 
-#if __INTEL__
+#if defined(__INTEL__) || defined(__x86_64__)
 #define COMPILER_NAME			"gcc"
 #define COMPILER_ADDON_OPTION	"-nostart"
 #define COMPILER_OPTIMIZATION	"-O1"
@@ -39,7 +39,7 @@ find_template_file(char *buffer)
 {
 	app_info ai;
 	BPath p;
-	
+
 	be_app->GetAppInfo(&ai);
 	BEntry e(&ai.ref);
 	e.GetPath(&p);
@@ -47,7 +47,7 @@ find_template_file(char *buffer)
 	p.Append("template");
 
 	strcpy(buffer, p.Path());
-	
+
 	return 1;
 }
 
@@ -63,7 +63,7 @@ build_addon(const char* path)
 	FILE* tfp = fopen(path, "r");
 	if (!tfp)
 		return NULL;
-		
+
 	// open a temporary source file, define the string indices,
 	// and tack the language file onto the end of it.
 	char srcfile[64];
@@ -81,14 +81,14 @@ build_addon(const char* path)
 	}
 
 	print_header(fp);
-	
+
 	char buffer[1024];
 	while (fgets(buffer, sizeof(buffer), tfp))
 		fputs(buffer, fp);
-	
+
 	fclose(fp);
 	fclose(tfp);
-	
+
 	// invoke the compiler
 	sprintf(buffer, "%s %s %s -o %s %s %s",
 			COMPILER_NAME, COMPILER_OPTIMIZATION, COMPILER_ADDON_OPTION,
@@ -117,7 +117,7 @@ build_addon(const char* path)
 	if (get_image_symbol(a->image, "init_strings", B_SYMBOL_TYPE_TEXT,
 						(void **)&(a->function)) != B_OK) {
 		printf("couldn't find init_strings() in addon\n");
-		unload_add_on(a->image);		
+		unload_add_on(a->image);
 		free(a);
 		return NULL;
 	}
@@ -135,7 +135,7 @@ destroy_addon(language_addon *addon)
 	// sanity check
 	if (addon == NULL)
 		return;
-		
+
 	unload_add_on(addon->image);
 	free(addon);
 }
@@ -147,7 +147,7 @@ load_addon(const char* path)
 	language_addon* a = (language_addon *)malloc(sizeof(language_addon));
 	if (!a)
 		return NULL;
-	
+
 	strcpy(a->path, path);
 
 	char* cp = strrchr(a->path, '/');
@@ -155,7 +155,7 @@ load_addon(const char* path)
 		strcpy(a->name, DEFAULT_NAME);
 	else
 		strcpy(a->name, cp+1);
-		
+
 	if ((a->image = load_add_on(a->path)) <= 0)
 		goto bail;
 
@@ -164,9 +164,9 @@ load_addon(const char* path)
 		goto bail2;
 
 	return a;
-								
+
 bail2:
-	unload_add_on(a->image);	
+	unload_add_on(a->image);
 bail:
 	free(a);
 	return NULL;
@@ -180,7 +180,7 @@ save_addon(language_addon *addon, const char *directory)
 	BEntry entry;
 	char file[B_FILE_NAME_LENGTH];
 	status_t err;
-			
+
 	BPath path(addon->path);
 	strcpy(file, path.Leaf());
 	path.GetParent(&path);
@@ -190,7 +190,7 @@ save_addon(language_addon *addon, const char *directory)
 
 	if ((err = newDir.SetTo(directory)) < B_OK)
 		return err;
-	
+
 	if ((err = oldDir.FindEntry(file, &entry)) < B_OK)
 		return err;
 
@@ -233,9 +233,9 @@ save_addon(language_addon *addon, const char *directory)
 
 	newDir.GetEntry(&entry);
 	entry.GetPath(&path);
-			
+
 	sprintf(addon->path, "%s/%s", path.Path(), addon->name);
-	
+
 	return err;
 }
 

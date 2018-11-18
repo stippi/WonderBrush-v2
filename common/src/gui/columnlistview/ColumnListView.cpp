@@ -736,7 +736,7 @@ ColumnListView::SetSelectionMode(selection_mode mode)
 int32
 ColumnListView::CurrentSelection(int32 index) const
 {
-	return (int32)fSelectedItems.ItemAt(index) - 1;
+	return (int32)(intptr_t)fSelectedItems.ItemAt(index) - 1;
 }
 
 // Deselect

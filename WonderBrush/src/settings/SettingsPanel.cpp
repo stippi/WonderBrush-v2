@@ -358,7 +358,7 @@ void
 SettingsPanel::_BuildLanguageMenu(BMenu* menu)
 {
 	// whipe menu clean
-	while (BMenuItem* item = menu->RemoveItem(0L))
+	while (BMenuItem* item = menu->RemoveItem((int32)0))
 		delete item;
 	// add the languages the language manager tells us he got...
 	int32 index = 0;

@@ -16,7 +16,7 @@ EventQueue::EventQueue()
 	  fThreadControl(-1),
 	  fNextEventTime(0),
 	  fStatus(B_ERROR)
-	  
+
 {
 	fThreadControl = create_sem(0, "event queue control");
 	if (fThreadControl >= B_OK)
@@ -39,7 +39,7 @@ EventQueue::~EventQueue()
 {
 	if (delete_sem(fThreadControl) == B_OK)
 		wait_for_thread(fEventExecutor, &fEventExecutor);
-	while (Event *event = (Event*)fEvents.RemoveItem(0L)) {
+	while (Event *event = (Event*)fEvents.RemoveItem((int32)0)) {
 		if (event->GetAutoDelete())
 			delete event;
 	}
@@ -172,7 +172,7 @@ EventQueue::_ExecuteEvents()
 				if (Lock()) {
 					while (!fEvents.IsEmpty()
 						   && system_time() >= _EventAt(0)->Time()) {
-						Event* event = (Event*)fEvents.RemoveItem(0L);
+						Event* event = (Event*)fEvents.RemoveItem((int32)0);
 						bool deleteEvent = event->GetAutoDelete();
 						event->Execute();
 						if (deleteEvent)
