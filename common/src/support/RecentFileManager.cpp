@@ -148,7 +148,7 @@ RecentFileManager::AddFile(const entry_ref* ref)
 			}
 			// remove old entries from beginning of the list
 			while ((uint32)fEntries.CountItems() >= fMaxEntries) {
-				if (entry_ref* oldRef = (entry_ref*)fEntries.RemoveItem(0L))
+				if (entry_ref* oldRef = (entry_ref*)fEntries.RemoveItem((int32)0))
 					delete oldRef;
 				else
 					break;

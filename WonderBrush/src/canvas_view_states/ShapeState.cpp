@@ -161,7 +161,7 @@ public:
 		{ return BList::IsEmpty(); }
 
 	inline int32 IndexAt(int32 index) const
-		{ return (int32)BList::ItemAt(index); }
+		{ return (int32)(intptr_t)BList::ItemAt(index); }
 
 	inline void MakeEmpty()
 		{ BList::MakeEmpty(); }
@@ -319,7 +319,7 @@ ShapeState::MouseDown(BPoint where, Point canvasWhere, bool eraser)
 			canvasWhere.point += BPoint(offset, offset);
 		}
 
-	
+
 		// start new stroke
 		if (!fShapeStroke) {
 			ShapeStroke* modifier = new ShapeStroke(fCanvasView->Color());
@@ -629,7 +629,7 @@ ShapeState::MouseMoved(BPoint where, Point canvasWhere,
 				// drag out control point
 				fPath->SetPointOut(fCurrentPathPoint, canvasWhere.point);
 				break;
-			
+
 			case SELECT_POINTS: {
 				// change the selection
 				BRect r;
@@ -714,7 +714,7 @@ class CanvasViewIterator : public VectorPath::Iterator {
 							else
 								fDrawingView->SetHighColor(0, 0, 0, 255);
 							fBlack = !fBlack;
-	
+
 							fDrawingView->StrokeLine(point);
 						} else {
 							fDrawingView->MovePenTo(point);
@@ -773,7 +773,7 @@ ShapeState::Draw(BView* into, BRect updateRect)
 
 						into->SetLowColor(highlight_color);
 					}
-		
+
 					into->SetDrawingMode(B_OP_COPY);
 					BRect r(point, point);
 					r.InsetBy(-POINT_EXTEND, -POINT_EXTEND);
@@ -1408,7 +1408,7 @@ ShapeState::SetColor(rgb_color color, bool action, bool notify)
 		if (fShapeStroke) {
 			if (action)
 				fCanvasView->Perform(new SetShapeColorAction(this, fShapeStroke));
-	
+
 			// handle invalidation
 			BRect r(fShapeStroke->Bounds());
 			BRect cr(_ControlPointRect());
@@ -1603,7 +1603,7 @@ ShapeState::_RedrawStroke(BRect oldStrokeBounds, BRect oldControlPointsBounds,
 
 			if (fEditAction) {
 				fShapeStroke->UpdateBounds();
-				
+
 				BRect r(fShapeStroke->Bounds());
 				fLayer->Touch(r);
 
@@ -1613,19 +1613,19 @@ ShapeState::_RedrawStroke(BRect oldStrokeBounds, BRect oldControlPointsBounds,
 				_InvalidateCanvasRect(oldControlPointsBounds | _ControlPointRect(), false);
 			} else {
 				fShapeStroke->UpdateBounds();
-		
+
 				BRect r(fShapeStroke->Bounds());
 				fLayer->Touch(r);
-	
+
 				clear_area(fCanvasView->StrokeBitmap(), oldStrokeBounds);
 				fShapeStroke->Draw(fCanvasView->StrokeBitmap(), r);
-	
+
 				r = r | oldStrokeBounds;
 
 				if (forceStrokeDrawing)
 					_ApplyStroke(fCanvasView->BackBitmap(),
 								 fLayer->Bitmap(), r, fShapeStroke);
-	
+
 				_InvalidateCanvasRect(r, true);
 				_InvalidateCanvasRect(oldControlPointsBounds | _ControlPointRect(), false);
 			}
@@ -1692,7 +1692,7 @@ ShapeState::_Perform()
 			_SetConfirmationEnabled(false);
 		}
 		SetClosed(false);
-	
+
 		UpdateToolCursor();
 		_UpdateSelection();
 	}
@@ -1886,7 +1886,7 @@ ShapeState::_InsertPoint(Point where, int32 index)
 			nextIn = scale_point(next, nextIn, 1 - scale);
 			pointIn = scale_point(previousOut, where.point, scale);
 			pointOut = scale_point(nextIn, where.point, 1 - scale);
-			
+
 			if (fPath->AddPoint(point, index)) {
 
 				fPath->SetPointIn(index, pointIn);
@@ -2138,7 +2138,7 @@ ShapeState::_ControlPointRect() const
 		r = r | fShapeStroke->Bounds();
 		r.InsetBy(-POINT_EXTEND, -POINT_EXTEND);
 	}
-	return r; 
+	return r;
 }
 
 // _SetModeForMousePos
@@ -2163,11 +2163,11 @@ ShapeState::_SetModeForMousePos(BPoint where)
 			BPoint pointOut;
 			for (int32 i = 0; fPath->GetPointsAt(i, point, pointIn, pointOut)
 							  && mode == UNDEFINED; i++) {
-	
+
 				float distM = dist(point, where) * zoomLevel;
 				float distIn = dist(pointIn, where) * zoomLevel;
 				float distOut = dist(pointOut, where) * zoomLevel;
-				
+
 				if (distM < MOVE_THRESHOLD) {
 					if (i == 0 && !fShapeStroke->IsOutline()
 						&& !fPath->IsClosed() && fPath->CountPoints() > 1) {
@@ -2181,7 +2181,7 @@ ShapeState::_SetModeForMousePos(BPoint where)
 					}
 				}
 				if (distIn < distM && distIn < MOVE_THRESHOLD) {
-					mode = fCommandDown ? TOGGLE_SHARP_IN : 
+					mode = fCommandDown ? TOGGLE_SHARP_IN :
 								(fOptionDown ? REMOVE_POINT_IN : MOVE_POINT_IN);
 					index = i;
 				}
@@ -2226,7 +2226,7 @@ ShapeState::_SetModeForMousePos(BPoint where)
 					int32 dummy;
 					if (path != fPath &&
 						path->Bounds().InsetByCopy(-hitTestDist, -hitTestDist).Contains(where) &&
-						path->GetDistance(where, &distance, &dummy) && 
+						path->GetDistance(where, &distance, &dummy) &&
 						distance < hitTestDist) {
 
 						mode = SELECT_SUB_PATH;
@@ -2343,14 +2343,14 @@ ShapeState::_Nudge(BPoint direction)
 				fTransformBox->NudgeBy(direction);
 			} else {
 				if (!fNudgeAction) {
-	
+
 					bool fromSelection = !fSelection->IsEmpty();
-	
+
 					int32 count = fromSelection ? fSelection->CountItems()
 												: fPath->CountPoints();
 					int32* indices = new int32[count];
 					control_point* points = new control_point[count];
-	
+
 					// init indices and points
 					for (int32 i = 0; i < count; i++) {
 						indices[i] = fromSelection ? fSelection->IndexAt(i) : i;
@@ -2360,21 +2360,21 @@ ShapeState::_Nudge(BPoint direction)
 										   points[i].point_out,
 										   &points[i].connected);
 					}
-	
+
 					fNudgeAction = new NudgePointsAction(this, fShapeStroke,
 														 indices, points, count);
-	
+
 					fNudgeAction->SetNewTranslation(fNudgeOffset);
 					fNudgeAction->Redo(fCanvasView);
-	
+
 					delete[] indices;
 					delete[] points;
-		
+
 				} else {
 					fNudgeAction->SetNewTranslation(fNudgeOffset);
 					fNudgeAction->Redo(fCanvasView);
 				}
-	
+
 				if (!fMouseDown)
 					_SetModeForMousePos(fLastCanvasPos);
 			}

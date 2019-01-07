@@ -225,13 +225,13 @@ BrushPanel::_BuildBrushSetMenu()
 		BDirectory dir(path.Path());
 		if (dir.InitCheck() >= B_OK) {
 			// empty the menus
-			while (BMenuItem* item = fLoadM->RemoveItem(0L)) {
+			while (BMenuItem* item = fLoadM->RemoveItem((int32)0)) {
 				delete item;
 			}
-			while (BMenuItem* item = fSaveM->RemoveItem(0L)) {
+			while (BMenuItem* item = fSaveM->RemoveItem((int32)0)) {
 				delete item;
 			}
-			while (BMenuItem* item = fDeleteM->RemoveItem(0L)) {
+			while (BMenuItem* item = fDeleteM->RemoveItem((int32)0)) {
 				delete item;
 			}
 			LanguageManager* manager = LanguageManager::Default();

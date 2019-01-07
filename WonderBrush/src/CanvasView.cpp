@@ -673,7 +673,7 @@ CanvasView::Draw(BRect updateRect)
 			lt.y = floorf(lt.y);
 			rb.x = ceilf(rb.x);
 			rb.y = ceilf(rb.y);
-	
+
 			int32 width = (int32)(rb.x - lt.x) + 1;
 			int32 height = (int32)(rb.y - lt.y) + 1;
 			SetHighColor(80, 80, 80, 255);
@@ -1414,7 +1414,7 @@ CanvasView::HandleKeyDown(uint32 key, uint32 modifiers)
 
 	if (!fLayer)
 		return false;
-	
+
 	if (fCurrentState) {
 		if (fCurrentState->HandleKeyDown(key, modifiers)) {
 //printf("CanvasView::HandleKeyDown() - state handled it\n");
@@ -1422,7 +1422,7 @@ CanvasView::HandleKeyDown(uint32 key, uint32 modifiers)
 		}
 	}
 
-		
+
 	bool handled = true;
 	// handle some keys regardless if command key pressed
 	switch (key) {
@@ -1976,7 +1976,7 @@ CanvasView::ShapeJoinMode() const
 {
 	return fShapeState->JoinMode();
 }
-			
+
 // ShapeControlFlags
 uint32
 CanvasView::ShapeControlFlags() const
@@ -2414,7 +2414,7 @@ CanvasView::ChangeColors(BList& indices, rgb_color color)
 		// copy items and make color change action
 		Stroke** strokes = new Stroke*[count];
 		for (int32 i = 0; i < count; i++) {
-			int32 index = (int32)indices.ItemAt(i);
+			int32 index = (int32)(intptr_t)indices.ItemAt(i);
 			strokes[i] = fHistory->ModifierAt(index);
 		}
 		Perform(new ChangeColorAction(fLayer, strokes, color, count));
@@ -2483,7 +2483,7 @@ CanvasView::StateForCurrentTool() const
 {
 	CanvasViewState* state = NULL;
 	switch (fMode) {
-		case TOOL_COLOR_PICKER:			
+		case TOOL_COLOR_PICKER:
 			state = fColorpickState;
 			break;
 		case TOOL_BUCKET_FILL:
@@ -2823,14 +2823,14 @@ CanvasView::_GetTabletInfo(BPoint& where, Point& canvasWhere, bool& eraser,
 		} else {
 			canvasWhere.point = where;
 		}
-	
+
 		// convert to canvas space and round if subpixel precision is off
 		ConvertToCanvas(canvasWhere.point);
 		if (fCurrentState && !fCurrentState->Precise()) {
 			canvasWhere.point.x = floorf(canvasWhere.point.x + 0.5);
 			canvasWhere.point.y = floorf(canvasWhere.point.y + 0.5);
 		}
-	
+
 		// pressure
 		if (message->FindFloat("be:tablet_pressure", &canvasWhere.pressure) < B_OK) {
 			canvasWhere.pressure = 1.0;
@@ -2838,13 +2838,13 @@ CanvasView::_GetTabletInfo(BPoint& where, Point& canvasWhere, bool& eraser,
 			tablet = true;
 		}
 		constrain(canvasWhere.pressure, 0.0, 1.0);
-	
+
 		// eraser
 		int32 eraserMode;
 		if (message->FindInt32("be:tablet_eraser", &eraserMode) < B_OK)
 			eraserMode = 0;
 		eraser = eraserMode > 0;
-	
+
 		// tilt
 		if (message->FindFloat("be:tablet_tilt_x", &canvasWhere.tiltX) < B_OK)
 			canvasWhere.tiltX = 0.0;
@@ -3348,9 +3348,9 @@ CanvasView::_SetZoom(float level, bool force, bool ignorBusy)
 				float scale = fZoomLevel / 100.0;
 				float width = floorf(r.Width() * scale + 1.0 * (scale - 1.0) + 0.5);
 				float height = floorf(r.Height() * scale + 1.0 * (scale - 1.0) + 0.5);
-	
+
 				r = _InnerBounds();
-	
+
 				BPoint center((r.left + r.right) / 2.0, (r.top + r.bottom) / 2.0);
 /*				BPoint center;
 				if (r.Contains(fCursorPosition)) {
@@ -3367,7 +3367,7 @@ CanvasView::_SetZoom(float level, bool force, bool ignorBusy)
 
 				fCanvasFrame.left = roundf(center.x - canvasPoint.x * scale);
 				fCanvasFrame.top = roundf(center.y - canvasPoint.y * scale);
-	
+
 				if (width < r.Width()) {
 					// center canvas horizontally
 					fCanvasFrame.left = roundf(r.left + (r.Width() - width) / 2.0);
@@ -3420,9 +3420,9 @@ CanvasView::_SetZoom(float level, bool force, bool ignorBusy)
 				fCurrentScrollOffset = newScrollOffset;
 				_UpdateNavigatorView();
 				fScrollingEnabled = true;
-	
+
 				Invalidate();
-	
+
 				_UpdateInfoView();
 			}
 		}
@@ -3476,7 +3476,7 @@ CanvasView::_NextZoomInLevel(float zoom) const
 }
 
 // _NextZoomOutLevel
-float			
+float
 CanvasView::_NextZoomOutLevel(float zoom) const
 {
 	if (zoom > 1600.0)

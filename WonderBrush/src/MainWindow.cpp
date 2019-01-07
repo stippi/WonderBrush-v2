@@ -5156,13 +5156,13 @@ MainWindow::_BuildSwatchMenu()
 		BDirectory dir(path.Path());
 		if (dir.InitCheck() >= B_OK) {
 			// empty the menus
-			while (BMenuItem* item = fLoadSwatchesM->RemoveItem(0L)) {
+			while (BMenuItem* item = fLoadSwatchesM->RemoveItem((int32)0)) {
 				delete item;
 			}
-			while (BMenuItem* item = fSaveSwatchesM->RemoveItem(0L)) {
+			while (BMenuItem* item = fSaveSwatchesM->RemoveItem((int32)0)) {
 				delete item;
 			}
-			while (BMenuItem* item = fDeleteSwatchesM->RemoveItem(0L)) {
+			while (BMenuItem* item = fDeleteSwatchesM->RemoveItem((int32)0)) {
 				delete item;
 			}
 			LanguageManager* manager = LanguageManager::Default();

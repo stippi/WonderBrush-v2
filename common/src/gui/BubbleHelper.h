@@ -12,7 +12,7 @@
       application). It is safe to create one on the stack or as a global.
     - Call SetHelp(view,text) for each view to which you wish to attach a text.
     - Use SetHelp(view,NULL) to remove text from a view.
-    
+
     This could be implemented as a BMessageFilter as well, but that means using
     one bubblehelp-instance for each window to which you wish to add help-bubbles.
     Using a single looping thread for everything turned out to be the most practical
@@ -57,14 +57,14 @@ class BubbleHelper {
 			void				_DisplayHelp(const char* text,
 											 BPoint where);
 			void				_Helper();
-	static	long 				_helper(void* arg);
+	static	int 				_helper(void* arg);
 
 			char*				_GetHelp(BView* view);
 			BView*				_FindView(BPoint where);
 
 	// may be accessed by several threads
 	volatile bool				fEnabled;
-	
+
 			void				_HideBubble();
 			void				_ShowBubble(BPoint dest);
 
@@ -72,8 +72,8 @@ class BubbleHelper {
 			BList*				fHelpList;
 			BWindow*			fTextWindow;
 			BTextView*			fTextView;
-	
-	static	long				fRunCount;
+
+	static	int32				fRunCount;
 	static	BubbleHelper*		fDefaultHelper;
 };
 

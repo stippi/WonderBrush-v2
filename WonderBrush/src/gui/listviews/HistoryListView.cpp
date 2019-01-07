@@ -762,7 +762,7 @@ HistoryListView::_CheckMenuStatus()
 void
 HistoryListView::_RebuildFilterMenu()
 {
-	while (BMenuItem* item = fFilterM->RemoveItem(0L))
+	while (BMenuItem* item = fFilterM->RemoveItem((int32)0))
 		delete item;
 	FilterFactory* factory = FilterFactory::Default();
 	int32 id;
