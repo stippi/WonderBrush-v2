@@ -38,7 +38,6 @@ class HistoryListView;
 class IconButton;
 class IconOptionsControl;
 class InfoView;
-class Keyfile;
 class LabelPopup;
 class Layer;
 class LayeredGroup;
@@ -112,8 +111,6 @@ class MainWindow : public MWindow {
 			status_t			Print(Canvas* canvas);// const;
 
 			void				UpdateStrings();
-
-			const char*			GetLicenceeName() const;
 
 			void				SetStatus(const char* message,
 										  uint32 warningLevel,
@@ -419,8 +416,6 @@ class MainWindow : public MWindow {
 	ExportPanel*				fSavePanel;
 	entry_ref*					fLastSavePath;
 	entry_ref*					fLastExportPath;
-	Keyfile*					fKeyfile;
-
 	thread_id					fLoadingThread;
 };
 

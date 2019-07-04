@@ -14,7 +14,6 @@
 #include <Space.h>
 #include <VGroup.h>
 
-#include "serial_number.h"
 #include "support.h"
 
 #include "GlobalFunctions.h"

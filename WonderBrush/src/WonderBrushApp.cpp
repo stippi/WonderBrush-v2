@@ -81,33 +81,6 @@ WonderBrushApp::AboutRequested()
 	Panel* aboutPanel = new Panel(BRect(0.0, 0.0, 400.0, 300.0), "About WonderBrush",
 								  B_MODAL_WINDOW, B_ASYNCHRONOUS_CONTROLS | B_NOT_RESIZABLE);
 
-	BString licenceeInfo;
-#ifdef USE_SERIAL_NUMBERS
-	const char* serialNumber = GlobalSettings::Default().SerialNumber();
-	if (!serialNumber)
-		licenceeInfo << "<invalid serial number>";
-	else {
-		licenceeInfo << "Serial Number: ";
-		int32 c = 1;
-		while (*serialNumber) {
-			if (*serialNumber) {
-				licenceeInfo << *serialNumber;
-				serialNumber++;
-			} else
-				break;
-			if (*serialNumber && c % 5 == 0)
-				licenceeInfo << " - ";
-			c++;
-		}
-	}
-#else
-	const char* licencee = fMainWindow->GetLicenceeName();
-	if (!licencee)
-		licenceeInfo = "<running in demo mode>";
-	else
-		licenceeInfo << "Registered to: " << licencee;
-#endif
-
 	int32 infoCount = 6;
 	const char* infos[infoCount];
 	infos[0] = "Colorpicker based on Colors! by Werner Freytag";
@@ -121,7 +94,7 @@ WonderBrushApp::AboutRequested()
 	AboutView *aboutView = new AboutView("WonderBrush", kAppVersionString,
 										 "by Stephan Aßmus (a.k.a. stippi)",
 										 infos, infoCount,
-										 licenceeInfo.String(),
+										 "",
 										 B_UTF8_COPYRIGHT" 2003-2008 YellowBites, All Rights Reserved.");
 	aboutPanel->AddChild(aboutView);
 	BScreen screen(aboutPanel);

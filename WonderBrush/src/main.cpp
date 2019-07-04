@@ -20,7 +20,6 @@
 #if ALLOCATION_CHECK
 	#include "AllocationChecker.h"
 #endif
-#include "BigIntGenerator.h"
 #include "BubbleHelper.h"
 #include "GlobalSettings.h"
 #include "Layer.h"
@@ -205,8 +204,6 @@ main(int argc, char** argv)
 				   "missing strings of all languages.\n");
 		}
 	} else {
-		BigIntGenerator::CreateDefault();
-
 		// We need to install the signal handler early. Apparently
 		// 1) CTRL-C causes a SIGINT to be sent to all threads of the
 		//    application, so we need signal handlers for all of them, and
@@ -229,7 +226,6 @@ main(int argc, char** argv)
 
 		// delete global instances of some classes
 		BubbleHelper::DeleteDefault();
-		BigIntGenerator::DeleteDefault();
 	}
 
 #if ALLOCATION_CHECK
