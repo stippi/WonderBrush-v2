@@ -292,7 +292,7 @@ end:
 }
 
 // _helper
-int
+status_t
 BubbleHelper::_helper(void *arg)
 {
 	((BubbleHelper*)arg)->_Helper();
