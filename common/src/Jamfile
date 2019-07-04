@@ -12,13 +12,8 @@ sourceDirs =	debug
 				gui/dimensions_control
 				gui/popup_control
 				gui/scrollview
-				keyfile
 				support
 ;
-
-if $(TARGET_PLATFORM) = linux {
-	sourceDirs = keyfile ;
-}
 
 # Create a list of source dirs paths relative to the current dir and include
 # the source_files files.

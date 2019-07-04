@@ -82,13 +82,11 @@
 #include "IconOptionsControl.h"
 #include "Icons.h"
 #include "InfoView.h"
-#include "Keyfile.h"
 #include "LabelPopup.h"
 #include "LanguageManager.h"
 #include "Layer.h"
 #include "LayerConfigView.h"
 #include "LayersListView.h"
-#include "LicenceeInfo.h"
 #include "ListViews.h"
 #include "MenuBar.h"
 #include "MTextView.h"
@@ -264,7 +262,6 @@ MainWindow::MainWindow(BRect frame)
 	  fSavePanel(new ExportPanel("save panel")),
 	  fLastSavePath(NULL),
 	  fLastExportPath(NULL),
-	  fKeyfile(NULL),
 	  fLoadingThread(B_ERROR)
 {
 	LanguageManager* manager = LanguageManager::Default();
@@ -1248,46 +1245,6 @@ topGroup->flags &= ~M_USE_FULL_SIZE;
 
 	BMessenger windowMessenger(this, this);
 
-#ifndef USE_SERIAL_NUMBERS
-	BPath path;
-	if (find_directory(B_USER_SETTINGS_DIRECTORY, &path) >= B_OK
-		&& path.Append("WonderBrush") >= B_OK) {
-		// watch this folder
-		BEntry entry(path.Path());
-		node_ref node;
-		if (entry.GetNodeRef(&node) >= B_OK) {
-			status_t err = watch_node(&node, B_WATCH_DIRECTORY, windowMessenger);
-			if (err < B_OK)
-				fprintf(stderr, "error trying to watch settings folder: %s\n", strerror(err));
-		}
-		// try to read keyfile now
-		if (path.Append("keyfile") >= B_OK) {
-			char appName[12];
-			appName[0] = 'W';
-			appName[1] = 'o';
-			appName[2] = 'n';
-			appName[3] = 'd';
-			appName[4] = 'e';
-			appName[5] = 'r';
-			appName[6] = 'B';
-			appName[7] = 'r';
-			appName[8] = 'u';
-			appName[9] = 's';
-			appName[10] = 'h';
-			appName[11] = 0;
-			fKeyfile = new Keyfile(path.Path(), kPublicKey,
-								   sizeof(kPublicKey), appName,
-								   &windowMessenger);
-		} else {
-#ifndef TARGET_PLATFORM_HAIKU
-			fCanvasView->SetDemoMode(true);
-#endif
-		}
-	} else {
-		fprintf(stderr, "no 'WonderBrush' settings folder\n");
-	}
-#endif // USE_SERIAL_NUMBERS
-
 	be_clipboard->StartWatching(windowMessenger);
 	PostMessage(B_CLIPBOARD_CHANGED);
 
@@ -1302,7 +1259,6 @@ MainWindow::~MainWindow()
 	delete fSettings;
 	delete fLastSavePath;
 	delete fLastExportPath;
-	delete fKeyfile;
 	be_clipboard->StopWatching(BMessenger(this, this));
 }
 
@@ -1344,56 +1300,6 @@ MainWindow::MessageReceived(BMessage* message)
 						break;
 				}
 			}
-			break;
-		}
-		case B_NODE_MONITOR: {
-			// we're watching the WonderBrush settings folder
-			// maybe the user registered during WonderBrush runtime...
-			// let's be fair!
-			if (!fKeyfile || !fKeyfile->GetLicenceeInfo()) {
-				BPath path;
-				// maybe Tracker is still copying the rest of the file
-				// give it some time
-				snooze(2000000);
-				if (find_directory(B_USER_SETTINGS_DIRECTORY, &path) >= B_OK
-					&& path.Append("WonderBrush/keyfile") >= B_OK) {
-					delete fKeyfile;
-					BEntry entry(path.Path());
-					if (entry.Exists()) {
-						BMessenger windowMessenger(this, this);
-						char appName[12];
-						appName[0] = 'W';
-						appName[1] = 'o';
-						appName[2] = 'n';
-						appName[3] = 'd';
-						appName[4] = 'e';
-						appName[5] = 'r';
-						appName[6] = 'B';
-						appName[7] = 'r';
-						appName[8] = 'u';
-						appName[9] = 's';
-						appName[10] = 'h';
-						appName[11] = 0;
-						fKeyfile = new Keyfile(path.Path(), kPublicKey,
-											   sizeof(kPublicKey), appName,
-											   &windowMessenger);
-					} else
-						fKeyfile = NULL;
-				}
-			}
-			break;
-		}
-		case MSG_KEYFILE_VALIDATED: {
-			bool demo = true;
-			if (fKeyfile) {
-				if (const LicenceeInfo* info = fKeyfile->GetLicenceeInfo()) {
-					if (info->GetApplicationVersion() >= 150)
-						demo = false;
-				}
-			}
-#ifndef TARGET_PLATFORM_HAIKU
-			fCanvasView->SetDemoMode(demo);
-#endif
 			break;
 		}
 		case MSG_DUMP_MISSING_STRINGS:
@@ -2642,33 +2548,6 @@ MainWindow::Save(Canvas* canvas, const entry_ref* docRef, Exporter* exporter)
 			return B_BAD_VALUE;
 
 #ifndef USE_SERIAL_NUMBERS
-#ifndef TARGET_PLATFORM_HAIKU
-		// check if we have a valid keyfile
-		if (!fKeyfile || !fKeyfile->GetLicenceeInfo() || fKeyfile->GetLicenceeInfo()->GetApplicationVersion() < 150) {
-			if (!exporter || exporter->NeedsKeyfile()) {
-				LanguageManager* manager = LanguageManager::Default();
-				BAlert* alert = new BAlert("show stopper",
-										   manager->GetString(DEMO_MODE,
-												"WonderBrush is running in demo mode. "
-												"Saving project files is disabled.\n\n"
-												"Please register to receive your "
-												"unlock keyfile at one of these online stores."),
-										   "Mensys Store",
-										   "Kagi Store",
-										   manager->GetString(NEVER_MIND, "Never Mind"),
-										   B_WIDTH_AS_USUAL, B_STOP_ALERT);
-				int32 ret = alert->Go();
-				if (ret == 0) {
-					char *argv = "http://shop.mensys.nl/catalogue/mns_Wonderbrush.html";
-					be_roster->Launch("text/html", 1, &argv);
-				} else if (ret == 1) {
-					char *argv = "http://order.kagi.com/?8JD";
-					be_roster->Launch("text/html", 1, &argv);
-				}
-				return B_ERROR;
-			}
-		}
-#endif // !TARGET_PLATFORM_HAIKU
 #endif // USE_SERIAL_NUMBERS
 		if (entry.Exists()) {
 			// if the file exists create a temporary file in the same folder
@@ -3746,21 +3625,6 @@ MainWindow::UpdateStrings()
 	RecalcSize();
 }
 
-// GetLicenceeName
-const char*
-MainWindow::GetLicenceeName() const
-{
-	const char* name = NULL;
-#ifndef TARGET_PLATFORM_HAIKU
-	if (fKeyfile) {
-		if (const LicenceeInfo* info = fKeyfile->GetLicenceeInfo())
-			name = info->GetName();
-	}
-#else
-	name = "Enjoy WonderBrush on Haiku!";
-#endif
-	return name;
-}
 
 // SetStatus
 void

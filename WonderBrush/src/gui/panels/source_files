@@ -4,5 +4,4 @@ SOURCE_FILES +=
 	NamePanel.cpp
 	NewCanvasPanel.cpp
 	NewSizePanel.cpp
-	SerialPanel.cpp
 ;
