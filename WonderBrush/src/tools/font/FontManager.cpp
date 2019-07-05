@@ -13,7 +13,9 @@
 #include <Menu.h>
 #include <MenuItem.h>
 #include <Path.h>
+#include <PathFinder.h>
 #include <String.h>
+#include <StringList.h>
 #include <UTF8.h>
 
 #include "FontPopup.h"
@@ -277,11 +279,17 @@ FontManager::_update(void* cookie)
 	if (fm && fm->Lock()) {
 //bigtime_t now = system_time();
 		// update from system, common and user fonts folders
+		BPathFinder pathFinder;
+		BStringList paths;
 		BPath path;
-		if (find_directory(B_SYSTEM_FONTS_DIRECTORY, &path) >= B_OK) {
-			BDirectory fontFolder(path.Path());
-			fm->_Update(&fontFolder);
-		}
+		status_t error = pathFinder.FindPaths(B_FIND_PATH_FONTS_DIRECTORY,
+			paths);
+		for (int i = 0; i < paths.CountStrings(); ++i) {
+			if (error == B_OK && path.SetTo(paths.StringAt(i)) == B_OK) {
+				BDirectory fontFolder(path.Path());
+				fm->_Update(&fontFolder);
+			}
+ 		}
 /*			if (find_directory(B_USER_FONTS_DIRECTORY, &path) >= B_OK) {
 			BDirectory fontFolder(path.Path());
 			_Update(&fontFolder);
