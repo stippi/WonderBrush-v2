@@ -30,27 +30,27 @@ init_strings(const char* strings[])
 {
 	strings[FILE_MENU]			= "File";
 	strings[NEW]				= "New";				// will show up in Canvas menu
-	strings[NEW_CANVAS]			= "New Canvas";			// tool tip
+	strings[NEW_CANVAS]			= "New canvas";			// tool tip
 	strings[NEW_LAYER]			= "New";				// these strings were added
 	strings[NEW_BRUSH]			= "New";				// by request to be able to
 	strings[NEW_PALETTE]		= "New";				// reflect different genders in "New"
 	strings[OPEN]				= "Open";
 	strings[LOAD]				= "Load";
-	strings[OPEN_CANVAS]		= "Open Canvas";
-	strings[EXPORT_CANVAS]		= "Export Canvas";		// title of Export panel
+	strings[OPEN_CANVAS]		= "Open canvas";
+	strings[EXPORT_CANVAS]		= "Export canvas";		// title of Export panel
 	strings[EXPORT]				= "Export";
-	strings[EXPORT_AS]			= "Export As";
-	strings[SAVE_CANVAS]		= "Save Canvas";		// title of Save panel
+	strings[EXPORT_AS]			= "Export as";
+	strings[SAVE_CANVAS]		= "Save canvas";		// title of Save panel
 	strings[SAVE]				= "Save";
-	strings[SAVE_AS]			= "Save As";
-	strings[SETUP_PAGE]			= "Page Setup";
+	strings[SAVE_AS]			= "Save as";
+	strings[SETUP_PAGE]			= "Page setup";
 	strings[PRINT]				= "Print";
 	strings[CLOSE]				= "Close";
-	strings[CLOSE_CANVAS]		= "Close Canvas";		// tool tip
+	strings[CLOSE_CANVAS]		= "Close canvas";		// tool tip
 	strings[ABOUT]				= "About";
 	strings[QUIT]				= "Quit";
 
-	strings[LOADING_FILE]		= "Loading File:";
+	strings[LOADING_FILE]		= "Loading file:";
 
 	strings[EDIT]				= "Edit";
 	strings[UNDO]				= "Undo";
@@ -58,7 +58,7 @@ init_strings(const char* strings[])
 
 	strings[SETTINGS]			= "Settings";
 	strings[FULLSCREEN]			= "Fullscreen";
-	strings[SHOW_GRID]			= "Show Pixel Grid";	// if zoomed in far enough,
+	strings[SHOW_GRID]			= "Show pixel grid";	// if zoomed in far enough,
 														// display a grid arround each pixel
 	strings[LANGUAGE]			= "Language";
 	strings[CANVAS]				= "Canvas";				// ie project, document
@@ -72,36 +72,36 @@ init_strings(const char* strings[])
 	strings[FORMAT]				= "Format";				// color space of the canvas (RGB, Lab etc)
 
 	strings[EXPORT_FORMAT]		= "Format";				// ie PNG, SVG etc
-	strings[CURSOR_SOURCE]		= "Cursor Source Code";
-	strings[BITMAP_SOURCE]		= "Bitmap Source Code";
-	strings[SVG_FORMAT]			= "SVG (Not all Object types)";
-	strings[AI_FORMAT]			= "Adobe Illustrator (Not all Object types)";
-	strings[RDEF_FORMAT]		= "RDef Source Code";
+	strings[CURSOR_SOURCE]		= "Cursor source code";
+	strings[BITMAP_SOURCE]		= "Bitmap source code";
+	strings[SVG_FORMAT]			= "SVG (not all object types)";
+	strings[AI_FORMAT]			= "Adobe Illustrator (not all object types)";
+	strings[RDEF_FORMAT]		= "RDef source code";
 	strings[RDEF_ASK_IF_ICON]	= "Save canvas as icon resource?";
 	strings[RDEF_NORMAL]		= "Normal";
 	strings[RDEF_ICON]			= "Icon";
 
 	strings[LAYER]				= "Layer";
 	strings[DUPLICATE]			= "Duplicate";
-	strings[MERGE_DOWN]			= "Merge Down";			// combining of current layer and the
+	strings[MERGE_DOWN]			= "Merge down";			// combining of current layer and the
 														// one underneath it
-	strings[MERGE_VISIBLE]		= "Merge Visible";		// combining of all visible layers
+	strings[MERGE_VISIBLE]		= "Merge visible";		// combining of all visible layers
 	strings[RENAME]				= "Rename";
 	strings[DELETE]				= "Delete";
-	strings[DELETE_ALL]			= "Remove All";
+	strings[DELETE_ALL]			= "Remove all";
 
 	// layer blending modes
 	strings[MODE]				= "Mode";
 	strings[NORMAL]				= "Normal";
 	strings[ERASE]				= "Erase";
 	strings[MULTIPLY]			= "Multiply";
-	strings[INVERSE_MULTIPLY]	= "Inverse Multiply";
+	strings[INVERSE_MULTIPLY]	= "Inverse multiply";
 	strings[LUMINANCE]			= "Luminance";
 	strings[MULTIPLY_ALPHA]		= "Alpha";
-	strings[MULTIPLY_INVERSE_ALPHA]	= "Inverse Alpha";
-	strings[REPLACE_RED]		= "Replace Red";
-	strings[REPLACE_GREEN]		= "Replace Green";
-	strings[REPLACE_BLUE]		= "Replace Blue";
+	strings[MULTIPLY_INVERSE_ALPHA]	= "Inverse alpha";
+	strings[REPLACE_RED]		= "Replace red";
+	strings[REPLACE_GREEN]		= "Replace green";
+	strings[REPLACE_BLUE]		= "Replace blue";
 	strings[DARKEN]				= "Darken";
 	strings[LIGHTEN]			= "Lighten";
 
@@ -114,14 +114,14 @@ init_strings(const char* strings[])
 	strings[CUT]				= "Cut";
 	strings[COPY]				= "Copy";
 	strings[PASTE]				= "Paste";
-	strings[MULTI_PASTE]		= "Multi Paste";		// paste one ore more properties to
+	strings[MULTI_PASTE]		= "Multi paste";		// paste one ore more properties to
 														// *multiple* objects at once
-	strings[REMOVE_ALL]			= "Remove All";
+	strings[REMOVE_ALL]			= "Remove all";
 
 	strings[OBJECT_SELECTION]	= "Select";				// change selection shortcuts
 	strings[SELECT_ALL_OBJECTS]	= "All";				// in Object and Property list
 	strings[SELECT_NO_OBJECTS]	= "None";
-	strings[INVERT_SELECTION]	= "Invert Selection";
+	strings[INVERT_SELECTION]	= "Invert selection";
 	strings[ALL_OBJECTS]		= "All";
 	strings[PROPERTY_SELECTION]	= "Select";
 	strings[SELECT_ALL_PROPERTIES] = "All";
@@ -130,13 +130,13 @@ init_strings(const char* strings[])
 
 	// filters
 	strings[ADD_FILTER]			= "Filter";				// the actual menu
-	strings[DROP_SHADOW]		= "Drop Shadow";
-	strings[GAUSSIAN_BLUR]		= "Gaussian Blur";
+	strings[DROP_SHADOW]		= "Drop shadow";
+	strings[GAUSSIAN_BLUR]		= "Gaussian blur";
 	strings[INVERT]				= "Invert";
 	strings[BRIGHTNESS]			= "Brightness";
 	strings[CONTRAST]			= "Contrast";
 	strings[SATURATION]			= "Saturation";
-	strings[MOTION_BLUR]		= "Motion Blur";
+	strings[MOTION_BLUR]		= "Motion blur";
 	strings[HALFTONE]			= "Halftone";
 	strings[DOT]				= "Dot";				// mode options of Halftone
 	strings[LINE]				= "Line";
@@ -144,7 +144,7 @@ init_strings(const char* strings[])
 	strings[DITHER_FS]			= "Dither (FS)";
 	strings[DITHER_NC]			= "Dither (NK)";
 	strings[NOISE]				= "Noise";
-	strings[HUE_SHIFT]			= "Hue Shift";			// filter not yet written
+	strings[HUE_SHIFT]			= "Hue shift";			// filter not yet written
 	strings[DISPERSION]			= "Dispersion";
 	strings[STRENGTH]			= "Strength";
 	strings[LUMINANCE_ONLY]		= "Luminance only";
@@ -153,7 +153,7 @@ init_strings(const char* strings[])
 	strings[MU]					= "µ";
 	strings[NON_MAXIMAL_SUPPRESSION] = "NMS";
 	strings[SOLID_AREA]			= "Area";
-	strings[COLOR_REDUCTION]	= "Color Reduction";
+	strings[COLOR_REDUCTION]	= "Color reduction";
 
 	strings[DE_NOISE]			= "De-Noise";
 	strings[AMPLITUDE]			= "Amplitude";
@@ -162,8 +162,8 @@ init_strings(const char* strings[])
 	strings[SIGMA]				= "Sigma";
 	strings[CIMG_DL]			= "dl";
 	strings[CIMG_DA]			= "da";
-	strings[GAUSS_PRECISION]	= "Gauss Prec.";
-	strings[FAST_APPROXIMATION]	= "Fast Approx.";
+	strings[GAUSS_PRECISION]	= "Gauss prec.";
+	strings[FAST_APPROXIMATION]	= "Fast approx.";
 
 	strings[PROPERTY]			= "Property";
 	strings[UNKOWN_PROPERTY]	= "<unknown>";
@@ -171,7 +171,7 @@ init_strings(const char* strings[])
 	strings[SWATCHES]			= "Swatches";			// color palette
 	strings[ZOOM]				= "Zoom";
 	strings[ALPHA]				= "Opacity";			// keep this as short as possible
-	strings[ALPHA_CHANNEL]		= "Alpha Channel";		// used for properties
+	strings[ALPHA_CHANNEL]		= "Alpha channel";		// used for properties
 	strings[COLOR]				= "Color";				// used for properties
 	strings[GRADIENT]			= "Gradient";			// used for properties (?)
 
@@ -189,7 +189,7 @@ init_strings(const char* strings[])
 	strings[GRADIENT_INTERPOLATION]			= "Interpolation";
 	strings[GRADIENT_INTERPOLATION_LINEAR]	= "Linear";
 	strings[GRADIENT_INTERPOLATION_SMOOTH]	= "Smooth";
-	strings[GRADIENT_INHERITS_TRANSFORM]	= "Inherit Transformation";
+	strings[GRADIENT_INHERITS_TRANSFORM]	= "Inherit transformation";
 
 	// brush options
 	strings[OPACITY]			= "Opacity";
@@ -210,7 +210,7 @@ init_strings(const char* strings[])
 	strings[SUBPIXELS]			= "Subpixels";			// allow subpixel precise positioning of tools
 	strings[SOLID]				= "Solid";				// solid (fixed) opacity for all pixels
 	strings[TILT]				= "Tilt";				// tablet specific, tilt of pen
-	strings[BLUR_RADIUS]		= "Blur Radius";		// property label (keep short), also used for Dispersion filter
+	strings[BLUR_RADIUS]		= "Blur radius";		// property label (keep short), also used for Dispersion filter
 	// translate options
 	strings[X_LABEL]			= "X";
 	strings[Y_LABEL]			= "Y";
@@ -222,8 +222,8 @@ init_strings(const char* strings[])
 	strings[SCALE_Y]			= "Y";
 	strings[ANGLE]				= "Angle";
 
-	strings[X_OFFSET]			= "X Offset";
-	strings[Y_OFFSET]			= "Y Offset";
+	strings[X_OFFSET]			= "X offset";
+	strings[Y_OFFSET]			= "Y offset";
 	// crop & select options
 	strings[LEFT]				= "Left";
 	strings[TOP]				= "Top";
@@ -231,7 +231,7 @@ init_strings(const char* strings[])
 	// bucket fill options
 	strings[TOLERANCE]			= "Tolerance";
 	strings[SOFTNESS]			= "Softness";
-	strings[CONTIGUOUS_AREA]	= "Contiguous Area";
+	strings[CONTIGUOUS_AREA]	= "Contiguous area";
 	// shape options
 	strings[PATH]				= "Path";				// property label
 	strings[OUTLINE]			= "Outline";
@@ -249,11 +249,11 @@ init_strings(const char* strings[])
 
 	strings[CIRCLE]				= "Circle";				// not yet used
 	strings[RECT]				= "Rect";				// not yet used
-	strings[ROUND_CORNERS]		= "Round Corners";		// not yet used
-	strings[TOGGLE_ROUND_CORNERS]		= "Toggle Round Corners";		// not yet used
-	strings[ROUND_CORNER_RADIUS]		= "Round Corner Radius";						// not yet used
-	strings[CHANGE_ROUND_CORNER_RADIUS]	= "Change Round Corner Radius";	// not yet used
-	strings[REVERSE_PATH]		= "Reverse Path";
+	strings[ROUND_CORNERS]		= "Round corners";		// not yet used
+	strings[TOGGLE_ROUND_CORNERS]		= "Toggle round corners";		// not yet used
+	strings[ROUND_CORNER_RADIUS]		= "Round corner radius";		// not yet used
+	strings[CHANGE_ROUND_CORNER_RADIUS]	= "Change round corner radius";	// not yet used
+	strings[REVERSE_PATH]		= "Reverse path";
 
 	// text options
 	strings[FONT]				= "Font";
@@ -267,20 +267,20 @@ init_strings(const char* strings[])
 														// enhances readability of text on screen
 	strings[KERNING]			= "Kerning";			// kerning means that the distance between two
 														// glyphs is individual per their combination
-	strings[TEXT_LINE_SPACING]	= "Line Spacing";		// font height * line spacing = vertical line dist
+	strings[TEXT_LINE_SPACING]	= "Line spacing";		// font height * line spacing = vertical line dist
 	// color picker tool
-	strings[TIP_SIZE]			= "Tip Size";
+	strings[TIP_SIZE]			= "Tip size";
 	strings[PIXEL_1x1]			= "1x1 pixels";
 	strings[PIXEL_3x3]			= "3x3 pixels";
 	strings[PIXEL_5x5]			= "5x5 pixels";
-	strings[INCLUDE_ALL_LAYERS]	= "Include All Layers";
+	strings[INCLUDE_ALL_LAYERS]	= "Include all layers";
 	// tools
 	strings[BRUSH]				= "Brush";
 	strings[CLONE]				= "Clone";				// clone brush (transfers parts of an image to
 														// another place)
 	strings[ERASER]				= "Eraser";
 	strings[PEN]				= "Pen";
-	strings[PEN_ERASER]			= "Pen Eraser";
+	strings[PEN_ERASER]			= "Pen eraser";
 	strings[RESTORE]			= "Restore";			// opposite of eraser (restores alpha channel)
 	strings[DROPPER]			= "Dropper";			// color picker
 	strings[TEXT]				= "Text";
@@ -289,116 +289,116 @@ init_strings(const char* strings[])
 	strings[SELECT]				= "Select";
 	strings[TRANSLATE]			= "Translate";
 	strings[CROP]				= "Crop";
-	strings[BUCKET_FILL]		= "Bucket Fill";
+	strings[BUCKET_FILL]		= "Bucket fill";
 	strings[SHAPE]				= "Shape";
 	strings[ELLIPSE]			= "Ellipse";
 	strings[ROUND_RECT]			= "(Round) Rectangle";	// the tool also creates non-round rectangles
-	strings[EDIT_GRADIENT]		= "Edit Gradient";
+	strings[EDIT_GRADIENT]		= "Edit gradient";
 	strings[GUIDES]				= "Guides";
-	strings[PICK_OBJECTS]		= "Pick Objects";
+	strings[PICK_OBJECTS]		= "Pick objects";
 	strings[CLIPBOARD]			= "Clipboard";
 
 	// zoom
-	strings[ZOOM_IN]			= "Zoom In";			// tool tips
-	strings[ZOOM_OUT]			= "Zoom Out";
+	strings[ZOOM_IN]			= "Zoom in";			// tool tips
+	strings[ZOOM_OUT]			= "Zoom out";
 
 	// delete icons
 	strings[DELETE_KEY]			= "Del";				// tool tips
-	strings[DELETE_LAYER]		= "Delete Selected Layer";
-	strings[DELETE_OBJECTS]		= "Delete Selected Objects";
+	strings[DELETE_LAYER]		= "Delete selected layer";
+	strings[DELETE_OBJECTS]		= "Delete selected objects";
 
 	// actions
-	strings[ADD_LAYER]			= "Add Layer";			// the following strings are for display in the
+	strings[ADD_LAYER]			= "Add layer";			// the following strings are for display in the
 														// undo/redo menu
-	strings[REMOVE_LAYER]		= "Remove Layer";		// a "modifier" is a step of changing the bitmap,
+	strings[REMOVE_LAYER]		= "Remove layer";		// a "modifier" is a step of changing the bitmap,
 														// ie a brush stroke or something else.
-	strings[REMOVE_LAYERS]		= "Remove Layers";
-	strings[MOVE_LAYER]			= "Move Layer";			// ie drag sorting to another pos in list
-	strings[MOVE_LAYERS]		= "Move Layers";
-	strings[MERGE_LAYERS]		= "Merge Layers";
-	strings[UNKOWN_MODIFIER]	= "Unknown Object";
-	strings[ADD_MODIFIER]		= "Add Object";
-	strings[ADD_MODIFIERS]		= "Add Objects";
-	strings[CHANGE_COLOR]		= "Change Color";
-	strings[CHANGE_COLORS]		= "Change Colors";
-	strings[REMOVE_MODIFIER]	= "Remove Object";
-	strings[REMOVE_MODIFIERS]	= "Remove Object";
-	strings[MOVE_MODIFIER]		= "Move Object";
-	strings[MOVE_MODIFIERS]		= "Move Objects";
-	strings[TRANSLATE_MODIFIER]	= "Translate Object";
-	strings[TRANSLATE_MODIFIERS]	= "Translate Objects";
-	strings[CHANGE_LAYER_SETTINGS]	= "Change Layer Settings";
-	strings[CROP_CANVAS]		= "Crop Canvas";
-	strings[RESIZE_CANVAS]		= "Resize Canvas";
-	strings[ROTATE_CANVAS]		= "Rotate Canvas";
-	strings[INSERT_CANVAS]		= "Insert Canvas";
-	strings[CHANGE_OPACITY]		= "Change Opacity";
-	strings[EDIT_MODIFIER]		= "Edit Modifier";
+	strings[REMOVE_LAYERS]		= "Remove layers";
+	strings[MOVE_LAYER]			= "Move layer";			// ie drag sorting to another pos in list
+	strings[MOVE_LAYERS]		= "Move layers";
+	strings[MERGE_LAYERS]		= "Merge layers";
+	strings[UNKOWN_MODIFIER]	= "Unknown object";
+	strings[ADD_MODIFIER]		= "Add object";
+	strings[ADD_MODIFIERS]		= "Add objects";
+	strings[CHANGE_COLOR]		= "Change color";
+	strings[CHANGE_COLORS]		= "Change colors";
+	strings[REMOVE_MODIFIER]	= "Remove object";
+	strings[REMOVE_MODIFIERS]	= "Remove object";
+	strings[MOVE_MODIFIER]		= "Move object";
+	strings[MOVE_MODIFIERS]		= "Move objects";
+	strings[TRANSLATE_MODIFIER]	= "Translate object";
+	strings[TRANSLATE_MODIFIERS]	= "Translate objects";
+	strings[CHANGE_LAYER_SETTINGS]	= "Change layer settings";
+	strings[CROP_CANVAS]		= "Crop canvas";
+	strings[RESIZE_CANVAS]		= "Resize canvas";
+	strings[ROTATE_CANVAS]		= "Rotate canvas";
+	strings[INSERT_CANVAS]		= "Insert canvas";
+	strings[CHANGE_OPACITY]		= "Change opacity";
+	strings[EDIT_MODIFIER]		= "Edit modifier";
 
 	// pasting properties
-	strings[PASTE_PROPERTY]		= "Paste Property";				// paste one property to one object
-	strings[PASTE_PROPERTIES]	= "Paste Properties";			// paste multiple properties to one object
-	strings[MULTI_PASTE_PROPERTY] = "Multi Paste Property";		// paste one property to multiple objects
-	strings[MUTLI_PASTE_PROPERTIES] = "Multi Paste Properties";	// paste multiple property to multiple objects
+	strings[PASTE_PROPERTY]		= "Paste property";				// paste one property to one object
+	strings[PASTE_PROPERTIES]	= "Paste properties";			// paste multiple properties to one object
+	strings[MULTI_PASTE_PROPERTY] = "Multi paste property";		// paste one property to multiple objects
+	strings[MUTLI_PASTE_PROPERTIES] = "Multi paste properties";	// paste multiple property to multiple objects
 
 	// shape tool history
-	strings[ADD_CONTROL_POINT]	= "Add Control Point";
-	strings[TOGGLE_OUTLINE]		= "Toggle Outline";
-	strings[CHANGE_OUTLINE_WIDTH] = "Change Outline Width";
-	strings[CHANGE_CAP_MODE]	= "Change Caps";
-	strings[CHANGE_JOIN_MODE]	= "Change Joints";
-	strings[MODIFY_CONTROL_POINT] = "Modify Control Point";
-	strings[CLOSE_PATH_ACTION]	= "Close Path";
-	strings[INSERT_CONTROL_POINT] = "Insert Control Point";
-	strings[REMOVE_CONTROL_POINT] = "Remove Control Point";
-	strings[REMOVE_CONTROL_POINTS] = "Remove Control Points";
-	strings[CHANGE_POINT_SELECTION] = "Change Selection";
-	strings[NUDGE_CONTROL_POINT] = "Nudge Control Point";
-	strings[NUDGE_CONTROL_POINTS] = "Nudge Control Points";
-	strings[SELECT_PATH]		= "Select Path";
-	strings[CREATE_NEW_PATH]	= "New Path";
-	strings[DELETE_PATH]		= "Remove Path";
-	strings[TEXT_TO_SHAPE]		= "Text to Shape";
-	strings[TEXTS_TO_SHAPES]	= "Texts to Shapes";
-	strings[TRANSFORM_CONTROL_POINTS] = "Transform Control Points";
-	strings[MERGE_SHAPE_OBJECTS] = "Merge Shapes";
+	strings[ADD_CONTROL_POINT]	= "Add control point";
+	strings[TOGGLE_OUTLINE]		= "Toggle outline";
+	strings[CHANGE_OUTLINE_WIDTH] = "Change outline width";
+	strings[CHANGE_CAP_MODE]	= "Change caps";
+	strings[CHANGE_JOIN_MODE]	= "Change joints";
+	strings[MODIFY_CONTROL_POINT] = "Modify control point";
+	strings[CLOSE_PATH_ACTION]	= "Close path";
+	strings[INSERT_CONTROL_POINT] = "Insert control point";
+	strings[REMOVE_CONTROL_POINT] = "Remove control point";
+	strings[REMOVE_CONTROL_POINTS] = "Remove control points";
+	strings[CHANGE_POINT_SELECTION] = "Change selection";
+	strings[NUDGE_CONTROL_POINT] = "Nudge control point";
+	strings[NUDGE_CONTROL_POINTS] = "Nudge control points";
+	strings[SELECT_PATH]		= "Select path";
+	strings[CREATE_NEW_PATH]	= "New path";
+	strings[DELETE_PATH]		= "Remove path";
+	strings[TEXT_TO_SHAPE]		= "Text to shape";
+	strings[TEXTS_TO_SHAPES]	= "Texts to shapes";
+	strings[TRANSFORM_CONTROL_POINTS] = "Transform control points";
+	strings[MERGE_SHAPE_OBJECTS] = "Merge shapes";
 
-	strings[FILLING_RULE]		= "Filling Rule";
-	strings[NON_ZERO]			= "Non Zero";
+	strings[FILLING_RULE]		= "Filling rule";
+	strings[NON_ZERO]			= "Non zero";
 	strings[EVEN_ODD]			= "Even-Odd";
 	// text tool history
-	strings[CHANGE_FONT_SIZE]	= "Change Font Size";
-	strings[CHANGE_TEXT_ROTATION] = "Change Text Rotation";
-	strings[MOVE_TEXT]			= "Move Text";
-	strings[CHANGE_FONT]		= "Change Font";
-	strings[CHANGE_TEXT]		= "Change Text";
-	strings[CHANGE_FONT_ADVANCE_SCALE] = "Change Spacing";
+	strings[CHANGE_FONT_SIZE]	= "Change font size";
+	strings[CHANGE_TEXT_ROTATION] = "Change text rotation";
+	strings[MOVE_TEXT]			= "Move text";
+	strings[CHANGE_FONT]		= "Change font";
+	strings[CHANGE_TEXT]		= "Change text";
+	strings[CHANGE_FONT_ADVANCE_SCALE] = "Change spacing";
 	strings[ALIGNMENT]			= "Alignment";
-	strings[CHANGE_ALIGNMENT]	= "Change Alignment";
+	strings[CHANGE_ALIGNMENT]	= "Change alignment";
 	strings[ALIGNMENT_LEFT]		= "Left";
 	strings[ALIGNMENT_CENTER]	= "Center";
 	strings[ALIGNMENT_RIGHT]	= "Right";
 	strings[ALIGNMENT_JUSTIFY]	= "Justify";
-	strings[CHANGE_TEXT_WIDTH]	= "Change Text Width";
+	strings[CHANGE_TEXT_WIDTH]	= "Change text width";
 	strings[PARAGRAPH_INSET]	= "Inset";
-	strings[CHANGE_PARAGRAPH_INSET]	= "Change Inset";
+	strings[CHANGE_PARAGRAPH_INSET]	= "Change inset";
 	strings[PARAGRAPH_SPACING]	= "P. Spacing";		// additional spacing between paragraphs
 	// crop tool
-	strings[MODIFY_CROP_RECT]	= "Modify Crop Rect";
+	strings[MODIFY_CROP_RECT]	= "Modify crop rect";
 	// select tool
-	strings[MODIFY_SELECT_RECT]	= "Modify Selection Rect";
+	strings[MODIFY_SELECT_RECT]	= "Modify selection rect";
 	// transformations
 	strings[TRANSFORMATION]		= "Transformation";
-	strings[BEGIN_TRANSFORMATION] = "Begin Transformation";
-	strings[FINISH_TRANSFORMATION]	= "Finish Transformation";
+	strings[BEGIN_TRANSFORMATION] = "Begin transformation";
+	strings[FINISH_TRANSFORMATION]	= "Finish transformation";
 	strings[MOVE]				= "Move";
 	strings[ROTATE]				= "Rotate";
 	strings[SCALE]				= "Scale";
-	strings[MOVE_PIVOT]			= "Move Pivot";
-	strings[TRANSFORM_OBJECT]	= "Transform Object";
-	strings[TRANSFORM_OBJECTS]	= "Transform Objects";
+	strings[MOVE_PIVOT]			= "Move pivot";
+	strings[TRANSFORM_OBJECT]	= "Transform object";
+	strings[TRANSFORM_OBJECTS]	= "Transform objects";
 	// guide tool
-	strings[SHOW_GUIDES]		= "Show Guides";
+	strings[SHOW_GUIDES]		= "Show guides";
 	strings[HORIZONTAL]			= "Horizontal";
 	strings[VERTICAL]			= "Vertical";
 	strings[UNIT]				= "Unit";
@@ -409,7 +409,7 @@ init_strings(const char* strings[])
 	strings[UNIT_INCH]			= "inch";
 	strings[UNIT_DPI]			= "dpi";
 	// general
-	strings[OK]					= "Ok";
+	strings[OK]					= "OK";
 	strings[CONFIRM]			= "Confirm";			// apply changes
 	strings[CANCEL]				= "Cancel";
 	strings[REVERT]				= "Revert";				// revert changes made in panel
@@ -419,7 +419,7 @@ init_strings(const char* strings[])
 	strings[DEFAULT]			= "Default";
 	strings[MERGED]				= "Merged";				// default name for merged layer
 	strings[TOOL]				= "Tool";				// for tool tips
-	strings[ANY_MODIFIER]		= "Any Modifier";		// as in modifier key on the keyboard (shift,
+	strings[ANY_MODIFIER]		= "Any modifier";		// as in modifier key on the keyboard (shift,
 														// option, alt etc)
 	strings[RETURN]				= "Return";
 	strings[ESCAPE]				= "Escape";
@@ -433,24 +433,24 @@ init_strings(const char* strings[])
 	strings[RETRY]				= "Retry";
 	strings[OVERWRITE]			= "Overwrite";
 	// panels
-	strings[PICK_COLOR]			= "Pick Color";			// window title of color picker
+	strings[PICK_COLOR]			= "Pick color";			// window title of color picker
 	strings[WIDTH]				= "Width";				// pixel count
 	strings[HEIGHT]				= "Height";
-	strings[BRUSH_PANEL]		= "Pick Brush";
-	strings[BRUSH_NAME]			= "Brush Name";
-	strings[PROGRAM_SETTINGS]	= "Program Settings";
+	strings[BRUSH_PANEL]		= "Pick brush";
+	strings[BRUSH_NAME]			= "Brush name";
+	strings[PROGRAM_SETTINGS]	= "Program settings";
 	// program settings
-	strings[ON_STARTUP]			= "On Startup";
-	strings[DO_NOTHING]			= "Do Nothing";
-	strings[ASK_OPEN]			= "Display Open Panel";
-	strings[ASK_NEW]			= "Display New Panel";
-	strings[AUTO_SIZE]			= "Create New Canvas of Size";
-	strings[LIVE_UPDATES]		= "Live Updates in Navigator and Layer Icons";
-	strings[USE_SYSTEM_LANGUAGE] = "Use Same Language as the System";
-	strings[STARTUP_ACTION]		= "Startup Action";
+	strings[ON_STARTUP]			= "On startup";
+	strings[DO_NOTHING]			= "Do nothing";
+	strings[ASK_OPEN]			= "Display open panel";
+	strings[ASK_NEW]			= "Display new panel";
+	strings[AUTO_SIZE]			= "Create new canvas of size";
+	strings[LIVE_UPDATES]		= "Live updates in navigator and layer icons";
+	strings[USE_SYSTEM_LANGUAGE] = "Use same language as the system";
+	strings[STARTUP_ACTION]		= "Startup action";
 	strings[INTERFACE]			= "Interface";
 	// requestors
-	strings[AKS_SAVE_CHANGES]	= "Close Document and discard unsaved changes?";
+	strings[AKS_SAVE_CHANGES]	= "Close document and discard unsaved changes?";
 	strings[DISCARD]			= "Discard";
 	strings[SAVING_FAILED]		= "Saving failed!";
 	strings[ERROR]				= "Error";				// alias reason for above
@@ -460,7 +460,7 @@ init_strings(const char* strings[])
 								  "Saving project files is disabled.\n\n"
 								  "Please register to receive your "
 								  "unlock keyfile at one of these online stores.";
-	strings[NEVER_MIND]			= "Never Mind";
+	strings[NEVER_MIND]			= "Never mind";
 	strings[OPEN_TRANSLATIONKIT_ERROR]	= "Failed to open the file '%s' using "
 								  "the Translation Kit.\n\nEither the "
 								  "file does not contain an image, or "
@@ -485,7 +485,7 @@ init_strings(const char* strings[])
 														// try to align them manually by putting the
 														// '\n' in the right spot!
 
-	strings[TOOL_TIPS]			= "Show Tool Tips";
+	strings[TOOL_TIPS]			= "Show tool tips";
 	strings[ALPHA_TIP]			= "Sets the active layer's global alpha value.";
 	strings[VISIBILITY_TIP]		= "Toggles the active layer's visibility.";
 	strings[PRESSURE_CONTROL_TIP]	= "Enables control by pen pressure.";
@@ -493,9 +493,9 @@ init_strings(const char* strings[])
 	strings[CURRENT_COLOR_TIP]	= "Current color. Click to open color picker panel.";
 	strings[NAVIGATOR_TIP]		= "Canvas overview. Click to move visible part.\n"
 								  "Use mousewheel to zoom in/out.";
-	strings[LAYER_LIST_TIP]		= "Sort by Drag'N'Drop. Click eye icon to turn\n"
+	strings[LAYER_LIST_TIP]		= "Sort by Drag'n'Drop. Click eye icon to turn\n"
 								  "visibility on/off. Doubleclick to change name.";
-	strings[HISTORY_LIST_TIP]	= "Sort by Drag'N'Drop. Drop color to change\n"
+	strings[HISTORY_LIST_TIP]	= "Sort by Drag'n'Drop. Drop color to change\n"
 								  "selected modifiers color.";
 	strings[PROPERTY_LIST_TIP]	= "Edit, copy and paste object properties.";
 	strings[SUB_PIXEL_TIP]		= "Track mouse/pen position with subpixel precision.";
@@ -524,7 +524,7 @@ init_strings(const char* strings[])
 	strings[PICK_OBJECTS_HELP]	= "Select Objects by clicking them or dragging a box.\n<Shift> keeps the previous selection.";
 	strings[GUIDES_HELP]		= "Create, edit or remove guides.";
 
-	strings[ENTER_SERIAL_NUMBER] = "Please enter the Serial Number which "
+	strings[ENTER_SERIAL_NUMBER] = "Please enter the serial number which "
 								   "came with your copy of WonderBrush.";
-	strings[WRONG_SERIAL_NUMBER] = "You have entered an invalid Serial Number.";
+	strings[WRONG_SERIAL_NUMBER] = "You have entered an invalid serial number.";
 }
