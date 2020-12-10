@@ -112,7 +112,7 @@ decompress_bitmap_lzo(const void* buffer, unsigned int size,
 
 // compress_bitmap_zlib
 bool
-compress_bitmap_zlib(const BBitmap* bitmap, void** buffer, unsigned* size)
+compress_bitmap_zlib(const BBitmap* bitmap, void** buffer, unsigned long* size)
 {
 	bool result = false;
 	if (bitmap) {
@@ -183,7 +183,7 @@ archive_bitmap(const BBitmap* bitmap, BMessage* into, const char* fieldName)
 	status_t ret = B_BAD_VALUE;
 	if (bitmap && bitmap->IsValid() && into) {
 		void* buffer;
-		unsigned size;
+		unsigned long size;
 #if USE_LZO
 		if (compress_bitmap_lzo(bitmap, &buffer, &size)) {
 			ret = into->AddData(fieldName, B_RAW_TYPE, buffer, size);
