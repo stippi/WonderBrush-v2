@@ -55,6 +55,13 @@ switch $(TARGET_PLATFORM)
 		LIBSTDC++ = stdc++.r4 ;
 	}
 
+	case haiku64 :
+	{
+		AS = yasm ;
+		DEFINES += TARGET_PLATFORM_HAIKU ;
+		LIBSTDC++ = stdc++ ;
+	}
+
 	case r5 :
 	{
 		AS = nasm ;

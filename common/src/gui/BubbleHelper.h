@@ -57,7 +57,7 @@ class BubbleHelper {
 			void				_DisplayHelp(const char* text,
 											 BPoint where);
 			void				_Helper();
-	static	int 				_helper(void* arg);
+	static	status_t			_helper(void* arg);
 
 			char*				_GetHelp(BView* view);
 			BView*				_FindView(BPoint where);
