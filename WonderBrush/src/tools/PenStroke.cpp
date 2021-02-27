@@ -375,7 +375,7 @@ PenStroke::_StrokeLine(Point* a, Point* b, uint8* dest, uint32 bpr,
 
 // _StrokePoint
 void
-PenStroke::_StrokePoint(float x, float y, float pressure, uint8* bits, uint32 bpr,
+PenStroke::_StrokePoint(float x, float y, float pressure, uint8* bits, int bpr,
 						BRect& constrainRect) const
 {
 	if (fFlags & FLAG_PRESSURE_CONTROLS_APHLA)
@@ -387,19 +387,20 @@ PenStroke::_StrokePoint(float x, float y, float pressure, uint8* bits, uint32 bp
 	if (fFlags & FLAG_SOLID) {
 		BPoint p(floorf(x + 0.5), floorf(y + 0.5));
 		if (constrainRect.Contains(p)) {
-			uint8* dest = bits + (int32)p.x;
-			dest += bpr * (int32)p.y;
+			uint8* dest = bits + (int)p.x;
+			dest += bpr * (int)p.y;
 			add_alpha(dest, pressure, maxAlpha);
 		}
 	} else {
 		float floorX = floorf(x);
 		float floorY = floorf(y);
+
 		float leftX = x - floorX;	// part not covered by pixel
 		float leftY = y - floorY;
 		float coverX = 1.0 - leftX;	// part covered by pixel
 		float coverY = 1.0 - leftY;
-		uint8* dest = bits + (int32)floorX;
-		dest += bpr * (int32)floorY;
+		uint8* dest = bits + (int)floorX;
+		dest += bpr * (int)floorY;
 		if (constrainRect.Contains(BPoint(floorX, floorY))) {
 			// offset into top left pixel
 			add_alpha(dest, pressure * (coverX * coverY), maxAlpha);

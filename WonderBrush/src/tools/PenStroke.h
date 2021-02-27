@@ -47,7 +47,7 @@ class PenStroke : public Stroke {
 											uint8* dest, uint32 bpr,
 											BRect& constrainRect);
 			void				_StrokePoint(float x, float y, float pressure,
-											 uint8* dest, uint32 bpr,
+											 uint8* dest, int bpr,
 											 BRect& constrainRect) const;
 
 			range				fAlpha;
