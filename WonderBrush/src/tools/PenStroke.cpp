@@ -278,7 +278,7 @@ bool
 PenStroke::SetToPropertyObject(PropertyObject* object)
 {
 	AutoNotificationSuspender _(this);
-	
+
 	bool ret = Stroke::SetToPropertyObject(object);
 	if (object) {
 		// opacity
@@ -383,6 +383,8 @@ PenStroke::_StrokePoint(float x, float y, float pressure, uint8* bits, uint32 bp
 	else
 		pressure = fAlpha.max;
 	uint8 maxAlpha = (uint8)(255.0 * pressure);
+	if (y < 0)
+		return;
 
 	if (fFlags & FLAG_SOLID) {
 		BPoint p(floorf(x + 0.5), floorf(y + 0.5));
