@@ -17,12 +17,14 @@
 #include <NodeInfo.h>
 #include <NodeMonitor.h>
 #include <Path.h>
+#include <PathFinder.h>
 #include <PrintJob.h>
 #include <PopUpMenu.h>
 #include <RecentItems.h>
 #include <Roster.h>
 #include <Screen.h>
 #include <ScrollView.h>
+#include <StringList.h>
 #include <TranslationUtils.h>
 #include <TranslatorRoster.h>
 #include <Volume.h>
@@ -1345,6 +1347,9 @@ MainWindow::MessageReceived(BMessage* message)
 			break;
 		case MSG_PRINT:
 			Print(fCanvasView->CurrentCanvas());
+			break;
+		case MSG_DOCS:
+			_ShowDocumentation();
 			break;
 		case MSG_SET_ZOOM: {
 			int32 value;
@@ -3729,6 +3734,9 @@ MainWindow::_CreateMenuBar()
 
 	fFileM->AddSeparatorItem();
 
+	fDocsMI = new BMenuItem("Documentation"B_UTF8_ELLIPSIS, new BMessage(MSG_DOCS));
+	fFileM->AddItem(fDocsMI);
+
 	fAboutMI = new BMenuItem("About"B_UTF8_ELLIPSIS, new BMessage(B_ABOUT_REQUESTED));
 	fAboutMI->SetTarget(be_app);
 	fFileM->AddItem(fAboutMI);
@@ -4382,6 +4390,31 @@ MainWindow::_ConfirmGroup()
 			)
 		);
 #endif
+}
+
+// _ShowDocumentation()
+void
+MainWindow::_ShowDocumentation()
+{
+	BPathFinder pathFinder;
+	BStringList paths;
+	BPath path;
+	BEntry entry;
+
+	status_t error = pathFinder.FindPaths(B_FIND_PATH_DOCUMENTATION_DIRECTORY,
+		"packages/wonderbrush", paths);
+
+	for (int i = 0; i < paths.CountStrings(); ++i) {
+		if (error == B_OK && path.SetTo(paths.StringAt(i)) == B_OK) {
+			entry = path.Path();
+			if (entry.Exists()) {
+				entry_ref ref;
+				entry.GetRef(&ref);
+				be_roster->Launch(&ref);
+				break;
+			}
+		}
+	}
 }
 
 // _LoadSettings()
