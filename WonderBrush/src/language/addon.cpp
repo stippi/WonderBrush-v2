@@ -17,7 +17,12 @@
 
 #include "addon.h"
 
-#if defined(__INTEL__) || defined(__x86_64__)
+#if defined(__x86_64__)
+#define COMPILER_NAME			"gcc"
+#define COMPILER_ADDON_OPTION	"-shared"
+#define COMPILER_OPTIMIZATION	"-O1"
+#define COMPILER_EXTRA_CRAP		""
+#elif defined(__INTEL__)
 #define COMPILER_NAME			"gcc"
 #define COMPILER_ADDON_OPTION	"-nostart"
 #define COMPILER_OPTIMIZATION	"-O1"
