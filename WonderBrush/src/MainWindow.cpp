@@ -3558,6 +3558,9 @@ MainWindow::UpdateStrings()
 	string << B_UTF8_ELLIPSIS;
 	fSetupPageMI->SetLabel(string.String());
 	fPrintMI->SetLabel(manager->GetString(PRINT, "Print"));
+	string.SetTo(manager->GetString(SHOW_DOCS, "Documentation"));
+	string << B_UTF8_ELLIPSIS;
+	fDocsMI->SetLabel(string.String());
 	string.SetTo(manager->GetString(ABOUT, "About"));
 	string << B_UTF8_ELLIPSIS;
 	fAboutMI->SetLabel(string.String());
@@ -3706,7 +3709,7 @@ MainWindow::_CreateMenuBar()
 	fExportProjectMI = new BMenuItem("Export", new BMessage(MSG_EXPORT), 'S', B_OPTION_KEY);
 	fFileM->AddItem(fExportProjectMI);
 
-	fExportProjecAstMI = new BMenuItem("Export As"B_UTF8_ELLIPSIS,
+	fExportProjecAstMI = new BMenuItem("Export As" B_UTF8_ELLIPSIS,
 								   new BMessage(MSG_EXPORT_AS),
 								   'S', B_SHIFT_KEY | B_OPTION_KEY);
 	fFileM->AddItem(fExportProjecAstMI);
@@ -3717,14 +3720,14 @@ MainWindow::_CreateMenuBar()
 								   'S');
 	fFileM->AddItem(fSaveProjectMI);
 
-	fSaveProjectAsMI = new BMenuItem("Save As"B_UTF8_ELLIPSIS,
+	fSaveProjectAsMI = new BMenuItem("Save As" B_UTF8_ELLIPSIS,
 									 new BMessage(MSG_SAVE_DOCUMENT_AS),
 									 'S', B_SHIFT_KEY);
 	fFileM->AddItem(fSaveProjectAsMI);
 
 	fFileM->AddSeparatorItem();
 
-	fSetupPageMI = new BMenuItem("Page Setup"B_UTF8_ELLIPSIS,
+	fSetupPageMI = new BMenuItem("Page Setup" B_UTF8_ELLIPSIS,
 								 new BMessage(MSG_SETUP_PAGE),
 								 'P', B_SHIFT_KEY);
 	fFileM->AddItem(fSetupPageMI);
@@ -3734,10 +3737,10 @@ MainWindow::_CreateMenuBar()
 
 	fFileM->AddSeparatorItem();
 
-	fDocsMI = new BMenuItem("Documentation"B_UTF8_ELLIPSIS, new BMessage(MSG_DOCS));
+	fDocsMI = new BMenuItem("Documentation" B_UTF8_ELLIPSIS, new BMessage(MSG_DOCS));
 	fFileM->AddItem(fDocsMI);
 
-	fAboutMI = new BMenuItem("About"B_UTF8_ELLIPSIS, new BMessage(B_ABOUT_REQUESTED));
+	fAboutMI = new BMenuItem("About" B_UTF8_ELLIPSIS, new BMessage(B_ABOUT_REQUESTED));
 	fAboutMI->SetTarget(be_app);
 	fFileM->AddItem(fAboutMI);
 
@@ -4398,23 +4401,42 @@ MainWindow::_ShowDocumentation()
 {
 	BPathFinder pathFinder;
 	BStringList paths;
-	BPath path;
-	BEntry entry;
-
 	status_t error = pathFinder.FindPaths(B_FIND_PATH_DOCUMENTATION_DIRECTORY,
 		"packages/wonderbrush", paths);
-
-	for (int i = 0; i < paths.CountStrings(); ++i) {
-		if (error == B_OK && path.SetTo(paths.StringAt(i)) == B_OK) {
-			entry = path.Path();
+	if (error == B_OK) {
+		for (int i = 0; i < paths.CountStrings(); i++) {
+			BPath path;
+			if (path.SetTo(paths.StringAt(i)) != B_OK)
+				continue;
+			BEntry entry(path.Path());
 			if (entry.Exists()) {
 				entry_ref ref;
 				entry.GetRef(&ref);
 				be_roster->Launch(&ref);
-				break;
+				return;
 			}
 		}
 	}
+
+	// TODO: We could try to find the documentation alongside
+	// the running application's binary. This would for example
+	// find the docs also when running WB from the source folder.
+
+	fprintf(stderr, "failed to find documentation directories: %s\n",
+		strerror(error));
+	
+	LanguageManager* manager = LanguageManager::Default();
+	BString helper(manager->GetString(DOCS_FAILED,
+		"It seems the WonderBrush documentation was not properly "
+		"installed by the WonderBrush package."));
+	if (error != B_OK) {
+		helper << "\n\n" << manager->GetString(ERROR, "Error")
+			<< ": " << strerror(error);
+	}
+	BAlert* alert = new BAlert("no docs", helper.String(),
+		manager->GetString(BLIP, "Bleep!"), NULL, NULL);
+	// launch alert asynchronously
+	alert->Go(NULL);
 }
 
 // _LoadSettings()
