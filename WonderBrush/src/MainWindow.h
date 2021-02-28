@@ -65,6 +65,7 @@ enum {
 	MSG_OPEN					= 'open',
 	MSG_PRINT					= 'prnt',
 	MSG_SETUP_PAGE				= 'supg',
+	MSG_DOCS					= 'docs',
 	MSG_SET_SWATCHES			= 'stsw',
 	MSG_SAVE_SWATCHES			= 'svsw',
 	MSG_DELETE_SWATCHES			= 'dlsw',
@@ -128,6 +129,7 @@ class MainWindow : public MWindow {
 			MView*				_ToolSetupView();
 			MView*				_ConfirmGroup();
 
+			void				_ShowDocumentation();
 			void				_LoadSettings();
 			void				_SaveSettings();
 			void				_SetTool(uint32 tool);
@@ -352,6 +354,7 @@ class MainWindow : public MWindow {
 	BMenuItem*					fSaveProjectAsMI;
 	BMenuItem*					fSetupPageMI;
 	BMenuItem*					fPrintMI;
+	BMenuItem*					fDocsMI;
 	BMenuItem*					fAboutMI;
 	BMenuItem*					fQuitMI;
 
