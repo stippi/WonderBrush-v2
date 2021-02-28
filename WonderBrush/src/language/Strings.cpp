@@ -28,6 +28,7 @@ print_header (FILE* file)
 	fprintf(file, "PRINT,\n");
 	fprintf(file, "CLOSE,\n");
 	fprintf(file, "CLOSE_CANVAS,\n");
+	fprintf(file, "SHOW_DOCS,\n");
 	fprintf(file, "ABOUT,\n");
 	fprintf(file, "QUIT,\n");
 
@@ -481,6 +482,7 @@ init_defines(const char* strings[])
 	strings[PRINT]				= "PRINT";
 	strings[CLOSE]				= "CLOSE";
 	strings[CLOSE_CANVAS]		= "CLOSE_CANVAS";
+	strings[SHOW_DOCS]			= "SHOW_DOCS";
 	strings[ABOUT]				= "ABOUT";
 	strings[QUIT]				= "QUIT";
 

@@ -30,6 +30,7 @@ enum {
 	PRINT,
 	CLOSE,
 	CLOSE_CANVAS,
+	SHOW_DOCS,
 	ABOUT,
 	QUIT,
 
