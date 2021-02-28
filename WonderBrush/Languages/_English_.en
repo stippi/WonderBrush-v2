@@ -47,6 +47,9 @@ init_strings(const char* strings[])
 	strings[PRINT]				= "Print";
 	strings[CLOSE]				= "Close";
 	strings[CLOSE_CANVAS]		= "Close canvas";		// tool tip
+	strings[SHOW_DOCS]			= "Documentation";
+	strings[DOCS_FAILED]		= "It seems the WonderBrush documentation was not properly "
+								  "installed by the WonderBrush package.";
 	strings[ABOUT]				= "About";
 	strings[QUIT]				= "Quit";
 

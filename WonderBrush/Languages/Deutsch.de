@@ -30,6 +30,9 @@ init_strings(const char* strings[])
 	strings[PRINT]				= "Drucken";
 	strings[CLOSE]				= "Schließen";
 	strings[CLOSE_CANVAS]		= "Dokument schließen";
+	strings[SHOW_DOCS]			= "Dokumentation";
+	strings[DOCS_FAILED]		= "Es scheint die WonderBrush-Dokumentation "
+								  "wurde nicht korrekt durch das Paket installiert.";
 	strings[ABOUT]				= "Über";
 	strings[QUIT]				= "Beenden";
 

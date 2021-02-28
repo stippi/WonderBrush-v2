@@ -47,6 +47,7 @@ init_strings(const char* strings[])
 	strings[PRINT]				= "Drukuj";
 	strings[CLOSE]				= "Zamknij";
 	strings[CLOSE_CANVAS]		= "Zamknij Projekt";			// tool tip
+	strings[SHOW_DOCS]			= "Dokumentacja";
 	strings[ABOUT]				= "O programie";
 	strings[QUIT]				= "Zakończ";
 
