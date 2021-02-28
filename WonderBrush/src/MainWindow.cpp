@@ -4405,6 +4405,7 @@ MainWindow::_ShowDocumentation()
 		"packages/wonderbrush", paths);
 	if (error == B_OK) {
 		for (int i = 0; i < paths.CountStrings(); i++) {
+			printf("looking for docs in %s\n", paths.StringAt(i).String());
 			BPath path;
 			if (path.SetTo(paths.StringAt(i)) != B_OK)
 				continue;
