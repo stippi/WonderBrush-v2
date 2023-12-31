@@ -108,10 +108,10 @@ LayerItem::Update(BView* owner, const BFont* font)
 
 // Draw
 void
-LayerItem::Draw(BView* owner, BRect frame, uint32 flags)
+LayerItem::DrawItem(BView* owner, BRect frame, bool even)
 {
 	if (Layer* layer = fParent->LayerFor(this)) {
-		DrawBackground(owner, frame, flags);
+		DrawBackground(owner, frame, even);
 		BRect r(frame);
 		BRect iconRect(frame);
 		GetIconRect(iconRect);
@@ -151,9 +151,9 @@ LayerItem::Draw(BView* owner, BRect frame, uint32 flags)
 		r.left = iconRect.right + 2.0;
 		r.right = frame.right;
 		owner->SetDrawingMode(B_OP_COPY);
-		SimpleItem::Draw(owner, r, flags);
+		SimpleItem::DrawItem(owner, r, even);
 	} else
-		SimpleItem::Draw(owner, frame, flags);
+		SimpleItem::DrawItem(owner, frame, even);
 }
 
 // GetIconRect
@@ -602,7 +602,7 @@ LayersListView::SetDropTargetRect(const BMessage* message, BPoint where)
 					r = ItemFrame(index - 1);
 					r.OffsetBy(0.0, r.Height() + 1);
 				}
-				_SetDropAnticipationRect(r);
+				SetDropRect(r);
 				fDropIndex = index;
 
 				if (message->what != B_PASTE) {

@@ -4,105 +4,135 @@
 #include <malloc.h>
 
 #include <Bitmap.h>
+#include <Clipboard.h>
 #include <Cursor.h>
 #include <Entry.h>
 #include <MessageRunner.h>
 #include <Messenger.h>
 #include <ScrollBar.h>
 #include <ScrollView.h>
+#include <StackOrHeapArray.h>
 #include <String.h>
 #include <Window.h>
 
 #include "cursors.h"
 
 #include "ListViews.h"
+#include "Selection.h"
 
 #define MAX_DRAG_HEIGHT		200.0
 #define ALPHA				170
 #define TEXT_OFFSET			5.0
 
-enum {
-	MSG_TICK	= 'tick',
-};
 
-// SimpleItem class
-SimpleItem::SimpleItem( const char *name )
-	: BStringItem( name )
+static const rgb_color kDropIndicatorColor = make_color(255, 65, 54, 255);
+static const rgb_color kDragFrameColor = make_color(17, 17, 17, 255);
+
+
+// #pragma mark - SimpleItem
+
+
+SimpleItem::SimpleItem(const char *name)
+	:
+	BStringItem(name)
 {
 }
+
 
 SimpleItem::~SimpleItem()
 {
 }
 
 // SimpleItem::DrawItem
+
 void
-SimpleItem::Draw(BView *owner, BRect frame, uint32 flags)
+SimpleItem::DrawItem(BView* owner, BRect itemFrame, bool even)
 {
-	DrawBackground(owner, frame, flags);
+	DrawBackground(owner, itemFrame, even);
+
 	// label
-	owner->SetHighColor( 0, 0, 0, 255 );
+	if (IsSelected())
+		owner->SetHighUIColor(B_LIST_SELECTED_ITEM_TEXT_COLOR);
+	else
+		owner->SetHighUIColor(B_LIST_ITEM_TEXT_COLOR);
+
 	font_height fh;
-	owner->GetFontHeight( &fh );
+	owner->GetFontHeight(&fh);
+
 	const char* text = Text();
-	BString truncatedString( text );
-	owner->TruncateString( &truncatedString, B_TRUNCATE_MIDDLE,
-						   frame.Width() - TEXT_OFFSET - 4.0 );
-	float height = frame.Height();
+	BString truncatedString(text);
+	owner->TruncateString(&truncatedString, B_TRUNCATE_MIDDLE,
+		itemFrame.Width() - TEXT_OFFSET - 4);
+
+	float height = itemFrame.Height();
 	float textHeight = fh.ascent + fh.descent;
 	BPoint textPoint;
-	textPoint.x = frame.left + TEXT_OFFSET;
-	textPoint.y = frame.top
-				  + ceilf(height / 2.0 - textHeight / 2.0
-				  		  + fh.ascent);
+	textPoint.x = itemFrame.left + TEXT_OFFSET;
+	textPoint.y = itemFrame.top
+		+ ceilf(height / 2 - textHeight / 2 + fh.ascent);
+
 	owner->DrawString(truncatedString.String(), textPoint);
 }
 
 // SimpleItem::DrawBackground
+
 void
-SimpleItem::DrawBackground(BView *owner, BRect frame, uint32 flags)
+SimpleItem::DrawBackground(BView* owner, BRect itemFrame, bool even)
 {
-	// stroke a blue frame around the item if it's focused
-	if (flags & FLAGS_FOCUSED) {
-		owner->SetLowColor(ui_color(B_KEYBOARD_NAVIGATION_COLOR));
-		owner->StrokeRect(frame, B_SOLID_LOW);
-		frame.InsetBy(1.0, 1.0);
-	}
-	// figure out bg-color
-	rgb_color color = (rgb_color){ 255, 255, 255, 255 };
-	if ( flags & FLAGS_TINTED_LINE )
-		color = tint_color( color, 1.06 );
-	// background
-	if ( IsSelected() )
-		color = tint_color( color, B_DARKEN_2_TINT );
-	owner->SetLowColor( color );
-	owner->FillRect( frame, B_SOLID_LOW );
+	rgb_color bgColor;
+	if (!IsEnabled()) {
+		rgb_color textColor = ui_color(B_LIST_ITEM_TEXT_COLOR);
+		rgb_color disabledColor;
+		if (textColor.red + textColor.green + textColor.blue > 128 * 3)
+			disabledColor = tint_color(textColor, B_DARKEN_2_TINT);
+		else
+			disabledColor = tint_color(textColor, B_LIGHTEN_2_TINT);
+		bgColor = disabledColor;
+	} else if (IsSelected())
+		bgColor = ui_color(B_LIST_SELECTED_BACKGROUND_COLOR);
+	else
+		bgColor = ui_color(B_LIST_BACKGROUND_COLOR);
+
+	if (even)
+		bgColor = tint_color(bgColor, 1.06);
+
+	owner->SetLowColor(bgColor);
+	owner->FillRect(itemFrame, B_SOLID_LOW);
 }
 
-// DragSortableListView class
+
+// #pragma mark - DragSortableListView
+
+
 DragSortableListView::DragSortableListView(BRect frame, const char* name,
-										   list_view_type type, uint32 resizingMode,
-										   uint32 flags)
-	: BListView(frame, name, type, resizingMode, flags),
-	  fDropRect(0.0, 0.0, -1.0, -1.0),
-	  fMouseWheelFilter(NULL),
-	  fScrollPulse(NULL),
-	  fDropIndex(-1),
-	  fLastClickedItem(NULL),
-	  fScrollView(NULL),
-	  fDragCommand(B_SIMPLE_DATA),
-	  fFocusedIndex(-1)
+	list_view_type type, uint32 resizingMode, uint32 flags)
+	:
+	BListView(frame, name, type, resizingMode, flags),
+	fDropRect(0, 0, -1, -1),
+	fMouseWheelFilter(NULL),
+	fScrollPulse(NULL),
+	fDropIndex(-1),
+	fLastClickedItem(NULL),
+	fScrollView(NULL),
+	fDragCommand(B_SIMPLE_DATA),
+	fFocusedIndex(-1),
+	fSelection(NULL),
+	fSyncingToSelection(false),
+	fModifyingSelection(false)
 {
 	SetViewColor(B_TRANSPARENT_32_BIT);
 }
 
+
 DragSortableListView::~DragSortableListView()
 {
-//	delete fMouseWheelFilter;
-	delete fScrollPulse;
+	delete fMouseWheelFilter;
+
+	SetSelection(NULL);
 }
 
 // AttachedToWindow
+
 void
 DragSortableListView::AttachedToWindow()
 {
@@ -118,79 +148,23 @@ DragSortableListView::AttachedToWindow()
 }
 
 // DetachedFromWindow
+
 void
 DragSortableListView::DetachedFromWindow()
 {
-//	Window()->RemoveCommonFilter(fMouseWheelFilter);
+	Window()->RemoveCommonFilter(fMouseWheelFilter);
 }
 
 // FrameResized
+
 void
 DragSortableListView::FrameResized(float width, float height)
 {
 	BListView::FrameResized(width, height);
 }
 
-/*
-// MakeFocus
-void
-DragSortableListView::MakeFocus(bool focused)
-{
-	if (focused != IsFocus()) {
-		Invalidate();
-		BListView::MakeFocus(focused);
-	}
-}
-*/
-// Draw
-void
-DragSortableListView::Draw( BRect updateRect )
-{
-	int32 firstIndex = IndexOf(updateRect.LeftTop());
-	int32 lastIndex = IndexOf(updateRect.RightBottom());
-	if (firstIndex >= 0) {
-		if (lastIndex < firstIndex)
-			lastIndex = CountItems() - 1;
-		// update rect contains items
-		BRect r = updateRect;
-		for (int32 i = firstIndex; i <= lastIndex; i++) {
-			r = ItemFrame(i);
-			DrawListItem(this, i, r);
-		}
-		updateRect.top = r.bottom + 1.0;
-		if (updateRect.IsValid()) {
-			SetLowColor(255, 255, 255, 255);
-			FillRect(updateRect, B_SOLID_LOW);
-		}
-	} else {
-		SetLowColor(255, 255, 255, 255);
-		FillRect(updateRect, B_SOLID_LOW);
-	}
-	// drop anticipation indication
-	if (fDropRect.IsValid()) {
-		SetHighColor(255, 0, 0, 255);
-		StrokeRect(fDropRect);
-	}
-/*	// focus indication
-	if (IsFocus()) {
-		SetHighColor(ui_color(B_KEYBOARD_NAVIGATION_COLOR));
-		StrokeRect(Bounds());
-	}*/
-}
-
-// ScrollTo
-void
-DragSortableListView::ScrollTo(BPoint where)
-{
-	uint32 buttons;
-	BPoint point;
-	GetMouse(&point, &buttons, false);
-	uint32 transit = Bounds().Contains(point) ? B_INSIDE_VIEW : B_OUTSIDE_VIEW;
-	MouseMoved(point, transit, &fDragMessageCopy);
-	BListView::ScrollTo(where);
-}
-
 // TargetedByScrollView
+
 void
 DragSortableListView::TargetedByScrollView(BScrollView* scrollView)
 {
@@ -198,305 +172,159 @@ DragSortableListView::TargetedByScrollView(BScrollView* scrollView)
 	BListView::TargetedByScrollView(scrollView);
 }
 
-// InitiateDrag
-bool
-DragSortableListView::InitiateDrag( BPoint point, int32 index, bool )
-{
-	// supress drag&drop while an item is focused
-	if (fFocusedIndex >= 0)
-		return false;
-
-	bool success = false;
-	BListItem* item = ItemAt( CurrentSelection( 0 ) );
-	if ( !item ) {
-		// workarround a timing problem
-		Select( index );
-		item = ItemAt( index );
-	}
-	if ( item ) {
-		// create drag message
-		BMessage msg( fDragCommand );
-		MakeDragMessage( &msg );
-		// figure out drag rect
-		float width = Bounds().Width();
-		BRect dragRect(0.0, 0.0, width, -1.0);
-		// figure out, how many items fit into our bitmap
-		int32 numItems;
-		bool fade = false;
-		for (numItems = 0; BListItem* item = ItemAt( CurrentSelection( numItems ) ); numItems++) {
-			dragRect.bottom += ceilf( item->Height() ) + 1.0;
-			if ( dragRect.Height() > MAX_DRAG_HEIGHT ) {
-				fade = true;
-				dragRect.bottom = MAX_DRAG_HEIGHT;
-				numItems++;
-				break;
-			}
-		}
-		BBitmap* dragBitmap = new BBitmap( dragRect, B_RGB32, true );
-		if ( dragBitmap && dragBitmap->IsValid() ) {
-			if ( BView *v = new BView( dragBitmap->Bounds(), "helper", B_FOLLOW_NONE, B_WILL_DRAW ) ) {
-				dragBitmap->AddChild( v );
-				dragBitmap->Lock();
-				BRect itemBounds( dragRect) ;
-				itemBounds.bottom = 0.0;
-				// let all selected items, that fit into our drag_bitmap, draw
-				for ( int32 i = 0; i < numItems; i++ ) {
-					int32 index = CurrentSelection( i );
-					BListItem* item = ItemAt( index );
-					itemBounds.bottom = itemBounds.top + ceilf( item->Height() );
-					if ( itemBounds.bottom > dragRect.bottom )
-						itemBounds.bottom = dragRect.bottom;
-					DrawListItem( v, index, itemBounds );
-					itemBounds.top = itemBounds.bottom + 1.0;
-				}
-				// make a black frame arround the edge
-				v->SetHighColor( 0, 0, 0, 255 );
-				v->StrokeRect( v->Bounds() );
-				v->Sync();
-	
-				uint8 *bits = (uint8 *)dragBitmap->Bits();
-				int32 height = (int32)dragBitmap->Bounds().Height() + 1;
-				int32 width = (int32)dragBitmap->Bounds().Width() + 1;
-				int32 bpr = dragBitmap->BytesPerRow();
-	
-				if (fade) {
-					for ( int32 y = 0; y < height - ALPHA / 2; y++, bits += bpr ) {
-						uint8 *line = bits + 3;
-						for (uint8 *end = line + 4 * width; line < end; line += 4)
-							*line = ALPHA;
-					}
-					for ( int32 y = height - ALPHA / 2; y < height; y++, bits += bpr ) {
-						uint8 *line = bits + 3;
-						for (uint8 *end = line + 4 * width; line < end; line += 4)
-							*line = (height - y) << 1;
-					}
-				} else {
-					for ( int32 y = 0; y < height; y++, bits += bpr ) {
-						uint8 *line = bits + 3;
-						for (uint8 *end = line + 4 * width; line < end; line += 4)
-							*line = ALPHA;
-					}
-				}
-				dragBitmap->Unlock();
-			}
-		} else {
-			delete dragBitmap;
-			dragBitmap = NULL;
-		}
-		if (dragBitmap)
-			DragMessage( &msg, dragBitmap, B_OP_ALPHA, BPoint( 0.0, 0.0 ) );
-		else
-			DragMessage( &msg, dragRect.OffsetToCopy( point ), this );
-
-		_SetDragMessage(&msg);
-		success = true;
-	}
-	return success;
-}
-
 // WindowActivated
+
 void
-DragSortableListView::WindowActivated( bool active )
+DragSortableListView::WindowActivated(bool active)
 {
-	// workarround for buggy focus indication of BScrollView
-	if ( BView* view = Parent() )
+	// work-around for buggy focus indicator on BScrollView
+	if (BView* view = Parent())
 		view->Invalidate();
 }
 
 // MessageReceived
+
 void
 DragSortableListView::MessageReceived(BMessage* message)
 {
 	if (message->what == fDragCommand) {
-		DragSortableListView *list = NULL;
-		if ( message->FindPointer( "list", (void **)&list ) == B_OK
-			 && list == this ) {
-			int32 count = CountItems();
-			if ( fDropIndex < 0 || fDropIndex > count )
-				fDropIndex = count;
-			BList items;
-			int32 index;
-			for ( int32 i = 0; message->FindInt32( "index", i, &index ) == B_OK; i++ )
-				if ( BListItem* item = ItemAt(index) )
-					items.AddItem( (void*)item );
-			if ( items.CountItems() > 0 ) {
-				if ( modifiers() & B_SHIFT_KEY )
-					CopyItems( items, fDropIndex );
-				else
-					MoveItems( items, fDropIndex );
-			}
-			fDropIndex = -1;
-		}
+		int32 count = CountItems();
+		if (fDropIndex < 0 || fDropIndex > count)
+			fDropIndex = count;
+		HandleDropMessage(message, fDropIndex);
+		fDropIndex = -1;
 	} else {
-		switch ( message->what ) {
-			case MSG_TICK: {
-				float scrollV = 0.0;
-				BRect rect(Bounds());
-				BPoint point;
+		switch (message->what) {
+			case B_MOUSE_WHEEL_CHANGED:
+			{
+				BListView::MessageReceived(message);
+				BPoint where;
 				uint32 buttons;
-				GetMouse(&point, &buttons, false);
-				if (rect.Contains(point)) {
-					// calculate the vertical scrolling offset
-					float hotDist = rect.Height() * SCROLL_AREA;
-					if (point.y > rect.bottom - hotDist)
-						scrollV = hotDist - (rect.bottom - point.y);
-					else if (point.y < rect.top + hotDist)
-						scrollV = (point.y - rect.top) - hotDist;
-				}
-				// scroll
-				if (scrollV != 0.0 && fScrollView) {
-					if (BScrollBar* scrollBar = fScrollView->ScrollBar(B_VERTICAL)) {
-						float value = scrollBar->Value();
-						scrollBar->SetValue(scrollBar->Value() + scrollV);
-						if (scrollBar->Value() != value) {
-							// update mouse position
-							uint32 buttons;
-							BPoint point;
-							GetMouse(&point, &buttons, false);
-							uint32 transit = Bounds().Contains(point) ? B_INSIDE_VIEW : B_OUTSIDE_VIEW;
-							MouseMoved(point, transit, &fDragMessageCopy);
-						}
-					}
-				}
+				GetMouse(&where, &buttons, false);
+				uint32 transit = Bounds().Contains(where) ? B_INSIDE_VIEW : B_OUTSIDE_VIEW;
+				MouseMoved(where, transit, &fDragMessageCopy);
 				break;
 			}
-//			case B_MODIFIERS_CHANGED:
-//				ModifiersChanged();
-//				break;
-			case B_MOUSE_WHEEL_CHANGED: {
-				BListView::MessageReceived( message );
-				BPoint point;
-				uint32 buttons;
-				GetMouse(&point, &buttons, false);
-				uint32 transit = Bounds().Contains(point) ? B_INSIDE_VIEW : B_OUTSIDE_VIEW;
-				MouseMoved(point, transit, &fDragMessageCopy);
-				break;
-			}
+
 			default:
-				BListView::MessageReceived( message );
+				BListView::MessageReceived(message);
 				break;
 		}
 	}
 }
 
 // KeyDown
+
 void
-DragSortableListView::KeyDown( const char* bytes, int32 numBytes )
+DragSortableListView::KeyDown(const char* bytes, int32 numBytes)
 {
-	if ( numBytes < 1 )
+	if (numBytes < 1)
 		return;
 		
-	if ( ( bytes[0] == B_BACKSPACE ) || ( bytes[0] == B_DELETE ) )
+	if ((bytes[0] == B_BACKSPACE) || (bytes[0] == B_DELETE))
 		RemoveSelected();
 
-	BListView::KeyDown( bytes, numBytes );
+	BListView::KeyDown(bytes, numBytes);
 }
 
 // MouseDown
-void
-DragSortableListView::MouseDown( BPoint where )
-{
-	int32 clicks = 1;
-	uint32 buttons = 0;
-	Window()->CurrentMessage()->FindInt32("clicks", &clicks);
-	Window()->CurrentMessage()->FindInt32("buttons", (int32*)&buttons);
-	int32 clickedIndex = -1;
-	for (int32 i = 0; BListItem* item = ItemAt(i); i++) {
-		if (ItemFrame(i).Contains(where)) {
-			if (clicks == 2) {
-				// only do something if user clicked the same item twice
-				if (fLastClickedItem == item)
-					DoubleClicked(i);
-			} else {
-				// remember last clicked item
-				fLastClickedItem = item;
-			}
-			clickedIndex = i;
-			break;
-		}
-	}
-	if (clickedIndex == -1)
-		fLastClickedItem = NULL;
 
-	BListItem* item = ItemAt(clickedIndex);
-	if (ListType() == B_MULTIPLE_SELECTION_LIST
-		&& item && (buttons & B_SECONDARY_MOUSE_BUTTON)) {
-		if (item->IsSelected())
-			Deselect(clickedIndex);
-		else
-			Select(clickedIndex, true);
-	} else {
-		BListView::MouseDown(where);
+void
+DragSortableListView::MouseDown(BPoint where)
+{
+	int32 index = IndexOf(where);
+	BListItem* item = ItemAt(index);
+
+	// bail out if item not found
+	if (index < 0 || item == NULL) {
+		fLastClickedItem = NULL;
+		return BListView::MouseDown(where);
 	}
+
+	int32 clicks = 1;
+	int32 buttons = 0;
+	Window()->CurrentMessage()->FindInt32("clicks", &clicks);
+	Window()->CurrentMessage()->FindInt32("buttons", &buttons);
+
+	if (clicks == 2 && item == fLastClickedItem) {
+		// only do something if user clicked the same item twice
+		DoubleClicked(index);
+	} else {
+		// remember last clicked item
+		fLastClickedItem = item;
+	}
+
+	if (ListType() == B_MULTIPLE_SELECTION_LIST
+		&& (buttons & B_SECONDARY_MOUSE_BUTTON) != 0) {
+		if (item->IsSelected())
+			Deselect(index);
+		else
+			Select(index, true);
+	} else
+		BListView::MouseDown(where);
 }
 
 // MouseMoved
+
 void
-DragSortableListView::MouseMoved(BPoint where, uint32 transit, const BMessage *msg)
+DragSortableListView::MouseMoved(BPoint where, uint32 transit, const BMessage* msg)
 {
-	if (msg && AcceptDragMessage(msg)) {
+	int32 buttons = 0;
+	Window()->CurrentMessage()->FindInt32("buttons", &buttons);
+
+	// only start a drag if a button is down and we have a drag message
+	if (buttons > 0 && msg && AcceptDragMessage(msg)) {
+		// we have dragged off the mouse down item
+		// turn on auto-scrolling and drag and drop
 		switch (transit) {
 			case B_ENTERED_VIEW:
-			case B_INSIDE_VIEW: {
-				// remember drag message
-				// this is needed to react on modifier changes
-				_SetDragMessage(msg);
+			case B_INSIDE_VIEW:
+				// remember drag message to react on modifier changes
+				SetDragMessage(msg);
 				// set drop target through virtual function
 				SetDropTargetRect(msg, where);
-				// go into autoscrolling mode
-				BRect r = Bounds();
-				r.InsetBy(0.0, r.Height() * SCROLL_AREA);
-				SetAutoScrolling(!r.Contains(where));
-				break;
-			}
+			break;
+
 			case B_EXITED_VIEW:
 				// forget drag message
-				_SetDragMessage(NULL);
-				SetAutoScrolling(false);
-				// fall through
+				SetDragMessage(NULL);
+				// don't draw drop rect indicator
+				InvalidateDropRect();
 			case B_OUTSIDE_VIEW:
-				_RemoveDropAnticipationRect();
 				break;
 		}
 	} else {
-		_RemoveDropAnticipationRect();
-		BListView::MouseMoved(where, transit, msg);
-		_SetDragMessage(NULL);
-		SetAutoScrolling(false);
-
+		// be sure to forget drag message
+		SetDragMessage(NULL);
+		// don't draw drop rect indicator
+		InvalidateDropRect();
+		// restore hand cursor
 		BCursor cursor(B_HAND_CURSOR);
 		SetViewCursor(&cursor, true);
 	}
+
 	fLastMousePos = where;
+	BListView::MouseMoved(where, transit, msg);
 }
 
 // MouseUp
-void
-DragSortableListView::MouseUp( BPoint where )
-{
-	// remove drop mark
-	_SetDropAnticipationRect( BRect( 0.0, 0.0, -1.0, -1.0 ) );
-	SetAutoScrolling(false);
-	// be sure to forget drag message
-	_SetDragMessage(NULL);
-	BListView::MouseUp( where );
 
+void
+DragSortableListView::MouseUp(BPoint where)
+{
+	// turn off auto-scrolling
+	BListView::MouseUp(where);
+	// be sure to forget drag message
+	SetDragMessage(NULL);
+	// don't draw drop rect indicator
+	InvalidateDropRect();
+	// restore hand cursor
 	BCursor cursor(B_HAND_CURSOR);
 	SetViewCursor(&cursor, true);
 }
 
-// DrawItem
-void
-DragSortableListView::DrawItem( BListItem *item, BRect itemFrame, bool complete )
-{
-	DrawListItem( this, IndexOf( item ), itemFrame );
-/*	if (IsFocus()) {
-		SetHighColor(ui_color(B_KEYBOARD_NAVIGATION_COLOR));
-		StrokeRect(Bounds());
-	}*/
-}
-
 // MouseWheelChanged
+
 bool
 DragSortableListView::MouseWheelChanged(float x, float y)
 {
@@ -509,14 +337,57 @@ DragSortableListView::MouseWheelChanged(float x, float y)
 		return false;
 }
 
+// ObjectChanged
+
+void
+DragSortableListView::ObjectChanged(const Observable* object)
+{
+	if (object != fSelection || fModifyingSelection || fSyncingToSelection)
+		return;
+
+	fSyncingToSelection = true;
+
+	// try to sync to Selection
+	BList selectedItems;
+
+	int32 count = fSelection->CountSelected();
+	for (int32 i = 0; i < count; i++) {
+		int32 index = IndexOfSelectable(fSelection->SelectableAtFast(i));
+		if (index >= 0) {
+			BListItem* item = ItemAt(index);
+			if (item && !selectedItems.HasItem((void*)item))
+				selectedItems.AddItem((void*)item);
+		}
+	}
+
+	count = selectedItems.CountItems();
+	if (count == 0) {
+		if (CurrentSelection(0) >= 0)
+			DeselectAll();
+	} else {
+		count = CountItems();
+		for (int32 i = 0; i < count; i++) {
+			BListItem* item = ItemAt(i);
+			bool selected = selectedItems.RemoveItem((void*)item);
+			if (item->IsSelected() != selected) {
+				Select(i, true);
+			}
+		}
+	}
+
+	fSyncingToSelection = false;
+}
+
 // SetDragCommand
+
 void
 DragSortableListView::SetDragCommand(uint32 command)
 {
 	fDragCommand = command;
 }
 
-// ModifiersChaned
+// ModifiersChanged
+
 void
 DragSortableListView::ModifiersChanged()
 {
@@ -524,6 +395,7 @@ DragSortableListView::ModifiersChanged()
 }
 
 // SetItemFocused
+
 void
 DragSortableListView::SetItemFocused(int32 index)
 {
@@ -533,6 +405,7 @@ DragSortableListView::SetItemFocused(int32 index)
 }
 
 // AcceptDragMessage
+
 bool
 DragSortableListView::AcceptDragMessage(const BMessage* message) const
 {
@@ -540,27 +413,28 @@ DragSortableListView::AcceptDragMessage(const BMessage* message) const
 }
 
 // SetDropTargetRect
+
 void
 DragSortableListView::SetDropTargetRect(const BMessage* message, BPoint where)
-
 {
 	if (AcceptDragMessage(message)) {
 		bool copy = modifiers() & B_SHIFT_KEY;
 		bool replaceAll = !message->HasPointer("list") && !copy;
-		BRect r = Bounds();
+		BRect rect = Bounds();
 		if (replaceAll) {
-			r.bottom--;	// compensate for scrollbar offset
-			_SetDropAnticipationRect(r);
+			// compensate for scrollbar offset
+			rect.bottom--;
+			fDropRect = rect;
 			fDropIndex = -1;
 		} else {
 			// offset where by half of item height
-			r = ItemFrame(0);
-			where.y += r.Height() / 2.0;
-	
+			rect = ItemFrame(0);
+			where.y += rect.Height() / 2;
+
 			int32 index = IndexOf(where);
 			if (index < 0)
 				index = CountItems();
-			_SetDropIndex(index);
+			SetDropIndex(index);
 
 			const uchar* cursorData = copy ? kCopyCursor : B_HAND_CURSOR;
 			BCursor cursor(cursorData);
@@ -569,52 +443,47 @@ DragSortableListView::SetDropTargetRect(const BMessage* message, BPoint where)
 	}
 }
 
-// SetAutoScrolling
-void
-DragSortableListView::SetAutoScrolling(bool enable)
+// HandleDropMessage
+
+bool
+DragSortableListView::HandleDropMessage(const BMessage* message,
+	int32 dropIndex)
 {
-	if (fScrollPulse && enable)
-		return;
-	if (enable) {
-		BMessenger messenger(this, Window());
-		BMessage message(MSG_TICK);
-		fScrollPulse = new BMessageRunner(messenger, &message, 40000LL);
-	} else {
-		delete fScrollPulse;
-		fScrollPulse = NULL;
+	DragSortableListView *list = NULL;
+	if (message->FindPointer("list", (void **)&list) != B_OK || list != this)
+		return false;
+
+	BList items;
+	int32 index;
+	for (int32 i = 0; message->FindInt32("index", i, &index) == B_OK; i++) {
+		BListItem* item = ItemAt(index);
+		if (item != NULL)
+			items.AddItem((void*)item);
 	}
+
+	if (items.CountItems() == 0)
+		return false;
+
+	if ((modifiers() & B_SHIFT_KEY) != 0)
+		CopyItems(items, dropIndex);
+	else
+		MoveItems(items, dropIndex);
+
+	return true;
 }
 
 // DoesAutoScrolling
+
 bool
 DragSortableListView::DoesAutoScrolling() const
 {
-	return fScrollPulse;
-}
-
-// ScrollTo
-void
-DragSortableListView::ScrollTo(int32 index)
-{
-	if (index < 0)
-		index = 0;
-	if (index >= CountItems())
-		index = CountItems() - 1;
-
-	if (BListItem* item = ItemAt(index)) {
-		BRect itemFrame = ItemFrame(index);
-		BRect bounds = Bounds();
-		if (itemFrame.top < bounds.top) {
-			ScrollTo(itemFrame.LeftTop());
-		} else if (itemFrame.bottom > bounds.bottom) {
-			ScrollTo(BPoint(0.0, itemFrame.bottom - bounds.Height()));
-		}
-	}
+	return true;
 }
 
 // MoveItems
+
 void
-DragSortableListView::MoveItems( BList& items, int32 index )
+DragSortableListView::MoveItems(BList& items, int32 index)
 {
 	DeselectAll();
 	// we remove the items while we look at them, the insertion index is decreased
@@ -622,34 +491,31 @@ DragSortableListView::MoveItems( BList& items, int32 index )
 	// removal
 	BList removedItems;
 	int32 count = items.CountItems();
-	for ( int32 i = 0; i < count; i++ )
-	{
-		BListItem* item = (BListItem*)items.ItemAt( i );
-		int32 removeIndex = IndexOf( item );
-		if ( RemoveItem( item ) && removedItems.AddItem( (void*)item ) )
-		{
-			if ( removeIndex < index )
+	for (int32 i = 0; i < count; i++) {
+		BListItem* item = (BListItem*)items.ItemAt(i);
+		int32 removeIndex = IndexOf(item);
+		if (RemoveItem(item) && removedItems.AddItem((void*)item)) {
+			if (removeIndex < index)
 				index--;
 		}
 		// else ??? -> blow up
 	}
-	for ( int32 i = 0; BListItem* item = (BListItem*)removedItems.ItemAt( i ); i++ )
-	{
-		if ( AddItem( item, index ) )
-		{
+	for (int32 i = 0;
+		 BListItem* item = (BListItem*)removedItems.ItemAt(i); i++) {
+		if (AddItem(item, index)) {
 			// after we're done, the newly inserted items will be selected
-			Select( index, true );
+			Select(index, true);
 			// next items will be inserted after this one
 			index++;
-		}
-		else
+		} else
 			delete item;
 	}
 }
 
 // CopyItems
+
 void
-DragSortableListView::CopyItems( BList& items, int32 index )
+DragSortableListView::CopyItems(BList& items, int32 index)
 {
 	DeselectAll();
 	// by inserting the items after we copied all items first, we avoid
@@ -658,70 +524,134 @@ DragSortableListView::CopyItems( BList& items, int32 index )
 	// need to be cloned
 	BList clonedItems;
 	int32 count = items.CountItems();
-	for ( int32 i = 0; i < count; i++ )
-	{
-		BListItem* item = CloneItem( IndexOf( (BListItem*)items.ItemAt( i ) ) );
-		if ( item && !clonedItems.AddItem( (void*)item ) )
+	for (int32 i = 0; i < count; i++) {
+		BListItem* item = CloneItem(IndexOf((BListItem*)items.ItemAt(i)));
+		if (item && !clonedItems.AddItem((void*)item))
 			delete item;
 	}
-	for ( int32 i = 0; BListItem* item = (BListItem*)clonedItems.ItemAt( i ); i++ )
-	{
-		if ( AddItem( item, index ) )
-		{
+	for (int32 i = 0;
+		 BListItem* item = (BListItem*)clonedItems.ItemAt(i); i++) {
+		if (AddItem(item, index)) {
 			// after we're done, the newly inserted items will be selected
-			Select( index, true );
+			Select(index, true);
 			// next items will be inserted after this one
 			index++;
-		}
-		else
+		} else
 			delete item;
 	}
 }
 
 // RemoveItemList
+
 void
-DragSortableListView::RemoveItemList( BList& items )
+DragSortableListView::RemoveItemList(BList& items)
 {
 	int32 count = items.CountItems();
-	for ( int32 i = 0; i < count; i++ )
-	{
-		BListItem* item = (BListItem*)items.ItemAt( i );
-		if ( RemoveItem( item ) )
+	for (int32 i = 0; i < count; i++) {
+		BListItem* item = (BListItem*)items.ItemAt(i);
+		if (RemoveItem(item))
 			delete item;
 	}
 }
 
 // RemoveSelected
+
 void
 DragSortableListView::RemoveSelected()
 {
-//	if (fFocusedIndex >= 0)
-//		return;
-
 	BList items;
-	for ( int32 i = 0; BListItem* item = ItemAt( CurrentSelection( i ) ); i++ )
-		items.AddItem( (void*)item );
-	RemoveItemList( items );
+	for (int32 i = 0; BListItem* item = ItemAt(CurrentSelection(i)); i++)
+		items.AddItem((void*)item);
+	RemoveItemList(items);
 }
 
-// CountSelectedItems
-int32
-DragSortableListView::CountSelectedItems() const
+// SetSelection
+
+void
+DragSortableListView::SetSelection(Selection* selection)
 {
-	int32 count = 0;
-	while ( CurrentSelection( count ) >= 0 )
-		count++;
-	return count;
+	if (fSelection == selection)
+		return;
+
+	if (fSelection)
+		fSelection->RemoveObserver((ObjectObserver*)this);
+
+	fSelection = selection;
+
+	if (fSelection)
+		fSelection->AddObserver((ObjectObserver*)this);
+}
+
+// IndexOfSelectable
+
+int32
+DragSortableListView::IndexOfSelectable(Selectable* selectable) const
+{
+	return -1;
+}
+
+// SelectableFor
+
+Selectable*
+DragSortableListView::SelectableFor(BListItem* item) const
+{
+	return NULL;
 }
 
 // SelectAll
+
 void
 DragSortableListView::SelectAll()
 {
 	Select(0, CountItems() - 1);
 }
 
+// CountSelectedItems
+
+int32
+DragSortableListView::CountSelectedItems() const
+{
+	int32 count = 0;
+	while (CurrentSelection(count) >= 0)
+		count++;
+	return count;
+}
+
+// SelectionChanged
+
+void
+DragSortableListView::SelectionChanged()
+{
+	if (!fSelection || fSyncingToSelection)
+		return;
+
+	fModifyingSelection = true;
+
+	BList selectables;
+	for (int32 i = 0; BListItem* item = ItemAt(CurrentSelection(i)); i++) {
+		Selectable* selectable = SelectableFor(item);
+		if (selectable)
+			selectables.AddItem((void*)selectable);
+	}
+
+	AutoNotificationSuspender _(fSelection);
+
+	int32 count = selectables.CountItems();
+	if (count == 0) {
+		if (!fSyncingToSelection)
+			fSelection->DeselectAll();
+	} else {
+		for (int32 i = 0; i < count; i++) {
+			Selectable* selectable = (Selectable*)selectables.ItemAtFast(i);
+			fSelection->Select(selectable, i > 0);
+		}
+	}
+
+	fModifyingSelection = false;
+}
+
 // DeleteItem
+
 bool
 DragSortableListView::DeleteItem(int32 index)
 {
@@ -733,59 +663,57 @@ DragSortableListView::DeleteItem(int32 index)
 	return false;
 }
 
-// _SetDropAnticipationRect
+// SetDropRect
+
 void
-DragSortableListView::_SetDropAnticipationRect(BRect r)
+DragSortableListView::SetDropRect(BRect rect)
 {
-	if (fDropRect != r) {
-		if (fDropRect.IsValid())
-			Invalidate(fDropRect);
-		fDropRect = r;
-		if (fDropRect.IsValid())
-			Invalidate(fDropRect);
-	}
+	fDropRect = rect;
 }
 
-// _SetDropIndex
+// SetDropIndex
+
 void
-DragSortableListView::_SetDropIndex(int32 index)
+DragSortableListView::SetDropIndex(int32 index)
 {
 	if (fDropIndex != index) {
 		fDropIndex = index;
 		if (fDropIndex >= 0) {
 			int32 count = CountItems();
 			if (fDropIndex == count) {
-				BRect r;
-				if (BListItem* item = ItemAt(count - 1)) {
-					r = ItemFrame(count - 1);
-					r.top = r.bottom;
-					r.bottom = r.top + 1.0;
+				BRect rect;
+				if (ItemAt(count - 1)) {
+					rect = ItemFrame(count - 1);
+					rect.top = rect.bottom;
+					rect.bottom = rect.top + 1;
 				} else {
-					r = Bounds();
-					r.bottom--;	// compensate for scrollbars moved slightly out of window
+					rect = Bounds();
+					// compensate for scrollbars moved slightly out of window
+					rect.bottom--;
 				}
-				_SetDropAnticipationRect(r);
+				fDropRect = rect;
 			} else {
-				BRect r = ItemFrame(fDropIndex);
-				r.top--;
-				r.bottom = r.top + 1.0;
-				_SetDropAnticipationRect(r);
+				BRect rect = ItemFrame(fDropIndex);
+				rect.top--;
+				rect.bottom = rect.top + 1;
+				fDropRect = rect;
 			}
 		}
 	}
 }
 
-// _RemoveDropAnticipationRect
+// InvalidateDropRect
+
 void
-DragSortableListView::_RemoveDropAnticipationRect()
+DragSortableListView::InvalidateDropRect()
 {
-	_SetDropAnticipationRect(BRect(0.0, 0.0, -1.0, -1.0));
-//	_SetDropIndex(-1);
+	fDropRect = BRect(0, 0, -1, -1);
 }
 
-// _SetDragMessage
+// SetDragMessage
+
 void
-DragSortableListView::_SetDragMessage(const BMessage* message)
+DragSortableListView::SetDragMessage(const BMessage* message)
 {
 	if (message)
 		fDragMessageCopy = *message;
@@ -794,34 +722,11 @@ DragSortableListView::_SetDragMessage(const BMessage* message)
 }
 
 
+// #pragma mark - SimpleListView
 
-// SimpleListView class
-SimpleListView::SimpleListView( BRect frame, BMessage* selectionChangeMessage )
-	: DragSortableListView( frame, "playlist listview",
-							B_MULTIPLE_SELECTION_LIST, B_FOLLOW_ALL,
-							B_WILL_DRAW | B_NAVIGABLE
-							| B_FRAME_EVENTS | B_FULL_UPDATE_ON_RESIZE ),
-	  fSelectionChangeMessage( selectionChangeMessage )
-{
-}
-
-// SimpleListView class
-SimpleListView::SimpleListView( BRect frame, const char* name,
-								BMessage* selectionChangeMessage,
-								list_view_type type,
-								uint32 resizingMode, uint32 flags )
-	: DragSortableListView( frame, name, type, resizingMode, flags ),
-	  fSelectionChangeMessage( selectionChangeMessage )
-{
-}
-
-// destructor
-SimpleListView::~SimpleListView()
-{
-	delete fSelectionChangeMessage;
-}
 
 // layoutprefs
+
 minimax
 SimpleListView::layoutprefs()
 {
@@ -833,7 +738,9 @@ SimpleListView::layoutprefs()
 	return mpm;
 }
 
+
 // layout
+
 BRect
 SimpleListView::layout(BRect frame)
 {
@@ -842,29 +749,250 @@ SimpleListView::layout(BRect frame)
 	return Frame();
 }
 
-// MessageReceived
-void
-SimpleListView::MessageReceived( BMessage* message)
+
+SimpleListView::SimpleListView(BRect frame, BMessage* selectionChangeMessage)
+	:
+	DragSortableListView(frame, "playlist listview",
+		B_MULTIPLE_SELECTION_LIST, B_FOLLOW_ALL,
+		B_WILL_DRAW | B_NAVIGABLE | B_FRAME_EVENTS | B_FULL_UPDATE_ON_RESIZE),
+		fSelectionChangeMessage(selectionChangeMessage)
 {
-	switch ( message->what ) {
+}
+
+
+SimpleListView::SimpleListView(BRect frame, const char* name,
+	BMessage* selectionChangeMessage, list_view_type type,
+	uint32 resizingMode, uint32 flags)
+	:
+	DragSortableListView(frame, name, type, resizingMode, flags),
+		fSelectionChangeMessage(selectionChangeMessage)
+{
+}
+
+
+SimpleListView::~SimpleListView()
+{
+	delete fSelectionChangeMessage;
+}
+
+// ArchiveSelection
+
+status_t
+SimpleListView::ArchiveSelection(BMessage*, bool = true) const
+{
+	return B_OK;
+}
+
+// InstantiateSelection
+
+bool
+SimpleListView::InstantiateSelection(const BMessage*, int32)
+{
+	return true;
+}
+
+// DetachedFromWindow
+
+void
+SimpleListView::DetachedFromWindow()
+{
+	DragSortableListView::DetachedFromWindow();
+	_MakeEmpty();
+}
+
+// Draw
+
+void
+SimpleListView::Draw(BRect updateRect)
+{
+	BRect emptyRect = updateRect;
+
+	int32 firstIndex = IndexOf(updateRect.LeftTop());
+	int32 lastIndex = IndexOf(updateRect.RightBottom());
+	if (firstIndex >= 0) {
+		BListItem* item;
+		BRect itemFrame(0, 0, -1, -1);
+		if (lastIndex < firstIndex)
+			lastIndex = CountItems() - 1;
+		// update rect contains items
+		for (int32 i = firstIndex; i <= lastIndex; i++) {
+			item = ItemAt(i);
+			if (item == NULL)
+				continue;
+			itemFrame = ItemFrame(i);
+			item->DrawItem(this, itemFrame, (i % 2) == 0);
+
+			// drop indicator
+			if (i == fDropIndex) {
+				SetHighColor(kDropIndicatorColor);
+				StrokeLine(fDropRect.LeftTop(), fDropRect.RightTop());
+			}
+		}
+		emptyRect.top = itemFrame.bottom + 1;
+	}
+
+	if (emptyRect.IsValid()) {
+		SetLowUIColor(B_LIST_BACKGROUND_COLOR);
+		FillRect(emptyRect, B_SOLID_LOW);
+	}
+
+#if 0
+	// focus indicator
+	if (IsFocus()) {
+		SetHighUIColor(B_KEYBOARD_NAVIGATION_COLOR);
+		StrokeRect(Bounds());
+	}
+#endif
+}
+
+
+// InitiateDrag
+
+bool
+SimpleListView::InitiateDrag(BPoint where, int32 index, bool)
+{
+	// supress drag & drop while an item is focused
+	if (fFocusedIndex >= 0)
+		return false;
+
+	BListItem* item = ItemAt(CurrentSelection(0));
+	if (item == NULL) {
+		// work-around a timing problem
+		Select(index);
+		item = ItemAt(index);
+	}
+	if (item == NULL)
+		return false;
+
+	// create drag message
+	BMessage msg(fDragCommand);
+	MakeDragMessage(&msg);
+	// figure out drag rect
+	float width = Bounds().Width();
+	BRect dragRect(0, 0, width, -1);
+	// figure out how many items fit into our bitmap
+	int32 numItems;
+	bool fade = false;
+	for (numItems = 0; BListItem* item = ItemAt(CurrentSelection(numItems)); numItems++) {
+		dragRect.bottom += ceilf(item->Height()) + 1;
+		if (dragRect.Height() > MAX_DRAG_HEIGHT) {
+			fade = true;
+			dragRect.bottom = MAX_DRAG_HEIGHT;
+			numItems++;
+			break;
+		}
+	}
+
+	BBitmap* dragBitmap = new BBitmap(dragRect, B_RGBA32, true);
+	if (dragBitmap && dragBitmap->IsValid()) {
+		if (BView* view = new BView(dragBitmap->Bounds(), "helper",
+				B_FOLLOW_NONE, B_WILL_DRAW)) {
+			dragBitmap->AddChild(view);
+			dragBitmap->Lock();
+			BRect itemFrame(dragRect) ;
+			itemFrame.bottom = 0.0;
+			BListItem* item;
+			// let all selected items, that fit into our drag_bitmap, draw
+			for (int32 i = 0; i < numItems; i++) {
+				item = ItemAt(CurrentSelection(i));
+				if (item == NULL)
+					continue;
+				itemFrame.bottom = itemFrame.top + ceilf(item->Height());
+				if (itemFrame.bottom > dragRect.bottom)
+					itemFrame.bottom = dragRect.bottom;
+				item->DrawItem(view, itemFrame, (i % 2) == 0);
+				itemFrame.top = itemFrame.bottom + 1;
+			}
+
+			// stroke a black frame around the edge
+			view->SetHighColor(kDragFrameColor);
+			view->StrokeRect(view->Bounds());
+			view->Sync();
+
+			uint8* bits = (uint8*)dragBitmap->Bits();
+			int32 height = (int32)dragBitmap->Bounds().Height() + 1;
+			int32 width = (int32)dragBitmap->Bounds().Width() + 1;
+			int32 bpr = dragBitmap->BytesPerRow();
+
+			if (fade) {
+				for (int32 y = 0; y < height - ALPHA / 2; y++, bits += bpr) {
+					uint8* line = bits + 3;
+					for (uint8 *end = line + 4 * width; line < end; line += 4)
+						*line = ALPHA;
+				}
+				for (int32 y = height - ALPHA / 2; y < height; y++, bits += bpr) {
+					uint8* line = bits + 3;
+					for (uint8 *end = line + 4 * width; line < end; line += 4)
+						*line = (height - y) << 1;
+				}
+			} else {
+				for (int32 y = 0; y < height; y++, bits += bpr) {
+					uint8* line = bits + 3;
+					for (uint8 *end = line + 4 * width; line < end; line += 4)
+						*line = ALPHA;
+				}
+			}
+			dragBitmap->Unlock();
+		}
+	} else {
+		delete dragBitmap;
+		dragBitmap = NULL;
+	}
+
+	if (dragBitmap)
+		DragMessage(&msg, dragBitmap, B_OP_ALPHA, B_ORIGIN);
+	else
+		DragMessage(&msg, dragRect.OffsetToCopy(where), this);
+
+	SetDragMessage(&msg);
+
+	return true;
+}
+
+// MessageReceived
+
+void
+SimpleListView::MessageReceived(BMessage* message)
+{
+	switch (message->what) {
+		// NOTE: pasting is handled in MainWindow::MessageReceived
+		case B_COPY:
+		{
+			int count = CountSelectedItems();
+			if (count == 0)
+				return;
+
+			if (!be_clipboard->Lock())
+				break;
+			be_clipboard->Clear();
+
+			BMessage data;
+			ArchiveSelection(&data);
+
+			ssize_t size = data.FlattenedSize();
+			BStackOrHeapArray<char, 1024> archive(size);
+			if (!archive) {
+				be_clipboard->Unlock();
+				break;
+			}
+			data.Flatten(archive, size);
+
+			be_clipboard->Data()->AddData(
+				"application/x-vnd.WonderBrush-listview-message", B_MIME_TYPE, archive, size);
+
+			be_clipboard->Commit();
+			be_clipboard->Unlock();
+
+			break;
+		}
+
 		default:
-			DragSortableListView::MessageReceived( message );
+			DragSortableListView::MessageReceived(message);
 			break;
 	}
 }
 
-// SelectionChanged
-void
-SimpleListView::SelectionChanged()
-{
-	BLooper* looper = Looper();
-	if (fSelectionChangeMessage && looper) {
-		BMessage message(*fSelectionChangeMessage);
-		looper->PostMessage(&message);
-	}
-}
 
-// CloneItem
 BListItem*
 SimpleListView::CloneItem(int32 atIndex) const
 {
@@ -874,29 +1002,56 @@ SimpleListView::CloneItem(int32 atIndex) const
 	return clone;
 }
 
-// DrawListItem
-void
-SimpleListView::DrawListItem(BView* owner, int32 index, BRect frame) const
-{
-	if (SimpleItem* item = dynamic_cast<SimpleItem*>(ItemAt(index))) {
-		uint32 flags  = FLAGS_NONE;
-		if (index == fFocusedIndex)
-			flags |= FLAGS_FOCUSED;
-		if (index % 2)
-			flags |= FLAGS_TINTED_LINE;
-		item->Draw(owner, frame, flags);
-	}
-}
-
 // MakeDragMessage
+
 void
 SimpleListView::MakeDragMessage(BMessage* message) const
 {
 	if (message) {
-		message->AddPointer( "list", (void*)dynamic_cast<const DragSortableListView*>(this));
+		message->AddPointer("list",
+			(void*)dynamic_cast<const DragSortableListView*>(this));
 		int32 index;
 		for (int32 i = 0; (index = CurrentSelection(i)) >= 0; i++)
-			message->AddInt32( "index", index );
+			message->AddInt32("index", index);
 	}
+
+	BMessage items;
+	ArchiveSelection(&items);
+	message->AddMessage("items", &items);
 }
 
+// HandleDropMessage
+
+bool
+SimpleListView::HandleDropMessage(const BMessage* message, int32 dropIndex)
+{
+	// Let DragSortableListView handle drag-sorting (when drag came from ourself)
+	if (DragSortableListView::HandleDropMessage(message, dropIndex))
+		return true;
+
+	BMessage items;
+	if (message->FindMessage("items", &items) != B_OK)
+		return false;
+
+	return InstantiateSelection(&items, dropIndex);
+}
+
+// HandlePaste
+
+bool
+SimpleListView::HandlePaste(const BMessage* archive)
+{
+	return InstantiateSelection(archive, CountItems());
+}
+
+
+void
+SimpleListView::_MakeEmpty()
+{
+	// NOTE: BListView::MakeEmpty() uses ScrollTo()
+	// for which the object needs to be attached to
+	// a BWindow.... :-(
+	int32 count = CountItems();
+	for (int32 i = count - 1; i >= 0; i--)
+		delete RemoveItem(i);
+}

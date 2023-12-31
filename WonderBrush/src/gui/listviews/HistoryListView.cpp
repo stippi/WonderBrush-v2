@@ -47,7 +47,7 @@ enum {
 
 // PaintObjectItem
 void
-ObjectItemPainter::PaintObjectItem(BView* owner, BRect itemFrame, uint32 flags)
+ObjectItemPainter::PaintObjectItem(BView* owner, BRect itemFrame, uint32)
 {
 	owner->SetHighColor( 0, 0, 0, 255 );
 	font_height fh;
@@ -95,14 +95,14 @@ HistoryItem::Update(BView* owner, const BFont* font)
 
 // Draw
 void
-HistoryItem::Draw(BView* owner, BRect frame, uint32 flags)
+HistoryItem::DrawItem(BView* owner, BRect frame, bool even)
 {
 	if (fPainter) {
-		SimpleItem::DrawBackground(owner, frame, flags);
+		SimpleItem::DrawBackground(owner, frame, even);
 		// additional grafics to distinguish tools
-		fPainter->PaintObjectItem(owner, frame, flags);
+		fPainter->PaintObjectItem(owner, frame, 0);
 	} else {
-		SimpleItem::Draw(owner, frame, flags);
+		SimpleItem::DrawItem(owner, frame, even);
 	}
 }
 
