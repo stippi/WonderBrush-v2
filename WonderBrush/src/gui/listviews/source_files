@@ -3,4 +3,7 @@ SOURCE_FILES +=
 	HistoryListView.cpp
 	LayersListView.cpp
 	ListViews.cpp
+	Observer.cpp
+	Selection.cpp
+	Selectable.cpp
 ;

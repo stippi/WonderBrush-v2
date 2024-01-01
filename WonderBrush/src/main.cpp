@@ -225,7 +225,8 @@ main(int argc, char** argv)
 		delete be_app;
 
 		// delete global instances of some classes
-		BubbleHelper::DeleteDefault();
+		// TODO fix crashes on Quit() with this line
+		//BubbleHelper::DeleteDefault();
 	}
 
 #if ALLOCATION_CHECK

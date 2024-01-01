@@ -51,8 +51,8 @@ class HistoryItem : public SimpleItem {
 
 
 							// SimpleItem
-		virtual	void		Draw(BView* owner, BRect frame,
-								 uint32 flags);
+		virtual	void		DrawItem(BView* owner, BRect frame,
+								 bool even = false);
 
 							// HistoryItem
 				void		SetPainter(ObjectItemPainter* painter);

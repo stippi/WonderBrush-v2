@@ -121,7 +121,7 @@ void
 CanvasListView::SetDropTargetRect(const BMessage* message, BPoint where)
 {
 	if (message->what == B_SIMPLE_DATA) {
-		_SetDropAnticipationRect(Bounds());
+		SetDropRect(Bounds());
 	} else {
 		SimpleListView::SetDropTargetRect(message, where);
 	}

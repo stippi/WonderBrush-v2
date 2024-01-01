@@ -25,8 +25,8 @@ class BrushItem : public SimpleItem {
 	virtual	void			Update(BView* owner, const BFont* font);
 
 							// SimpleItem
-	virtual	void			Draw(BView* owner, BRect frame,
-								 uint32 flags);
+	virtual	void			DrawItem(BView* owner, BRect frame,
+								 bool even = false);
 
 			void			GetIconRect(BRect& itemFrame) const;
 
@@ -66,6 +66,8 @@ class BrushListView : public SimpleListView {
 	virtual void			SelectionChanged();
 
 							// SimpleListView
+	virtual	status_t		ArchiveSelection(BMessage*, bool = true) const;
+	virtual	bool			InstantiateSelection(const BMessage*, int32);
 	virtual	void			DoubleClicked(int32 index);
 	virtual	BListItem*		CloneItem(int32 atIndex) const;
 

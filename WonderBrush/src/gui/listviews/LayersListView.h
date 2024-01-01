@@ -28,8 +28,8 @@ class LayerItem : public SimpleItem {
 		virtual	void		Update(BView* owner, const BFont* font);
 
 							// SimpleItem
-		virtual	void		Draw(BView* owner, BRect frame,
-								 uint32 flags);
+		virtual	void		DrawItem(BView* owner, BRect frame,
+								 bool even = false);
 
 				void		GetIconRect(BRect& itemFrame) const;
 

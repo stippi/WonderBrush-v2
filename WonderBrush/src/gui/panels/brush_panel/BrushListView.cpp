@@ -103,10 +103,10 @@ BrushItem::Update(BView* owner, const BFont* font)
 
 // Draw
 void
-BrushItem::Draw(BView* owner, BRect frame, uint32 flags)
+BrushItem::DrawItem(BView* owner, BRect frame, bool even)
 {
 	if (fBitmap && fBitmap->IsValid()) {
-		DrawBackground(owner, BRect(0.0, 0.0, -1.0, -1.0), flags);
+		SimpleItem::DrawBackground(owner, BRect(0.0, 0.0, -1.0, -1.0), even);
 		// see if we need to update our bitmap contents
 		rgb_color color = owner->LowColor();
 		if (fDirty
@@ -173,9 +173,9 @@ BrushItem::Draw(BView* owner, BRect frame, uint32 flags)
 		// let the base class finish off
 		frame.left = fBitmap->Bounds().right + 1.0;
 		owner->SetDrawingMode(B_OP_COPY);
-		SimpleItem::Draw(owner, frame, flags);
+		SimpleItem::DrawItem(owner, frame, even);
 	} else
-		SimpleItem::Draw(owner, frame, flags);
+		SimpleItem::DrawItem(owner, frame, even);
 }
 
 // GetIconRect
@@ -331,6 +331,20 @@ BrushListView::SelectionChanged()
 	}
 	fRenameMI->SetEnabled(item != NULL);
 	fRemoveMI->SetEnabled(item != NULL);
+}
+
+// ArchiveSelection
+status_t
+BrushListView::ArchiveSelection(BMessage*, bool) const
+{
+	return B_OK;
+}
+
+// InstantiateSelection
+bool
+BrushListView::InstantiateSelection(const BMessage*, int32)
+{
+	return true;
 }
 
 // DoubleClicked
