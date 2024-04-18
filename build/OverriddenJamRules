@@ -33,9 +33,17 @@ actions Chmod1
 # headers
 
 if $(OSPLAT) = X86 {
-	HDRS_INCLUDES_SEPARATOR ?= -I- ;
-	HDRS_LOCAL_INCLUDES_OPTION ?= -I ;
-	HDRS_SYSTEM_INCLUDES_OPTION ?= -I ;
+	if $(TARGET_PLATFORM) = haiku64 {
+		HDRS_INCLUDES_SEPARATOR ?= "" ;
+		HDRS_LOCAL_INCLUDES_OPTION ?= "-iquote " ;
+		HDRS_SYSTEM_INCLUDES_OPTION ?= "-isystem " ;
+
+		rule FIncludes { return "-iquote $(<)" ; }
+	} else {
+		HDRS_INCLUDES_SEPARATOR ?= -I- ;
+		HDRS_LOCAL_INCLUDES_OPTION ?= -I ;
+		HDRS_SYSTEM_INCLUDES_OPTION ?= -I ;
+	}
 } else {
 	HDRS_INCLUDES_SEPARATOR ?= -i- ;
 	HDRS_LOCAL_INCLUDES_OPTION ?= -I ;
